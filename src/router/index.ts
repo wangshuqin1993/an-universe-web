@@ -4,7 +4,7 @@ let router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: "/index",
+      path: "/",
       name: "index",
       component: () => import('@/views/index/index.vue'),
     }
