@@ -6,7 +6,9 @@
           <div class="text-[#FFFFFF]">Unlock Wisdom, Join</div>
           <div class="text-color-css">An-Universe</div>
         </div>
-        <div class="text-[22px] leading-[35px] mt-[20px] mb-[40px] text-[#EEE9E9]">Return the value of knowledge to the one who create it！AIGC is helping us better realize this vision. Let’s build a universe driving by AI-Avatar and knowledge together!</div>
+        <div class="text-[22px] leading-[35px] mt-[20px] mb-[40px] text-[#EEE9E9]">Return the value of knowledge to the
+          one who create it！AIGC is helping us better realize this vision. Let’s build a universe driving by AI-Avatar and
+          knowledge together!</div>
         <button class="btn-css">Start Now</button>
       </div>
     </div>
@@ -55,8 +57,10 @@
         <div class="w-[680px]">
           <div class="text-[48px] font-bold text-[#FFFFFF] leading-[84px]">Explore Diverse Knowledge Planets now!</div>
           <div class="text-[22px] text-[#EEE9E9] mt-[20px] italic">
-            <div>AN Universe opens the gateway to diverse knowledge universes. Explore stars across various fields, gaining insights and experiences that align with your interests.</div>
-            <div class="mt-[30px]">Connect directly with star creators whose content resonates with you. Interact, ask questions, and be part of a community where your engagement matters.</div>
+            <div>AN Universe opens the gateway to diverse knowledge universes. Explore stars across various fields,
+              gaining insights and experiences that align with your interests.</div>
+            <div class="mt-[30px]">Connect directly with star creators whose content resonates with you. Interact, ask
+              questions, and be part of a community where your engagement matters.</div>
           </div>
           <button class="btn-css mt-[30px]">Try It Now</button>
         </div>
@@ -67,8 +71,10 @@
         <div class="w-[680px]">
           <div class="text-[48px] font-bold text-[#FFFFFF] leading-[84px]">Create to earn! Sharing your Knowledge.</div>
           <div class="text-[22px] text-[#EEE9E9] mt-[20px] italic">
-            <div> AN Universe is your canvas to share your knowledge and creativity. Benefit from the exclusive AI Avatar, enhancing your connection with fans.</div>
-            <div class="mt-[30px]">Transform your passion into a profession. AN Universe empowers you to monetize your knowledge and creations, offering a platform for financial growth and recognition.</div>
+            <div> AN Universe is your canvas to share your knowledge and creativity. Benefit from the exclusive AI Avatar,
+              enhancing your connection with fans.</div>
+            <div class="mt-[30px]">Transform your passion into a profession. AN Universe empowers you to monetize your
+              knowledge and creations, offering a platform for financial growth and recognition.</div>
           </div>
           <button class="btn-css mt-[30px]">Try It Now</button>
         </div>
@@ -85,29 +91,31 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 </script>
 <style scoped>
-.text-color-css{
+.text-color-css {
   width: max-content;
-  background: linear-gradient(245.29deg, #6DC1DC 13.32%, #A690FC 28.55%, #FC96BB 55.55%, #FFC397 84.12%),linear-gradient(0deg, #FFFFFF, #FFFFFF);
+  background: linear-gradient(245.29deg, #6DC1DC 13.32%, #A690FC 28.55%, #FC96BB 55.55%, #FFC397 84.12%), linear-gradient(0deg, #FFFFFF, #FFFFFF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.index-bg1{
+
+.index-bg1 {
   background: url("@/assets/images/index-img1.png") no-repeat right #15083E;
   background-size: contain;
 
 }
-.img-w{
+
+.img-w {
   width: 200px;
   height: fit-content;
 }
-.btn-css{
+
+.btn-css {
   background-color: #FBFAFF;
   color: #8C72FF;
   height: 55px;
   width: 150px;
   border-radius: 100px;
-}
-</style>
+}</style>
