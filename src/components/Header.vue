@@ -5,5 +5,5 @@
     <div class="text-[20px] text-[#6CD3FF] ml-[10px] w-[100px] leading-[22px]">AN Universe</div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 </script>

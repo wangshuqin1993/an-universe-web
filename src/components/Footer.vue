@@ -6,7 +6,8 @@
           <img src="@/assets/images/logo.png" class="w-[60px] h-[60px]" />
           <div class="text-[24px] text-[#6CD3FF] ml-[10px] w-[100px] leading-[26px]">AN Universe</div>
         </div>
-        <div class="text-[#A690FC] text-[16px] mt-[20px] w-[260px] leading-[35px]">Ignite Your Intelligence in the AI-Enhanced Universe!</div>
+        <div class="text-[#A690FC] text-[16px] mt-[20px] w-[260px] leading-[35px]">Ignite Your Intelligence in the
+          AI-Enhanced Universe!</div>
       </div>
       <div class="text-[#E2E1E4] text-[16px] leading-[35px] flex justify-end w-[60%]">
         <div class="w-[200px]">
@@ -28,7 +29,8 @@
         </div>
       </div>
     </div>
-    <div class="border border-solid border-x-0 border-b-0 border-[#2B2931] flex justify-between pt-[30px] px-[40px] mt-[80px]">
+    <div
+      class="border border-solid border-x-0 border-b-0 border-[#2B2931] flex justify-between pt-[30px] px-[40px] mt-[80px]">
       <div class="text-[#A7A4AF] text-[13px]">© Draft 2023, All Rights Reserved.</div>
       <div class="flex">
         <img src="@/assets/images/footer1.png" class="w-[16px] h-[16px]" />
@@ -38,5 +40,5 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 </script>
