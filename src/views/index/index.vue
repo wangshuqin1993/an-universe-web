@@ -1,85 +1,85 @@
 <template>
-  <div class="px-[120px]">
+  <div class="px-[60px] md:px-[120px]">
     <div class="h-[625px] flex items-center index-bg1">
       <div class="w-[580px]">
-        <div class="text-[48px] leading-[84px] font-bold">
+        <div class="text-[24px] md:text-[48px] leading-[42px] md:leading-[84px] font-bold">
           <div class="text-[#FFFFFF]">Unlock Wisdom, Join</div>
           <div class="text-color-css">An-Universe</div>
         </div>
-        <div class="text-[22px] leading-[35px] mt-[20px] mb-[40px] text-[#EEE9E9]">Return the value of knowledge to the
+        <div class="md:text-[11px] leading-[35px] mt-[20px] mb-[40px] text-[#EEE9E9]">Return the value of knowledge to the
           one who create it！AIGC is helping us better realize this vision. Let’s build a universe driving by AI-Avatar and
           knowledge together!</div>
-        <button class="btn-css">Start Now</button>
+        <button class="btn-css text-xs md:text-base w-[75px] h-[27px] md:h-[55px] md:w-[150px]">Start Now</button>
       </div>
     </div>
     <div>
-      <div class="text-[48px] font-extrabold text-[#EBE6FA] text-center mt-[120px]">Our Top Planets</div>
+      <div class="text-[24px] md:text-[48px] font-extrabold text-[#EBE6FA] text-center mt-[60px] md:mt-[120px]">Our Top Planets</div>
       <div class="text-[18px] text-[#E2E1E4] text-center">We have been partner with many influencers</div>
       <div class="flex mt-[50px] justify-center items-center">
         <img src="@/assets/images/imgLogo1.png" class="img-w" />
-        <div>
-          <img src="@/assets/images/imgLogo2.png" class="img-w" />
-          <img src="@/assets/images/imgLogo3.png" class="img-w" />
+        <div class="img-w">
+          <img src="@/assets/images/imgLogo2.png" />
+          <img src="@/assets/images/imgLogo3.png"/>
         </div>
-        <div>
-          <img src="@/assets/images/imgLogo4.png" class="img-w" />
-          <img src="@/assets/images/imgLogo5.png" class="img-w" />
-          <img src="@/assets/images/imgLogo6.png" class="img-w" />
+        <div class="img-w">
+          <img src="@/assets/images/imgLogo4.png"/>
+          <img src="@/assets/images/imgLogo5.png"/>
+          <img src="@/assets/images/imgLogo6.png"/>
         </div>
-        <div>
-          <img src="@/assets/images/imgLogo7.png" class="img-w" />
-          <img src="@/assets/images/imgLogo8.png" class="img-w" />
+        <div class="img-w">
+          <img src="@/assets/images/imgLogo7.png"/>
+          <img src="@/assets/images/imgLogo8.png"/>
         </div>
         <img src="@/assets/images/imgLogo9.png" class="img-w" />
       </div>
     </div>
   </div>
   <div>
-    <div class="mt-[120px] flex justify-between">
-      <div>
+    <div class="mt-[60px] md:mt-[120px] flex justify-between">
+      <div class="hidden md:block">
         <img src="@/assets/images/Component5.png" class="w-[263px] ml-[30px]" />
         <div class="bg-[#291C52] rounded-full flex ml-[270px] p-[8px]">
           <img src="@/assets/images/untitled2.png" class="w-[33px] " />
         </div>
       </div>
-      <div class="mr-[120px]">
+      <div class="md:mr-[120px]">
         <div class="flex justify-center">
           <img src="@/assets/images/Component4.png" class="w-[124px]" />
         </div>
-        <div class="text-[48px] font-bold text-[#FFFFFF] mt-[20px]">
+        <div class="text-[24px] md:text-[48px] font-bold text-[#FFFFFF] mt-[20px] px-[60px] md:px-0">
           To access to Star Creator <label class="text-color-css">AI-Avatar</label>,<br>Just buy the Key.
         </div>
       </div>
     </div>
-    <div class="mt-[120px] flex justify-between">
-      <img src="@/assets/images/Component7.png" class="w-[608px] ml-[30px]" />
-      <div class="flex items-center mr-[120px]">
-        <div class="w-[680px]">
-          <div class="text-[48px] font-bold text-[#FFFFFF] leading-[84px]">Explore Diverse Knowledge Planets now!</div>
-          <div class="text-[22px] text-[#EEE9E9] mt-[20px] italic">
+    <div class="mt-[60px] md:mt-[120px] md:flex md:justify-between">
+      <img src="@/assets/images/Component7.png" class="mx-auto md:mx-0 w-[50%] md:w-[100%] md:w-[608px] md:ml-[30px]" />
+      <div class="md:flex md:items-center md:mr-[120px]">
+        <div class="px-[60px] md:px-0 md:w-[680px]">
+          <div class="text-[24px] md:text-[48px] font-bold text-[#FFFFFF] leading-[42px] md:leading-[84px]">Explore Diverse Knowledge Planets now!</div>
+          <div class="text-[16px] md:text-[22px] text-[#EEE9E9] mt-[20px] italic">
             <div>AN Universe opens the gateway to diverse knowledge universes. Explore stars across various fields,
               gaining insights and experiences that align with your interests.</div>
             <div class="mt-[30px]">Connect directly with star creators whose content resonates with you. Interact, ask
               questions, and be part of a community where your engagement matters.</div>
           </div>
-          <button class="btn-css mt-[30px]">Try It Now</button>
+          <button class="btn-css text-xs md:text-base h-[27px] w-[75px] md:h-[55px] md:w-[150px] mt-[30px]">Try It Now</button>
         </div>
       </div>
     </div>
-    <div class="mt-[120px] flex justify-between">
-      <div class="flex items-center ml-[120px]">
-        <div class="w-[680px]">
-          <div class="text-[48px] font-bold text-[#FFFFFF] leading-[84px]">Create to earn! Sharing your Knowledge.</div>
-          <div class="text-[22px] text-[#EEE9E9] mt-[20px] italic">
+    <div class="mt-[60px] md:mt-[120px] md:flex md:justify-between">
+      <div class="md:flex md:items-center md:ml-[120px]">
+        <div class="px-[60px] md:px-0 md:w-[680px]">
+          <div class="text-[24px] md:text-[48px] font-bold text-[#FFFFFF] leading-[42px] md:leading-[84px]">Create to earn! Sharing your Knowledge.</div>
+          <div class="text-[16px] md:text-[22px] text-[#EEE9E9] mt-[20px] italic">
             <div> AN Universe is your canvas to share your knowledge and creativity. Benefit from the exclusive AI Avatar,
               enhancing your connection with fans.</div>
             <div class="mt-[30px]">Transform your passion into a profession. AN Universe empowers you to monetize your
               knowledge and creations, offering a platform for financial growth and recognition.</div>
           </div>
-          <button class="btn-css mt-[30px]">Try It Now</button>
+          <button class="btn-css text-xs md:text-base h-[27px] w-[75px] md:h-[55px] md:w-[150px] mt-[30px]">Try It Now</button>
         </div>
       </div>
-      <img src="@/assets/images/Component7.png" class="w-[608px] mr-[30px]" />
+      <img src="@/assets/images/Component7.png" class="mx-auto md:mx-0 w-[50%] md:w-[100%] md:w-[608px] md:mr-[30px]" />
     </div>
     <div class="fixed right-[30px] bottom-[30px] cursor-pointer">
       <a href="#top">
@@ -108,14 +108,12 @@
 }
 
 .img-w {
-  width: 200px;
+  width: 20%;
   height: fit-content;
 }
 
 .btn-css {
   background-color: #FBFAFF;
   color: #8C72FF;
-  height: 55px;
-  width: 150px;
   border-radius: 100px;
 }</style>
