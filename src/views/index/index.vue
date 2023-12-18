@@ -3,13 +3,14 @@
     <div class="main-content">
       <Header></Header>
       <div class="">
-        <div class="h-[625px] flex items-center index-bg1">
+        <div class="md:h-[625px] pt-[30px] md:pt-[0px] flex items-center index-bg1 ">
           <div class="w-[580px]">
             <div class="text-[24px] md:text-[48px] leading-[42px] md:leading-[84px] font-bold">
               <div class="text-[#FFFFFF]">Unlock Wisdom, Join</div>
               <div class="text-color-css">An-Universe</div>
             </div>
-            <div class="md:text-[11px] leading-[35px] mt-[20px] mb-[40px] text-[#EEE9E9]">Return the value of knowledge to
+            <div class="md:text-[22px] text-[11px] leading-[35px] mt-[20px] mb-[40px] text-[#EEE9E9]">Return the value of
+              knowledge to
               the
               one who create it！AIGC is helping us better realize this vision. Let’s build a universe driving by AI-Avatar
               and
@@ -75,7 +76,7 @@
             </div>
           </div>
         </div>
-        <div class="mt-[60px] md:mt-[120px] md:flex md:justify-between">
+        <div class="mt-[60px] md:mt-[120px] flex md:flex-nowrap flex-wrap-reverse md:justify-between">
           <div class="md:flex md:items-center md:ml-[120px]">
             <div class="px-[60px] md:px-0 md:w-[680px]">
               <div class="text-[24px] md:text-[48px] font-bold text-[#FFFFFF] leading-[42px] md:leading-[84px]">Create to
