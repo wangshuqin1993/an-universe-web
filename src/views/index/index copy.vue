@@ -4,7 +4,7 @@
       <Header></Header>
       <div class="">
         <div class="h-[625px] flex items-center index-bg1">
-          <div class="w-[580px]">
+          <div class="md:w-[580px]">
             <div class="text-[48px] leading-[84px] font-bold">
               <div class="text-[#FFFFFF]">Unlock Wisdom, Join</div>
               <div class="text-color-css">An-Universe</div>
@@ -59,7 +59,7 @@
         <div class="mt-[120px] flex justify-between">
           <img src="@/assets/images/Component7.png" class="w-[608px] ml-[30px]" />
           <div class="flex items-center mr-[120px]">
-            <div class="w-[680px]">
+            <div class="md:w-[680px]">
               <div class="text-[48px] font-bold text-[#FFFFFF] leading-[84px]">Explore Diverse Knowledge Planets now!
               </div>
               <div class="text-[22px] text-[#EEE9E9] mt-[20px] italic">
