@@ -3,25 +3,29 @@
     <div class="main-content">
       <Header></Header>
       <div class="">
-        <div class="md:h-[625px] pt-[38px] md:pt-[0px] flex items-center index-bg1 ">
-          <div class="w-[580px]">
+        <div class="md:mt-[120px] pt-[38px] md:pt-[0px] flex md:justify-between">
+          <div class="md:w-[580px]">
             <div class="text-[24px] md:text-[48px] leading-[42px] md:leading-[84px] font-bold">
               <div class="text-[#FFFFFF]">Unlock Wisdom, Join</div>
               <div class="text-color-css">An-Universe</div>
             </div>
+            <img src="@/assets/images/Component 1.png"
+              class="md:hidden block w-[50%] mx-auto" 
+            />
             <div class="md:text-[22px] text-[16px] leading-[35px] mt-[20px] mb-[40px] text-[#EEE9E9]">Return the value of
-              knowledge to
-              the
-              one who create it！AIGC is helping us better realize this vision. Let’s build a universe driving by AI-Avatar
-              and
-              knowledge together!</div>
+              knowledge to the one who create it！AIGC is helping us better realize this vision. 
+              Let’s build a universe driving by AI-Avatar and knowledge together!
+            </div>
             <button class="btn-css text-xs md:text-base w-[120px] h-[35px] md:h-[55px] md:w-[150px]">Start Now</button>
           </div>
+          <img src="@/assets/images/Component 1.png"
+            class="hidden md:block md:w-[508px] md:mr-[30px]" 
+          />
         </div>
         <div>
-          <div class="text-[24px] md:text-[48px] font-extrabold text-[#EBE6FA] text-center mt-[80px] md:mt-[120px]">Our
+          <div class="hidden md:block text-[24px] md:text-[48px] font-extrabold text-[#EBE6FA] text-center mt-[80px] md:mt-[120px]">Our
             Top Planets</div>
-          <div class="text-[18px] text-[#E2E1E4] text-center">We have been partner with many influencers</div>
+          <div class="text-[18px] text-[#E2E1E4] text-center mt-[80px] md:mt-0">We have been partner with many influencers</div>
           <div class="flex mt-[50px] justify-center items-center">
             <img src="@/assets/images/imgLogo1.png" class="img-w" />
             <div class="img-w">
@@ -92,10 +96,10 @@
                 Now</button>
             </div>
           </div>
-          <img src="@/assets/images/Component7.png"
+          <img src="@/assets/images/Component 8.png"
             class="mx-auto md:mx-0 w-[50%] md:w-[100%] md:w-[608px] md:mr-[30px]" />
         </div>
-        <div class="fixed right-[30px] bottom-[30px] cursor-pointer">
+        <div class="fixed right-[30px] bottom-[30px] cursor-pointer hidden md:block">
           <a href="#top">
             <div class="bg-[#EBE6FA] rounded-full h-[56px] w-[56px] flex justify-center items-center ml-[15px] mb-[10px]">
               <img src="@/assets/images/Vector1.png" class="h-[16px]" />
@@ -124,12 +128,6 @@ import Footer from '../../components/Footer.vue'
   background: linear-gradient(245.29deg, #6DC1DC 13.32%, #A690FC 28.55%, #FC96BB 55.55%, #FFC397 84.12%), linear-gradient(0deg, #FFFFFF, #FFFFFF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.index-bg1 {
-  background: url("@/assets/images/index-img1.png") no-repeat right #15083E;
-  background-size: contain;
-
 }
 
 .img-w {
