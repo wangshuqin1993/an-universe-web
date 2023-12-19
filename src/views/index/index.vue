@@ -3,30 +3,29 @@
     <div class="main-content">
       <Header></Header>
       <div class="">
-        <div class="md:mt-[120px] pt-[38px] md:pt-[0px] flex md:justify-between">
+        <div class="md:mt-[60px] pt-[38px] md:pt-[0px] flex md:justify-between md:items-center">
           <div class="md:w-[580px]">
             <div class="text-[24px] md:text-[48px] leading-[42px] md:leading-[84px] font-bold">
               <div class="text-[#FFFFFF]">Unlock Wisdom, Join</div>
               <div class="text-color-css">An-Universe</div>
             </div>
-            <img src="@/assets/images/Component 1.png"
-              class="md:hidden block w-[50%] mx-auto" 
-            />
+            <img src="@/assets/images/Component 1.png" class="md:hidden block w-[50%] mx-auto" />
             <div class="md:text-[22px] text-[16px] leading-[35px] mt-[20px] mb-[40px] text-[#EEE9E9]">Return the value of
-              knowledge to the one who create it！AIGC is helping us better realize this vision. 
+              knowledge to the one who create it！AIGC is helping us better realize this vision.
               Let’s build a universe driving by AI-Avatar and knowledge together!
             </div>
             <button class="btn-css text-xs md:text-base w-[120px] h-[35px] md:h-[55px] md:w-[150px]">Start Now</button>
           </div>
-          <img src="@/assets/images/Component 1.png"
-            class="hidden md:block md:w-[508px] md:mr-[30px]" 
-          />
+          <img src="@/assets/images/Component 1.png" class="hidden md:block md:w-[508px] md:mr-[30px]" />
         </div>
         <div>
-          <div class="hidden md:block text-[24px] md:text-[48px] font-extrabold text-[#EBE6FA] text-center mt-[80px] md:mt-[120px]">Our
+          <div
+            class="hidden md:block text-[24px] md:text-[48px] font-extrabold text-[#EBE6FA] text-center mt-[80px] md:mt-[120px]">
+            Our
             Top Planets</div>
-          <div class="text-[18px] text-[#E2E1E4] text-center mt-[80px] md:mt-0">We have been partner with many influencers</div>
-          <div class="flex mt-[50px] justify-center items-center">
+          <div class="text-[18px] text-[#E2E1E4] text-center mt-[80px] md:mt-0">We have been partner with many influencers
+          </div>
+          <div class="flex mt-[50px] justify-center items-center md:px-[110px] px-[0px]">
             <img src="@/assets/images/imgLogo1.png" class="img-w" />
             <div class="img-w">
               <img src="@/assets/images/imgLogo2.png" />
@@ -53,7 +52,7 @@
               <img src="@/assets/images/untitled2.png" class="w-[33px] " />
             </div>
           </div>
-          <div class="md:mr-[120px]">
+          <div class="md:mr-[30px]">
             <div class="flex justify-center">
               <img src="@/assets/images/Component4.png" class="w-[124px]" />
             </div>
@@ -65,7 +64,7 @@
         <div class="mt-[80px] md:mt-[120px] md:flex md:justify-between">
           <img src="@/assets/images/Component7.png"
             class="mx-auto md:mx-0 w-[50%] md:w-[100%] md:w-[608px] md:ml-[30px]" />
-          <div class="md:flex md:items-center md:mr-[120px]">
+          <div class="md:flex md:items-center md:mr-[30px]">
             <div class="md:w-[680px]">
               <div class="text-[24px] md:text-[48px] font-bold text-[#FFFFFF] leading-[42px] md:leading-[84px]">Explore
                 Diverse Knowledge Planets now!</div>
@@ -81,7 +80,7 @@
           </div>
         </div>
         <div class="mt-[80px] md:mt-[120px] flex md:flex-nowrap flex-wrap-reverse md:justify-between">
-          <div class="md:flex md:items-center md:ml-[120px]">
+          <div class="md:flex md:items-center">
             <div class=" md:w-[680px]">
               <div class="text-[24px] md:text-[48px] font-bold text-[#FFFFFF] leading-[42px] md:leading-[84px]">Create to
                 earn! Sharing your Knowledge.</div>
