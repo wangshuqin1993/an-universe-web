@@ -3,30 +3,76 @@
     <div class="max-w-[1440px] mx-auto">
       <div class="flex justify-between  header h-[82px] py-[20px] ">
         <div>
-          <img src="@/assets/images/mbake-logo.png" class="w-[140px]" />
+          <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
         </div>
-        <div class="flex items-stretch text-[#ffffff] text-[16px]">
-          <div class="mr-[50px] self-center">Whitepaper</div>
-          <div class="mr-[50px] self-center">Roadmap</div>
-          <div class="mr-[50px] self-center">IDO</div>
+        <div v-if="isMobile" @click="open = true">
+          <img src="@/assets/images/mobileShow.png" class="w-[24px]" />
+        </div>
+        <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
+          <div class="md:mr-[50px] mr-[16px] self-center">Whitepaper</div>
+          <div class="md:mr-[50px] mr-[16px] self-center">Roadmap</div>
+          <!-- <div class="md:mr-[50px] mr-[16px] self-center">IDO</div> -->
           <div class="min-btn">
             Mint (Coming Soon)
           </div>
         </div>
+
       </div>
       <div class="text-center content mt-[80px]">
-        <div class="text-[72px] content-title">
+        <div class="md:text-[72px] text-[50px] content-title">
           <span class="font-bold title-text">Bmaker</span>
         </div>
-        <div class="text-[18px] ">
+        <div class="md:text-[18px] text-[14px]">
           <span class="title-text">The Web3 future Bitcoin Stablecoin Paradigm</span>
+        </div>
+        <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
+          <div class=" min-btn">
+            Mint (Coming Soon)
+          </div>
         </div>
       </div>
     </div>
 
+    <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
+      :contentWrapperStyle="contentWrapperStyle" rootClassName="bg-css">
+      <div class="flex justify-between">
+        <div>
+          <img src="@/assets/images/mbake-logo.png" class="w-[110px]" />
+        </div>
+        <div>
+          <CloseOutlined style="color: #ffffff;fontSize: 24px" @click="open = false" />
+        </div>
+      </div>
+      <div class="text-[16px] text-[#ffFfff] font-bold">
+        <div class="mt-[40px] mb-[30px]">Whitepaper</div>
+        <div class="mb-[30px]">Roadmap</div>
+        <!-- <div class="mb-[30px]">IDO</div> -->
+      </div>
+    </a-drawer>
+
   </div>
 </template>
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
+import { CloseOutlined } from "@ant-design/icons-vue"
+const open = ref(false);
+const isMobile = ref(false)
+
+const onClose = () => {
+  open.value = false
+}
+
+const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
+
+onMounted(() => {
+  let width = document.documentElement.clientWidth;
+  console.log(width, 'width')
+  if (width > 750) {
+    isMobile.value = false
+  } else {
+    isMobile.value = true;
+  }
+})
 </script>
 <style scoped>
 .main-content {
@@ -39,6 +85,13 @@
   /* 
   max-width: 1440px;
   margin: 0 auto; */
+}
+
+.mobile-min-btn {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translatex(-50%);
 }
 
 .min-btn {
@@ -55,4 +108,16 @@
   background-clip: text;
   color: transparent;
 }
+
+:deep(.ant-drawer-content) {
+  background-color: #1F1F1F;
+}
+
+.bg-css {
+  background-color: #1F1F1F;
+}
+
+
+
+/* 1F1F1F */
 </style>
