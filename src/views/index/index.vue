@@ -3,10 +3,14 @@
     <div class="max-w-[1440px] mx-auto">
       <div class="flex justify-between  header h-[82px] py-[20px] ">
         <div>
-          <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
+          <!-- <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" /> -->
+          <!-- <div class="text-[28px] text-[#fff] font-bold">
+            <span class="absc-title">$ABSC</span>
+          </div> -->
+          <img src="@/assets/images/absc.png" class="md:w-[140px] w-[110px]" />
         </div>
         <div v-if="isMobile" @click="open = true">
-          <img src="@/assets/images/mobileShow.png" class="w-[24px]" />
+          <img src="@/assets/images/mobileShow.png" class="w-[24px] mt-[10px]" />
         </div>
         <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
           <div class="md:mr-[50px] mr-[16px] self-center">Whitepaper</div>
@@ -20,10 +24,10 @@
       </div>
       <div class="text-center content mt-[80px]">
         <div class="md:text-[72px] text-[50px] content-title">
-          <span class="font-bold title-text">Bmaker</span>
+          <span class="font-bold title-text">ABSC</span>
         </div>
         <div class="md:text-[18px] text-[14px]">
-          <span class="title-text">The Web3 future Bitcoin Stablecoin Paradigm</span>
+          <span class="title-text">$ABSC： build BTC & all assets in aptos</span>
         </div>
         <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
           <div class=" min-btn">
@@ -35,11 +39,13 @@
 
     <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
       :contentWrapperStyle="contentWrapperStyle" rootClassName="bg-css">
-      <div class="flex justify-between">
-        <div>
-          <img src="@/assets/images/mbake-logo.png" class="w-[110px]" />
+      <div class="flex items-stretch justify-between">
+        <div class="self-center">
+          <!-- <img src="@/assets/images/mbake-logo.png" class="w-[110px]" /> -->
+          <!-- <div class="text-[28px] text-[#fff] font-bold"><span class="absc-title">$ABSC</span></div> -->
+          <img src="@/assets/images/absc.png" class="md:w-[140px] w-[110px]" />
         </div>
-        <div>
+        <div class="self-center">
           <CloseOutlined style="color: #ffffff;fontSize: 24px" @click="open = false" />
         </div>
       </div>
@@ -85,6 +91,13 @@ onMounted(() => {
   /* 
   max-width: 1440px;
   margin: 0 auto; */
+}
+
+.absc-title {
+  background-image: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .mobile-min-btn {
