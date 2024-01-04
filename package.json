@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^4.0.7",
+    "axios": "^1.6.4",
     "esbuild": "^0.19.9",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
