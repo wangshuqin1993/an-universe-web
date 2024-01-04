@@ -3,10 +3,6 @@
     <div class="max-w-[1440px] mx-auto">
       <div class="flex justify-between  header h-[82px] py-[20px] ">
         <div>
-          <!-- <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" /> -->
-          <!-- <div class="text-[28px] text-[#fff] font-bold">
-            <span class="absc-title">$ABSC</span>
-          </div> -->
           <img src="@/assets/images/absc.png" class="md:w-[140px] w-[110px]" />
         </div>
         <div v-if="isMobile" @click="open = true">
@@ -14,9 +10,8 @@
         </div>
         <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
           <div class="md:mr-[50px] mr-[16px] self-center">Whitepaper</div>
-          <div class="md:mr-[50px] mr-[16px] self-center">Roadmap</div>
-          <!-- <div class="md:mr-[50px] mr-[16px] self-center">IDO</div> -->
-          <div class="min-btn">
+          <div class="md:mr-[50px] mr-[16px] self-center ">Roadmap</div>
+          <div class="cursor-pointer min-btn hover:opacity-[.85]">
             Mint (Coming Soon)
           </div>
         </div>
@@ -41,8 +36,6 @@
       :contentWrapperStyle="contentWrapperStyle" rootClassName="bg-css">
       <div class="flex items-stretch justify-between">
         <div class="self-center">
-          <!-- <img src="@/assets/images/mbake-logo.png" class="w-[110px]" /> -->
-          <!-- <div class="text-[28px] text-[#fff] font-bold"><span class="absc-title">$ABSC</span></div> -->
           <img src="@/assets/images/absc.png" class="md:w-[140px] w-[110px]" />
         </div>
         <div class="self-center">
@@ -52,7 +45,6 @@
       <div class="text-[16px] text-[#ffFfff] font-bold">
         <div class="mt-[40px] mb-[30px]">Whitepaper</div>
         <div class="mb-[30px]">Roadmap</div>
-        <!-- <div class="mb-[30px]">IDO</div> -->
       </div>
     </a-drawer>
 
@@ -90,7 +82,8 @@ onMounted(() => {
   background-position: center center;
   /* 
   max-width: 1440px;
-  margin: 0 auto; */
+  margin: 0 auto; 
+  */
 }
 
 .absc-title {
