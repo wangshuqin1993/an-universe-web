@@ -16,7 +16,7 @@
           <div class="md:mr-[50px] mr-[16px] self-center">Whitepaper</div>
           <div class="md:mr-[50px] mr-[16px] self-center">Roadmap</div>
           <!-- <div class="md:mr-[50px] mr-[16px] self-center">IDO</div> -->
-          <div class="min-btn">
+          <div class="cursor-pointer min-btn" @click="router.push('/mint')">
             Mint (Coming Soon)
           </div>
         </div>
@@ -60,7 +60,10 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { CloseOutlined } from "@ant-design/icons-vue"
+
+const router = useRouter();
 const open = ref(false);
 const isMobile = ref(false)
 
