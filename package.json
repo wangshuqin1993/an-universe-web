@@ -8,11 +8,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@web3-onboard/core": "^2.21.2",
+    "@web3-onboard/injected-wallets": "^2.10.10",
+    "@web3-onboard/vue": "^2.7.12",
     "ant-design-vue": "^4.0.7",
+    "aptos": "^1.21.0",
     "axios": "^1.6.4",
     "esbuild": "^0.19.9",
+    "ethers": "^6.9.2",
     "vue": "^3.3.11",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "web3": "^4.3.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.4",
