@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-
+// absc/mint
 let router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -7,6 +7,11 @@ let router = createRouter({
       path: "/",
       name: "index",
       component: () => import('@/views/index/index.vue'),
+    },
+    {
+      path: "/mint",
+      name: "mint",
+      component: () => import('@/views/absc/mint.vue'),
     },
     {
       path: "/test",
