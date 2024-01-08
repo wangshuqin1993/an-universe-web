@@ -1,8 +1,3 @@
-
-import { log } from 'console';
-
-import { relative } from 'path';
-
 <template>
   <div class="w-full h-full bg-black">
     <abscHeader></abscHeader>
@@ -45,7 +40,7 @@ import { relative } from 'path';
       </div>
       <div class="">
         <div class="text-[#FFFFFF] font-[Montserrat Black] text-[36px] font-bold text-center">Your activity result</div>
-        <!-- <a-button>按钮</a-button> -->
+        <a-button @click="showModal = true">按钮</a-button>
         <div class="flex mt-[45px] justify-center gap-[30px] pb-[136px]">
           <div class="card-container" v-for="(item, index) in recordData" :key="index">
             <div v-if="!item.child.blank">
@@ -98,15 +93,15 @@ import { relative } from 'path';
         <span class="close-btn">X</span>
       </div>
       <div class="absolute">
-        <img src="@/assets/images/absc-cube.png" class="w-[380px] mx-auto"/>
+        <img src="@/assets/images/absc-cube.png" class="w-[380px] mx-auto" />
       </div>
-      <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px] absolute bottom-[350px]">Now you can check your draw results!</div>
+      <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px] absolute bottom-[350px]">Now you can check your draw
+        results!</div>
       <div class="min-btn-modal absolute bottom-[280px]">
         <span class="min-btn-text">View Results</span>
       </div>
     </div>
   </ADModal>
-
 </template>
 
 <script setup lang="ts">
@@ -142,12 +137,13 @@ const abscNFTList = ref([]);
 const toAddress = ref("");
 const amount = ref(10);
 const open = ref(false);
-const showModal = ref(true)
+const showModal = ref(false)
 
-const showModalbtn = ()=> {
+const showModalbtn = () => {
   showModal.value = !showModal.value
-  console.log('showModal.value:',showModal.value)
+  console.log('showModal.value:', showModal.value)
 }
+
 const resultModal = ref(false);
 const recordData = ref([])
 
@@ -325,7 +321,7 @@ onMounted(() => {
     address.value = window.okxwallet.aptos.selectedAccount?.address;
     getAbscRecord()
   }
-  console.log(coreImgRef.value.offsetHeight, 'iii')
+  // console.log(coreImgRef.value.offsetHeight, 'iii')
   getAbscBlindBoxNumber()
 })
 
@@ -438,7 +434,8 @@ button:focus {
   justify-content: center;
   margin: 40px auto 0px;
 }
-.min-btn-modal{
+
+.min-btn-modal {
   width: 200px;
   height: 40px;
   background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);

@@ -9,7 +9,7 @@
         <span class="title-text">$ABSC： build BTC & all assets in aptos</span>
       </div>
       <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
-        <div class="cursor-pointer min-btn hover:opacity-[0.85]">
+        <div class="cursor-pointer min-btn hover:opacity-[0.85]" @click="router.push('/absc/mint')">
           Mint (Coming Soon)
         </div>
       </div>
@@ -18,9 +18,11 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import abscHeader from "@/components/absc-header.vue";
-
+const router = useRouter();
 const isMobile = ref(false)
+
 
 onMounted(() => {
   let width = document.documentElement.clientWidth;
