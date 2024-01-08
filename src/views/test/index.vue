@@ -10,9 +10,9 @@ import { ref, onMouted } from "vue";
 import Web3 from "web3";
 import * as aptos from "aptos";
 import ethers from "ethers";
-// import Onboard, { type WalletState } from '@web3-onboard/core'
-import { useOnboard } from '@web3-onboard/vue'
-const { wallets, connectWallet, connectedWallet, disconnectConnectedWallet, disconnectWallet } = useOnboard()
+// // import Onboard, { type WalletState } from '@web3-onboard/core'
+// import { useOnboard } from '@web3-onboard/vue'
+// const { wallets, connectWallet, connectedWallet, disconnectConnectedWallet, disconnectWallet } = useOnboard()
 // const onboard = useOnboard()
 
 // console.log(connectWallet, 'connectWallet')
@@ -38,10 +38,19 @@ const getBalance = async (address) => {
 
 
 const connect = async () => {
-  console.log(wallets, 'wallets');
-  const walletsValue = await connectWallet()
-  console.log(walletsValue, 'walletsvalue')
-  console.log(wallets, 'wallets');
+  if (typeof window.okxwallet !== 'undefined') { console.log('OKX is installed!'); }
+  try {
+    const response = await window.okxwallet.aptos.connect();
+    console.log(response);
+    // { address: string, publicKey: string }
+  } catch (error) {
+    console.log(error);
+    // { code: 4001, message: "User rejected the request."}
+  }
+  // console.log(wallets, 'wallets');
+  // const walletsValue = await connectWallet()
+  // console.log(walletsValue, 'walletsvalue')
+  // console.log(wallets, 'wallets');
   // try {
 
 
@@ -75,6 +84,10 @@ const disconnect = async () => {
 //     }
 //   }
 // }
+
+onMounted(() => {
+
+})
 
 
 

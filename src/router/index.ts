@@ -9,7 +9,7 @@ let router = createRouter({
       component: () => import('@/views/index/index.vue'),
     },
     {
-      path: "/mint",
+      path: "/absc/mint",
       name: "mint",
       component: () => import('@/views/absc/mint.vue'),
     },
