@@ -1,6 +1,10 @@
 
+import { log } from 'console';
+
+import { relative } from 'path';
+
 <template>
-  <div class="w-full h-full bg-black ">
+  <div class="w-full h-full bg-black">
     <abscHeader></abscHeader>
     <div>
       <div class="absc-title"><span class="title-text ">BSC Golden Shovel</span></div>
@@ -36,8 +40,8 @@
         which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
       </div>
 
-      <div class="">
-        <img src="@/assets/images/absc-core-show.png" class="w-full mx-auto " ref="coreImgRef" />
+      <div class="w-full h-[565px] absc-core-img">
+        <!-- <img src="@/assets/images/absc-core-show.png" class="w-full mx-auto" ref="coreImgRef" /> -->
       </div>
       <div class="">
         <div class="text-[#FFFFFF] font-[Montserrat Black] text-[36px] font-bold text-center">Your activity result</div>
@@ -77,6 +81,32 @@
       <span class="text-[14px] text-[#fff]">Mint</span>
     </div>
   </a-modal>
+
+  <!-- <div class="absc-cube-container">
+    <div class="close-btn">X</div>
+    <div>
+      <img src="@/assets/images/absc-cube.png" class="w-[450px] mx-auto pt-6"/>
+    </div>
+    <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px]">Now you can check your draw results!</div>
+    <div class="min-btn">
+      <span class="min-btn-text">View Results</span>
+    </div>
+  </div> -->
+  <ADModal :show="showModal">
+    <div class="absc-cube-container">
+      <div class="absolute left-[410px] top-[70px] cursor-pointer z-10" @click="showModalbtn">
+        <span class="close-btn">X</span>
+      </div>
+      <div class="absolute">
+        <img src="@/assets/images/absc-cube.png" class="w-[380px] mx-auto"/>
+      </div>
+      <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px] absolute bottom-[350px]">Now you can check your draw results!</div>
+      <div class="min-btn-modal absolute bottom-[280px]">
+        <span class="min-btn-text">View Results</span>
+      </div>
+    </div>
+  </ADModal>
+
 </template>
 
 <script setup lang="ts">
@@ -84,6 +114,7 @@ import { ref, onMounted } from "vue";
 import { ExclamationCircleTwoTone, setTwoToneColor } from "@ant-design/icons-vue"
 import { message } from "ant-design-vue";
 import abscHeader from "@/components/absc-header.vue";
+import ADModal from '@/components/ADModal.vue';
 import { AptosClient } from "aptos";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById } from "@/apis/absc.ts"
@@ -111,6 +142,12 @@ const abscNFTList = ref([]);
 const toAddress = ref("");
 const amount = ref(10);
 const open = ref(false);
+const showModal = ref(true)
+
+const showModalbtn = ()=> {
+  showModal.value = !showModal.value
+  console.log('showModal.value:',showModal.value)
+}
 const resultModal = ref(false);
 const recordData = ref([])
 
@@ -401,6 +438,17 @@ button:focus {
   justify-content: center;
   margin: 40px auto 0px;
 }
+.min-btn-modal{
+  width: 200px;
+  height: 40px;
+  background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px auto 0px;
+  cursor: pointer;
+}
 
 .min-btn-tra {
   width: 178px;
@@ -439,5 +487,73 @@ button:focus {
   border: 1px solid rgba(255, 255, 255, 0.23);
   text-align: center;
   padding: 30px 20px;
+}
+
+.absc-core-img {
+  background-image: url("@/assets/images/absc-core-show.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: contain;
+  background-attachment: scroll;
+}
+
+.absc-cube-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 650px;
+  height: 650px;
+  margin-right: 150px;
+  text-align: center;
+  opacity: 1;
+  /* background: linear-gradient(180deg, #6F56FF 0%, #F320FF 21%, rgba(0,0,0,0) 100%); */
+}
+
+.close-btn {
+  width: 28px;
+  height: 28px;
+  opacity: 0.7;
+  border: 1px solid #FFF;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.absc-core-img {
+  background-image: url("@/assets/images/absc-core-show.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: contain;
+  background-attachment: scroll;
+}
+
+.absc-cube-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 650px;
+  height: 650px;
+  margin-right: 150px;
+  text-align: center;
+  opacity: 1;
+  /* background: linear-gradient(180deg, #6F56FF 0%, #F320FF 21%, rgba(0,0,0,0) 100%); */
+}
+
+.close-btn {
+  width: 28px;
+  height: 28px;
+  opacity: 0.7;
+  border: 1px solid #FFF;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
