@@ -18,17 +18,22 @@
       </div>
     </div>
     <div>
-      <div class="cursor-pointer min-btn hover:opacity-[0.85]" @click="connectWallet">
-        <span class="min-btn-text " v-if="!address">CONNECT WALLET</span>
-        <span class="min-btn-text " v-else @click="open = true">MINT</span>
+      <div class="cursor-pointer min-btn hover:opacity-[0.85]" v-if="!address" @click="connectWallet">
+        <span class="min-btn-text ">CONNECT WALLET</span>
       </div>
-      <div class="text-[#fff]">{{ address }}</div>
+      <div v-else class="cursor-pointer min-btn hover:opacity-[0.85]" @click="showOpen">
+        <span class="min-btn-text ">MINT</span>
+      </div>
+
+      <!-- 测试用 -->
+      <div class="text-[#fff] text-center">{{ '已连接address: ' + address }}</div>
       <!-- <div class="cursor-pointer min-btn hover:opacity-[0.85]">
         <span class="min-btn-text ml-[30px]" @click="getAbscBalance">获取余额{{ ':' + abscBalance }}</span>
       </div> -->
 
-      <div v-if="address" class="mint-text">You have started <span class="!text-[#E527FF]">4</span> activity once,
-        which costs <span class="!text-[#E527FF]">4000</span> $ABSC
+      <div v-if="address" class="mint-text">You have started <span class="!text-[#E527FF]">{{ recordData.length
+      }}</span> activity once,
+        which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
       </div>
 
       <div class="">
@@ -36,27 +41,38 @@
       </div>
       <div class="">
         <div class="text-[#FFFFFF] font-[Montserrat Black] text-[36px] font-bold text-center">Your activity result</div>
+        <a-button>按钮</a-button>
         <div class="flex mt-[45px] justify-center gap-[30px] pb-[136px]">
-          <div class="card-container" v-for="(item, index) in cardInfo" :key="index">
-            <img :src="_" />
-            <div class="text-[red] mb-[30px]">{{ item.content }}</div>
+          <div class="card-container" v-for="(item, index) in recordData" :key="index">
+            <div v-if="!item.child.blank">
+              <img :src="item.child.img" class="h-[237px]" />
+              <div class="flex justify-center text-[#fff] text-[18px] font-extrabold">
+                <div>Rarity:</div>
+                <div>{{ item.child.level }}</div>
+              </div>
+            </div>
+
+            <div v-else class="text-[#fff] text-[18px] font-extrabold">
+              <div>I'm sorry I didn't win. Please try again next time</div>
+              <div class="flex justify-center text-[#fff] text-[18px] font-extrabold mt-[20px]">
+                <div>Rarity:</div>
+                <div>{{ item.child.level }}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-
   </div>
 
-  <a-modal v-model:open="open" title="" @ok="handleOk" :footer="null">
+  <a-modal v-model:open="open" title="" :footer="null">
     <div class="text-[14px] text-[#000] font-semibold mb-[20px] mt-[50px]">Please enter BSC address</div>
     <a-input class="h-[54px] bg-[#F3F3F3]" v-modal="toAddress" />
-    <!-- <a-alert message="Note: BSC address is used to receive NFT" type="warning" show-icon /> -->
     <div class="text-[#737373] text-[12px] mt-[14px]">
       <ExclamationCircleTwoTone style="fontSize: 14px" />
       <span class="align-middle ml-[4px]">Note: BSC address is used to receive NFT</span>
     </div>
-    <div class="cursor-pointer min-btn-tra hover:opacity-[0.85]" @click="getAbscBlindBoxNumber">
+    <div class="cursor-pointer min-btn-tra hover:opacity-[0.85]" @click="transactionApt20">
       <!-- <span class="text-[14px] text-[#fff]" @click="signTransaction">Mint</span> -->
       <span class="text-[14px] text-[#fff]">Mint</span>
     </div>
@@ -64,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { ExclamationCircleTwoTone, setTwoToneColor } from "@ant-design/icons-vue"
 import { message } from "ant-design-vue";
 import abscHeader from "@/components/absc-header.vue";
@@ -87,53 +103,65 @@ const apolloClient = new ApolloClient({
   link: httpLink,
   cache,
 })
+const surplusAmount = ref(0);
 const coreImgRef = ref();
 const address = ref("");
 const abscBalance = ref(0);
 const abscNFTList = ref([]);
 const toAddress = ref("");
-const amount = ref();
+const amount = ref(10);
 const open = ref(false);
-
-const recordData = reactive({})
-
-const cardInfo = ref([
-  {
-    path: '1',
-    content: 'Rarity: SS'
-  },
-  {
-    path: '2',
-    content: 'Rarity: A'
-  },
-  {
-    path: '3',
-    content: 'Rarity: S'
-  },
-  {
-    path: '4',
-    content: 'Rarity: C'
-  }
-])
+const resultModal = ref(false);
+const recordData = ref([])
 
 const getAbscBlindBoxNumber = async () => {
-  console.log('jjW')
   const { data } = await apiAbscBlindBoxNumber();
-  console.log(data, 'data')
+  surplusAmount.value = data
+  console.log(data, '剩余抽奖次数')
 }
 
+
+// 抽奖记录列表
 const getAbscRecord = async () => {
   const { data } = await apiAbscRecord(address.value)
   recordData.value = data;
+  recordData.value.map(async (item) => {
+    item.child = await getAbscBlindBoxById(item.id)
+    console.log(recordData.value)
+  })
 }
 
-const getAbscDraw = async () => {
-  const { data } = await apiAbscDraw()
+// 抽奖接口
+const getAbscDraw = async (hash: string) => {
+  // "hash": "aptos转账的交易hash",
+  // "aptAddress": "aptos的账户地址",
+  // "mintAddress": "用户填写的mint的地址"
+  const params = {
+    hash: hash,
+    aptAddress: address.value,
+    mintAddress: toAddress.value,
+  }
+  const res = await apiAbscDraw(params);
+  if (res.code === 200) {
+    getAbscRecord()
+  } else {
+
+  }
 }
 
+const showOpen = () => {
+  if (surplusAmount.value > 15) {
+    open.value = true
+  } else {
+    message.info('抽奖次数已用完')
+  }
+}
 
-const getAbscBlindBoxById = async () => {
-  const { data } = await apiAbscBlindBoxById()
+// 列表详情
+const getAbscBlindBoxById = async (id: string) => {
+  const { data } = await apiAbscBlindBoxById(id)
+  console.log(data, '99999')
+  return data
 }
 
 
@@ -144,10 +172,10 @@ const connectWallet = async () => {
     const response = await window.okxwallet.aptos.connect();
     console.log(response);
     address.value = response.address;
-    getAbscRecord(address.value)
+    getAbscRecord()
     // { address: string, publicKey: string }
   } catch (error) {
-    console.log(error);
+    message.error(error.message)
     // { code: 4001, message: "User rejected the request."}
   }
 }
@@ -190,7 +218,7 @@ const getAbscBalance = async () => {
 }
 
 // 返回可支付 apt 的 NFT 数组
-const payableNFTs = () => {
+const payableNFTs = (nfts: any[], amount: number) => {
   let num = 0;
   let list = [];
   for (let i = 0; i < nfts.length; i++) {
@@ -206,6 +234,7 @@ const payableNFTs = () => {
 
 // // 交易 APT20 
 const transactionApt20 = async () => {
+  if (!toAddress.value) return message.error('Please enter BSC address!');
   let list = payableNFTs(abscNFTList.value, amount.value);
   console.log(list);
   const transaction = {
@@ -218,15 +247,21 @@ const transactionApt20 = async () => {
   console.log(transaction);
 
   try {
+    // resultModal.value = true;
     const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
-
     const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
     const txn = await client.waitForTransactionWithResult(
       pendingTransaction.hash,
     );
+    console.log(txn, 'txn')
+    resultModal.value = false;
+    if (txn) {
+      getAbscDraw(txn.hash)
+    }
   } catch (error) {
+    resultModal.value = false;
+    message.error(error.message)
     console.log(error);
-    // see "Errors"
   }
 }
 
@@ -247,20 +282,54 @@ const getOwnersNFTs = (address: String) => {
 }
 
 
-
 onMounted(() => {
   if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
-  if (window.okxwallet) {
-    address.value = window.okxwallet.aptos.selectedAccount.address;
-    getAbscRecord(address.value)
+  if (window.okxwallet.aptos.selectedAccount) {
+    address.value = window.okxwallet.aptos.selectedAccount?.address;
+    getAbscRecord()
   }
-
   console.log(coreImgRef.value.offsetHeight, 'iii')
+  getAbscBlindBoxNumber()
 })
 
 </script>
 
 <style scoped>
+button:focus {
+  overflow: unset;
+}
+
+.ant-btn {
+  font-size: 18px;
+  font-weight: bold;
+  width: 278px;
+  height: 60px;
+
+  background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
+  /* border-color: linear-gradient(to right, #6E56FF 0%, #F41FFF 100%); */
+  border-width: 2px;
+  border-image: linear-gradient(to right, #8f41e9, #578aef) 1;
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 30px;
+}
+
+.ant-btn:hover,
+.ant-btn:active {
+  color: #ffffff;
+  border-right: 2px solid;
+  border-color: linear-gradient(to right, #6E56FF 0%, #F41FFF 100%);
+  box-shadow: none;
+}
+
+:deep(.ant-btn-default) {
+  background-color: transparent;
+  border-color: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
+  /* border-color: transparent; */
+
+}
+
 .contant {
   height: 500px;
   padding-top: 300px;
@@ -369,6 +438,6 @@ onMounted(() => {
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.23);
   text-align: center;
-  padding: 30px 20px 0px 20px;
+  padding: 30px 20px;
 }
 </style>

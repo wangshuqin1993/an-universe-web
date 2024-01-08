@@ -12,7 +12,7 @@ export function apiAbscDraw(params) {
 
 export function apiAbscRecord(address: string) {
   return httpRequest({
-    url: `/absc/record`,
+    url: `/absc/draw/record`,
     method: "get",
     params: {address: address}
   });
