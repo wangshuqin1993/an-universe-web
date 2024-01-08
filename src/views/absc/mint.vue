@@ -1,16 +1,16 @@
 
 <template>
-  <div class="w-full h-full bg-black ">
+  <div class="w-full h-full bg-black px-[32px]">
     <abscHeader></abscHeader>
     <div>
-      <div class="absc-title"><span class="title-text ">BSC Golden Shovel</span></div>
+      <div class="absc-title"><span class="title-text text-[30px] md:text-[48px]">BSC Golden Shovel</span></div>
       <div class="absc-sub-title">XXX is an experimental NFT project sponsored by X team, whose NFT works are all
         hand-painted
         and focused on different<br /> kinds and patterns of XXX.
       </div>
-      <div class="absc-blind-container">
+      <div class="absc-blind-container md:w-[860px] w-hull">
         <div class="absc-blind">Blind box activity</div>
-        <span class="absc-blind-text">XXX is an experimental NFT project sponsored by X team,
+        <span class="absc-blind-text w-hull">XXX is an experimental NFT project sponsored by X team,
           whose NFT works are all hand-painted and focused on different kinds and patterns of XXX.
           XXX is an experimental NFT project sponsored by X team,
           whose NFT works are all hand-painted and focused on different kinds and patterns of XXX.
@@ -18,20 +18,25 @@
       </div>
     </div>
     <div>
-      <div class="cursor-pointer min-btn hover:opacity-[0.85]" v-if="!address" @click="connectWallet">
-        <span class="min-btn-text ">CONNECT WALLET</span>
+      <div
+        class="cursor-pointer min-btn  hover:opacity-[0.85] h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
+        v-if="!address" @click="connectWallet">
+        <span class="min-btn-text text-[16px] md:text-[18px]">CONNECT WALLET</span>
       </div>
-      <div v-else class="cursor-pointer min-btn hover:opacity-[0.85]" @click="showOpen">
-        <span class="min-btn-text ">MINT</span>
+      <div v-else
+        class="cursor-pointer min-btn  hover:opacity-[0.85] h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
+        @click="showOpen">
+        <span class="min-btn-text text-[16px] md:text-[18px]">MINT</span>
       </div>
 
       <!-- 测试用 -->
-      <div class="text-[#fff] text-center">{{ '已连接address: ' + address }}</div>
+      <!-- <div class="text-[#fff] text-center w-hull">{{ '已连接address: ' + address }}</div> -->
       <!-- <div class="cursor-pointer min-btn hover:opacity-[0.85]">
         <span class="min-btn-text ml-[30px]" @click="getAbscBalance">获取余额{{ ':' + abscBalance }}</span>
       </div> -->
 
-      <div v-if="address" class="mint-text">You have started <span class="!text-[#E527FF]">{{ recordData.length
+      <div v-if="address" class="mint-text md:w-[532px] w-hull">You have started <span class="!text-[#E527FF]">{{
+        recordData.length
       }}</span> activity once,
         which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
       </div>
@@ -40,21 +45,22 @@
         <img src="@/assets/images/absc-core-show.png" class="w-full mx-auto " ref="coreImgRef" />
       </div>
       <div class="">
-        <div class="text-[#FFFFFF] font-[Montserrat Black] text-[36px] font-bold text-center">Your activity result</div>
+        <div class="text-[#FFFFFF] font-[Montserrat Black] text-[21px] md:text-[36px] font-bold text-center">Your activity
+          result</div>
         <!-- <a-button>按钮</a-button> -->
         <div class="flex mt-[45px] justify-center gap-[30px] pb-[136px]">
           <div class="card-container" v-for="(item, index) in recordData" :key="index">
             <div v-if="!item.child.blank">
               <img :src="item.child.img" class="h-[237px]" />
-              <div class="flex justify-center text-[#fff] text-[18px] font-extrabold">
+              <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
                 <div>Rarity:</div>
                 <div>{{ item.child.level }}</div>
               </div>
             </div>
 
-            <div v-else class="text-[#fff] text-[18px] font-extrabold">
+            <div v-else class="text-[#fff] md:text-[18px] text-[14px] font-extrabold">
               <div>I'm sorry I didn't win. Please try again next time</div>
-              <div class="flex justify-center text-[#fff] text-[18px] font-extrabold mt-[20px]">
+              <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold mt-[20px]">
                 <div>Rarity:</div>
                 <div>{{ item.child.level }}</div>
               </div>
@@ -67,7 +73,7 @@
 
   <a-modal v-model:open="open" title="" :footer="null">
     <div class="text-[14px] text-[#000] font-semibold mb-[20px] mt-[50px]">Please enter BSC address</div>
-    <a-input class="h-[54px] bg-[#F3F3F3]" v-modal="toAddress" />
+    <a-input class="h-[54px] bg-[#F3F3F3]" v-model:value="toAddress" />
     <div class="text-[#737373] text-[12px] mt-[14px]">
       <ExclamationCircleTwoTone style="fontSize: 14px" />
       <span class="align-middle ml-[4px]">Note: BSC address is used to receive NFT</span>
@@ -143,14 +149,15 @@ const getAbscDraw = async (hash: string) => {
   }
   const res = await apiAbscDraw(params);
   if (res.code === 200) {
-    getAbscRecord()
+    getAbscRecord();
+    open.value = false;
   } else {
 
   }
 }
 
 const showOpen = () => {
-  if (surplusAmount.value > 15) {
+  if (surplusAmount.value > 0) {
     open.value = true
   } else {
     message.info('抽奖次数已用完')
@@ -234,6 +241,7 @@ const payableNFTs = (nfts: any[], amount: number) => {
 
 // // 交易 APT20 
 const transactionApt20 = async () => {
+  debugger
   if (!toAddress.value) return message.error('Please enter BSC address!');
   let list = payableNFTs(abscNFTList.value, amount.value);
   console.log(list);
@@ -340,7 +348,7 @@ button:focus {
 
 .absc-title {
   font-family: Montserrat Black;
-  font-size: 48px;
+  /* font-size: 48px; */
   font-weight: 900;
   color: rgba(255, 255, 255, 1);
   text-align: center;
@@ -364,7 +372,7 @@ button:focus {
 }
 
 .absc-blind-container {
-  width: 860px;
+  /* width: 860px; */
   padding: 20px 41px 27px 41px;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 10px;
@@ -392,10 +400,10 @@ button:focus {
 }
 
 .min-btn {
-  width: 278px;
-  height: 60px;
+  /* width: 278px;
+  height: 60px; */
   background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
-  border-radius: 30px;
+  /* border-radius: 30px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -414,7 +422,7 @@ button:focus {
 }
 
 .min-btn-text {
-  font-size: 18px;
+  /* font-size: 18px; */
   font-family: Montserrat, Montserrat;
   font-weight: bold;
   color: #FFFFFF;
@@ -422,7 +430,7 @@ button:focus {
 }
 
 .mint-text {
-  width: 532px;
+  /* width: 532px; */
   font-size: 14px;
   font-family: Montserrat, Montserrat;
   font-weight: 500;
