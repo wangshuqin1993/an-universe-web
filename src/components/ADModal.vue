@@ -1,5 +1,5 @@
 <template>
-  <teleport to="body" v-if="show">
+  <teleport to="body">
     <transition enter-active-class="transition duration-200 ease-out transform" enter-from-class="opacity-0"
       enter-to-class="opacity-100" leave-active-class="transition duration-200 ease-in transform"
       leave-from-class="opacity-100" leave-to-class="opacity-0">
