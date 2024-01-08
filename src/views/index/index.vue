@@ -9,7 +9,7 @@
         <span class="title-text">$ABSC： build BTC & all assets in aptos</span>
       </div>
       <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
-        <div class="cursor-pointer min-btn hover:opacity-[0.85]" @click="router.push('/absc/mint')">
+        <div class="cursor-pointer min-btn hover:opacity-[0.85] fixed" @click="router.push('/absc/mint')">
           Mint (Coming Soon)
         </div>
       </div>
@@ -46,6 +46,18 @@ onMounted(() => {
   max-width: 1440px;
   margin: 0 auto; 
   */
+}
+
+.min-btn {
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 160px;
+  line-height: 40px;
+  font-size: 14px;
+  padding: 0 12px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
+
 }
 
 
