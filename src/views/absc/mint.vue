@@ -41,7 +41,7 @@
       </div>
       <div class="">
         <div class="text-[#FFFFFF] font-[Montserrat Black] text-[36px] font-bold text-center">Your activity result</div>
-        <a-button>按钮</a-button>
+        <!-- <a-button>按钮</a-button> -->
         <div class="flex mt-[45px] justify-center gap-[30px] pb-[136px]">
           <div class="card-container" v-for="(item, index) in recordData" :key="index">
             <div v-if="!item.child.blank">
