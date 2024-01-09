@@ -9,15 +9,10 @@ let router = createRouter({
       component: () => import('@/views/index/index.vue'),
     },
     {
-      path: "/absc/mint",
+      path: "/mint",
       name: "mint",
       component: () => import('@/views/absc/mint.vue'),
     },
-    {
-      path: "/test",
-      name: "test",
-      component: () => import('@/views/test/index.vue'),
-    }
   ],
   // 每次切换路由页面滚动到顶部
   scrollBehavior() {

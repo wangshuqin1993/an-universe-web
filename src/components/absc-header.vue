@@ -12,7 +12,7 @@
           <div class="md:mr-[50px] mr-[16px] self-center">Whitepaper</div>
           <div class="md:mr-[50px] mr-[16px] self-center">Roadmap</div>
           <!-- <div class="md:mr-[50px] mr-[16px] self-center">IDO</div> -->
-          <div class="cursor-pointer min-btn hover:opacity-[0.85]" @click="router.push('/absc/mint')">
+          <div class="cursor-pointer min-btn hover:opacity-[0.85]" @click="router.push('/mint')">
             Mint (Coming Soon)
           </div>
         </div>
