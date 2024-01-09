@@ -2,7 +2,7 @@
   <div class="w-full h-full bg-black">
 
     <abscHeader></abscHeader>
-    <div class=" px-[32px] ">
+    <div class="px-[32px] ">
       <div class="absc-title"><span class="title-text text-[30px] md:text-[48px]">BSC Golden Shovel</span></div>
       <div class="absc-sub-title">XXX is an experimental NFT project sponsored by X team, whose NFT works are all
         hand-painted
@@ -17,13 +17,13 @@
         </span>
       </div>
     </div>
-    <div class=" px-[32px] ">
-      <div class="text-center mt-[40px]" v-if="!address">
+    <div class="">
+      <div class="text-center mt-[40px]  px-[32px]" v-if="!address">
         <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
           @click="connectWallet">CONNECT
           WALLET</a-button>
       </div>
-      <div v-else class="text-center mt-[40px]">
+      <div v-else class="text-center mt-[40px]  px-[32px]">
         <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
           @click="showOpen">MINT</a-button>
       </div>
@@ -38,7 +38,7 @@
         <span class="min-btn-text ml-[30px]" @click="getAbscBalance">获取余额{{ ':' + abscBalance }}</span>
       </div> -->
 
-      <div v-if="address" class="mint-text md:w-[532px] w-hull  px-[32px] ">You have started <span
+      <div v-if="address" class="mint-text md:w-[532px] w-hull px-[32px] ">You have started <span
           class="!text-[#E527FF]">{{
             recordData.length
           }}</span> activity once,
@@ -54,9 +54,9 @@
 
 
 
-      <div class=" px-[32px] relative">
+      <div class=" md:px-[65px] px-[32px] relative">
         <div
-          class="text-[#FFFFFF] font-[Montserrat Black] text-[21px] md:text-[36px] font-bold text-center absolute -top-[100px] result-titile">
+          class="text-[#FFFFFF] font-[Montserrat Black] mdtext-[21px] text-[20px] md:text-[36px] font-bold text-center absolute md:-top-[100px] -top-[70px] result-titile">
           Your
           activity
           result</div>
@@ -64,7 +64,7 @@
           <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
             <div v-if="!item?.child?.blank">
               <!-- getImageURL(`ABSC-NFT-0${item?.child?.level}.png`) -->
-              <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class=" h-[237px]" />
+              <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px]" />
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
                 <div>Rarity:</div>
                 <div>{{ item?.child?.level }}</div>
@@ -73,7 +73,7 @@
 
             <div v-else class="text-[#fff] md:text-[18px] text-[14px] font-extrabold">
               <!-- <div>I'm sorry I didn't win. Please try again next time</div> -->
-              <img src="@/assets/images/null.png" class="h-[237px]" />
+              <img src="@/assets/images/null.png" class="rounded-[16px]" />
               <!-- <img src="@/assets/images/ABSC-NFT-01.png" class="h-[237px]" /> -->
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold mt-[20px]">
                 <div>Rarity:</div>
