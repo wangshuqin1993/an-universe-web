@@ -162,7 +162,7 @@ const getAbscBlindBoxNumber = async () => {
 // 抽奖记录列表
 const getAbscRecord = async () => {
   const { data } = await apiAbscRecord(address.value)
-  recordData.value = data;
+  recordData.value = data || [];
   recordData.value.map(async (item) => {
     item.child = await getAbscBlindBoxById(item.id)
     console.log(recordData.value)
@@ -273,7 +273,7 @@ const payableNFTs = (nfts: any[], amount: number) => {
 
 // // 交易 APT20 
 const transactionApt20 = async () => {
-  debugger
+  // debugger
   if (!toAddress.value) return message.error('Please enter BSC address!');
   let list = payableNFTs(abscNFTList.value, amount.value);
   console.log(list);
