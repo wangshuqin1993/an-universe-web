@@ -17,19 +17,20 @@
       </div>
     </div>
     <div>
-      <div
-        class="cursor-pointer min-btn  hover:opacity-[0.85] h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
-        v-if="!address" @click="connectWallet">
-        <span class="min-btn-text text-[16px] md:text-[18px]">CONNECT WALLET</span>
+      <div class="text-center mt-[40px]" v-if="!address" @click="connectWallet">
+        <!-- <span class="min-btn-text text-[16px] md:text-[18px]">CONNECT WALLET</span> -->
+        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]">CONNECT
+          WALLET</a-button>
       </div>
-      <div v-else
-        class="cursor-pointer min-btn  hover:opacity-[0.85] h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
-        @click="showOpen">
-        <span class="min-btn-text text-[16px] md:text-[18px]">MINT</span>
+      <div v-else @click="showOpen" class="text-center mt-[40px]">
+        <!-- <span class="min-btn-text text-[16px] md:text-[18px]">MINT</span> -->
+        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]">MINT</a-button>
       </div>
 
       <!-- 测试用 -->
       <!-- <div class="text-[#fff] text-center w-hull">{{ '已连接address: ' + address }}</div> -->
+      <!-- 测试用btn -->
+      <!-- <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]">按钮</a-button> -->
       <!-- <div class="cursor-pointer min-btn hover:opacity-[0.85]">
         <span class="min-btn-text ml-[30px]" @click="getAbscBalance">获取余额{{ ':' + abscBalance }}</span>
       </div> -->
@@ -46,14 +47,13 @@
       <div class="">
         <div class="text-[#FFFFFF] font-[Montserrat Black] text-[21px] md:text-[36px] font-bold text-center">Your activity
           result</div>
-        <!-- <a-button>按钮</a-button> -->
         <div class="flex mt-[45px] justify-center gap-[30px] pb-[136px]">
           <div class="card-container" v-for="(item, index) in recordData" :key="index">
-            <div v-if="!item.child.blank">
-              <img :src="item.child.img" class="h-[237px]" />
+            <div v-if="!item?.child?.blank">
+              <img :src="item?.child?.img" class="h-[237px]" />
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
                 <div>Rarity:</div>
-                <div>{{ item.child.level }}</div>
+                <div>{{ item?.child?.level }}</div>
               </div>
             </div>
 
@@ -61,7 +61,7 @@
               <div>I'm sorry I didn't win. Please try again next time</div>
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold mt-[20px]">
                 <div>Rarity:</div>
-                <div>{{ item.child.level }}</div>
+                <div>{{ item?.child?.level }}</div>
               </div>
             </div>
           </div>
@@ -77,22 +77,13 @@
       <ExclamationCircleTwoTone style="fontSize: 14px" />
       <span class="align-middle ml-[4px]">Note: BSC address is used to receive NFT</span>
     </div>
-    <div class="cursor-pointer min-btn-tra hover:opacity-[0.85]" @click="transactionApt20">
+    <div class="text-center mt-[40px]" @click="transactionApt20">
       <!-- <span class="text-[14px] text-[#fff]" @click="signTransaction">Mint</span> -->
-      <span class="text-[14px] text-[#fff]">Mint</span>
+      <!-- <span class="text-[14px] text-[#fff]">Mint</span> -->
+      <a-button class="text-[14px] w-[178px] h-[38px] rounded-[5px]" :disabled="disabledMint">Mint</a-button>
     </div>
   </a-modal>
 
-  <!-- <div class="absc-cube-container">
-    <div class="close-btn">X</div>
-    <div>
-      <img src="@/assets/images/absc-cube.png" class="w-[450px] mx-auto pt-6"/>
-    </div>
-    <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px]">Now you can check your draw results!</div>
-    <div class="min-btn">
-      <span class="min-btn-text">View Results</span>
-    </div>
-  </div> -->
   <ADModal :show="showModal">
     <div class="absc-cube-container">
       <div class="absolute left-[410px] top-[70px] cursor-pointer z-10" @click="showModalbtn">
@@ -137,19 +128,19 @@ const apolloClient = new ApolloClient({
 })
 const surplusAmount = ref(0);
 const address = ref("");
-const abscBalance = ref(0);
+// const abscBalance = ref(0);
 const abscNFTList = ref([]);
 const toAddress = ref("");
 const amount = ref(10);
 const open = ref(false);
 const showModal = ref(false)
+const disabledMint = ref(false);
 
 const showModalbtn = () => {
   showModal.value = !showModal.value
   console.log('showModal.value:', showModal.value)
 }
 
-const resultModal = ref(false);
 const recordData = ref([])
 
 const getAbscBlindBoxNumber = async () => {
@@ -212,10 +203,8 @@ const connectWallet = async () => {
     console.log(response);
     address.value = response.address;
     getAbscRecord()
-    // { address: string, publicKey: string }
   } catch (error) {
     message.error(error.message)
-    // { code: 4001, message: "User rejected the request."}
   }
 }
 
@@ -273,7 +262,6 @@ const payableNFTs = (nfts: any[], amount: number) => {
 
 // // 交易 APT20 
 const transactionApt20 = async () => {
-  // debugger
   if (!toAddress.value) return message.error('Please enter BSC address!');
   let list = payableNFTs(abscNFTList.value, amount.value);
   console.log(list);
@@ -283,23 +271,24 @@ const transactionApt20 = async () => {
     function: '0x1fc2f33ab6b624e3e632ba861b755fd8e61d2c2e6cf8292e415880b4c198224d::apts::split',
     type_arguments: [],
   };
-
   console.log(transaction);
-
   try {
-    // resultModal.value = true;
     const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
     const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
+    open.value = false;
+    toAddress.value = '';
     const txn = await client.waitForTransactionWithResult(
       pendingTransaction.hash,
     );
+
     console.log(txn, 'txn')
-    resultModal.value = false;
     if (txn) {
+      showModal.value = true;
       getAbscDraw(txn.hash)
     }
   } catch (error) {
-    resultModal.value = false;
+    open.value = false;
+    toAddress.value = '';
     message.error(error.message)
     console.log(error);
   }
@@ -329,45 +318,41 @@ onMounted(() => {
     getAbscRecord()
   }
   // console.log(coreImgRef.value.offsetHeight, 'iii')
+  document.documentElement.scrollTop = 500
   getAbscBlindBoxNumber()
 })
 
 </script>
 
-<style scoped>
+<style scoped  lang="less">
 button:focus {
+  outline: none;
   overflow: unset;
 }
 
 .ant-btn {
-  font-size: 18px;
   font-weight: bold;
-  width: 278px;
-  height: 60px;
-
   background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
-  /* border-color: linear-gradient(to right, #6E56FF 0%, #F41FFF 100%); */
-  border-width: 2px;
-  border-image: linear-gradient(to right, #8f41e9, #578aef) 1;
   color: #ffffff;
   border-color: transparent;
   box-shadow: none;
-  border-radius: 30px;
+  border: none;
+
+  &:hover {
+    opacity: 0.85;
+  }
 }
 
 .ant-btn:hover,
 .ant-btn:active {
   color: #ffffff;
-  border-right: 2px solid;
-  border-color: linear-gradient(to right, #6E56FF 0%, #F41FFF 100%);
   box-shadow: none;
+  border: none;
 }
 
 :deep(.ant-btn-default) {
   background-color: transparent;
-  border-color: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
-  /* border-color: transparent; */
-
+  border: none;
 }
 
 .contant {
