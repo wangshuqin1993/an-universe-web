@@ -41,13 +41,13 @@
         which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
       </div>
 
-      <div class="w-full h-[565px] absc-core-img">
+      <div class="w-full h-[180px] md:h-[565px] absc-core-img">
         <!-- <img src="@/assets/images/absc-core-show.png" class="w-full mx-auto" ref="coreImgRef" /> -->
       </div>
       <div class="">
         <div class="text-[#FFFFFF] font-[Montserrat Black] text-[21px] md:text-[36px] font-bold text-center">Your activity
           result</div>
-        <div class="flex mt-[45px] justify-center gap-[30px] pb-[136px]">
+        <div class="grid grid-cols-2 md:grid-cols-4 mt-[45px] justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
           <div class="card-container" v-for="(item, index) in recordData" :key="index">
             <div v-if="!item?.child?.blank">
               <img :src="item?.child?.img" class="h-[237px]" />
@@ -143,6 +143,41 @@ const showModalbtn = () => {
 }
 
 const recordData = ref([])
+const fakeRecordData = ref([
+  {
+    test:1,
+    child: {
+      blank: 'exist',
+      level: 1
+    }
+  },
+  {
+    test:2,
+    child: {
+      level: 2
+    }
+  },
+  {
+    test:3,
+    child: {
+      blank: 'exist',
+      level: 3
+    }
+  },
+  {
+    test:4,
+    child: {
+      level: 4
+    }
+  },
+  {
+    test:5,
+    child: {
+      blank: 'exist',
+      level: 5
+    }
+  }
+])
 
 const getAbscBlindBoxNumber = async () => {
   const { data } = await apiAbscBlindBoxNumber();
@@ -157,7 +192,7 @@ const getAbscRecord = async () => {
   recordData.value = data || [];
   recordData.value.map(async (item) => {
     item.child = await getAbscBlindBoxById(item.id)
-    console.log(recordData.value)
+    console.log('recordData.value:',recordData.value)
   })
 }
 
@@ -471,7 +506,6 @@ button:focus {
 }
 
 .card-container {
-  width: 278px;
   background: rgba(255, 255, 255, 0.11);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.23);
@@ -511,14 +545,6 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.absc-core-img {
-  background-image: url("@/assets/images/absc-core-show.png");
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-size: contain;
-  background-attachment: scroll;
 }
 
 .absc-cube-container {
