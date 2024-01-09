@@ -46,9 +46,8 @@
       <div class="">
         <div class="text-[#FFFFFF] font-[Montserrat Black] text-[21px] md:text-[36px] font-bold text-center">Your activity
           result</div>
-        <!-- <a-button>按钮</a-button> -->
         <div class="grid grid-cols-2 md:grid-cols-4 mt-[45px] justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
-          <!-- <div class="card-container" v-for="(item, index) in recordData" :key="index">
+          <div class="card-container" v-for="(item, index) in recordData" :key="index">
             <div v-if="!item.child.blank">
               <img :src="item.child.img" class="h-[237px]" />
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
@@ -58,23 +57,6 @@
             </div>
 
             <div v-else class="text-[#fff] md:text-[18px] text-[14px] font-extrabold">
-              <div>I'm sorry I didn't win. Please try again next time</div>
-              <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold mt-[20px]">
-                <div>Rarity:</div>
-                <div>{{ item.child.level }}</div>
-              </div>
-            </div>
-          </div> -->
-          <div class="card-container" v-for="(item, index) in fakeRecordData" :key="index">
-            <div v-if="!item.child.blank">
-              <img :src="_" class="h-[237px]" />
-              <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
-                <div>Rarity:</div>
-                <div>{{ item.child.level }}</div>
-              </div>
-            </div>
-
-            <div v-else class="text-[#fff] md:text-[18px] text-[14px] font-extrabold h-[237px]">
               <div>I'm sorry I didn't win. Please try again next time</div>
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold mt-[20px]">
                 <div>Rarity:</div>
@@ -100,16 +82,6 @@
     </div>
   </a-modal>
 
-  <!-- <div class="absc-cube-container">
-    <div class="close-btn">X</div>
-    <div>
-      <img src="@/assets/images/absc-cube.png" class="w-[450px] mx-auto pt-6"/>
-    </div>
-    <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px]">Now you can check your draw results!</div>
-    <div class="min-btn">
-      <span class="min-btn-text">View Results</span>
-    </div>
-  </div> -->
   <ADModal :show="showModal">
     <div class="absc-cube-container">
       <div class="absolute left-[410px] top-[70px] cursor-pointer z-10" @click="showModalbtn">
