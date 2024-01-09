@@ -136,7 +136,6 @@ const apolloClient = new ApolloClient({
   cache,
 })
 const surplusAmount = ref(0);
-const coreImgRef = ref();
 const address = ref("");
 const abscBalance = ref(0);
 const abscNFTList = ref([]);
@@ -221,41 +220,41 @@ const connectWallet = async () => {
 }
 
 // 交易
-const signTransaction = async () => {
-  if (!toAddress.value) return message.error('Please enter BSC address!');
-  const transaction = {
-    arguments: [address.value, '717'],
-    function: '0x1::coin::transfer',
-    type: 'entry_function_payload',
-    type_arguments: ['0x1::aptos_coin::AptosCoin'],
-  };
+// const signTransaction = async () => {
+//   if (!toAddress.value) return message.error('Please enter BSC address!');
+//   const transaction = {
+//     arguments: [address.value, '717'],
+//     function: '0x1::coin::transfer',
+//     type: 'entry_function_payload',
+//     type_arguments: ['0x1::aptos_coin::AptosCoin'],
+//   };
 
-  try {
-    const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
+//   try {
+//     const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
 
-    const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
-    const txn = await client.waitForTransactionWithResult(
-      pendingTransaction.hash,
-    );
+//     const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
+//     const txn = await client.waitForTransactionWithResult(
+//       pendingTransaction.hash,
+//     );
 
-    console.log(txn, 'txn')
+//     console.log(txn, 'txn')
 
-  } catch (error) {
-    console.log(error);
-    // see "Errors"
-  }
-}
+//   } catch (error) {
+//     console.log(error);
+//     // see "Errors"
+//   }
+// }
 
 // 获得 Absc 余额
-const getAbscBalance = async () => {
-  const res = await getOwnersNFTs(address.value).then(data => {
-    console.log(data);
-    abscNFTList.value = data.data.current_token_datas_v2;
-    abscBalance.value = abscNFTList.value.reduce((prev: number, cur: { token_properties: { amt: number; }; }) => {
-      return prev + Number(cur.token_properties.amt)
-    }, 0)
-  })
-}
+// const getAbscBalance = async () => {
+//   const res = await getOwnersNFTs(address.value).then(data => {
+//     console.log(data);
+//     abscNFTList.value = data.data.current_token_datas_v2;
+//     abscBalance.value = abscNFTList.value.reduce((prev: number, cur: { token_properties: { amt: number; }; }) => {
+//       return prev + Number(cur.token_properties.amt)
+//     }, 0)
+//   })
+// }
 
 // 返回可支付 apt 的 NFT 数组
 const payableNFTs = (nfts: any[], amount: number) => {
@@ -306,21 +305,21 @@ const transactionApt20 = async () => {
   }
 }
 
-const getOwnersNFTs = (address: String) => {
-  return apolloClient.query({
-    query: gql`query getOwnersNFTs($address:String) {
-        current_token_datas_v2(
-          where: {current_token_ownership: {owner_address: {_eq: $address }, amount: {_gt: "0"}}, current_collection: {creator_address: {_eq: "0xadeb45c274f9f4f535afe8957a8cf9ffecbd2b79026fba6c207111136d963f14"}, collection_name: {_eq: "ABSC"}}}
-        ) {
-          token_data_id
-          token_properties
-        }
-      }`,
-    variables: {
-      address: address,
-    }
-  })
-}
+// const getOwnersNFTs = (address: String) => {
+//   return apolloClient.query({
+//     query: gql`query getOwnersNFTs($address:String) {
+//         current_token_datas_v2(
+//           where: {current_token_ownership: {owner_address: {_eq: $address }, amount: {_gt: "0"}}, current_collection: {creator_address: {_eq: "0xadeb45c274f9f4f535afe8957a8cf9ffecbd2b79026fba6c207111136d963f14"}, collection_name: {_eq: "ABSC"}}}
+//         ) {
+//           token_data_id
+//           token_properties
+//         }
+//       }`,
+//     variables: {
+//       address: address,
+//     }
+//   })
+// }
 
 
 onMounted(() => {
