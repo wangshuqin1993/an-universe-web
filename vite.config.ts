@@ -6,6 +6,11 @@ import { fileURLToPath, URL } from "node:url";
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv) => defineConfig({
   plugins: [vue()],
+  build: {
+    outDir: 'dist', // 打包文件的输出目录
+    assetsDir: 'static', // 静态资源的存放目录
+    assetsInlineLimit: 4096, // 图片转 base64 编码的阈值
+  },
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),

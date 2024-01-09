@@ -110,7 +110,7 @@ import ADModal from '@/components/ADModal.vue';
 import { AptosClient } from "aptos";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById } from "@/apis/absc.ts"
-import gql from 'graphql-tag';
+// import gql from 'graphql-tag';
 setTwoToneColor('#FAAD14')
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
@@ -126,6 +126,7 @@ const apolloClient = new ApolloClient({
   link: httpLink,
   cache,
 })
+
 const surplusAmount = ref(0);
 const address = ref("");
 // const abscBalance = ref(0);
