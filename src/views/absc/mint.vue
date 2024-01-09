@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full bg-black px-[32px]">
+  <div class="w-full h-full bg-black px-[32px] contant">
     <abscHeader></abscHeader>
     <div>
       <div class="absc-title"><span class="title-text text-[30px] md:text-[48px]">BSC Golden Shovel</span></div>
@@ -17,15 +17,19 @@
       </div>
     </div>
     <div>
-      <div class="text-center mt-[40px]" v-if="!address" @click="connectWallet">
+      <div class="text-center mt-[40px]" v-if="!address">
         <!-- <span class="min-btn-text text-[16px] md:text-[18px]">CONNECT WALLET</span> -->
-        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]">CONNECT
+        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
+          @click="connectWallet">CONNECT
           WALLET</a-button>
       </div>
-      <div v-else @click="showOpen" class="text-center mt-[40px]">
+      <div v-else class="text-center mt-[40px]">
         <!-- <span class="min-btn-text text-[16px] md:text-[18px]">MINT</span> -->
-        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]">MINT</a-button>
+        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
+          @click="showOpen">MINT</a-button>
       </div>
+
+      <div class="h-[900px]"></div>
 
       <!-- 测试用 -->
       <!-- <div class="text-[#fff] text-center w-hull">{{ '已连接address: ' + address }}</div> -->
@@ -41,9 +45,9 @@
         which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
       </div>
 
-      <div class="w-full h-[565px] absc-core-img">
-        <!-- <img src="@/assets/images/absc-core-show.png" class="w-full mx-auto" ref="coreImgRef" /> -->
-      </div>
+      <!-- <div class="w-full h-[565px] absc-core-img"> -->
+      <!-- <img src="@/assets/images/absc-core-show.png" class="w-full mx-auto" ref="coreImgRef" /> -->
+      <!-- </div> -->
       <div class="">
         <div class="text-[#FFFFFF] font-[Montserrat Black] text-[21px] md:text-[36px] font-bold text-center">Your activity
           result</div>
@@ -319,7 +323,7 @@ onMounted(() => {
     getAbscRecord()
   }
   // console.log(coreImgRef.value.offsetHeight, 'iii')
-  document.documentElement.scrollTop = 500
+  // document.documentElement.scrollTop = 500
   getAbscBlindBoxNumber()
 })
 
@@ -357,11 +361,12 @@ button:focus {
 }
 
 .contant {
-  height: 500px;
-  padding-top: 300px;
-  background-image: url("../../assets/images/absc-core-show.png");
-  background-size: 100% 100%;
-  background-position: center;
+  min-height: 100vh;
+  // background-image: url("../../assets/images/absc-core-show.png");
+  background-image: url("../../assets/images/absc-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  // background-position: top 300px right 0px;
 }
 
 .absc-title {
@@ -479,13 +484,13 @@ button:focus {
   padding: 30px 20px;
 }
 
-.absc-core-img {
-  background-image: url("@/assets/images/absc-core-show.png");
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-size: contain;
-  background-attachment: scroll;
-}
+// .absc-core-img {
+//   background-image: url("@/assets/images/absc-core-show.png");
+//   background-repeat: no-repeat;
+//   background-position: center top;
+//   background-size: contain;
+//   background-attachment: scroll;
+// }
 
 .absc-cube-container {
   position: relative;
