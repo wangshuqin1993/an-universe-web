@@ -354,7 +354,6 @@ onMounted(() => {
     getAbscRecord()
   }
   // console.log(coreImgRef.value.offsetHeight, 'iii')
-  document.documentElement.scrollTop = 500
   getAbscBlindBoxNumber()
 })
 
