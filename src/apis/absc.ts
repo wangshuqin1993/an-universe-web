@@ -32,3 +32,11 @@ export function apiAbscBlindBoxById(id: string) {
     method: "get",
   });
 }
+
+// 活动进程接口
+export function apiAbscDrawCheck() {
+  return httpRequest({
+    url: `/absc/draw/check`,
+    method: "get",
+  });
+}

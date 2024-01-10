@@ -2,7 +2,7 @@
   <div class="w-full h-full bg-black">
 
     <abscHeader></abscHeader>
-    <div class="px-[32px] ">
+    <div class="px-[32px] pt-[82px]">
       <div class="absc-title"><span class="title-text text-[30px] md:text-[48px]">BSC Golden Shovel</span></div>
       <div class="absc-sub-title">XXX is an experimental NFT project sponsored by X team, whose NFT works are all
         hand-painted
@@ -48,13 +48,13 @@
       <!-- :style="{ height: coreImgHeight + 'px' }" -->
       <div class="relative">
         <div class="w-full h-full absc-core-img ">
-          <img src="@/assets/images/absc-core-show.png" class="w-full mx-auto" ref="coreImgRef" @load="loadImage" />
+          <img src="@/assets/images/absc-core-show.png" class="w-full mx-auto" ref="coreImgRef" />
         </div>
       </div>
 
 
 
-      <div class=" md:px-[65px] px-[32px] relative">
+      <div class="md:px-[0px] px-[32px] relative max-w-[1440px] mx-auto">
         <div
           class="text-[#FFFFFF] font-[Montserrat Black] mdtext-[21px] text-[20px] md:text-[36px] font-bold text-center absolute md:-top-[100px] -top-[70px] result-titile">
           Your
@@ -64,7 +64,7 @@
           <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
             <div v-if="!item?.child?.blank">
               <!-- getImageURL(`ABSC-NFT-0${item?.child?.level}.png`) -->
-              <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px]" />
+              <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px] mb-[30px]" />
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
                 <div>Rarity:</div>
                 <div>{{ item?.child?.level }}</div>
@@ -124,7 +124,7 @@ import abscHeader from "@/components/absc-header.vue";
 import ADModal from '@/components/ADModal.vue';
 import { AptosClient } from "aptos";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
-import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById } from "@/apis/absc.ts";
+import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById, apiAbscDrawCheck } from "@/apis/absc.ts";
 import useAssets from "@/stores/useAssets";
 
 const { getImageURL } = useAssets();
@@ -146,7 +146,8 @@ const apolloClient = new ApolloClient({
 })
 const coreImgRef = ref();
 const coreImgHeight = ref(0);
-const surplusAmount = ref(0);
+const surplusAmount = ref(false);
+const abscDrawCheck = ref(0);
 const address = ref("");
 // const abscBalance = ref(0);
 const abscNFTList = ref([]);
@@ -168,6 +169,11 @@ const getAbscBlindBoxNumber = async () => {
   const { data } = await apiAbscBlindBoxNumber();
   surplusAmount.value = data
   console.log(data, '剩余抽奖次数')
+}
+
+const getAbscDrawCheck = async () => {
+  const { data } = await apiAbscDrawCheck();
+  abscDrawCheck.value = data
 }
 
 
@@ -200,16 +206,18 @@ const getAbscDraw = async (hash: string) => {
   }
 }
 
-const loadImage = () => {
-  // coreImgHeight.value = coreImgRef.value.offsetHeight - 450;
-  // console.log(coreImgRef.value.offsetHeight, 'loadiii')
-}
 
 const showOpen = () => {
-  if (surplusAmount.value > 0) {
-    open.value = true
-  } else {
-    message.info('抽奖次数已用完')
+  if (abscDrawCheck.value == 1) {
+    return message.info('活动未开始')
+  } else if (abscDrawCheck.value == 2) {
+    if (!surplusAmount.value) {
+      open.value = true
+    } else {
+      message.info('抽奖次数已用完')
+    }
+  } else if (abscDrawCheck.value == 3) {
+    return message.info('活动已结束')
   }
 }
 
@@ -223,7 +231,7 @@ const getAbscBlindBoxById = async (id: string) => {
 
 // 连接钱包
 const connectWallet = async () => {
-  // if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
+  if (typeof window.okxwallet == 'undefined') return message.info('请先安装OKX钱包')
   try {
     const response = await window.okxwallet.aptos.connect();
     // console.log(response);

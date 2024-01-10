@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full px-[32px] main-content ">
     <abscHeader></abscHeader>
-    <div class="text-center content mt-[80px]">
+    <div class="text-center content pt-[162px]">
       <div class="md:text-[72px] text-[50px] content-title">
         <span class="font-bold title-text">ABSC</span>
       </div>
