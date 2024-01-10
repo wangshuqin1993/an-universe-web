@@ -11,8 +11,8 @@
         <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
           <div class="md:mr-[50px] mr-[16px] self-center">Whitepaper</div>
           <div class="md:mr-[50px] mr-[16px] self-center">Roadmap</div>
-          <!-- <div class="md:mr-[50px] mr-[16px] self-center cursor-pointer hover:text-[#F41FFF]"
-            @click="router.push('/ido')">IDO</div> -->
+          <div class="md:mr-[50px] mr-[16px] self-center cursor-pointer hover:text-[#F41FFF]" @click="router.push('/ido')"
+            :class="{ 'selected-header-menu': selectedNavTitle === 'ido' }">IDO</div>
           <div class="cursor-pointer min-btn hover:opacity-[0.85]" @click="router.push('/mint')">
             Mint (Coming Soon)
           </div>
@@ -32,18 +32,23 @@
       <div class="text-[16px] text-[#ffFfff] font-bold">
         <div class="mt-[40px] mb-[30px]">Whitepaper</div>
         <div class="mb-[30px]">Roadmap</div>
+        <div class="mb-[30px]" :class="{ 'selected-header-menu-mobile': selectedNavTitle === 'ido' }"
+          @click="router.push('/ido')">
+          IDO</div>
       </div>
     </a-drawer>
   </div>
 </template>
 <script lang='ts' setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { CloseOutlined } from "@ant-design/icons-vue"
+import { ref, onMounted, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { CloseOutlined } from "@ant-design/icons-vue";
 
 const router = useRouter();
+const route = useRoute();
 const open = ref(false);
-const isMobile = ref(false)
+const isMobile = ref(false);
+const selectedNavTitle = ref('');
 const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
 
 
@@ -60,6 +65,18 @@ onMounted(() => {
     isMobile.value = true;
   }
 })
+
+
+watch(
+  () => route.path,
+  (newPath, oldPath) => {
+    if (newPath === '/ido') {
+      selectedNavTitle.value = 'ido';
+    }
+  }, { deep: true, immediate: true }
+);
+
+
 </script>
 <style lang='less' scoped>
 .absc-title {
@@ -91,5 +108,13 @@ onMounted(() => {
 
 .bg-css {
   background-color: #1F1F1F;
+}
+
+.selected-header-menu {
+  font-weight: bold;
+}
+
+.selected-header-menu-mobile {
+  color: #F41FFF;
 }
 </style>
