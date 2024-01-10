@@ -54,13 +54,13 @@
 
 
 
-      <div class="md:px-[0px] px-[32px] relative max-w-[1440px] mx-auto">
+      <div class="md:px-[0px] px-[32px] relative max-w-[1440px] mx-auto pb-[80px] md:pb-[156px]">
         <div
           class="text-[#FFFFFF] font-[Montserrat Black] mdtext-[21px] text-[20px] md:text-[36px] font-bold text-center absolute md:-top-[100px] -top-[70px] result-titile">
           Your
           activity
           result</div>
-        <div class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
+        <div v-if="recordData.length" class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
           <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
             <div v-if="!item?.child?.blank">
               <!-- getImageURL(`ABSC-NFT-0${item?.child?.level}.png`) -->
@@ -81,6 +81,10 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div v-else class="text-center flex justify-center items-center bg-[#FFFFFF] w-[80%] mx-auto h-[170px] md:h-[349px] bg-opacity-20 rounded-[16px] border border-opacity-20 border-[#fff]">
+          <span class="text-[#7C7C7C] font-[Arial] text-[16px]">You haven’t obtained the NFT yet, please go to mint</span>
         </div>
       </div>
     </div>
