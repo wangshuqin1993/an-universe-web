@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[32px] fixed top-0 w-full z-10">
+  <div class="px-[32px] fixed top-0 w-full z-10 bg-black opacity-[0.85]">
     <div class="max-w-[1440px] mx-auto">
       <div class="flex justify-between  header h-[82px] py-[20px] ">
         <div>
