@@ -13,6 +13,11 @@ let router = createRouter({
       name: "mint",
       component: () => import('@/views/absc/mint.vue'),
     },
+    {
+      path: "/ido",
+      name: "ido",
+      component: () => import('@/views/absc/iDo.vue'),
+    },
   ],
   // 每次切换路由页面滚动到顶部
   scrollBehavior() {
