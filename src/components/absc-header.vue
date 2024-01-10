@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="px-[32px]">
     <div class="max-w-[1440px] mx-auto">
       <div class="flex justify-between  header h-[82px] py-[20px] ">
         <div>

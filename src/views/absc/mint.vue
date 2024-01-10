@@ -1,7 +1,8 @@
 <template>
-  <div class="w-full h-full bg-black px-[32px]">
+  <div class="w-full h-full bg-black">
+
     <abscHeader></abscHeader>
-    <div>
+    <div class="px-[32px] ">
       <div class="absc-title"><span class="title-text text-[30px] md:text-[48px]">BSC Golden Shovel</span></div>
       <div class="absc-sub-title">XXX is an experimental NFT project sponsored by X team, whose NFT works are all
         hand-painted
@@ -16,16 +17,18 @@
         </span>
       </div>
     </div>
-    <div>
-      <div class="text-center mt-[40px]" v-if="!address" @click="connectWallet">
-        <!-- <span class="min-btn-text text-[16px] md:text-[18px]">CONNECT WALLET</span> -->
-        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]">CONNECT
+    <div class="">
+      <div class="text-center mt-[40px]  px-[32px]" v-if="!address">
+        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
+          @click="connectWallet">CONNECT
           WALLET</a-button>
       </div>
-      <div v-else @click="showOpen" class="text-center mt-[40px]">
-        <!-- <span class="min-btn-text text-[16px] md:text-[18px]">MINT</span> -->
-        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]">MINT</a-button>
+      <div v-else class="text-center mt-[40px]  px-[32px]">
+        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
+          @click="showOpen">MINT</a-button>
       </div>
+
+
 
       <!-- 测试用 -->
       <!-- <div class="text-[#fff] text-center w-hull">{{ '已连接address: ' + address }}</div> -->
@@ -35,22 +38,33 @@
         <span class="min-btn-text ml-[30px]" @click="getAbscBalance">获取余额{{ ':' + abscBalance }}</span>
       </div> -->
 
-      <div v-if="address" class="mint-text md:w-[532px] w-hull">You have started <span class="!text-[#E527FF]">{{
-        recordData.length
-      }}</span> activity once,
+      <div v-if="address" class="mint-text md:w-[532px] w-hull px-[32px] ">You have started <span
+          class="!text-[#E527FF]">{{
+            recordData.length
+          }}</span> activity once,
         which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
       </div>
 
-      <div class="w-full h-[180px] md:h-[565px] absc-core-img">
-        <!-- <img src="@/assets/images/absc-core-show.png" class="w-full mx-auto" ref="coreImgRef" /> -->
+      <!-- :style="{ height: coreImgHeight + 'px' }" -->
+      <div class="relative">
+        <div class="w-full h-full absc-core-img ">
+          <img src="@/assets/images/absc-core-show.png" class="w-full mx-auto" ref="coreImgRef" @load="loadImage" />
+        </div>
       </div>
-      <div class="">
-        <div class="text-[#FFFFFF] font-[Montserrat Black] text-[21px] md:text-[36px] font-bold text-center">Your activity
+
+
+
+      <div class=" md:px-[65px] px-[32px] relative">
+        <div
+          class="text-[#FFFFFF] font-[Montserrat Black] mdtext-[21px] text-[20px] md:text-[36px] font-bold text-center absolute md:-top-[100px] -top-[70px] result-titile">
+          Your
+          activity
           result</div>
-        <div class="grid grid-cols-2 md:grid-cols-4 mt-[45px] justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
-          <div class="card-container" v-for="(item, index) in recordData" :key="index">
+        <div class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
+          <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
             <div v-if="!item?.child?.blank">
-              <img :src="item?.child?.img" class="h-[237px]" />
+              <!-- getImageURL(`ABSC-NFT-0${item?.child?.level}.png`) -->
+              <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px]" />
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
                 <div>Rarity:</div>
                 <div>{{ item?.child?.level }}</div>
@@ -58,7 +72,9 @@
             </div>
 
             <div v-else class="text-[#fff] md:text-[18px] text-[14px] font-extrabold">
-              <div>I'm sorry I didn't win. Please try again next time</div>
+              <!-- <div>I'm sorry I didn't win. Please try again next time</div> -->
+              <img src="@/assets/images/null.png" class="rounded-[16px]" />
+              <!-- <img src="@/assets/images/ABSC-NFT-01.png" class="h-[237px]" /> -->
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold mt-[20px]">
                 <div>Rarity:</div>
                 <div>{{ item?.child?.level }}</div>
@@ -77,10 +93,9 @@
       <ExclamationCircleTwoTone style="fontSize: 14px" />
       <span class="align-middle ml-[4px]">Note: BSC address is used to receive NFT</span>
     </div>
-    <div class="text-center mt-[40px]" @click="transactionApt20">
-      <!-- <span class="text-[14px] text-[#fff]" @click="signTransaction">Mint</span> -->
-      <!-- <span class="text-[14px] text-[#fff]">Mint</span> -->
-      <a-button class="text-[14px] w-[178px] h-[38px] rounded-[5px]" :disabled="disabledMint">Mint</a-button>
+    <div class="text-center mt-[40px]">
+      <a-button class="text-[14px] w-[178px] h-[38px] rounded-[5px]" :disabled="disabledMint"
+        @click="transactionApt20">Mint</a-button>
     </div>
   </a-modal>
 
@@ -109,7 +124,10 @@ import abscHeader from "@/components/absc-header.vue";
 import ADModal from '@/components/ADModal.vue';
 import { AptosClient } from "aptos";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
-import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById } from "@/apis/absc.ts"
+import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById } from "@/apis/absc.ts";
+import useAssets from "@/stores/useAssets";
+
+const { getImageURL } = useAssets();
 // import gql from 'graphql-tag';
 setTwoToneColor('#FAAD14')
 // 与 API 的 HTTP 连接
@@ -126,7 +144,8 @@ const apolloClient = new ApolloClient({
   link: httpLink,
   cache,
 })
-
+const coreImgRef = ref();
+const coreImgHeight = ref(0);
 const surplusAmount = ref(0);
 const address = ref("");
 // const abscBalance = ref(0);
@@ -143,41 +162,7 @@ const showModalbtn = () => {
 }
 
 const recordData = ref([])
-const fakeRecordData = ref([
-  {
-    test:1,
-    child: {
-      blank: 'exist',
-      level: 1
-    }
-  },
-  {
-    test:2,
-    child: {
-      level: 2
-    }
-  },
-  {
-    test:3,
-    child: {
-      blank: 'exist',
-      level: 3
-    }
-  },
-  {
-    test:4,
-    child: {
-      level: 4
-    }
-  },
-  {
-    test:5,
-    child: {
-      blank: 'exist',
-      level: 5
-    }
-  }
-])
+
 
 const getAbscBlindBoxNumber = async () => {
   const { data } = await apiAbscBlindBoxNumber();
@@ -192,7 +177,7 @@ const getAbscRecord = async () => {
   recordData.value = data || [];
   recordData.value.map(async (item) => {
     item.child = await getAbscBlindBoxById(item.id)
-    console.log('recordData.value:',recordData.value)
+    // console.log('recordData.value:', recordData.value)
   })
 }
 
@@ -215,6 +200,11 @@ const getAbscDraw = async (hash: string) => {
   }
 }
 
+const loadImage = () => {
+  // coreImgHeight.value = coreImgRef.value.offsetHeight - 450;
+  // console.log(coreImgRef.value.offsetHeight, 'loadiii')
+}
+
 const showOpen = () => {
   if (surplusAmount.value > 0) {
     open.value = true
@@ -226,7 +216,7 @@ const showOpen = () => {
 // 列表详情
 const getAbscBlindBoxById = async (id: string) => {
   const { data } = await apiAbscBlindBoxById(id)
-  console.log(data, '99999')
+  // console.log(data, '99999')
   return data
 }
 
@@ -236,50 +226,13 @@ const connectWallet = async () => {
   // if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
   try {
     const response = await window.okxwallet.aptos.connect();
-    console.log(response);
+    // console.log(response);
     address.value = response.address;
     getAbscRecord()
   } catch (error) {
     message.error(error.message)
   }
 }
-
-// 交易
-// const signTransaction = async () => {
-//   if (!toAddress.value) return message.error('Please enter BSC address!');
-//   const transaction = {
-//     arguments: [address.value, '717'],
-//     function: '0x1::coin::transfer',
-//     type: 'entry_function_payload',
-//     type_arguments: ['0x1::aptos_coin::AptosCoin'],
-//   };
-
-//   try {
-//     const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
-
-//     const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
-//     const txn = await client.waitForTransactionWithResult(
-//       pendingTransaction.hash,
-//     );
-
-//     console.log(txn, 'txn')
-
-//   } catch (error) {
-//     console.log(error);
-//     // see "Errors"
-//   }
-// }
-
-// 获得 Absc 余额
-// const getAbscBalance = async () => {
-//   const res = await getOwnersNFTs(address.value).then(data => {
-//     console.log(data);
-//     abscNFTList.value = data.data.current_token_datas_v2;
-//     abscBalance.value = abscNFTList.value.reduce((prev: number, cur: { token_properties: { amt: number; }; }) => {
-//       return prev + Number(cur.token_properties.amt)
-//     }, 0)
-//   })
-// }
 
 // 返回可支付 apt 的 NFT 数组
 const payableNFTs = (nfts: any[], amount: number) => {
@@ -309,14 +262,13 @@ const transactionApt20 = async () => {
   };
   console.log(transaction);
   try {
-    const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
-    const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
     open.value = false;
     toAddress.value = '';
+    const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
+    const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
     const txn = await client.waitForTransactionWithResult(
       pendingTransaction.hash,
     );
-
     console.log(txn, 'txn')
     if (txn) {
       showModal.value = true;
@@ -330,30 +282,12 @@ const transactionApt20 = async () => {
   }
 }
 
-// const getOwnersNFTs = (address: String) => {
-//   return apolloClient.query({
-//     query: gql`query getOwnersNFTs($address:String) {
-//         current_token_datas_v2(
-//           where: {current_token_ownership: {owner_address: {_eq: $address }, amount: {_gt: "0"}}, current_collection: {creator_address: {_eq: "0xadeb45c274f9f4f535afe8957a8cf9ffecbd2b79026fba6c207111136d963f14"}, collection_name: {_eq: "ABSC"}}}
-//         ) {
-//           token_data_id
-//           token_properties
-//         }
-//       }`,
-//     variables: {
-//       address: address,
-//     }
-//   })
-// }
-
-
 onMounted(() => {
   if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
   if (window.okxwallet.aptos.selectedAccount) {
     address.value = window.okxwallet.aptos.selectedAccount?.address;
     getAbscRecord()
   }
-  // console.log(coreImgRef.value.offsetHeight, 'iii')
   getAbscBlindBoxNumber()
 })
 
@@ -390,17 +324,25 @@ button:focus {
   border: none;
 }
 
+.result-titile {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .contant {
-  height: 500px;
-  padding-top: 300px;
-  background-image: url("../../assets/images/absc-core-show.png");
+  // min-height: 180vh;
+  // background-image: url("../../assets/images/absc-core-show.png");
+  background-image: url("../../assets/images/absc-bg.jpg");
+  background-repeat: no-repeat;
   background-size: 100% 100%;
-  background-position: center;
+  background-position: center center;
+  // max-height: 120vh;
+  // background-attachment: fixed;
+  // background-position: top 300px right 0px;
 }
 
 .absc-title {
   font-family: Montserrat Black;
-  /* font-size: 48px; */
   font-weight: 900;
   color: rgba(255, 255, 255, 1);
   text-align: center;
@@ -424,7 +366,6 @@ button:focus {
 }
 
 .absc-blind-container {
-  /* width: 860px; */
   padding: 20px 41px 27px 41px;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 10px;
@@ -451,22 +392,10 @@ button:focus {
   line-height: 15px;
 }
 
-.min-btn {
-  /* width: 278px;
-  height: 60px; */
-  background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
-  /* border-radius: 30px; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 40px auto 0px;
-}
-
 .min-btn-modal {
   width: 200px;
   height: 40px;
   background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
-  /* border-radius: 30px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -486,7 +415,6 @@ button:focus {
 }
 
 .min-btn-text {
-  /* font-size: 18px; */
   font-family: Montserrat, Montserrat;
   font-weight: bold;
   color: #FFFFFF;
@@ -494,7 +422,6 @@ button:focus {
 }
 
 .mint-text {
-  /* width: 532px; */
   font-size: 14px;
   font-family: Montserrat, Montserrat;
   font-weight: 500;
@@ -512,13 +439,13 @@ button:focus {
   padding: 30px 20px;
 }
 
-.absc-core-img {
-  background-image: url("@/assets/images/absc-core-show.png");
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-size: contain;
-  background-attachment: scroll;
-}
+// .absc-core-img {
+//   background-image: url("@/assets/images/absc-core-show.png");
+//   background-repeat: no-repeat;
+//   background-position: center top;
+//   background-size: contain;
+//   background-attachment: scroll;
+// }
 
 .absc-cube-container {
   position: relative;
@@ -530,7 +457,6 @@ button:focus {
   margin-right: 150px;
   text-align: center;
   opacity: 1;
-  /* background: linear-gradient(180deg, #6F56FF 0%, #F320FF 21%, rgba(0,0,0,0) 100%); */
 }
 
 .close-btn {
@@ -556,7 +482,6 @@ button:focus {
   margin-right: 150px;
   text-align: center;
   opacity: 1;
-  /* background: linear-gradient(180deg, #6F56FF 0%, #F320FF 21%, rgba(0,0,0,0) 100%); */
 }
 
 .close-btn {
