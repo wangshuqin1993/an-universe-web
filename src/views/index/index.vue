@@ -14,12 +14,32 @@
         </div>
       </div>
     </div>
+    <Progress></Progress>
+    <div class="text-center">
+      <div class="text-[#fff] text-[36px] font-bold md:mb-[64px] mb-[32px]">$ABSC Token</div>
+      <div class="border border-solid border-[#fff] w-full h-[400px] rounded-[10px]"></div>
+    </div>
+    <div class="service-box md:p-[50px] p-[24px]">
+      <div class="text-[21px] text-[#fff] font-bold md:mb-[30px] mb-[20px]">$ABSC IDO Terms of service</div>
+      <div class="text-[#7C7C7C] text-[14px]">
+        1.我是条款我是条款我是条款我是条款我是条款我是条款我是条款我是条款
+
+        2.我是条款我是条款我是条款我是条款我是条款我是条款我是条款我是条款我
+
+        3.我是条款我是条款我是条款我是条款我是条款我是条款我是条款是条款我是条款
+
+        4.我是条款我是条款我是条款我是条款我是条款我是条款我是条款
+
+        5.我是条款我是条款我是条款我是条款我是条款我是条款
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import abscHeader from "@/components/absc-header.vue";
+import Progress from "@/components/progress.vue";
 const router = useRouter();
 const isMobile = ref(false)
 
@@ -66,5 +86,12 @@ onMounted(() => {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.service-box {
+  background-color: rgba(108, 108, 108, 0.09);
+  border: 1px solid #463947;
+  border-radius: 10px;
+  text-align: left;
 }
 </style>
