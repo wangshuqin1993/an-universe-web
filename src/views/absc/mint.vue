@@ -60,7 +60,8 @@
           Your
           activity
           result</div>
-        <div v-if="recordData.length" class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
+        <div v-if="recordData.length"
+          class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
           <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
             <div v-if="!item?.child?.blank">
               <!-- getImageURL(`ABSC-NFT-0${item?.child?.level}.png`) -->
@@ -83,7 +84,8 @@
           </div>
         </div>
 
-        <div v-else class="text-center flex justify-center items-center bg-[#FFFFFF] w-[80%] mx-auto h-[170px] md:h-[349px] bg-opacity-20 rounded-[16px] border border-opacity-20 border-[#fff]">
+        <div v-else
+          class="text-center flex justify-center items-center bg-[#FFFFFF] w-[80%] mx-auto h-[170px] md:h-[349px] bg-opacity-20 rounded-[16px] border border-opacity-20 border-[#fff]">
           <span class="text-[#7C7C7C] font-[Arial] text-[16px]">You haven’t obtained the NFT yet, please go to mint</span>
         </div>
       </div>
@@ -177,7 +179,7 @@ const getAbscBlindBoxNumber = async () => {
 
 const getAbscDrawCheck = async () => {
   const { data } = await apiAbscDrawCheck();
-  abscDrawCheck.value = data
+  abscDrawCheck.value = data.status
 }
 
 
@@ -301,6 +303,7 @@ onMounted(() => {
     getAbscRecord()
   }
   getAbscBlindBoxNumber()
+  getAbscDrawCheck()
 })
 
 </script>
