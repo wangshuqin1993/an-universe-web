@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<style>
+<style lang="less">
 .ant-drawer .ant-drawer-content {
   background-color: #1F1F1F !important;
 }

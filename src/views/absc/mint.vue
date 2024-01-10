@@ -188,7 +188,7 @@ const getAbscRecord = async () => {
   const { data } = await apiAbscRecord(address.value)
   recordData.value = data || [];
   recordData.value.map(async (item) => {
-    item.child = await getAbscBlindBoxById(item.id)
+    item.child = await getAbscBlindBoxById(item.blindBoxId)
     // console.log('recordData.value:', recordData.value)
   })
 }
@@ -309,35 +309,35 @@ onMounted(() => {
 </script>
 
 <style scoped  lang="less">
-button:focus {
-  outline: none;
-  overflow: unset;
-}
+// button:focus {
+//   outline: none;
+//   overflow: unset;
+// }
 
-.ant-btn {
-  font-weight: bold;
-  background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
-  color: #ffffff;
-  border-color: transparent;
-  box-shadow: none;
-  border: none;
+// .ant-btn {
+//   font-weight: bold;
+//   background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
+//   color: #ffffff;
+//   border-color: transparent;
+//   box-shadow: none;
+//   border: none;
 
-  &:hover {
-    opacity: 0.85;
-  }
-}
+//   &:hover {
+//     opacity: 0.85;
+//   }
+// }
 
-.ant-btn:hover,
-.ant-btn:active {
-  color: #ffffff;
-  box-shadow: none;
-  border: none;
-}
+// .ant-btn:hover,
+// .ant-btn:active {
+//   color: #ffffff;
+//   box-shadow: none;
+//   border: none;
+// }
 
-:deep(.ant-btn-default) {
-  background-color: transparent;
-  border: none;
-}
+// :deep(.ant-btn-default) {
+//   background-color: transparent;
+//   border: none;
+// }
 
 .result-titile {
   left: 50%;

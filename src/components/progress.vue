@@ -1,7 +1,8 @@
 <template>
   <div class="progress ">
-    <a-progress :percent="50" :size="[300, 36]" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }" />
-    <div class="text-[21px] font-bold float-right mt-[18px]">
+    <a-progress :percent="50" :size="[300, 36]" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }" md:text-[21px]
+      text-[16px] />
+    <div class="md:text-[21px] text-[16px] font-bold float-right mt-[18px]">
       <div>
         <span class="text-[#FF3B0F]">$750000</span>
         <span class="text-[#88898A]">/$500000</span>
@@ -46,7 +47,6 @@
   position: absolute;
   top: -30px;
   right: 0px;
-  font-size: 21px;
 }
 
 :deep(.ant-progress.ant-progress-show-info .ant-progress-outer) {
