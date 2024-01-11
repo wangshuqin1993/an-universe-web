@@ -38,16 +38,18 @@
         <span class="min-btn-text ml-[30px]" @click="getAbscBalance">获取余额{{ ':' + abscBalance }}</span>
       </div> -->
 
-      <div v-if="address" class="mint-text md:w-[532px] w-hull px-[32px] ">You have started <span
-          class="!text-[#E527FF]">{{
-            recordData.length
-          }}</span> activity once,
-        which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
+      <div v-if="address" class="mint-text md:w-[532px] w-hull px-[32px] ">
+        <div class="mb-[8px]">balance: <span class="!text-[#E527FF]">{{ abscBalance }}</span> ABSC</div>
+        <div>
+          You have started
+          <span class="!text-[#E527FF]">{{ recordData.length }}</span>
+          activity once,
+          which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
+        </div>
       </div>
 
-      <!-- :style="{ height: coreImgHeight + 'px' }" -->
       <div class="relative">
-        <div class="w-full h-full absc-core-img ">
+        <div class="w-full h-full">
           <img src="@/assets/images/absc-core-show.png" class="w-full mx-auto" ref="coreImgRef" />
         </div>
       </div>
@@ -115,8 +117,8 @@
       </div>
       <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px] absolute bottom-[350px]">Now you can check your draw
         results!</div>
-      <div class="min-btn-modal absolute bottom-[280px]">
-        <span class="min-btn-text">View Results</span>
+      <div class="absolute bottom-[280px]">
+        <a-button class=" w-[198px] h-[40px] rounded-[25px]">View Results</a-button>
       </div>
     </div>
   </ADModal>
@@ -134,7 +136,7 @@ import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById,
 import useAssets from "@/stores/useAssets";
 
 const { getImageURL } = useAssets();
-// import gql from 'graphql-tag';
+import gql from 'graphql-tag';
 setTwoToneColor('#FAAD14')
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
@@ -155,7 +157,7 @@ const coreImgHeight = ref(0);
 const surplusAmount = ref(false);
 const abscDrawCheck = ref(0);
 const address = ref("");
-// const abscBalance = ref(0);
+const abscBalance = ref(0);
 const abscNFTList = ref([]);
 const toAddress = ref("");
 const amount = ref(10);
@@ -189,7 +191,6 @@ const getAbscRecord = async () => {
   recordData.value = data || [];
   recordData.value.map(async (item) => {
     item.child = await getAbscBlindBoxById(item.blindBoxId)
-    // console.log('recordData.value:', recordData.value)
   })
 }
 
@@ -287,6 +288,7 @@ const transactionApt20 = async () => {
     if (txn) {
       showModal.value = true;
       getAbscDraw(txn.hash)
+      getAbscBalance()
     }
   } catch (error) {
     open.value = false;
@@ -296,11 +298,38 @@ const transactionApt20 = async () => {
   }
 }
 
+const getAbscBalance = () => {
+  getOwnersNFTs().then(data => {
+    console.log(data);
+    abscNFTList.value = data.data.current_token_datas_v2;
+    abscBalance.value = abscNFTList.value.reduce((prev: number, cur: { token_properties: { amt: number; }; }) => {
+      return prev + Number(cur.token_properties.amt)
+    }, 0)
+  })
+}
+
+const getOwnersNFTs = () => {
+  return apolloClient.query({
+    query: gql`query getOwnersNFTs($address:String) {
+        current_token_datas_v2(
+          where: {current_token_ownership: {owner_address: {_eq: $address }, amount: {_gt: "0"}}, current_collection: {creator_address: {_eq: "0xadeb45c274f9f4f535afe8957a8cf9ffecbd2b79026fba6c207111136d963f14"}, collection_name: {_eq: "ABSC"}}}
+        ) {
+          token_data_id
+          token_properties
+        }
+      }`,
+    variables: {
+      address: address.value,
+    }
+  })
+}
+
 onMounted(() => {
   if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
   if (window.okxwallet.aptos.selectedAccount) {
     address.value = window.okxwallet.aptos.selectedAccount?.address;
     getAbscRecord()
+    getAbscBalance()
   }
   getAbscBlindBoxNumber()
   getAbscDrawCheck()
@@ -309,36 +338,6 @@ onMounted(() => {
 </script>
 
 <style scoped  lang="less">
-// button:focus {
-//   outline: none;
-//   overflow: unset;
-// }
-
-// .ant-btn {
-//   font-weight: bold;
-//   background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
-//   color: #ffffff;
-//   border-color: transparent;
-//   box-shadow: none;
-//   border: none;
-
-//   &:hover {
-//     opacity: 0.85;
-//   }
-// }
-
-// .ant-btn:hover,
-// .ant-btn:active {
-//   color: #ffffff;
-//   box-shadow: none;
-//   border: none;
-// }
-
-// :deep(.ant-btn-default) {
-//   background-color: transparent;
-//   border: none;
-// }
-
 .result-titile {
   left: 50%;
   transform: translateX(-50%);
@@ -454,14 +453,6 @@ onMounted(() => {
   padding: 30px 20px;
 }
 
-// .absc-core-img {
-//   background-image: url("@/assets/images/absc-core-show.png");
-//   background-repeat: no-repeat;
-//   background-position: center top;
-//   background-size: contain;
-//   background-attachment: scroll;
-// }
-
 .absc-cube-container {
   position: relative;
   display: flex;
@@ -469,7 +460,6 @@ onMounted(() => {
   align-items: center;
   width: 650px;
   height: 650px;
-  margin-right: 150px;
   text-align: center;
   opacity: 1;
 }
@@ -487,17 +477,7 @@ onMounted(() => {
   align-items: center;
 }
 
-.absc-cube-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 650px;
-  height: 650px;
-  margin-right: 150px;
-  text-align: center;
-  opacity: 1;
-}
+
 
 .close-btn {
   width: 28px;

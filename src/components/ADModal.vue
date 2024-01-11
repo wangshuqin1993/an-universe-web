@@ -5,8 +5,8 @@
       leave-from-class="opacity-100" leave-to-class="opacity-0">
       <div ref="modal-backdrop" v-if="showModal" class="fixed inset-0 z-10 overflow-y-auto bg-black bg-opacity-50">
         <div class="flex items-start justify-center min-h-screen pt-24 text-center">
-          <div class="w-1/2 p-8 overflow-hidden text-left rounded-lg shadow-xl" role="dialog" ref="modal"
-            aria-modal="true" aria-labelledby="modal-headline">
+          <div class=" p-8 overflow-hidden text-left rounded-lg shadow-xl" role="dialog" ref="modal" aria-modal="true"
+            aria-labelledby="modal-headline">
             <slot />
           </div>
         </div>
