@@ -94,6 +94,7 @@
     </div>
 
     <nftDesc></nftDesc>
+    <nftRights></nftRights>
   </div>
 
   <a-modal v-model:open="open" title="" :footer="null">
@@ -132,14 +133,15 @@ import { ExclamationCircleTwoTone, setTwoToneColor } from "@ant-design/icons-vue
 import { message } from "ant-design-vue";
 import abscHeader from "@/components/absc-header.vue";
 import nftDesc from './components/nftDesc.vue';
+import nftRights from "./components/nftRights.vue";
 import ADModal from '@/components/ADModal.vue';
 import { AptosClient } from "aptos";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
-import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById, apiAbscDrawCheck } from "@/apis/absc.ts";
+import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById, apiAbscDrawCheck } from "@/apis/absc";
 import useAssets from "@/stores/useAssets";
-
-const { getImageURL } = useAssets();
 import gql from 'graphql-tag';
+const { getImageURL } = useAssets();
+
 setTwoToneColor('#FAAD14')
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
@@ -328,7 +330,7 @@ const getOwnersNFTs = () => {
 }
 
 onMounted(() => {
-  if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
+  // if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
   if (window.okxwallet.aptos.selectedAccount) {
     address.value = window.okxwallet.aptos.selectedAccount?.address;
     getAbscRecord()
