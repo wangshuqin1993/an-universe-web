@@ -54,7 +54,7 @@
 
 
 
-      <div class="md:px-[0px] px-[32px] relative max-w-[1440px] mx-auto pb-[80px] md:pb-[156px]">
+      <div class="md:px-[0px] px-[32px] relative max-w-[1440px] mx-auto pb-[75px]">
         <div
           class="text-[#FFFFFF] font-[Montserrat Black] mdtext-[21px] text-[20px] md:text-[36px] font-bold text-center absolute md:-top-[100px] -top-[70px] result-titile">
           Your
@@ -91,7 +91,7 @@
       </div>
     </div>
 
-    <nftDesc></nftDesc>
+    <nftDesc class="mx-auto text-center w-[80%]"></nftDesc>
   </div>
 
   <a-modal v-model:open="open" title="" :footer="null">
