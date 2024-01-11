@@ -169,14 +169,14 @@ const amount = ref(10);
 const open = ref(false);
 const showModal = ref(false)
 const disabledMint = ref(false);
+const recordData = ref([])
+const isMobile = ref(false)
+const isOKApp = ref(false)
 
 const showModalbtn = () => {
   showModal.value = !showModal.value
   console.log('showModal.value:', showModal.value)
 }
-
-const recordData = ref([])
-
 
 const getAbscBlindBoxNumber = async () => {
   const { data } = await apiAbscBlindBoxNumber();
@@ -243,15 +243,25 @@ const getAbscBlindBoxById = async (id: string) => {
 
 // 连接钱包
 const connectWallet = async () => {
-  if (typeof window.okxwallet == 'undefined') return message.info('请先安装OKX钱包')
-  try {
-    const response = await window.okxwallet.aptos.connect();
-    // console.log(response);
-    address.value = response.address;
-    getAbscRecord()
-  } catch (error) {
-    message.error(error.message)
+  if (isMobile && !isOKApp) {
+    const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
+    window.location.href = encodedUrl;
+  } else {
+    if (typeof window.okxwallet !== 'undefined') {
+      try {
+        const response = await window.okxwallet.aptos.connect();
+        // console.log(response);
+        address.value = response.address;
+        getAbscRecord()
+        getAbscBalance()
+      } catch (error) {
+        message.error(error.message)
+      }
+    } else {
+      return message.info('请先安装OKX钱包')
+    }
   }
+
 }
 
 // 返回可支付 apt 的 NFT 数组
@@ -329,8 +339,27 @@ const getOwnersNFTs = () => {
   })
 }
 
-onMounted(() => {
+const getIsMobils = async () => {
+  const ua = navigator.userAgent;
+  const isIOS = /iphone|ipad|ipod|ios/i.test(ua);
+  const isAndroid = /android|XiaoMi|MiuiBrowser/i.test(ua);
+  isMobile.value = isIOS || isAndroid;
+  isOKApp.value = /OKApp/i.test(ua);
+  // if (isMobile && !isOKApp) {
+  //   const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
+  //   window.location.href = encodedUrl;
+  // }
+  // else if (window.okxwallet) {
+  //   // const accounts = await window.okxwallet.request({
+  //   //   method: "eth_requestAccounts",
+  //   // });
+  // }
+}
+
+
+onMounted(async () => {
   // if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
+  await getIsMobils()
   if (window.okxwallet.aptos.selectedAccount) {
     address.value = window.okxwallet.aptos.selectedAccount?.address;
     getAbscRecord()
