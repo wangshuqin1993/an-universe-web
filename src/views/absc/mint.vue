@@ -92,6 +92,8 @@
         </div>
       </div>
     </div>
+
+    <nftDesc></nftDesc>
   </div>
 
   <a-modal v-model:open="open" title="" :footer="null">
@@ -129,6 +131,7 @@ import { ref, onMounted } from "vue";
 import { ExclamationCircleTwoTone, setTwoToneColor } from "@ant-design/icons-vue"
 import { message } from "ant-design-vue";
 import abscHeader from "@/components/absc-header.vue";
+import nftDesc from './components/nftDesc.vue';
 import ADModal from '@/components/ADModal.vue';
 import { AptosClient } from "aptos";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
