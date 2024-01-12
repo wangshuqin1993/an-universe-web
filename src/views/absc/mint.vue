@@ -1,27 +1,34 @@
 <template>
+  <abscHeader></abscHeader>
   <div class="w-full h-full bg-black">
-
-    <abscHeader></abscHeader>
     <div class="px-[32px] pt-[82px]">
-      <div class="absc-title"><span class="title-text text-[30px] md:text-[48px]">BSC Golden Shovel</span></div>
-      <div class="absc-sub-title">XXX is an experimental NFT project sponsored by X team, whose NFT works are all
-        hand-painted
-        and focused on different<br /> kinds and patterns of XXX.
+      <div class="absc-title "><span class="title-text text-[30px] md:text-[48px] ">BSC Golden Shovel</span></div>
+      <div class="absc-sub-title md:w-[860px] w-hull mx-auto">$BSC Golden Shovel is a collection of 7777 NFTs issued on
+        the BSC
+        chain. As the genesis
+        NFT of the
+
+        BMaker&$BSC project, it plays an important role in the subsequent development of the ecosystem.
+
+        According to different rarity, $BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
+
+        to different rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
       </div>
       <div class="absc-blind-container md:w-[860px] w-hull">
         <div class="absc-blind">Blind box activity</div>
-        <span class="absc-blind-text w-hull">XXX is an experimental NFT project sponsored by X team,
-          whose NFT works are all hand-painted and focused on different kinds and patterns of XXX.
-          XXX is an experimental NFT project sponsored by X team,
-          whose NFT works are all hand-painted and focused on different kinds and patterns of XXX.
+        <span class="absc-blind-text w-hull">The blind box activity is an event set up for ABSC inscription holders to
+          consume inscriptions and obtain
+
+          the genesis NFT. Each participation in the event will consume 100,000 ABSC inscriptions. We wish every
+
+          ABSC inscription holder can obtain their desired genesis NFT.
         </span>
       </div>
     </div>
     <div class="">
       <div class="text-center mt-[40px]  px-[32px]" v-if="!walletAddress.walletAddress">
         <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
-          @click="connectWallet">CONNECT
-          WALLET</a-button>
+          @click="connectWallet">Start now</a-button>
       </div>
       <div v-else class="text-center mt-[40px]  px-[32px]">
         <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
@@ -255,6 +262,7 @@ const connectWallet = async () => {
         const response = await window.okxwallet.aptos.connect();
         // console.log(response);
         address.value = response.address;
+        walletAddress.setWalletAddress(address.value);
         getAbscRecord()
         getAbscBalance()
       } catch (error) {
@@ -366,6 +374,7 @@ onMounted(async () => {
   if (window.okxwallet.aptos.selectedAccount) {
     address.value = window.okxwallet.aptos.selectedAccount?.address;
     walletAddress.setWalletAddress(address.value);
+
     getAbscRecord()
     getAbscBalance()
   }

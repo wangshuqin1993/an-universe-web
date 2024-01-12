@@ -29,7 +29,7 @@
             <template #overlay>
               <a-menu>
                 <a-menu-item>
-                  <div @click="disConnectWallet">disConnect</div>
+                  <div @click="disConnectWallet" class="text-center">disConnect</div>
                 </a-menu-item>
               </a-menu>
             </template>
@@ -39,7 +39,7 @@
     </div>
     <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
       :contentWrapperStyle="contentWrapperStyle" rootClassName="bg-css">
-      <div class="flex items-stretch justify-between">
+      <div class="flex items-stretch justify-between mb-[30px]">
         <div class="self-center">
           <img src="@/assets/images/absc.png" class="md:w-[140px] w-[110px]" />
         </div>
@@ -49,8 +49,8 @@
       </div>
       <div class="text-[16px] text-[#ffFfff] font-bold">
         <div v-for="item in menuList" :key="item.path"
-          class="md:mr-[50px] mr-[16px] self-center cursor-pointer hover:text-[#F41FFF]" @click="router.push(item.path)"
-          :class="{ 'selected-header-menu': selectedNavTitle === item.name }">
+          class="md:mr-[50px] mr-[16px] self-center cursor-pointer hover:text-[#F41FFF] mb-[30px]"
+          @click="changeRouter(item)" :class="{ 'selected-header-menu': selectedNavTitle === item.name }">
           {{ item.name }}
         </div>
       </div>
@@ -104,6 +104,11 @@ const onClose = () => {
   open.value = false
 }
 
+
+const changeRouter = (item: any) => {
+  router.push(item.path);
+  open.value = false
+}
 // 连接钱包
 const connectWallet = async () => {
   walletOpen.value = false;
