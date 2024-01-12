@@ -1,13 +1,5 @@
 <template>
   <div class="max-w-[798px] mx-auto md:px-[0px] px-[32px] md:pb-[64px] pb-[32px] text-center">
-    <div class="font-[Montserrat Black] text-[#fff] text-[36px] font-black">NFT Description</div>
-    <div class="font-[Arial] text-[#7C7C7C] text-[16px] my-[29px] w-[90%] mx-auto leading-[18px]">
-      BSC Golden Shovel is a collection of 7777 NFTs issued on the BSC chain. 
-      As the genesis NFT of the BMaker&$BSC project, it plays an important role in the subsequent development of the ecosystem.
-      According to different rarity, BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
-      to different rights. You can obtain the BSC Golden Shovel NFT by burning ABSC inscriptions.
-    </div>
-
     <div>
       <a-table :columns="columns" :data-source="data" bordered>
       </a-table>
