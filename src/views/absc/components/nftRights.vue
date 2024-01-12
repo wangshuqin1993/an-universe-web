@@ -67,39 +67,4 @@ const dataSource = ref([
   border: 1px solid rgba(255, 255, 255, 0.23);
   border-radius: 10px;
 }
-
-:deep(.ant-table-wrapper .ant-table) {
-  background-color: transparent;
-  color: #7C7C7C;
-}
-
-:deep(.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container) {
-  border: 2px solid #2D2D2D;
-  border-radius: 12px;
-}
-
-:deep(.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table) {
-  border-top: none;
-}
-
-:deep(.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >tbody>tr>td) {
-  border-inline-end: 1px solid #2D2D2D;
-}
-
-:deep(.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >tbody>tr>td:last-child) {
-  border-inline-end: none;
-}
-
-:deep(.ant-table-wrapper .ant-table.ant-table-bordered .ant-table-tbody >tr >td) {
-  border-bottom: 1px solid #2D2D2D;
-}
-
-:deep(.ant-table-wrapper .ant-table.ant-table-bordered .ant-table-tbody >tr:last-child >td) {
-  border-bottom: none;
-}
-
-:deep(.ant-table-wrapper .ant-table-tbody>tr.ant-table-row:hover>td),
-:deep(.ant-table-wrapper .ant-table-tbody>tr>td.ant-table-cell-row-hover) {
-  background-color: transparent;
-}
 </style>
