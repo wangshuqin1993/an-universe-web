@@ -54,11 +54,11 @@ const connectWallet = async () => {
 }
 
 const getIsMobils = async () => {
-  // const ua = navigator.userAgent;
-  // const isIOS = /iphone|ipad|ipod|ios/i.test(ua);
-  // const isAndroid = /android|XiaoMi|MiuiBrowser/i.test(ua);
-  // isMobile.value = isIOS || isAndroid;
-  // isOKApp.value = /OKApp/i.test(ua);
+  const ua = navigator.userAgent;
+  const isIOS = /iphone|ipad|ipod|ios/i.test(ua);
+  const isAndroid = /android|XiaoMi|MiuiBrowser/i.test(ua);
+  isMobile.value = isIOS || isAndroid;
+  isOKApp.value = /OKApp/i.test(ua);
 }
 
 
