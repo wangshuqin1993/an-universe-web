@@ -10,11 +10,12 @@
         </div>
         <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
           <div class="md:mr-[50px] mr-[16px] self-center">Whitepaper</div>
+          <div class="md:mr-[50px] mr-[16px] self-center cursor-pointer" @click="router.push('/whitelist')">Whitelist</div>
           <div class="md:mr-[50px] mr-[16px] self-center">Roadmap</div>
           <div class="md:mr-[50px] mr-[16px] self-center cursor-pointer hover:text-[#F41FFF]" @click="router.push('/ido')"
             :class="{ 'selected-header-menu': selectedNavTitle === 'ido' }">IDO</div>
           <div class="cursor-pointer min-btn hover:opacity-[0.85]" @click="router.push('/mint')">
-            Mint (Coming Soon)
+            Mint
           </div>
         </div>
       </div>
