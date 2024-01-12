@@ -5,17 +5,17 @@ let router = createRouter({
   routes: [
     {
       path: "/",
-      name: "index",
+      name: "Home",
       component: () => import('@/views/index/index.vue'),
     },
     {
       path: "/mint",
-      name: "mint",
+      name: "NFT",
       component: () => import('@/views/absc/mint.vue'),
     },
     {
       path: "/ido",
-      name: "ido",
+      name: "IDO",
       component: () => import('@/views/absc/iDo.vue'),
     },
   ],

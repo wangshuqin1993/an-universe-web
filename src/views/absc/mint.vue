@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="">
-      <div class="text-center mt-[40px]  px-[32px]" v-if="!address">
+      <div class="text-center mt-[40px]  px-[32px]" v-if="!walletAddress.walletAddress">
         <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
           @click="connectWallet">CONNECT
           WALLET</a-button>
@@ -38,7 +38,8 @@
         <span class="min-btn-text ml-[30px]" @click="getAbscBalance">获取余额{{ ':' + abscBalance }}</span>
       </div> -->
 
-      <div v-if="address" class="mint-text md:w-[532px] w-hull px-[32px] ">
+
+      <div v-if="walletAddress.walletAddress" class="mint-text md:w-[532px] w-hull px-[32px] ">
         <div class="mb-[8px]">balance: <span class="!text-[#E527FF]">{{ abscBalance }}</span> ABSC</div>
         <div>
           You have started
@@ -66,7 +67,6 @@
           class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
           <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
             <div v-if="!item?.child?.blank">
-              <!-- getImageURL(`ABSC-NFT-0${item?.child?.level}.png`) -->
               <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px] mb-[30px]" />
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
                 <div>Rarity:</div>
@@ -75,12 +75,9 @@
             </div>
 
             <div v-else class="text-[#fff] md:text-[18px] text-[14px] font-extrabold">
-              <!-- <div>I'm sorry I didn't win. Please try again next time</div> -->
               <img src="@/assets/images/null.png" class="rounded-[16px]" />
-              <!-- <img src="@/assets/images/ABSC-NFT-01.png" class="h-[237px]" /> -->
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold mt-[20px]">
-                <div>Rarity:</div>
-                <div>{{ item?.child?.level }}</div>
+                <div>losing lottery</div>
               </div>
             </div>
           </div>
@@ -121,7 +118,7 @@
       <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px] absolute bottom-[350px]">Now you can check your draw
         results!</div>
       <div class="absolute bottom-[280px]">
-        <a-button class=" w-[198px] h-[40px] rounded-[25px]">View Results</a-button>
+        <a-button class=" w-[198px] h-[40px] rounded-[25px]" @click="viewResult">View Results</a-button>
       </div>
     </div>
   </ADModal>
@@ -139,6 +136,8 @@ import { AptosClient } from "aptos";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById, apiAbscDrawCheck } from "@/apis/absc";
 import useAssets from "@/stores/useAssets";
+import { useWalletAddress } from "@/stores/useWalletAddress";
+const walletAddress = useWalletAddress()
 import gql from 'graphql-tag';
 const { getImageURL } = useAssets();
 
@@ -240,6 +239,10 @@ const getAbscBlindBoxById = async (id: string) => {
   return data
 }
 
+const viewResult = () => {
+  showModal.value = false;
+  document.documentElement.scrollTop = 1500
+}
 
 // 连接钱包
 const connectWallet = async () => {
@@ -362,6 +365,7 @@ onMounted(async () => {
   await getIsMobils()
   if (window.okxwallet.aptos.selectedAccount) {
     address.value = window.okxwallet.aptos.selectedAccount?.address;
+    walletAddress.setWalletAddress(address.value);
     getAbscRecord()
     getAbscBalance()
   }
