@@ -431,7 +431,7 @@ onMounted(async () => {
   // position: relative;
   background-image: url("../../assets/images/mint-bg1.jpg");
   background-repeat: no-repeat;
-  background-size: 10vw 100vh;
+  background-size: 100vw 100vh;
 }
 
 .phone-bg1-container {
