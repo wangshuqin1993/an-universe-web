@@ -5,7 +5,7 @@
 
     <div class="max-w-[1440px] mx-auto md:px-[0px] px-[32px]">
       <div class="title-text md:pt-[166px] pt-[100px]">$ABSC Token IDO Whit</div>
-      <div class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[37px]">
+      <div class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-center mt-[37px]">
         The $ABSC token IDO will be launched soon, and users with whitelist spots can enjoy corresponding price discounts. 
         Users holding $BSC Genesis NFT can exchange for whitelist spots by burning ABSC inscriptions. 
         Each exchange requires burning 500,000 ABSC inscriptions, and each address can only exchange once for each NFT.
@@ -13,16 +13,16 @@
     </div>
 
     <div>
-      <div class="flex items-center flex-col justify-center max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-[47px] border border-[#463947] border-solid mx-auto">
+      <div class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-[47px] border border-[#463947] border-solid mx-auto">
         <span class="pt-[15px] px-[21px] font-bold text-[24px] text-[#fff]">2024.1.16 10:00 am — 1.17 8:00 am(UTC+8)</span>
         <span class="pb-[15px] text-[#8D8D8D] text-[18px]">Exchange time</span>
       </div>
       <div class="min-btn" @click="handleExchangeModal">Exchange Now</div>
       <div class="text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center mt-[19px] mb-[9px]">balance：<span class="text-[#F41FFF]">1200000</span> ABSC</div>
-      <div class="text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center">You have obtained the <span class="text-[#F41FFF]">UR</span> whitelist, corresponding to your NFT with Token ID <span class="text-[#F41FFF]">1268</span></div>
+      <div class="w-[90%] md:w-full text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center mx-auto">You have obtained the <span class="text-[#F41FFF]">UR</span> whitelist, corresponding to your NFT with Token ID <span class="text-[#F41FFF]">1268</span></div>
     </div>
 
-    <div class="whitelist-absc-container max-w-[931px] py-[50px] mt-[70px] mx-auto">
+    <div class="whitelist-absc-container w-[90%] md:max-w-[931px] py-[50px] mt-[70px] mx-auto">
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
         <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[24px] text-[16px]">As the mapping token of the leading inscription ABSC based on APT-20 on the BSC chain, 
