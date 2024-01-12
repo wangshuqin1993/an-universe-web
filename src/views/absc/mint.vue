@@ -253,7 +253,7 @@ const viewResult = () => {
 
 // 连接钱包
 const connectWallet = async () => {
-  if (isMobile && !isOKApp) {
+  if (isMobile.value && !isOKApp.value) {
     const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
     window.location.href = encodedUrl;
   } else {

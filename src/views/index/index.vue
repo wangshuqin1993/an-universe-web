@@ -10,14 +10,14 @@
         <span class="title-text">$ABSC： build BTC & all assets in aptos</span>
       </div>
       <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
-        <a-button class="min-btn fixed w-[198px] h-[50px] rounded-[25px]" @click="connectWallet"
+        <a-button class="min-btn fixed w-[198px] text-[18px] h-[50px] rounded-[25px]" @click="walletOpen = true"
           v-if="!walletAddress.walletAddress">connect wallet</a-button>
         <!-- <a-button v-else class="min-btn fixed w-[198px] h-[50px] rounded-[25px]">{{ btnInfo }}</a-button> -->
         <a-dropdown v-else>
           <template #overlay>
             <a-menu>
               <a-menu-item>
-                <div @click="disConnectWallet">disConnect</div>
+                <div @click="disConnectWallet" class="text-center">disConnect</div>
               </a-menu-item>
             </a-menu>
           </template>
@@ -28,6 +28,15 @@
       </div>
     </div>
   </div>
+  <a-modal v-model:open="walletOpen" title="" :footer="null">
+    <div class="text-[20px] text-[#000] font-bold mb-[30px] mt-[0px]">Please connect your wallet</div>
+    <div class="flex">
+      <div class="text-center wallet-item" @click="connectWallet">
+        <img src="@/assets/images/OKXWallet-logo.png" class="w-[54px] mx-auto" />
+        <div class="mt-[10px]">OKX WAllet</div>
+      </div>
+    </div>
+  </a-modal>
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
@@ -42,6 +51,7 @@ const walletAddress = useWalletAddress()
 const router = useRouter();
 const isMobile = ref(false);
 const isOKApp = ref(false);
+const walletOpen = ref(false);
 const address = ref('');
 const btnInfo = ref('');
 
@@ -61,7 +71,7 @@ const apolloClient = new ApolloClient({
 })
 
 const connectWallet = async () => {
-  if (isMobile && !isOKApp) {
+  if (isMobile.value && !isOKApp.value) {
     const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
     window.location.href = encodedUrl;
     try {
