@@ -174,7 +174,7 @@ onMounted(async () => {
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   }
 
-  console.log(window.okxwallet.selectedAddress, walletAddress.walletAddress, btnInfo.value, 'window.okxwallet')
+  console.log(window.okxwallet, walletAddress.walletAddress, btnInfo.value, 'window.okxwallet')
   // let width = document.documentElement.clientWidth;
   // console.log(width, 'width')
   // if (width > 750) {

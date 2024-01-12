@@ -1,111 +1,105 @@
 <template>
   <abscHeader></abscHeader>
-  <div class="w-full h-full bg-black">
-    <div class="px-[32px] pt-[82px]">
-      <div class="absc-title "><span class="title-text text-[30px] md:text-[48px] ">BSC Golden Shovel</span></div>
-      <div class="absc-sub-title md:w-[860px] w-hull mx-auto">$BSC Golden Shovel is a collection of 7777 NFTs issued on
-        the BSC
-        chain. As the genesis
-        NFT of the
+  <div class="w-full h-full">
 
-        BMaker&$BSC project, it plays an important role in the subsequent development of the ecosystem.
+    <div class="w-screen h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
+      <div class="px-[32px] pt-[82px]">
+        <div class="absc-title "><span class="title-text text-[30px] md:text-[48px] ">BSC Golden Shovel</span></div>
+        <div class="absc-sub-title md:w-[860px] w-hull mx-auto">$BSC Golden Shovel is a collection of 7777 NFTs issued on
+          the BSC
+          chain. As the genesis
+          NFT of the
 
-        According to different rarity, $BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
+          BMaker&$BSC project, it plays an important role in the subsequent development of the ecosystem.
 
-        to different rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
-      </div>
-      <div class="absc-blind-container md:w-[860px] w-hull">
-        <div class="absc-blind">Blind box activity</div>
-        <span class="absc-blind-text w-hull">The blind box activity is an event set up for ABSC inscription holders to
-          consume inscriptions and obtain
+          According to different rarity, $BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
 
-          the genesis NFT. Each participation in the event will consume 100,000 ABSC inscriptions. We wish every
+          to different rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
+        </div>
+        <div class="absc-blind-container md:w-[860px] w-hull">
+          <div class="absc-blind">Blind box activity</div>
+          <span class="absc-blind-text w-hull">The blind box activity is an event set up for ABSC inscription holders to
+            consume inscriptions and obtain
 
-          ABSC inscription holder can obtain their desired genesis NFT.
-        </span>
-      </div>
-    </div>
-    <div class="">
-      <div class="text-center mt-[40px]  px-[32px]" v-if="!walletAddress.walletAddress">
-        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
-          @click="connectWallet">Start now</a-button>
-      </div>
-      <div v-else class="text-center mt-[40px]  px-[32px]">
-        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]" :loading="loading"
-          @click="showOpen">MINT</a-button>
-      </div>
+            the genesis NFT. Each participation in the event will consume 100,000 ABSC inscriptions. We wish every
 
-
-
-      <!-- 测试用 -->
-      <!-- <div class="text-[#fff] text-center w-hull">{{ '已连接address: ' + address }}</div> -->
-      <!-- 测试用btn -->
-      <!-- <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]">按钮</a-button> -->
-      <!-- <div class="cursor-pointer min-btn hover:opacity-[0.85]">
-          <span class="min-btn-text ml-[30px]" @click="getAbscBalance">获取余额{{ ':' + abscBalance }}</span>
-        </div> -->
-
-      <div v-if="address" class="mint-text md:w-[532px] w-hull px-[32px] ">
-        <div class="mb-[8px]">balance: <span class="!text-[#E527FF]">{{ abscBalance }}</span> ABSC</div>
-        <div>
-          You have started
-          <span class="!text-[#E527FF]">{{ recordData.length }}</span>
-          activity once,
-          which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
+            ABSC inscription holder can obtain their desired genesis NFT.
+          </span>
         </div>
       </div>
-    </div>
-  </div>
+      <div class="">
+        <div class="text-center mt-[40px]  px-[32px]" v-if="!address">
+          <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
+            @click="connectWallet">Start now
+          </a-button>
+        </div>
+        <div v-else class="text-center mt-[40px]  px-[32px]">
+          <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
+            :loading="loading" @click="showOpen">MINT
+          </a-button>
+        </div>
 
-  <div class="w-screen h-[85vh]" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
-    <div class="md:px-[0px] px-[32px] max-w-[1440px] mx-auto pb-[75px]">
-      <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center">
-        Your activity result
-        <div class="text-[14px] mb-[10px] font-medium">You have started <span class="text-[#F41FFF]">0</span> activity
-          once</div>
-      </div>
-      <div v-if="recordData.length"
-        class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
-        <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
-          <div v-if="!item?.child?.blank">
-            <!-- getImageURL(`ABSC-NFT-0${item?.child?.level}.png`) -->
-            <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px] mb-[30px]" />
-            <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
-              <div>Rarity:</div>
-              <div>{{ item?.child?.level }}</div>
-            </div>
-          </div>
-
-          <div v-else class="text-[#fff] md:text-[18px] text-[14px] font-extrabold">
-            <img src="@/assets/images/null.png" class="rounded-[16px]" />
-            <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold mt-[20px]">
-              <div>Didn't get reward</div>
-            </div>
+        <div v-if="address" class="mint-text md:w-[532px] w-hull px-[32px] ">
+          <div class="mb-[8px]">balance: <span class="!text-[#E527FF]">{{ abscBalance }}</span> ABSC</div>
+          <div>
+            You have started
+            <span class="!text-[#E527FF]">{{ recordData.length }}</span>
+            activity once,
+            which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
           </div>
         </div>
       </div>
+    </div>
 
-      <div v-else
-        class="text-center flex justify-center items-center bg-[#FFFFFF] w-[80%] mx-auto h-[170px] md:h-[349px] bg-opacity-20 rounded-[16px] border border-opacity-20 border-[#fff]">
-        <span class="text-[#7C7C7C] font-[Arial] text-[16px]">You haven’t obtained the NFT yet, please go to mint</span>
+    <div class="w-screen h-[85vh]" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
+      <div class="md:px-[0px] px-[32px] md:pt-[82px] pt-[0px] max-w-[1440px] mx-auto pb-[75px]">
+        <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center">
+          Your activity result
+          <div class="text-[14px] mb-[10px] font-medium">You have started <span class="text-[#F41FFF]">0</span> activity
+            once</div>
+        </div>
+        <div v-if="recordData.length"
+          class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
+          <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
+            <div v-if="!item?.child?.blank">
+              <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px] mb-[30px]" />
+              <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
+                <div>Rarity:</div>
+                <div>{{ item?.child?.level }}</div>
+              </div>
+            </div>
+
+            <div v-else class="text-[#fff] md:text-[18px] text-[14px] font-extrabold">
+              <img src="@/assets/images/null.png" class="rounded-[16px]" />
+              <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold mt-[20px]">
+                <div>Didn't get reward</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-else
+          class="text-center flex justify-center items-center bg-[#FFFFFF] w-[80%] mx-auto h-[170px] md:h-[349px] bg-opacity-20 rounded-[16px] border border-opacity-20 border-[#fff]">
+          <span class="text-[#7C7C7C] font-[Arial] text-[16px]">You haven’t obtained the NFT yet, please go to mint</span>
+        </div>
+      </div>
+
+      <div class="max-w-[798px] mx-auto text-center">
+        <div class="font-[Montserrat Black] text-[#fff] text-[36px] font-black">NFT Description</div>
+        <div class="font-[Arial] text-[#7C7C7C] text-[16px] mt-[29px] w-[90%] mx-auto leading-[18px]">
+          BSC Golden Shovel is a collection of 7777 NFTs issued on the BSC chain.
+          As the genesis NFT of the BMaker&$BSC project, it plays an important role in the subsequent development of the
+          ecosystem.
+          According to different rarity, BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
+          to different rights. You can obtain the BSC Golden Shovel NFT by burning ABSC inscriptions.
+        </div>
       </div>
     </div>
 
-    <div class="max-w-[798px] mx-auto text-center">
-      <div class="font-[Montserrat Black] text-[#fff] text-[36px] font-black">NFT Description</div>
-      <div class="font-[Arial] text-[#7C7C7C] text-[16px] mt-[29px] w-[90%] mx-auto leading-[18px]">
-        BSC Golden Shovel is a collection of 7777 NFTs issued on the BSC chain.
-        As the genesis NFT of the BMaker&$BSC project, it plays an important role in the subsequent development of the
-        ecosystem.
-        According to different rarity, BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
-        to different rights. You can obtain the BSC Golden Shovel NFT by burning ABSC inscriptions.
-      </div>
+    <div class="bg-black">
+      <nftDesc></nftDesc>
+      <nftRights></nftRights>
     </div>
-  </div>
-
-  <div class="bg-black">
-    <nftDesc></nftDesc>
-    <nftRights></nftRights>
   </div>
 
 
@@ -271,7 +265,6 @@ const gotIt = async () => {
     if (response.address) {
       transactionApt20()
     }
-
     getAbscBalance()
   } catch (error) {
     message.error(error.message)
