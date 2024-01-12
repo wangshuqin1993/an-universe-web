@@ -1,6 +1,7 @@
 <template>
-  <div class="w-full h-full px-[32px] main-content ">
-    <abscHeader></abscHeader>
+  <abscHeader></abscHeader>
+  <div class="w-full h-full px-[32px] main-content md:p-[82px] pt-[0px]">
+
     <div class="text-center content pt-[162px]">
       <div class="md:text-[72px] text-[50px] content-title">
         <span class="font-bold title-text">ABSC</span>
@@ -9,30 +10,112 @@
         <span class="title-text">$ABSC： build BTC & all assets in aptos</span>
       </div>
       <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
-        <div class="cursor-pointer min-btn hover:opacity-[0.85] fixed" @click="router.push('/mint')">
-          Mint (Coming Soon)
-        </div>
+        <a-button class="min-btn fixed w-[198px] text-[18px] h-[50px] rounded-[25px]" @click="walletOpen = true"
+          v-if="!walletAddress.walletAddress">connect wallet</a-button>
+        <!-- <a-button v-else class="min-btn fixed w-[198px] h-[50px] rounded-[25px]">{{ btnInfo }}</a-button> -->
+        <a-dropdown v-else>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item>
+                <div @click="disConnectWallet" class="text-center">disConnect</div>
+              </a-menu-item>
+            </a-menu>
+          </template>
+          <a-button class="min-btn fixed w-[198px] h-[50px] rounded-[25px]">{{ btnInfo }}
+            <DownOutlined />
+          </a-button>
+        </a-dropdown>
       </div>
     </div>
-
   </div>
+  <a-modal v-model:open="walletOpen" title="" :footer="null">
+    <div class="text-[20px] text-[#000] font-bold mb-[30px] mt-[0px]">Please connect your wallet</div>
+    <div class="flex">
+      <div class="text-center wallet-item" @click="connectWallet">
+        <img src="@/assets/images/OKXWallet-logo.png" class="w-[54px] mx-auto" />
+        <div class="mt-[10px]">OKX WAllet</div>
+      </div>
+    </div>
+  </a-modal>
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import abscHeader from "@/components/absc-header.vue";
+import { message } from "ant-design-vue";
+import { DownOutlined } from '@ant-design/icons-vue';
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
+import { useWalletAddress } from "@/stores/useWalletAddress";
+const walletAddress = useWalletAddress()
 
 const router = useRouter();
-const isMobile = ref(false)
+const isMobile = ref(false);
+const isOKApp = ref(false);
+const walletOpen = ref(false);
+const address = ref('');
+const btnInfo = ref('');
+
+// 与 API 的 HTTP 连接
+const httpLink = createHttpLink({
+  // 你需要在这里使用绝对路径
+  uri: 'https://indexer.mainnet.aptoslabs.com/v1/graphql',
+})
+
+// 缓存实现
+const cache = new InMemoryCache()
+
+// 创建 apollo 客户端
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache,
+})
+
+const connectWallet = async () => {
+  if (isMobile.value && !isOKApp.value) {
+    const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
+    window.location.href = encodedUrl;
+    try {
+      const response = await window.okxwallet.aptos.connect();
+      // console.log(response);
+      address.value = response.address;
+      walletAddress.setWalletAddress(address.value)
+      btnInfo.value = address.value?.substring(0, 5) + "..." + address.value?.substring(address.value.length - 4);
+    } catch (error) {
+      message.error(error.message)
+    }
+  }
 
 
-onMounted(() => {
-  let width = document.documentElement.clientWidth;
-  console.log(width, 'width')
-  if (width > 750) {
-    isMobile.value = false
-  } else {
-    isMobile.value = true;
+}
+
+const disConnectWallet = async () => {
+  let connectionStatus = await window.okxwallet.aptos.isConnected();
+  console.log(connectionStatus, 'connectionStatus')
+
+  try {
+    const response = window.okxwallet.aptos.disconnect()
+    console.log(response, 'response')
+    walletAddress.setWalletAddress('');
+  } catch (error) {
+    message.error(error.message)
+  }
+}
+
+const getIsMobils = async () => {
+  const ua = navigator.userAgent;
+  const isIOS = /iphone|ipad|ipod|ios/i.test(ua);
+  const isAndroid = /android|XiaoMi|MiuiBrowser/i.test(ua);
+  isMobile.value = isIOS || isAndroid;
+  isOKApp.value = /OKApp/i.test(ua);
+}
+
+
+onMounted(async () => {
+  await getIsMobils()
+  if (window.okxwallet.aptos.selectedAccount) {
+    address.value = window.okxwallet.aptos.selectedAccount?.address;
+    walletAddress.setWalletAddress(address.value);
+    btnInfo.value = address.value?.substring(0, 5) + "..." + address.value?.substring(address.value.length - 4);
   }
 })
 </script>
@@ -69,5 +152,4 @@ onMounted(() => {
   background-clip: text;
   color: transparent;
 }
-
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full">
+<div class="w-full h-full">
     
     <div class="w-screen h-screen" :class=" isMobile == true? 'phone-bg1-container' : 'bg1-container'">
       <abscHeader></abscHeader>
@@ -126,7 +126,7 @@
       <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px] absolute bottom-[350px]">Now you can check your draw
         results!</div>
       <div class="absolute bottom-[280px]">
-        <a-button class=" w-[198px] h-[40px] rounded-[25px]">View Results</a-button>
+        <a-button class=" w-[198px] h-[40px] rounded-[25px]" @click="viewResult">View Results</a-button>
       </div>
     </div>
   </ADModal>
@@ -144,6 +144,8 @@ import { AptosClient } from "aptos";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById, apiAbscDrawCheck } from "@/apis/absc";
 import useAssets from "@/stores/useAssets";
+import { useWalletAddress } from "@/stores/useWalletAddress";
+const walletAddress = useWalletAddress()
 import gql from 'graphql-tag';
 const { getImageURL } = useAssets();
 
@@ -245,10 +247,14 @@ const getAbscBlindBoxById = async (id: string) => {
   return data
 }
 
+const viewResult = () => {
+  showModal.value = false;
+  document.documentElement.scrollTop = 1500
+}
 
 // 连接钱包
 const connectWallet = async () => {
-  if (isMobile && !isOKApp) {
+  if (isMobile.value && !isOKApp.value) {
     const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
     window.location.href = encodedUrl;
   } else {
@@ -257,6 +263,7 @@ const connectWallet = async () => {
         const response = await window.okxwallet.aptos.connect();
         // console.log(response);
         address.value = response.address;
+        walletAddress.setWalletAddress(address.value);
         getAbscRecord()
         getAbscBalance()
       } catch (error) {
@@ -367,6 +374,8 @@ onMounted(async () => {
   await getIsMobils()
   if (window.okxwallet.aptos.selectedAccount) {
     address.value = window.okxwallet.aptos.selectedAccount?.address;
+    walletAddress.setWalletAddress(address.value);
+
     getAbscRecord()
     getAbscBalance()
   }
