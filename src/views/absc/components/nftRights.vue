@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[798px] mx-auto md:px-[0px] px-[32px] md:pb-[64px] pb-[32px]">
+  <div class="max-w-[798px] mx-auto md:px-[0px] px-[32px] md:pb-[36px] pb-[32px]">
     <div class="text-center text-[16px] text-[#fff] font-bold mb-[20px]">NFT rights</div>
     <div class="mb-[30px]">
       <a-table :dataSource="dataSource" :columns="columns" :pagination="false" :showHeader="false" bordered />

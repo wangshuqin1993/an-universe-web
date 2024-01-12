@@ -5,18 +5,20 @@
     <div class="w-screen h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
       <div class="px-[32px] pt-[82px]">
         <div class="absc-title "><span class="title-text text-[30px] md:text-[48px] ">BSC Golden Shovel</span></div>
-        <div class="absc-sub-title md:w-[860px] w-hull mx-auto">$BSC Golden Shovel is a collection of 7777 NFTs issued on
-          the BSC
-          chain. As the genesis
-          NFT of the
-
-          BMaker&$BSC project, it plays an important role in the subsequent development of the ecosystem.
-
-          According to different rarity, $BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
-
-          to different rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
+        <div class="absc-sub-title md:w-[860px] w-hull mx-auto">
+          <div>
+            $BSC Golden Shovel is a collection of 7777 NFTs issued on
+            the BSC chain. As the genesis NFT of the<br />
+            BMaker&$BSC project, it plays an important role in the subsequent
+            development of the ecosystem.<br />
+          </div>
+          <div class="mt-[20px]">
+            According to different rarity, $BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
+            to<br />
+            different rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
+          </div>
         </div>
-        <div class="absc-blind-container md:w-[860px] w-hull">
+        <!-- <div class="absc-blind-container md:w-[860px] w-hull">
           <div class="absc-blind">Blind box activity</div>
           <span class="absc-blind-text w-hull">The blind box activity is an event set up for ABSC inscription holders to
             consume inscriptions and obtain
@@ -25,7 +27,7 @@
 
             ABSC inscription holder can obtain their desired genesis NFT.
           </span>
-        </div>
+        </div> -->
       </div>
       <div class="">
         <div class="text-center mt-[40px]  px-[32px]" v-if="!address">
@@ -51,13 +53,15 @@
       </div>
     </div>
 
-    <div class="w-screen h-[85vh]" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
+    <div class="w-screen h-[75vh]" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
       <div class="md:px-[0px] px-[32px] md:pt-[82px] pt-[0px] max-w-[1440px] mx-auto pb-[75px]">
-        <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center">
+        <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center mb-[20px]">
           Your activity result
-          <div class="text-[14px] mb-[10px] font-medium">You have started <span class="text-[#F41FFF]">0</span> activity
-            once</div>
         </div>
+        <div class="text-[14px] mb-[10px] font-medium text-center text-[#FFFFFF]">You have started <span
+            class="text-[#F41FFF]">0</span>
+          activity
+          once</div>
         <div v-if="recordData.length"
           class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
           <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
@@ -79,19 +83,25 @@
         </div>
 
         <div v-else
-          class="text-center flex justify-center items-center bg-[#FFFFFF] w-[80%] mx-auto h-[170px] md:h-[349px] bg-opacity-20 rounded-[16px] border border-opacity-20 border-[#fff]">
+          class="text-center flex justify-center items-center bg-[#FFFFFF] w-[80%] mx-auto h-[170px] md:h-[260px] bg-opacity-20 rounded-[16px] border border-opacity-20 border-[#fff]">
           <span class="text-[#7C7C7C] font-[Arial] text-[16px]">You haven’t obtained the NFT yet, please go to mint</span>
         </div>
       </div>
 
       <div class="max-w-[798px] mx-auto text-center">
         <div class="font-[Montserrat Black] text-[#fff] text-[36px] font-black">NFT Description</div>
-        <div class="font-[Arial] text-[#7C7C7C] text-[16px] mt-[29px] w-[90%] mx-auto leading-[18px]">
-          BSC Golden Shovel is a collection of 7777 NFTs issued on the BSC chain.
-          As the genesis NFT of the BMaker&$BSC project, it plays an important role in the subsequent development of the
-          ecosystem.
-          According to different rarity, BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
-          to different rights. You can obtain the BSC Golden Shovel NFT by burning ABSC inscriptions.
+        <div class="font-[Arial] text-[#7C7C7C] text-[16px] mt-[29px] mx-auto leading-[18px]">
+          <div>
+            $BSC Golden Shovel is a collection of 7777 NFTs issued on
+            the BSC chain. As the genesis NFT of the<br />
+            BMaker&$BSC project, it plays an important role in the subsequent
+            development of the ecosystem.<br />
+          </div>
+          <div class="mt-[20px]">
+            According to different rarity, $BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
+            to<br />
+            different rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
+          </div>
         </div>
       </div>
     </div>
@@ -421,7 +431,7 @@ onMounted(async () => {
   // position: relative;
   background-image: url("../../assets/images/mint-bg1.jpg");
   background-repeat: no-repeat;
-  background-size: 100vw 100vh;
+  background-size: 10vw 100vh;
 }
 
 .phone-bg1-container {
@@ -433,7 +443,7 @@ onMounted(async () => {
 .bg2-container {
   background-image: url("../../assets/images/mint-bg2.jpg");
   background-repeat: no-repeat;
-  background-size: 100vw 100vh;
+  background-size: 100vw 75vh;
 }
 
 .phone-bg2-container {

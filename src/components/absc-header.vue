@@ -242,6 +242,7 @@ watch(() => walletAddress.walletAddress,
 
 .selected-header-menu {
   font-weight: bold;
+  color: #F41FFF;
 }
 
 .selected-header-menu-mobile {
