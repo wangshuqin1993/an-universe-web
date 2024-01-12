@@ -26,7 +26,7 @@ import { useWalletAddress } from "@/stores/useWalletAddress";
 const walletAddress = useWalletAddress()
 
 const router = useRouter();
-const isMobile = ref(true);
+const isMobile = ref(false);
 const isOKApp = ref(false);
 const address = ref('');
 const btnInfo = ref('');
