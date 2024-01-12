@@ -31,7 +31,7 @@
           @click="connectWallet">Start now</a-button>
       </div>
       <div v-else class="text-center mt-[40px]  px-[32px]">
-        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
+        <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]" :loading="loading"
           @click="showOpen">MINT</a-button>
       </div>
 
@@ -84,7 +84,7 @@
             <div v-else class="text-[#fff] md:text-[18px] text-[14px] font-extrabold">
               <img src="@/assets/images/null.png" class="rounded-[16px]" />
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold mt-[20px]">
-                <div>losing lottery</div>
+                <div>Didn't get reward</div>
               </div>
             </div>
           </div>
@@ -102,16 +102,29 @@
   </div>
 
   <a-modal v-model:open="open" title="" :footer="null">
-    <div class="text-[14px] text-[#000] font-semibold mb-[20px] mt-[50px]">Please enter BSC address</div>
+    <div class="text-center">
+      <div class="flex items-center justify-center text-center text-[21px] font-semibold mt-[50px] mb-[30px] ">
+        <ExclamationCircleTwoTone style="fontSize: 20px" />
+        <div class="ml-[10px]">Attention</div>
+      </div>
+      <div class="text-[#737373] text-[14px]">The NFT won from the blind box will be airdropped directly to your BSC
+        address:
+        1f3fef…3fty</div>
+      <div class="text-center mt-[40px]">
+        <a-button class="text-[14px] w-[178px] h-[38px] rounded-[5px]" :disabled="disabledMint" @click="gotIt">Got
+          it</a-button>
+      </div>
+    </div>
+    <!-- <div class="text-[14px] text-[#000] font-semibold mb-[20px] mt-[50px]">Please enter BSC address</div>
     <a-input class="h-[54px] bg-[#F3F3F3]" v-model:value="toAddress" />
     <div class="text-[#737373] text-[12px] mt-[14px]">
-      <ExclamationCircleTwoTone style="fontSize: 14px" />
+      
       <span class="align-middle ml-[4px]">Note: BSC address is used to receive NFT</span>
     </div>
     <div class="text-center mt-[40px]">
       <a-button class="text-[14px] w-[178px] h-[38px] rounded-[5px]" :disabled="disabledMint"
         @click="transactionApt20">Mint</a-button>
-    </div>
+    </div> -->
   </a-modal>
 
   <ADModal :show="showModal">
@@ -174,6 +187,7 @@ const toAddress = ref("");
 const amount = ref(10);
 const open = ref(false);
 const showModal = ref(false)
+const loading = ref(false);
 const disabledMint = ref(false);
 const recordData = ref([])
 const isMobile = ref(false)
@@ -198,7 +212,7 @@ const getAbscDrawCheck = async () => {
 
 // 抽奖记录列表
 const getAbscRecord = async () => {
-  const { data } = await apiAbscRecord(address.value)
+  const { data } = await apiAbscRecord(walletAddress.walletAddress)
   recordData.value = data || [];
   recordData.value.map(async (item) => {
     item.child = await getAbscBlindBoxById(item.blindBoxId)
@@ -251,26 +265,53 @@ const viewResult = () => {
   document.documentElement.scrollTop = 1500
 }
 
+
+const gotIt = async () => {
+  try {
+    const response = await window.okxwallet.aptos.connect();
+    console.log(response);
+    if (response.address) {
+      transactionApt20()
+    }
+
+    getAbscBalance()
+  } catch (error) {
+    message.error(error.message)
+  }
+}
+
 // 连接钱包
 const connectWallet = async () => {
   if (isMobile.value && !isOKApp.value) {
     const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
     window.location.href = encodedUrl;
   } else {
-    if (typeof window.okxwallet !== 'undefined') {
-      try {
-        const response = await window.okxwallet.aptos.connect();
-        // console.log(response);
-        address.value = response.address;
-        walletAddress.setWalletAddress(address.value);
-        getAbscRecord()
-        getAbscBalance()
-      } catch (error) {
-        message.error(error.message)
-      }
+    const response = await okxwallet.request({ method: 'eth_requestAccounts' });
+    const res = await okxwallet.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: '0x38' }],
+    });
+    if (window.okxwallet.selectedAddress) {
+      let address = window.okxwallet.selectedAddress
+      walletAddress.setWalletAddress(address);
+      getAbscRecord()
     } else {
-      return message.info('请先安装OKX钱包')
+      message.info('Please provide a wallet that supports BSC!')
     }
+    // if (typeof window.okxwallet !== 'undefined') {
+    //   try {
+    //     const response = await window.okxwallet.aptos.connect();
+    //     // console.log(response);
+    //     address.value = response.address;
+    //     walletAddress.setWalletAddress(address.value);
+    //     getAbscRecord()
+    //     getAbscBalance()
+    //   } catch (error) {
+    //     message.error(error.message)
+    //   }
+    // } else {
+    //   return message.info('请先安装OKX钱包')
+    // }
   }
 
 }
@@ -292,19 +333,18 @@ const payableNFTs = (nfts: any[], amount: number) => {
 
 // // 交易 APT20 
 const transactionApt20 = async () => {
-  if (!toAddress.value) return message.error('Please enter BSC address!');
   let list = payableNFTs(abscNFTList.value, amount.value);
   console.log(list);
   const transaction = {
     arguments: [
-      list, toAddress.value, amount.value],
+      list, walletAddress.walletAddress, amount.value],
     function: '0x1fc2f33ab6b624e3e632ba861b755fd8e61d2c2e6cf8292e415880b4c198224d::apts::split',
     type_arguments: [],
   };
   console.log(transaction);
   try {
     open.value = false;
-    toAddress.value = '';
+    loading.value = true;
     const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
     const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
     const txn = await client.waitForTransactionWithResult(
@@ -313,12 +353,13 @@ const transactionApt20 = async () => {
     console.log(txn, 'txn')
     if (txn) {
       showModal.value = true;
+      loading.value = false;
       getAbscDraw(txn.hash)
       getAbscBalance()
     }
   } catch (error) {
     open.value = false;
-    toAddress.value = '';
+    loading.value = false;
     message.error(error.message)
     console.log(error);
   }
@@ -371,9 +412,9 @@ const getIsMobils = async () => {
 onMounted(async () => {
   // if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
   await getIsMobils()
-  if (window.okxwallet.aptos.selectedAccount) {
-    address.value = window.okxwallet.aptos.selectedAccount?.address;
-    walletAddress.setWalletAddress(address.value);
+  if (window.okxwallet.selectedAddress) {
+    let address = window.okxwallet.selectedAddress;
+    walletAddress.setWalletAddress(address);
 
     getAbscRecord()
     getAbscBalance()

@@ -21,7 +21,7 @@
             :class="{ 'selected-header-menu': selectedNavTitle === item.name }">
             {{ item.name }}
           </div>
-          <a-button class="w-[178px] text-[18px] h-[42px] rounded-[12px]" @click="walletOpen = true"
+          <a-button class="w-[178px] text-[18px] h-[42px] rounded-[12px]" @click="connectWallet"
             v-if="!walletAddress.walletAddress">connect wallet</a-button>
 
           <a-dropdown placement="bottom" v-else>
@@ -56,7 +56,7 @@
       </div>
     </a-drawer>
   </div>
-  <a-modal v-model:open="walletOpen" title="" :footer="null">
+  <!-- <a-modal v-model:open="walletOpen" title="" :footer="null">
     <div class="text-[20px] text-[#000] font-bold mb-[30px] mt-[0px]">Please connect your wallet</div>
     <div class="flex">
       <div class="text-center wallet-item" @click="connectWallet">
@@ -64,7 +64,7 @@
         <div class="mt-[10px]">OKX WAllet</div>
       </div>
     </div>
-  </a-modal>
+  </a-modal> -->
 </template>
 <script lang='ts' setup>
 import { ref, onMounted, watch } from "vue";
@@ -112,26 +112,44 @@ const changeRouter = (item: any) => {
 // 连接钱包
 const connectWallet = async () => {
   walletOpen.value = false;
-  if (typeof window.okxwallet !== 'undefined') {
-    try {
-      const response = await window.okxwallet.aptos.connect();
-      // console.log(response);
-      walletAddress.setWalletAddress(response.address);
-      btnInfo.value = response.address?.substring(0, 5) + "..." + response.address?.substring(response.address.length - 4);
-    } catch (error) {
-      message.error(error.message)
+
+  try {
+    const response = await okxwallet.request({ method: 'eth_requestAccounts' });
+    const res = await okxwallet.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: '0x38' }],
+    });
+    if (window.okxwallet.selectedAddress) {
+      let address = window.okxwallet.selectedAddress
+      walletAddress.setWalletAddress(address);
+      btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+    } else {
+      message.info('Please provide a wallet that supports BSC!')
     }
-  } else {
-    return message.info('请先安装OKX钱包')
+  } catch (error) {
+    message.error(error.message)
   }
+
+  // if (typeof window.okxwallet !== 'undefined') {
+  //   try {
+  //     const response = await window.okxwallet.aptos.connect();
+  //     // console.log(response);
+  //     walletAddress.setWalletAddress(response.address);
+  //     btnInfo.value = response.address?.substring(0, 5) + "..." + response.address?.substring(response.address.length - 4);
+  //   } catch (error) {
+  //     message.error(error.message)
+  //   }
+  // } else {
+  //   return message.info('请先安装OKX钱包')
+  // }
 }
 
 const disConnectWallet = async () => {
-  let connectionStatus = await window.okxwallet.aptos.isConnected();
+  let connectionStatus = await window.okxwallet.isConnected();
   console.log(connectionStatus, 'connectionStatus')
 
   try {
-    const response = window.okxwallet.aptos.disconnect()
+    const response = window.okxwallet.disconnect()
     console.log(response, 'response')
     walletAddress.setWalletAddress('');
   } catch (error) {
@@ -149,11 +167,14 @@ const getIsMobils = async () => {
 
 onMounted(async () => {
   await getIsMobils()
-  if (window.okxwallet.aptos.selectedAccount) {
-    let address = window.okxwallet.aptos.selectedAccount?.address;
+  // console.log(window.okxwallet, 'window.okxwallet')
+  if (window.okxwallet.selectedAddress) {
+    let address = window.okxwallet.selectedAddress;
     walletAddress.setWalletAddress(address);
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   }
+
+  console.log(window.okxwallet.selectedAddress, walletAddress.walletAddress, btnInfo.value, 'window.okxwallet')
   // let width = document.documentElement.clientWidth;
   // console.log(width, 'width')
   // if (width > 750) {
@@ -175,6 +196,15 @@ watch(
     }
   }, { deep: true, immediate: true }
 );
+
+watch(() => walletAddress.walletAddress,
+  (newVal, _oldVal) => {
+    if (newVal) {
+      console.log(newVal, 'kkkk')
+      walletAddress.setWalletAddress(newVal)
+    }
+  }, { deep: true, immediate: true })
+
 
 
 </script>

@@ -74,26 +74,44 @@ const connectWallet = async () => {
   if (isMobile.value && !isOKApp.value) {
     const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
     window.location.href = encodedUrl;
+
     try {
-      const response = await window.okxwallet.aptos.connect();
-      // console.log(response);
-      address.value = response.address;
-      walletAddress.setWalletAddress(address.value)
-      btnInfo.value = address.value?.substring(0, 5) + "..." + address.value?.substring(address.value.length - 4);
+      const response = await okxwallet.request({ method: 'eth_requestAccounts' });
+      const res = await okxwallet.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x38' }],
+      });
+      if (window.okxwallet.selectedAddress) {
+        let address = window.okxwallet.selectedAddress
+        walletAddress.setWalletAddress(address);
+        btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+      } else {
+        message.info('Please provide a wallet that supports BSC!')
+      }
     } catch (error) {
       message.error(error.message)
     }
+
+    // try {
+    //   const response = await window.okxwallet.aptos.connect();
+    //   // console.log(response);
+    //   address.value = response.address;
+    //   walletAddress.setWalletAddress(address.value)
+    //   btnInfo.value = address.value?.substring(0, 5) + "..." + address.value?.substring(address.value.length - 4);
+    // } catch (error) {
+    //   message.error(error.message)
+    // }
   }
 
 
 }
 
 const disConnectWallet = async () => {
-  let connectionStatus = await window.okxwallet.aptos.isConnected();
+  let connectionStatus = await window.okxwallet.isConnected();
   console.log(connectionStatus, 'connectionStatus')
 
   try {
-    const response = window.okxwallet.aptos.disconnect()
+    const response = window.okxwallet.disconnect()
     console.log(response, 'response')
     walletAddress.setWalletAddress('');
   } catch (error) {
@@ -112,8 +130,8 @@ const getIsMobils = async () => {
 
 onMounted(async () => {
   await getIsMobils()
-  if (window.okxwallet.aptos.selectedAccount) {
-    address.value = window.okxwallet.aptos.selectedAccount?.address;
+  if (window.okxwallet.selectedAddress) {
+    let address = window.okxwallet.selectedAddress;
     walletAddress.setWalletAddress(address.value);
     btnInfo.value = address.value?.substring(0, 5) + "..." + address.value?.substring(address.value.length - 4);
   }
