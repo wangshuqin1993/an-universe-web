@@ -1,5 +1,5 @@
 #!/bin/bash
-
+rm -rf dist/
 npm run build
 docker build -t hamstershare/hamster-nft-frontend:$1 .
 docker push hamstershare/hamster-nft-frontend:$1
