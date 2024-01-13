@@ -53,7 +53,7 @@ export function apiWhitelistAcquisitionTime()  {
     code: 200,
     data: {
       start: "2024-1-13 00:00:00",
-      eng: "2024-1-14 00:00:00",
+      end: "2024-1-14 00:00:00",
       status: 2
     }
   })

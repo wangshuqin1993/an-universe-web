@@ -259,7 +259,7 @@ const showOpen = async () => {
       open.value = true
     }
   } else {
-    message.info('抽奖次数已用完')
+    message.info('The activity has ended')
   }
 }
 
