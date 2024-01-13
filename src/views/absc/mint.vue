@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <div class="w-screen h-[75vh]" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
+    <div class="w-screen" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
       <div class="md:px-[0px] px-[32px] md:pt-[82px] pt-[0px] max-w-[1440px] mx-auto pb-[75px]">
         <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center mb-[20px]">
           Your activity result
@@ -97,7 +97,7 @@
             BMaker&$BSC project, it plays an important role in the subsequent
             development of the ecosystem.<br />
           </div>
-          <div class="mt-[20px]">
+          <div class="mt-[20px] pb-[20px]">
             According to different rarity, $BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
             to<br />
             different rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
@@ -283,38 +283,42 @@ const gotIt = async () => {
 
 // 连接钱包
 const connectWallet = async () => {
-  if (isMobile.value && !isOKApp.value) {
-    const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
-    window.location.href = encodedUrl;
-  } else {
-    const response = await okxwallet.request({ method: 'eth_requestAccounts' });
-    const res = await okxwallet.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0x38' }],
-    });
-    if (window.okxwallet.selectedAddress) {
-      let address = window.okxwallet.selectedAddress
-      walletAddress.setWalletAddress(address);
-      getAbscRecord()
+  try {
+    if (isMobile.value && !isOKApp.value) {
+      const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
+      window.location.href = encodedUrl;
     } else {
-      message.info('Please provide a wallet that supports BSC!')
+      const response = await okxwallet.request({ method: 'eth_requestAccounts' });
+      const res = await okxwallet.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x38' }],
+      });
+      if (window.okxwallet.selectedAddress) {
+        let address = window.okxwallet.selectedAddress
+        walletAddress.setWalletAddress(address);
+        getAbscRecord()
+      } else {
+        message.info('Please provide a wallet that supports BSC!')
+      }
     }
-    // if (typeof window.okxwallet !== 'undefined') {
-    //   try {
-    //     const response = await window.okxwallet.aptos.connect();
-    //     // console.log(response);
-    //     address.value = response.address;
-    //     walletAddress.setWalletAddress(address.value);
-    //     getAbscRecord()
-    //     getAbscBalance()
-    //   } catch (error) {
-    //     message.error(error.message)
-    //   }
-    // } else {
-    //   return message.info('请先安装OKX钱包')
-    // }
+  } catch (err) {
+    message.error(err.message)
   }
 
+  // if (typeof window.okxwallet !== 'undefined') {
+  //   try {
+  //     const response = await window.okxwallet.aptos.connect();
+  //     // console.log(response);
+  //     address.value = response.address;
+  //     walletAddress.setWalletAddress(address.value);
+  //     getAbscRecord()
+  //     getAbscBalance()
+  //   } catch (error) {
+  //     message.error(error.message)
+  //   }
+  // } else {
+  //   return message.info('请先安装OKX钱包')
+  // }
 }
 
 // 返回可支付 apt 的 NFT 数组
@@ -443,7 +447,7 @@ onMounted(async () => {
 .bg2-container {
   background-image: url("../../assets/images/mint-bg2.jpg");
   background-repeat: no-repeat;
-  background-size: 100vw 75vh;
+  background-size: 100vw 100%;
 }
 
 .phone-bg2-container {

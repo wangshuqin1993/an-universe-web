@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-[798px] mx-auto md:px-[0px] px-[32px] md:pb-[64px] pb-[32px] text-center">
     <div>
-      <a-table :columns="columns" :data-source="data" bordered>
+      <a-table :columns="columns" :data-source="data" bordered :pagination="false">
       </a-table>
     </div>
   </div>
@@ -72,5 +72,4 @@ const data = ref([
 
 </script>
 
-<style scoped lang="less">
-</style>
+<style scoped lang="less"></style>

@@ -78,6 +78,7 @@
 
 
   <WhiteListModal :openWhiteListModal="openWhiteListModal"></WhiteListModal>
+  <whiteListBuyModal :openWhiteListBuyModal="openWhiteListBuyModal"></whiteListBuyModal>
 </template>
 
 <script setup lang="ts">
@@ -85,10 +86,12 @@ import { ref } from 'vue'
 import abscHeader from "@/components/absc-header.vue";
 import { ExclamationCircleTwoTone } from "@ant-design/icons-vue";
 import WhiteListModal from './components/WhiteListModal.vue';
+import whiteListBuyModal from './components/whiteListBuyModal.vue';
 
 const open = ref(false)
 const bscAddress = ref("");
 const openWhiteListModal = ref(false);
+const openWhiteListBuyModal = ref(false)
 
 const handleExchangeModal = () => {
   open.value = true

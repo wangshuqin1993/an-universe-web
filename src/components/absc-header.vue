@@ -112,7 +112,6 @@ const changeRouter = (item: any) => {
 // 连接钱包
 const connectWallet = async () => {
   walletOpen.value = false;
-
   try {
     const response = await okxwallet.request({ method: 'eth_requestAccounts' });
     const res = await okxwallet.request({
