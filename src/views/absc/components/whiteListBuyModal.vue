@@ -1,19 +1,27 @@
 <template>
-  <a-modal v-model:open="openWhiteListBuyModal" title="" :footer="null">
+  <a-modal v-model:open="openWhiteListBuyModal" title="" :footer="null" @cancel="closeModal">
     <div class="relative">
       <div class="mt-[50px] buy-input-item">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay</div>
-        <a-input v-model:value="buyValue"></a-input>
+        <a-input v-model:value="buyValue" placeholder="Basic usage">
+          <template #suffix>
+            <div>BNB</div>
+          </template>
+        </a-input>
         <div class="flex justify-between mt-[5px]">
           <div class="text-[#6A6A6A ]">$300.12</div>
           <div class="text-[#000000]">Balance: 12.12</div>
         </div>
       </div>
-      <img src="@/assets/images/swap.png" class="h-[63px] absolute left-50%" />
+      <img src="@/assets/images/swap.png" class="swap-posi" />
 
       <div class="buy-input-item mt-[10px]">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">You Receive</div>
-        <a-input v-model:value="buyValue"></a-input>
+        <a-input v-model:value="buyValue" placeholder="Basic usage">
+          <template #suffix>
+            <div>ABSC</div>
+          </template>
+        </a-input>
         <div class="text-[#000000]">You $ABSC balance: 1000000</div>
       </div>
     </div>
@@ -45,6 +53,10 @@ const props = defineProps({
 })
 
 const { openWhiteListBuyModal } = toRefs(props)
+const emit = defineEmits(['closeWhiteListBuyModal'])
+const closeModal = () => {
+  emit('closeWhiteListBuyModal', false)
+}
 </script>
 <style lang='less' scoped>
 .buy-input-item {
@@ -71,5 +83,17 @@ const { openWhiteListBuyModal } = toRefs(props)
   &:hover {
     opacity: 0.65;
   }
+}
+
+.swap-posi {
+  width: 63px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ant-input-affix-wrapper {
+  height: 49px;
 }
 </style>

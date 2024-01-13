@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model:open="openWhiteListModal" title="" :footer="null" width="660px">
+  <a-modal v-model:open="openWhiteListModal" title="" :footer="null" width="660px" @cancel="closeModal">
     <div class="text-center">
       <div class="flex items-center justify-center text-center text-[21px] font-semibold mt-[50px] mb-[30px] ">
         Get your whitelist and win a better price for $ABSC token IDO
@@ -67,6 +67,11 @@ const props = defineProps({
 })
 
 const { openWhiteListModal } = toRefs(props)
+const emit = defineEmits(['closeWhiteListModal'])
+const closeModal = () => {
+  emit('closeWhiteListModal', false)
+}
+
 </script>
 <style lang='less' scoped>
 .wallet-item {

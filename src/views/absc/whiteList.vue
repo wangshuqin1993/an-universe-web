@@ -77,8 +77,10 @@
   </a-modal> -->
 
 
-  <WhiteListModal :openWhiteListModal="openWhiteListModal"></WhiteListModal>
-  <whiteListBuyModal :openWhiteListBuyModal="openWhiteListBuyModal"></whiteListBuyModal>
+  <WhiteListModal :openWhiteListModal="openWhiteListModal" @closeWhiteListModal="openWhiteListModal = false">
+  </WhiteListModal>
+  <whiteListBuyModal :openWhiteListBuyModal="openWhiteListBuyModal"
+    @closeWhiteListBuyModal="openWhiteListBuyModal = false"></whiteListBuyModal>
 </template>
 
 <script setup lang="ts">
@@ -91,7 +93,7 @@ import whiteListBuyModal from './components/whiteListBuyModal.vue';
 const open = ref(false)
 const bscAddress = ref("");
 const openWhiteListModal = ref(false);
-const openWhiteListBuyModal = ref(false)
+const openWhiteListBuyModal = ref(true)
 
 const handleExchangeModal = () => {
   open.value = true

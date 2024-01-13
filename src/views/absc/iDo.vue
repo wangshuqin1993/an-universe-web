@@ -40,7 +40,9 @@
           Coming Soon
         </a-button>
         <div class="text-[#fff] md:text-[36px] text-[24px] font-bold md:mb-[64px] mb-[32px]">$ABSC Token</div>
-        <div class="border border-solid border-[#fff] w-full h-[400px] rounded-[10px] text-[#fff]">这里要放张图片</div>
+        <div class=" w-full rounded-[10px] text-[#fff]">
+          <img src="@/assets/images/id-tokens.png" />
+        </div>
       </div>
       <div class="service-box md:p-[50px] p-[24px] md:mt-[64px] mt-[32px]">
         <div class="md:text-[21px] text-[18px] text-[#fff] font-bold md:mb-[30px] mb-[20px]">$ABSC IDO Terms of service

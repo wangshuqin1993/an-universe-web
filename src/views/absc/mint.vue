@@ -262,7 +262,7 @@ const getAbscBlindBoxById = async (id: string) => {
 
 const viewResult = () => {
   showModal.value = false;
-  document.documentElement.scrollTop = 1500
+  document.documentElement.scrollTop = 600
 }
 
 
