@@ -30,7 +30,7 @@
         </div> -->
       </div>
       <div class="">
-        <div class="text-center mt-[40px]  px-[32px]" v-if="!address">
+        <div class="text-center mt-[40px]  px-[32px]" v-if="!walletAddress.walletAddress">
           <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
             @click="connectWallet">Start now
           </a-button>
@@ -41,7 +41,7 @@
           </a-button>
         </div>
 
-        <div v-if="address" class="mint-text md:w-[532px] w-hull px-[32px] ">
+        <div v-if="walletAddress.walletAddress" class="mint-text md:w-[532px] w-hull px-[32px] ">
           <div class="mb-[8px]">balance: <span class="!text-[#E527FF]">{{ abscBalance }}</span> ABSC</div>
           <div>
             You have started
@@ -84,7 +84,7 @@
 
         <div v-else
           class="text-center flex justify-center items-center bg-[#FFFFFF] w-[80%] mx-auto h-[170px] md:h-[260px] bg-opacity-20 rounded-[16px] border border-opacity-20 border-[#fff]">
-          <span class="text-[#7C7C7C] font-[Arial] text-[16px]">You haven’t obtained the NFT yet, please go to mint</span>
+          <span class="text-[#7C7C7C] font-[Arial] text-[16px]">You haven't obtained the NFT yet, please go to mint</span>
         </div>
       </div>
 
@@ -121,7 +121,7 @@
       </div>
       <div class="text-[#737373] text-[14px]">The NFT won from the blind box will be airdropped directly to your BSC
         address:
-        1f3fef…3fty</div>
+        {{ walletAddress.walletAddress }}</div>
       <div class="text-center mt-[40px]">
         <a-button class="text-[14px] w-[178px] h-[38px] rounded-[5px]" :disabled="disabledMint" @click="gotIt">Got
           it</a-button>
@@ -178,14 +178,12 @@ const apolloClient = new ApolloClient({
   link: httpLink,
   cache,
 })
-const coreImgRef = ref();
-const coreImgHeight = ref(0);
+
 const surplusAmount = ref(false);
 const abscDrawCheck = ref(0);
-const address = ref("");
 const abscBalance = ref(0);
 const abscNFTList = ref([]);
-const toAddress = ref("");
+const aptosAddress = ref("");
 const amount = ref(10);
 const open = ref(false);
 const showModal = ref(false)
@@ -223,13 +221,13 @@ const getAbscRecord = async () => {
 
 // 抽奖接口
 const getAbscDraw = async (hash: string) => {
-  // "hash": "aptos转账的交易hash",
-  // "aptAddress": "aptos的账户地址",
-  // "mintAddress": "用户填写的mint的地址"
+  // "hash": "aptos 转账的交易 hash",
+  // "aptAddress": "aptos 的账户地址",
+  // "mintAddress": "用户填写的 mint 的地址"
   const params = {
     hash: hash,
-    aptAddress: address.value,
-    mintAddress: toAddress.value,
+    aptAddress: aptosAddress.value,
+    mintAddress: walletAddress.walletAddress,
   }
   const res = await apiAbscDraw(params);
   if (res.code === 200) {
@@ -273,6 +271,7 @@ const gotIt = async () => {
     const response = await window.okxwallet.aptos.connect();
     console.log(response);
     if (response.address) {
+      aptosAddress.value = response.address;
       transactionApt20()
     }
     getAbscBalance()
@@ -288,8 +287,8 @@ const connectWallet = async () => {
       const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
       window.location.href = encodedUrl;
     } else {
-      const response = await okxwallet.request({ method: 'eth_requestAccounts' });
-      const res = await okxwallet.request({
+      await okxwallet.request({ method: 'eth_requestAccounts' });
+      await okxwallet.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0x38' }],
       });
@@ -305,20 +304,6 @@ const connectWallet = async () => {
     message.error(err.message)
   }
 
-  // if (typeof window.okxwallet !== 'undefined') {
-  //   try {
-  //     const response = await window.okxwallet.aptos.connect();
-  //     // console.log(response);
-  //     address.value = response.address;
-  //     walletAddress.setWalletAddress(address.value);
-  //     getAbscRecord()
-  //     getAbscBalance()
-  //   } catch (error) {
-  //     message.error(error.message)
-  //   }
-  // } else {
-  //   return message.info('请先安装OKX钱包')
-  // }
 }
 
 // 返回可支付 apt 的 NFT 数组
@@ -342,7 +327,7 @@ const transactionApt20 = async () => {
   console.log(list);
   const transaction = {
     arguments: [
-      list, walletAddress.walletAddress, amount.value],
+      list, "0xc2895146e7e35ca7210fedefb75af56a67eeb4084017f5d3bd45882780e93277", amount.value],
     function: '0x1fc2f33ab6b624e3e632ba861b755fd8e61d2c2e6cf8292e415880b4c198224d::apts::split',
     type_arguments: [],
   };
@@ -391,7 +376,7 @@ const getOwnersNFTs = () => {
         }
       }`,
     variables: {
-      address: address.value,
+      address: aptosAddress.value,
     }
   })
 }
