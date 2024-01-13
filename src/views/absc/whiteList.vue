@@ -93,7 +93,7 @@ import whiteListBuyModal from './components/whiteListBuyModal.vue';
 const open = ref(false)
 const bscAddress = ref("");
 const openWhiteListModal = ref(false);
-const openWhiteListBuyModal = ref(true)
+const openWhiteListBuyModal = ref(false)
 
 const handleExchangeModal = () => {
   open.value = true
