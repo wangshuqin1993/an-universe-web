@@ -156,7 +156,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { ExclamationCircleTwoTone, setTwoToneColor } from "@ant-design/icons-vue"
 import { message } from "ant-design-vue";
 import abscHeader from "@/components/absc-header.vue";
@@ -422,6 +422,18 @@ onMounted(async () => {
   getAbscBlindBoxNumber()
   getAbscDrawCheck()
 })
+
+
+watch(
+  () => walletAddress.walletAddress,
+  (newVal, _oldVal) => {
+    if (newVal) {
+      getAbscRecord()
+    } else {
+      recordData.value = [];
+    }
+  }, { deep: true, immediate: true }
+);
 
 </script>
 
