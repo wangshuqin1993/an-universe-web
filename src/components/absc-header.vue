@@ -21,7 +21,7 @@
             :class="{ 'selected-header-menu': selectedNavTitle === item.name }">
             {{ item.name }}
           </div>
-          <a-button class="w-[178px] text-[18px] h-[42px] rounded-[12px]" @click="connectWallet"
+          <a-button class="w-[178px] text-[18px] h-[42px] rounded-[12px]" @click="walletOpen = true"
             v-if="!walletAddress.walletAddress">connect wallet</a-button>
 
           <a-dropdown placement="bottom" v-else>
@@ -56,7 +56,7 @@
       </div>
     </a-drawer>
   </div>
-  <!-- <a-modal v-model:open="walletOpen" title="" :footer="null">
+  <a-modal v-model:open="walletOpen" title="" :footer="null">
     <div class="text-[20px] text-[#000] font-bold mb-[30px] mt-[0px]">Please connect your wallet</div>
     <div class="flex">
       <div class="text-center wallet-item" @click="connectWallet">
@@ -64,7 +64,7 @@
         <div class="mt-[10px]">OKX WAllet</div>
       </div>
     </div>
-  </a-modal> -->
+  </a-modal>
 </template>
 <script lang='ts' setup>
 import { ref, onMounted, watch } from "vue";

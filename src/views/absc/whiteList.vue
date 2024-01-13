@@ -1,43 +1,58 @@
 
 <template>
+  <abscHeader></abscHeader>
   <div class="w-full h-full bg-black pb-[75px]">
-    <abscHeader></abscHeader>
-
     <div class="max-w-[1440px] mx-auto md:px-[0px] px-[32px]">
       <div class="title-text md:pt-[166px] pt-[100px]">$ABSC Token IDO Whit</div>
       <div class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-center mt-[37px]">
-        The $ABSC token IDO will be launched soon, and users with whitelist spots can enjoy corresponding price discounts. 
-        Users holding $BSC Genesis NFT can exchange for whitelist spots by burning ABSC inscriptions. 
+        The $ABSC token IDO will be launched soon, and users with whitelist spots can enjoy corresponding price discounts.
+        Users holding $BSC Genesis NFT can exchange for whitelist spots by burning ABSC inscriptions.
         Each exchange requires burning 500,000 ABSC inscriptions, and each address can only exchange once for each NFT.
       </div>
     </div>
-
     <div>
-      <div class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-[47px] border border-[#463947] border-solid mx-auto">
-        <span class="pt-[15px] px-[21px] font-bold text-[24px] text-[#fff]">2024.1.16 10:00 am — 1.17 8:00 am(UTC+8)</span>
+      <div
+        class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-[47px] border border-[#463947] border-solid mx-auto">
+        <span class="pt-[15px] px-[21px] font-bold text-[24px] text-[#fff]">2024.1.16 10:00 am — 1.17 8:00
+          am(UTC+8)</span>
         <span class="pb-[15px] text-[#8D8D8D] text-[18px]">Exchange time</span>
       </div>
-      <div class="min-btn" @click="handleExchangeModal">Exchange Now</div>
-      <div class="text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center mt-[19px] mb-[9px]">balance：<span class="text-[#F41FFF]">1200000</span> ABSC</div>
-      <div class="w-[90%] md:w-full text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center mx-auto">You have obtained the <span class="text-[#F41FFF]">UR</span> whitelist, corresponding to your NFT with Token ID <span class="text-[#F41FFF]">1268</span></div>
+      <div class="text-center mt-[40px]">
+        <a-button class="w-[278px] h-[60px] rounded-[30px] text-[18px]" @click="handleExchangeModal">Get
+          Whitelist</a-button>
+      </div>
+
+      <div class="text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center mt-[19px] mb-[9px]">
+        balance：<span class="text-[#F41FFF]">1200000</span> ABSC</div>
+      <div
+        class="w-[90%] md:w-full text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center mx-auto">
+        You have obtained the <span class="text-[#F41FFF]">UR</span> whitelist, corresponding to your NFT with Token ID
+        <span class="text-[#F41FFF]">1268</span>
+      </div>
     </div>
 
     <div class="whitelist-absc-container w-[90%] md:max-w-[931px] py-[50px] mt-[70px] mx-auto">
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
-        <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[24px] text-[16px]">As the mapping token of the leading inscription ABSC based on APT-20 on the BSC chain, 
-          the $ABSC token will become the first mapping token of the Bmaker ecosystem and can be exchanged with BSC stablecoins based on the Bmaker ecosystem. 
-          $ABSC can also be staked to obtain the corresponding amount of Bmaker ecosystem stablecoins, 
-          which can be used on any chain supported by the BSC ecosystem. 
+        <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[24px] text-[16px]">As the mapping token of
+          the leading inscription ABSC based on APT-20 on the BSC chain,
+          the $ABSC token will become the first mapping token of the Bmaker ecosystem and can be exchanged with BSC
+          stablecoins based on the Bmaker ecosystem.
+          $ABSC can also be staked to obtain the corresponding amount of Bmaker ecosystem stablecoins,
+          which can be used on any chain supported by the BSC ecosystem.
           The $ABSC token is an important value support for the Bmaker ecosystem stablecoins.
         </span>
       </div>
       <div class="flex flex-col items-center justify-center mt-[32px]">
-        <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token IDO Whit</span>
-        <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[24px] text-[16px]">The $ABSC token IDO will be launched soon, and users with whitelist spots can enjoy corresponding price discounts. 
-          Users holding $BSC Genesis NFT can exchange for whitelist spots by burning ABSC inscriptions. 
+        <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token IDO Whitelist</span>
+        <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[24px] text-[16px]">The $ABSC token IDO
+          will
+          be launched soon, and users with whitelist spots can enjoy corresponding price discounts.
+          Users holding $BSC Genesis NFT can exchange for whitelist spots by burning ABSC inscriptions.
           Each exchange requires burning 500,000 ABSC inscriptions, and each address can only exchange once for each NFT.
-          Exchange time：2024-1-16 10:00 am—— 1-17 8:00 am（UTC+8）
+          <div class="mt-[12px]">
+            Exchange time：2024-1-16 10:00 am—— 1-17 8:00 am（UTC+8）
+          </div>
         </span>
       </div>
 
@@ -48,33 +63,39 @@
     </div>
   </div>
 
-  <a-modal v-model:open="open" title="" :footer="null">
+  <!-- <a-modal v-model:open="open" title="" :footer="null">
     <div class="text-[18px] text-[#000] font-semibold mb-[20px] mt-[50px] font-bold">Please enter BSC address</div>
-    <a-input class="h-[54px] bg-[#F3F3F3]" v-model:value="bscAddress" placeholder="Please enter BSC address"/>
+    <a-input class="h-[54px] bg-[#F3F3F3]" v-model:value="bscAddress" placeholder="Please enter BSC address" />
     <div class="text-[#737373] text-[12px] mt-[14px]">
       <ExclamationCircleTwoTone style="fontSize: 14px" />
-      <span class="align-middle ml-[4px]">Note: The BSC chain address is used to detect whether it is qualified for the redemption whitelist</span>
+      <span class="align-middle ml-[4px]">Note: The BSC chain address is used to detect whether it is qualified for the
+        redemption whitelist</span>
     </div>
     <div class="text-center mt-[40px]">
       <a-button class="text-[14px] w-[178px] h-[38px] rounded-[5px]" @click="handleExchangeNow">Exchange Now</a-button>
     </div>
-  </a-modal>
+  </a-modal> -->
+
+
+  <WhiteListModal :openWhiteListModal="openWhiteListModal"></WhiteListModal>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import abscHeader from "@/components/absc-header.vue";
-import { ExclamationCircleTwoTone } from "@ant-design/icons-vue"
+import { ExclamationCircleTwoTone } from "@ant-design/icons-vue";
+import WhiteListModal from './components/WhiteListModal.vue';
 
 const open = ref(false)
 const bscAddress = ref("");
+const openWhiteListModal = ref(false);
 
-const handleExchangeModal = ()=>{
+const handleExchangeModal = () => {
   open.value = true
 }
 
-const handleExchangeNow =()=>{
-  console.log('handleExchangeNow:',bscAddress.value)
+const handleExchangeNow = () => {
+  console.log('handleExchangeNow:', bscAddress.value)
 }
 
 const columns = ref([
@@ -165,12 +186,10 @@ const data = ref([
 }
 
 .whitelist-absc-container {
-  background: linear-gradient(152deg, rgba(60,43,157,0.13) 0%, rgba(115,10,131,0.15) 100%);
+  background: linear-gradient(152deg, rgba(60, 43, 157, 0.13) 0%, rgba(115, 10, 131, 0.15) 100%);
   border-radius: 16px;
   border-color: transparent;
   border: 1px solid;
   border-image: linear-gradient(134deg, rgba(110, 86, 255, 0.24), rgba(240, 33, 255, 0.16)) 16px round;
 }
-
-
 </style>
