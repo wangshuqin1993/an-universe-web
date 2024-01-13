@@ -30,17 +30,26 @@
         </div> -->
       </div>
       <div class="">
+        <!--
         <div class="text-center mt-[40px]  px-[32px]" v-if="!walletAddress.walletAddress">
           <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
             @click="connectWallet">Start now
           </a-button>
         </div>
-        <div v-else class="text-center mt-[40px]  px-[32px]">
-          <a-button class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
-            :loading="loading" @click="showOpen">MINT
+      -->
+        <div class="text-center mt-[40px]  px-[32px]">
+          <a-button :disabled="abscDrawCheck!==2 " class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]"
+            :loading="loading" @click="showOpen">Start now
           </a-button>
         </div>
-
+        <div v-if="(abscDrawCheck == 1) || (abscDrawCheck == 3)" class="mint-text md:w-[532px] w-hull px-[32px] "></div>
+            <div v-if="abscDrawCheck == 1">
+              The activity has not started yet
+            </div>
+            <div v-if="abscDrawCheck == 3">
+              The activity has ended
+            </div>
+        </div>
         <div v-if="walletAddress.walletAddress" class="mint-text md:w-[532px] w-hull px-[32px] ">
           <div class="mb-[8px]">balance: <span class="!text-[#E527FF]">{{ abscBalance }}</span> ABSC</div>
           <div>
@@ -110,7 +119,7 @@
       <nftDesc></nftDesc>
       <nftRights></nftRights>
     </div>
-  </div>
+  
 
 
   <a-modal v-model:open="open" title="" :footer="null">
@@ -201,7 +210,7 @@ const showModalbtn = () => {
 const getAbscBlindBoxNumber = async () => {
   const { data } = await apiAbscBlindBoxNumber();
   surplusAmount.value = data
-  console.log(data, '剩余抽奖次数')
+  //console.log(data, '剩余抽奖次数')
 }
 
 const getAbscDrawCheck = async () => {
@@ -239,17 +248,18 @@ const getAbscDraw = async (hash: string) => {
 }
 
 
-const showOpen = () => {
-  if (abscDrawCheck.value == 1) {
-    return message.info('活动未开始')
-  } else if (abscDrawCheck.value == 2) {
-    if (!surplusAmount.value) {
-      open.value = true
+const showOpen = async () => {
+  if (!surplusAmount.value) {
+    if (!walletAddress.walletAddress) {
+      await connectWallet();
+      if (walletAddress.walletAddress) {
+        open.value = true
+      }
     } else {
-      message.info('抽奖次数已用完')
+      open.value = true
     }
-  } else if (abscDrawCheck.value == 3) {
-    return message.info('活动已结束')
+  } else {
+    message.info('抽奖次数已用完')
   }
 }
 
