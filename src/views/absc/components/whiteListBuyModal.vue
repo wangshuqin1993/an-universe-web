@@ -10,7 +10,7 @@
         </a-input>
         <div class="flex justify-between mt-[5px]">
           <div class="text-[#6A6A6A ]">$300.12</div>
-          <div class="text-[#000000]">Balance: 12.12</div>
+          <div class="text-[#000000]">Balance: {{ whitelistSubscribeAmountData.amount }}</div>
         </div>
       </div>
       <img src="@/assets/images/swap.png" class="swap-posi" />
@@ -22,17 +22,18 @@
             <div>ABSC</div>
           </template>
         </a-input>
-        <div class="text-[#000000]">You $ABSC balance: 1000000</div>
+        <div class="text-[#000000]">You $ABSC balance: {{ whitelistSubscribeAmountData.abscAmount }}</div>
       </div>
     </div>
 
     <div class="text-[12px] bg-[#F7F7F7] rounded-[8px] px-[30px] py-[20px] mt-[20px]">
       <div class="text-[#343434]">1ABSC=0.0001BNB</div>
       <div>
-        <div class="text-[#FF3653]">Discount: 0.7<br />
-          Minimum amount: 100 USDT<br />
-          Maximum amount: 1000 USDT<br />
-          Remaining amount: 400 USDT</div>
+        <div class="text-[#FF3653]">Discount: {{ whitelistSubscribeConfigData.tokenEthRate }}<br />
+          Minimum amount: {{ whitelistSubscribeConfigData.minAllocation }} USDT<br />
+          Maximum amount: {{ whitelistSubscribeConfigData.maxAllocation }} USDT<br />
+          <!-- Remaining amount: {{ }} USDT</div> -->
+        </div>
       </div>
     </div>
     <div class="flex justify-center items-center mt-[40px]">
@@ -42,9 +43,13 @@
   </a-modal>
 </template>
 <script lang='ts' setup>
-import { ref, toRefs } from "vue";
+import { ref, toRefs, onMounted } from "vue";
+import { apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiWhitelistDiscount, apiWhitelistSubscribe } from "@/apis/absc";
+import { useWalletAddress } from "@/stores/useWalletAddress";
+const walletAddress = useWalletAddress();
 const buyValue = ref(0)
-
+const whitelistSubscribeConfigData = ref({});
+const whitelistSubscribeAmountData = ref({});
 const props = defineProps({
   openWhiteListBuyModal: {
     type: Boolean,
@@ -57,6 +62,21 @@ const emit = defineEmits(['closeWhiteListBuyModal'])
 const closeModal = () => {
   emit('closeWhiteListBuyModal', false)
 }
+
+const getApiWhitelistSubscribeConfig = async () => {
+  const { data } = await apiWhitelistSubscribeConfig()
+  whitelistSubscribeConfigData.value = data;
+}
+
+const getApiWhitelistSubscribeAmount = async () => {
+  const { data } = await apiWhitelistSubscribeAmount(walletAddress.walletAddress)
+  whitelistSubscribeAmountData.value = data
+}
+
+onMounted(async () => {
+  await getApiWhitelistSubscribeConfig()
+  getApiWhitelistSubscribeAmount();
+})
 </script>
 <style lang='less' scoped>
 .buy-input-item {

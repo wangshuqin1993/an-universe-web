@@ -1,0 +1,72 @@
+<template>
+  <a-modal v-model:open="openSelectedWhiteListModal" title="" :footer="null" width="660px" @cancel="closeModal">
+    <div>
+      <div class="my-[20px] text-[14px] text-[#000] font-semibold">
+        <div class="mb-[30px] text-[18px]">Connect Wallet</div>
+        <div v-for="val in walletList " :key="val.name" @click="connectWallet">
+          <div class="flex wallet-item  items-center cursor-pointer">
+            <img :src="getImageURL(`${val.img}.png`)" class="h-[30px] mr-[18px]" />
+            <div>{{ val.name }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a-modal>
+</template>
+<script lang='ts' setup>
+import { ref, toRefs } from "vue";
+import useAssets from "@/stores/useAssets";
+import { message } from "ant-design-vue";
+import { useWalletAddress } from "@/stores/useWalletAddress";
+const { getImageURL } = useAssets();
+const walletAddress = useWalletAddress()
+const walletList = ref([{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo' }])
+const props = defineProps({
+  openSelectedWhiteListModal: {
+    type: Boolean,
+    default: false,
+  }
+})
+const { openSelectedWhiteListModal } = toRefs(props)
+const emit = defineEmits(['closeSelectedWhiteListModal'])
+const closeModal = () => {
+  emit('closeSelectedWhiteListModal')
+}
+
+// 连接钱包
+const connectWallet = async () => {
+  try {
+    const response = await okxwallet.request({ method: 'eth_requestAccounts' });
+    const res = await okxwallet.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: '0x38' }],
+    });
+    if (window.okxwallet.selectedAddress) {
+      let address = window.okxwallet.selectedAddress
+      walletAddress.setWalletAddress(address);
+      closeModal()
+    } else {
+      closeModal()
+      message.info('Please provide a wallet that supports BSC!')
+    }
+  } catch (error) {
+    message.error(error.message)
+  }
+}
+</script>
+<style lang='less' scoped>
+.wallet-item {
+  padding: 20px 30px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #000000;
+  background-color: #fff;
+  border-radius: 22px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.13);
+  margin-bottom: 20px;
+
+  &:hover {
+    box-shadow: 0px 2px 4px 0px rgba(244, 31, 255, 0.13);
+  }
+}
+</style>

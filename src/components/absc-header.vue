@@ -167,8 +167,8 @@ const getIsMobils = async () => {
 onMounted(async () => {
   await getIsMobils()
   // console.log(window.okxwallet, 'window.okxwallet')
-  if (window.okxwallet.selectedAddress) {
-    let address = window.okxwallet.selectedAddress;
+  if (window.okxwallet?.selectedAddress) {
+    let address = window.okxwallet?.selectedAddress;
     walletAddress.setWalletAddress(address);
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   }

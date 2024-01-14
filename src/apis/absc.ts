@@ -53,8 +53,8 @@ export function apiWhitelistAcquisitionTime()  {
     code: 200,
     data: {
       start: "2024-1-13 00:00:00",
-      eng: "2024-1-14 00:00:00",
-      status: 2
+      end: "2024-1-14 00:00:00",
+      status: '2'
     }
   })
 }
@@ -76,7 +76,7 @@ export function apiWhitelistAbscNFT(address: string)  {
 }
 
 // 白名单申请
-export function apiWhitelistApplication(tx:string,address: string)  {
+export function apiWhitelistApplication(tx:string, aptoAddress: string, address: string)  {
   // return httpRequest({
   //   url: `/absc/whitelist/application`,
   //   method: "post",
@@ -122,8 +122,8 @@ export function apiWhitelistSubscribeTime()  {
     code: 200,
     data: {
       start: "2024-1-13 00:00:00",
-      eng: "2024-1-14 00:00:00",
-      status: 2
+      end: "2024-1-14 00:00:00",
+      status: '2'
     }
   })
 }
@@ -173,7 +173,8 @@ export function apiWhitelistSubscribeAmount(address: string)  {
   return Promise.resolve({
     code: 200,
     data: {
-      amount: "100"
+      amount: "100",
+      abscAmount: '776555'
     }
   })
 }

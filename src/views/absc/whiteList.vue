@@ -13,22 +13,30 @@
     <div>
       <div
         class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-[47px] border border-[#463947] border-solid mx-auto">
-        <span class="pt-[15px] px-[21px] font-bold text-[24px] text-[#fff]">2024.1.16 10:00 am — 1.17 8:00
+        <span class="pt-[15px] px-[21px] font-bold text-[24px] text-[#fff]">{{ whitelistAcquisitionTime.start }} am — {{
+          whitelistAcquisitionTime.end }}
           am(UTC+8)</span>
         <span class="pb-[15px] text-[#8D8D8D] text-[18px]">Exchange time</span>
       </div>
       <div class="text-center mt-[40px]">
-        <a-button class="w-[278px] h-[60px] rounded-[30px] text-[18px]" @click="handleExchangeModal">Get
-          Whitelist</a-button>
+        <a-button class="w-[278px] h-[60px] rounded-[30px] text-[18px]" @click="handleExchangeModal"
+          :disabled="disabled">{{ btnInfo
+          }}</a-button>
       </div>
+      <div v-if="whitelistVerifyData && whitelistVerifyData.result" class="text-center text-[#fff] mt-[20px]">You have
+        obtained the <span class="text-[#E527FF]">{{
+          whitelistVerifyData.level }}</span>
+        whitelist,
+        corresponding to your NFT with
+        Token ID <span class="text-[#E527FF]">{{ whitelistVerifyData.tokenId }}</span></div>
 
-      <div class="text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center mt-[19px] mb-[9px]">
+      <!-- <div class="text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center mt-[19px] mb-[9px]">
         balance：<span class="text-[#F41FFF]">1200000</span> ABSC</div>
       <div
         class="w-[90%] md:w-full text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center mx-auto">
         You have obtained the <span class="text-[#F41FFF]">UR</span> whitelist, corresponding to your NFT with Token ID
         <span class="text-[#F41FFF]">1268</span>
-      </div>
+      </div> -->
     </div>
 
     <div class="whitelist-absc-container w-[90%] md:max-w-[931px] py-[50px] mt-[70px] mx-auto">
@@ -58,7 +66,7 @@
 
       <div class="flex flex-col items-center justify-center mt-[32px]">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold mb-[19px]">Whitelist information:</span>
-        <a-table :columns="columns" :data-source="data" bordered></a-table>
+        <a-table :columns="columns" :data-source="data" bordered :pagination="false"></a-table>
       </div>
     </div>
   </div>
@@ -77,31 +85,65 @@
   </a-modal> -->
 
 
-  <WhiteListModal :openWhiteListModal="openWhiteListModal" @closeWhiteListModal="openWhiteListModal = false">
+  <WhiteListModal :openWhiteListModal="openWhiteListModal" :whitelistAbscNFTdata="whitelistAbscNFTdata"
+    @closeWhiteListModal="openWhiteListModal = false" @getWhiteListDone="getApiWhitelistVerify">
   </WhiteListModal>
   <whiteListBuyModal :openWhiteListBuyModal="openWhiteListBuyModal"
     @closeWhiteListBuyModal="openWhiteListBuyModal = false"></whiteListBuyModal>
+  <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
+    @closeSelectedWhiteListModal="openSelectedWhiteListModal = false">
+  </selectWalletListModal>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import abscHeader from "@/components/absc-header.vue";
-import { ExclamationCircleTwoTone } from "@ant-design/icons-vue";
 import WhiteListModal from './components/WhiteListModal.vue';
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
+import selectWalletListModal from "@/components/selectWalletListModal.vue";
+import { useWalletAddress } from "@/stores/useWalletAddress";
+import { apiWhitelistAcquisitionTime, apiWhitelistVerify, apiWhitelistAbscNFT } from "@/apis/absc";
+const walletAddress = useWalletAddress()
 
 const open = ref(false)
 const bscAddress = ref("");
 const openWhiteListModal = ref(false);
-const openWhiteListBuyModal = ref(false)
+const openWhiteListBuyModal = ref(false);
+const openSelectedWhiteListModal = ref(false);
+const whitelistVerifyData = ref({});
+const whitelistAbscNFTdata = ref({});
+const whitelistAcquisitionTime = ref({});
+const btnInfo = ref('Get Whitelist');
+const disabled = ref(false);
+
 
 const handleExchangeModal = () => {
-  open.value = true
+  if (walletAddress.walletAddress) {
+    openWhiteListModal.value = true;
+  } else {
+    openSelectedWhiteListModal.value = true
+  }
 }
 
-const handleExchangeNow = () => {
-  console.log('handleExchangeNow:', bscAddress.value)
+const getApiWhitelistAcquisitionTime = async () => {
+  const { data } = await apiWhitelistAcquisitionTime();
+  whitelistAcquisitionTime.value = data
+  if (data.status == '1') {
+    disabled.value = true
+  } else if (data.status == '2') {
+    // 获取ido状态
+    // apiWhitelistSubscribeTime
+  }
 }
+
+
+const getApiWhitelistAbscNFT = async () => {
+  const { data } = await apiWhitelistAbscNFT(walletAddress.walletAddress)
+  whitelistAbscNFTdata.value = data;
+  console.log(data);
+
+}
+
 
 const columns = ref([
   {
@@ -162,6 +204,24 @@ const data = ref([
     quota: 'Voucher worth 30U during $ABSC IDO',
   },
 ]);
+
+const getApiWhitelistVerify = async () => {
+  const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
+  whitelistVerifyData.value = data;
+  if (data && data.result) {
+    btnInfo.value = 'IDO(coming soon)';
+    disabled.value = true;
+  }
+  console.log(data, 'apiWhitelistVerify')
+}
+
+onMounted(async () => {
+  await getApiWhitelistAcquisitionTime()
+  if (walletAddress.walletAddress) {
+    await getApiWhitelistVerify()
+  }
+  getApiWhitelistAbscNFT()
+})
 </script>
 
 <style scoped lang="less">
@@ -169,7 +229,7 @@ const data = ref([
   font-family: Montserrat Black;
   text-align: center;
   background-image: linear-gradient(to right, #60638B 0%, #F9F9F9 25%, #FFFFFF 50%, #60638B 100%);
-  -webkit-background-clip: text;
+  -webkit-background-clip: te xt;
   background-clip: text;
   color: transparent;
   font-weight: 900;
