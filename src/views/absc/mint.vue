@@ -67,10 +67,12 @@
         <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center mb-[20px]">
           Your activity result
         </div>
+        <!--
         <div class="text-[14px] mb-[10px] font-medium text-center text-[#FFFFFF]">You have started <span
             class="text-[#F41FFF]">0</span>
           activity
           once</div>
+        -->
         <div v-if="recordData.length"
           class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
           <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
@@ -78,7 +80,7 @@
               <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px] mb-[30px]" />
               <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
                 <div>Rarity:</div>
-                <div>{{ item?.child?.level }}</div>
+                <div>{{ getLevelLabel(item?.child?.level) }}</div>
               </div>
             </div>
 
@@ -252,11 +254,18 @@ const showOpen = async () => {
   if (!surplusAmount.value) {
     if (!walletAddress.walletAddress) {
       await connectWallet();
-      if (walletAddress.walletAddress) {
-        open.value = true
+    }
+    if (walletAddress.walletAddress) {
+      const response = await window.okxwallet.aptos.connect();
+      if (response.address) {
+        aptosAddress.value = response.address;
+        await getAbscBalance()
+        open.value = true;
+      } else {
+        message.error("Aptos Wallet without link")
       }
     } else {
-      open.value = true
+      message.error("Wallet without link")
     }
   } else {
     message.info('The activity has ended')
@@ -278,19 +287,18 @@ const viewResult = () => {
 
 const gotIt = async () => {
   try {
-    const response = await window.okxwallet.aptos.connect();
-    console.log(response);
-    if (response.address) {
-      aptosAddress.value = response.address;
-      transactionApt20()
-    }
-    getAbscBalance()
+    open.value = false;
+    loading.value = true;
+    await transactionApt20()
   } catch (error) {
-    message.error(error.message)
+    open.value = false;
+    loading.value = false;
+    message.error(error.message);
+    console.error(error);
   }
 }
 
-// 连接钱包
+// connectWallet
 const connectWallet = async () => {
   try {
     if (isMobile.value && !isOKApp.value) {
@@ -319,13 +327,16 @@ const connectWallet = async () => {
 // 返回可支付 apt 的 NFT 数组
 const payableNFTs = (nfts: any[], amount: number) => {
   let num = 0;
-  let list = [];
+  let list :string[] = [];
   for (let i = 0; i < nfts.length; i++) {
     num = num + nfts[i].token_properties.amt
     list.push(nfts[i].token_data_id);
     if (num > amount) {
       break;
     }
+  }
+  if (num < amount) {
+    throw new Error("Insufficient balance of ABSC inscriptions");
   }
   return list;
 }
@@ -334,34 +345,28 @@ const payableNFTs = (nfts: any[], amount: number) => {
 // // 交易 APT20 
 const transactionApt20 = async () => {
   let list = payableNFTs(abscNFTList.value, amount.value);
-  console.log(list);
+  if (list.length == 0) {
+    throw new Error("Insufficient balance of ABSC inscriptions");
+  }
   const transaction = {
     arguments: [
       list, "0xc2895146e7e35ca7210fedefb75af56a67eeb4084017f5d3bd45882780e93277", amount.value],
     function: '0x1fc2f33ab6b624e3e632ba861b755fd8e61d2c2e6cf8292e415880b4c198224d::apts::split',
     type_arguments: [],
   };
-  console.log(transaction);
-  try {
-    open.value = false;
-    loading.value = true;
-    const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
-    const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
-    const txn = await client.waitForTransactionWithResult(
-      pendingTransaction.hash,
-    );
-    console.log(txn, 'txn')
-    if (txn) {
-      showModal.value = true;
-      loading.value = false;
-      getAbscDraw(txn.hash)
-      getAbscBalance()
-    }
-  } catch (error) {
-    open.value = false;
+  console.log("tx",transaction);
+  
+  const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
+  const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
+  const txn = await client.waitForTransactionWithResult(
+    pendingTransaction.hash,
+  );
+  console.log(txn, 'txn')
+  if (txn) {
+    showModal.value = true;
     loading.value = false;
-    message.error(error.message)
-    console.log(error);
+    getAbscDraw(txn.hash)
+    getAbscBalance()
   }
 }
 
@@ -434,6 +439,18 @@ watch(
     }
   }, { deep: true, immediate: true }
 );
+
+const levelLabel = new Map();
+levelLabel.set(1, 'UR');
+levelLabel.set(2, 'SSR');
+levelLabel.set(3, 'SR');
+levelLabel.set(4, 'S');
+levelLabel.set(5, 'R');
+levelLabel.set(6, 'N');
+
+const getLevelLabel = (level:number):string =>{
+  return levelLabel.get(level)
+}
 
 </script>
 
