@@ -358,14 +358,15 @@ const transactionApt20 = async () => {
   const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
   const txn = await client.waitForTransactionWithResult(
     pendingTransaction.hash,
+    {
+      checkSuccess: true
+    }
   );
   console.log(txn, 'txn')
-  if (txn) {
-    showModal.value = true;
-    loading.value = false;
-    getAbscDraw(txn.hash)
-    getAbscBalance()
-  }
+  showModal.value = true;
+  loading.value = false;
+  await getAbscDraw(txn.hash);
+  getAbscBalance()
 }
 
 const getAbscBalance = () => {
