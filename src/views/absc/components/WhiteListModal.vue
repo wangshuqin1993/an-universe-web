@@ -49,7 +49,7 @@
                 ABSC
                 inscriptions
               </div>
-              <div @click="gotIt" v-if="!whitelistVerifyData.result"
+              <div @click="startNow" v-if="!whitelistVerifyData.result"
                 class="w-[120px] h-[32px] text-[#fff] text-[12px] font-semibold bg-[#000] rounded-[22px] text-center leading-[32px] cursor-pointer hover:opacity-[0.75]">
                 Start Now</div>
               <div class="flex items-center" v-else>
@@ -141,7 +141,7 @@ import useAssets from "@/stores/useAssets";
 import { message } from "ant-design-vue";
 import { AptosClient } from "aptos";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
-import { apiWhitelistAbscNFT, apiWhitelistVerify } from "@/apis/absc";
+import { apiWhitelistAbscNFT, apiWhitelistVerify, apiWhitelistApplication } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const { getImageURL } = useAssets();
 const walletAddress = useWalletAddress();
@@ -149,6 +149,7 @@ const disabledWhiteListBtn = ref(true);
 const amount = ref(10);
 const abscNFTList = ref([]);
 const aptosAddress = ref('');
+const whitelistApplicationResult = ref(false);
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
   // 你需要在这里使用绝对路径
@@ -177,6 +178,7 @@ const closeModal = () => {
   emit('closeWhiteListModal', false)
 }
 
+// 有NFT可以Start Now
 const getApiWhitelistAbscNFT = async () => {
   const { data } = await apiWhitelistAbscNFT(walletAddress.walletAddress)
   whitelistAbscNFTdata.value = data;
@@ -188,7 +190,7 @@ const getWhiteListDone = () => {
   emit('getWhiteListDone')
 }
 
-const gotIt = async () => {
+const startNow = async () => {
   try {
     const response = await window.okxwallet.aptos.connect();
     console.log(response);
@@ -201,6 +203,7 @@ const gotIt = async () => {
   }
 }
 
+// 获取白名单资格
 const getApiWhitelistVerify = async () => {
   const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
   whitelistVerifyData.value = data;
@@ -208,6 +211,11 @@ const getApiWhitelistVerify = async () => {
     disabledWhiteListBtn.value = false
   }
   console.log(data, 'apiWhitelistVerify')
+}
+
+const getApiWhitelistApplication = async (hash: string) => {
+  const { data } = await apiWhitelistApplication(hash, aptosAddress.value, walletAddress.walletAddress)
+  whitelistApplicationResult.value = data.result
 }
 
 // // 交易 APT20 
@@ -230,6 +238,7 @@ const transactionApt20 = async () => {
     );
     console.log(txn, 'txn')
     if (txn) {
+      await getApiWhitelistApplication(txn.hash);
       getApiWhitelistVerify()
     }
   } catch (error) {

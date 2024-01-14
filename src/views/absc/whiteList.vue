@@ -60,7 +60,7 @@
           Users holding $BSC Genesis NFT can exchange for whitelist spots by burning ABSC inscriptions.
           Each exchange requires burning 500,000 ABSC inscriptions, and each address can only exchange once for each NFT.
           <div class="mt-[12px]">
-            Exchange time：2024-1-16 10:00 am—— 1-17 8:00 am（UTC+8）
+            Exchange time：{{ whitelistAcquisitionTime.start }} am—— {{ whitelistAcquisitionTime.end }} am（UTC+8）
           </div>
         </span>
       </div>
@@ -86,13 +86,13 @@
   </a-modal> -->
 
 
-  <WhiteListModal :openWhiteListModal="openWhiteListModal" :whitelistAbscNFTdata="whitelistAbscNFTdata"
-    @closeWhiteListModal="openWhiteListModal = false" @getWhiteListDone="getApiWhitelistVerify">
+  <WhiteListModal :openWhiteListModal="openWhiteListModal" @closeWhiteListModal="openWhiteListModal = false"
+    @getWhiteListDone="getWhiteListDone">
   </WhiteListModal>
   <whiteListBuyModal :openWhiteListBuyModal="openWhiteListBuyModal"
     @closeWhiteListBuyModal="openWhiteListBuyModal = false"></whiteListBuyModal>
   <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
-    @closeSelectedWhiteListModal="openSelectedWhiteListModal = false">
+    @closeSelectedWhiteListModal="closeSelectedWhiteListModal">
   </selectWalletListModal>
 </template>
 
@@ -103,7 +103,7 @@ import WhiteListModal from './components/WhiteListModal.vue';
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
-import { apiWhitelistAcquisitionTime, apiWhitelistVerify, apiWhitelistAbscNFT } from "@/apis/absc";
+import { apiWhitelistAcquisitionTime, apiWhitelistVerify, apiWhitelistSubscribeTime } from "@/apis/absc";
 const walletAddress = useWalletAddress()
 
 const open = ref(false)
@@ -114,36 +114,9 @@ const openSelectedWhiteListModal = ref(false);
 const whitelistVerifyData = ref({});
 const whitelistAbscNFTdata = ref({});
 const whitelistAcquisitionTime = ref({});
-const btnInfo = ref('Get Whitelist');
+const whitelistSubscribeTime = ref({});
+const btnInfo = ref('');
 const disabled = ref(false);
-
-
-const handleExchangeModal = () => {
-  if (walletAddress.walletAddress) {
-    openWhiteListModal.value = true;
-  } else {
-    openSelectedWhiteListModal.value = true
-  }
-}
-
-const getApiWhitelistAcquisitionTime = async () => {
-  const { data } = await apiWhitelistAcquisitionTime();
-  whitelistAcquisitionTime.value = data
-  if (data.status == '1') {
-    disabled.value = true
-  } else if (data.status == '2') {
-    // 获取ido状态
-    // apiWhitelistSubscribeTime
-  }
-}
-
-
-const getApiWhitelistAbscNFT = async () => {
-  const { data } = await apiWhitelistAbscNFT(walletAddress.walletAddress)
-  whitelistAbscNFTdata.value = data;
-  console.log(data);
-
-}
 
 
 const columns = ref([
@@ -171,57 +144,136 @@ const data = ref([
   {
     key: '1',
     type: 'UR',
-    price: 100,
-    quota: 'Discount voucher worth 70% of 300U during $ABSC IDO',
+    price: 13,
+    quota: 'Discount voucher 70% during $ABSC IDO',
   },
   {
     key: '2',
     type: 'SSR',
-    price: 300,
-    quota: 'Discount voucher worth 80% of 200U during $ABSC IDO',
+    price: 40,
+    quota: 'Discount voucher 80% during $ABSC IDO',
   },
   {
     key: '3',
     type: 'SR',
-    price: 500,
-    quota: 'Discount voucher worth 90% of 100U during $ABSC IDO',
+    price: 65,
+    quota: 'Discount voucher 90% during $ABSC IDO',
   },
   {
     key: '4',
     type: 'S',
-    price: 1000,
+    price: 130,
     quota: 'Voucher worth 80U during $ABSC IDO',
   },
   {
     key: '5',
     type: 'R',
-    price: 2000,
+    price: 260,
     quota: 'Voucher worth 50U during $ABSC IDO',
   },
   {
     key: '6',
     type: 'N',
-    price: 3877,
+    price: 492,
     quota: 'Voucher worth 30U during $ABSC IDO',
   },
 ]);
 
+// 点击按钮
+const handleExchangeModal = async () => {
+  if (!walletAddress.walletAddress) return openSelectedWhiteListModal.value = true;
+  if (btnInfo.value.includes('Whitelist')) {
+    // 点击获取白名单
+    await getApiWhitelistVerify();
+    if (whitelistAbscNFTdata.value && whitelistAbscNFTdata.value.result) {
+      // 有白名单判断IDO是否开始
+      getApiWhitelistSubscribeTime()
+    } else {
+      // 没有白名单
+      openWhiteListModal.value = true;
+    }
+  } else {
+    openWhiteListBuyModal.value = true;
+    // 点击开始IDO
+
+  }
+
+}
+
+// 活动开始时间
+const getApiWhitelistAcquisitionTime = async () => {
+  const { data } = await apiWhitelistAcquisitionTime();
+  whitelistAcquisitionTime.value = data
+  if (data.status == '1') {
+    btnInfo.value = 'Get Whitelist'
+    disabled.value = true
+  } else if (data.status == '2') {
+    btnInfo.value = 'Get Whitelist'
+    disabled.value = false;
+    // getApiWhitelistSubscribeTime()
+  } else {
+    btnInfo.value = '活动已结束';
+    disabled.value = true;
+  }
+  console.log(data, 'data')
+}
+
+// 添加白名单时间
+const getApiWhitelistSubscribeTime = async () => {
+  const { data } = await apiWhitelistSubscribeTime()
+  whitelistSubscribeTime.value = data
+  if (data.status == '1') {
+    btnInfo.value = 'IDO(coming soon)';
+    disabled.value = true;
+  } else if (data.status == '2') {
+    btnInfo.value = 'IDO';
+    disabled.value = false;
+  } else {
+    btnInfo.value = 'IDO已结束';
+    disabled.value = true;
+  }
+}
+
+
+const getWhiteListDone = () => {
+  getApiWhitelistVerify()
+  getApiWhitelistSubscribeTime()
+}
+
+// 连接钱包成功
+const closeSelectedWhiteListModal = async () => {
+  openSelectedWhiteListModal.value = false;
+  await getApiWhitelistVerify()
+  if (whitelistAbscNFTdata.value && whitelistAbscNFTdata.value.result) {
+    // 有白名单判断IDO是否开始
+    getApiWhitelistSubscribeTime()
+  }
+}
+
+// 用来判断是否有白名单
 const getApiWhitelistVerify = async () => {
   const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
   whitelistVerifyData.value = data;
-  if (data && data.result) {
-    btnInfo.value = 'IDO(coming soon)';
-    disabled.value = true;
-  }
-  console.log(data, 'apiWhitelistVerify')
 }
 
+
 onMounted(async () => {
-  await getApiWhitelistAcquisitionTime()
   if (walletAddress.walletAddress) {
     await getApiWhitelistVerify()
+    if (whitelistAbscNFTdata.value && whitelistAbscNFTdata.value.result) {
+      // 有白名单判断IDO是否开始
+      getApiWhitelistSubscribeTime()
+    } else {
+      // 没有，判断认领是否开始
+      getApiWhitelistAcquisitionTime()
+    }
+    getApiWhitelistSubscribeTime()
+  } else {
+    await getApiWhitelistAcquisitionTime()
+    if (whitelistAcquisitionTime.value.status !== '2') {
+      getApiWhitelistSubscribeTime()
+    }
   }
-  getApiWhitelistAbscNFT()
 })
 </script>
 

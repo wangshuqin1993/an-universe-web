@@ -4,7 +4,7 @@
       <div class="my-[20px] text-[14px] text-[#000] font-semibold">
         <div class="mb-[30px] text-[18px]">Connect Wallet</div>
         <div v-for="val in walletList " :key="val.name" @click="connectWallet">
-          <div class="flex wallet-item  items-center cursor-pointer">
+          <div class="flex wallet-item w-[50%] items-center cursor-pointer">
             <img :src="getImageURL(`${val.img}.png`)" class="h-[30px] mr-[18px]" />
             <div>{{ val.name }}</div>
           </div>
@@ -62,11 +62,11 @@ const connectWallet = async () => {
   color: #000000;
   background-color: #fff;
   border-radius: 22px;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.13);
+  box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.13);
   margin-bottom: 20px;
 
   &:hover {
-    box-shadow: 0px 2px 4px 0px rgba(244, 31, 255, 0.13);
+    box-shadow: 0px 1px 4px 2px rgba(244, 31, 255, 0.13);
   }
 }
 </style>
