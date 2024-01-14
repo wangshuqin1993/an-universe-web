@@ -14,7 +14,7 @@ export default function useAssets () {
     })
   })
 
-  const getImageURL = (imageFilename: string) => assetsMapping.images[imageFilename]
+  const getImageURL = (imageFilename: string) :string => String(assetsMapping.images[imageFilename])
   const getAssets = (assetType: string) => assetsMapping[assetType]
 
   return { getImageURL, getAssets }
