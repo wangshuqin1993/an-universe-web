@@ -21,7 +21,7 @@
             :class="{ 'selected-header-menu': selectedNavTitle === item.name }">
             {{ item.name }}
           </div>
-          <a-button class="w-[178px] text-[18px] h-[42px] rounded-[12px]" @click="walletOpen = true"
+          <a-button class="w-[178px] text-[18px] h-[42px] rounded-[12px]" @click="openSelectedWhiteListModal = true"
             v-if="!walletAddress.walletAddress">connect wallet</a-button>
 
           <a-dropdown placement="bottom" v-else>
@@ -56,7 +56,10 @@
       </div>
     </a-drawer>
   </div>
-  <a-modal v-model:open="walletOpen" title="" :footer="null">
+  <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
+    @closeSelectedWhiteListModal="openSelectedWhiteListModal = false">
+  </selectWalletListModal>
+  <!-- <a-modal v-model:open="walletOpen" title="" :footer="null">
     <div class="text-[20px] text-[#000] font-bold mb-[30px] mt-[0px]">Please connect your wallet</div>
     <div class="flex">
       <div class="text-center wallet-item" @click="connectWallet">
@@ -64,13 +67,14 @@
         <div class="mt-[10px]">OKX WAllet</div>
       </div>
     </div>
-  </a-modal>
+  </a-modal> -->
 </template>
 <script lang='ts' setup>
 import { ref, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { CloseOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
+import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const walletAddress = useWalletAddress()
@@ -80,6 +84,7 @@ const open = ref(false);
 const walletOpen = ref(false);
 const isMobile = ref(false);
 const isOKApp = ref(false);
+const openSelectedWhiteListModal = ref(false);
 const selectedNavTitle = ref('');
 const btnInfo = ref('');
 const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
@@ -102,6 +107,10 @@ const apolloClient = new ApolloClient({
 
 const onClose = () => {
   open.value = false
+}
+
+const closeSelectedWhiteListModal = () => {
+
 }
 
 

@@ -23,7 +23,12 @@
           :disabled="disabled">{{ btnInfo
           }}</a-button>
       </div>
-      <div v-if="whitelistVerifyData && whitelistVerifyData.result" class="text-center text-[#fff] mt-[20px]">You have
+      <div v-if="whitelistSubscribeTime.status == '2' && walletAddress.walletAddress"
+        class="text-center text-[#fff] mt-[20px]"> Your $ABSC balance：<span class="text-[#E527FF]">{{
+          whitelistSubscribeAmountData.abscAmount }}</span> ABSC
+      </div>
+      <div v-if="whitelistVerifyData.result && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">You
+        have
         obtained the <span class="text-[#E527FF]">{{
           whitelistVerifyData.level }}</span>
         whitelist,
@@ -39,7 +44,8 @@
       </div> -->
     </div>
 
-    <div class="whitelist-absc-container w-[90%] md:max-w-[931px] py-[50px] mt-[70px] mx-auto">
+    <div v-if="!whitelistSubscribeResult"
+      class="whitelist-absc-container w-[90%] md:max-w-[931px] py-[50px] mt-[70px] mx-auto">
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
         <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[24px] text-[16px]">As the governance token
@@ -90,20 +96,21 @@
     @getWhiteListDone="getWhiteListDone">
   </WhiteListModal>
   <whiteListBuyModal :openWhiteListBuyModal="openWhiteListBuyModal"
-    @closeWhiteListBuyModal="openWhiteListBuyModal = false"></whiteListBuyModal>
+    @getWhitelistSubscribeResult="getWhitelistSubscribeResult" @closeWhiteListBuyModal="openWhiteListBuyModal = false">
+  </whiteListBuyModal>
   <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
     @closeSelectedWhiteListModal="closeSelectedWhiteListModal">
   </selectWalletListModal>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import abscHeader from "@/components/absc-header.vue";
 import WhiteListModal from './components/WhiteListModal.vue';
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
-import { apiWhitelistAcquisitionTime, apiWhitelistVerify, apiWhitelistSubscribeTime } from "@/apis/absc";
+import { apiWhitelistAcquisitionTime, apiWhitelistVerify, apiWhitelistSubscribeTime, apiWhitelistSubscribeAmount } from "@/apis/absc";
 const walletAddress = useWalletAddress()
 
 const open = ref(false)
@@ -111,10 +118,12 @@ const bscAddress = ref("");
 const openWhiteListModal = ref(false);
 const openWhiteListBuyModal = ref(false);
 const openSelectedWhiteListModal = ref(false);
+const whitelistSubscribeResult = ref(false);
 const whitelistVerifyData = ref({});
 const whitelistAbscNFTdata = ref({});
 const whitelistAcquisitionTime = ref({});
 const whitelistSubscribeTime = ref({});
+const whitelistSubscribeAmountData = ref({});
 const btnInfo = ref('');
 const disabled = ref(false);
 
@@ -210,12 +219,11 @@ const getApiWhitelistAcquisitionTime = async () => {
   } else if (data.status == '2') {
     btnInfo.value = 'Get Whitelist'
     disabled.value = false;
-    // getApiWhitelistSubscribeTime()
   } else {
     btnInfo.value = '活动已结束';
     disabled.value = true;
   }
-  console.log(data, 'data')
+  console.log('认领的data', data)
 }
 
 // 添加白名单时间
@@ -228,10 +236,16 @@ const getApiWhitelistSubscribeTime = async () => {
   } else if (data.status == '2') {
     btnInfo.value = 'IDO';
     disabled.value = false;
+    getApiWhitelistSubscribeAmount()
   } else {
     btnInfo.value = 'IDO已结束';
     disabled.value = true;
   }
+}
+
+const getApiWhitelistSubscribeAmount = async () => {
+  const { data } = await apiWhitelistSubscribeAmount(walletAddress.walletAddress)
+  whitelistSubscribeAmountData.value = data
 }
 
 
@@ -250,6 +264,11 @@ const closeSelectedWhiteListModal = async () => {
   }
 }
 
+// 购买成功
+const getWhitelistSubscribeResult = (result: boolean) => {
+  whitelistSubscribeResult.value = result
+}
+
 // 用来判断是否有白名单
 const getApiWhitelistVerify = async () => {
   const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
@@ -258,16 +277,18 @@ const getApiWhitelistVerify = async () => {
 
 
 onMounted(async () => {
+  console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
+  // debugger
   if (walletAddress.walletAddress) {
     await getApiWhitelistVerify()
-    if (whitelistAbscNFTdata.value && whitelistAbscNFTdata.value.result) {
+    console.log(whitelistVerifyData.value)
+    if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
       // 有白名单判断IDO是否开始
       getApiWhitelistSubscribeTime()
     } else {
       // 没有，判断认领是否开始
       getApiWhitelistAcquisitionTime()
     }
-    getApiWhitelistSubscribeTime()
   } else {
     await getApiWhitelistAcquisitionTime()
     if (whitelistAcquisitionTime.value.status !== '2') {
@@ -275,6 +296,29 @@ onMounted(async () => {
     }
   }
 })
+
+watch(
+  () => walletAddress.walletAddress,
+  async (newVal, _oldVal) => {
+    console.log(newVal, 'new')
+    if (newVal != '') {
+      await getApiWhitelistVerify()
+      if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
+        // 有白名单判断IDO是否开始
+        console.log('有了白名单')
+        getApiWhitelistSubscribeTime()
+      } else {
+        // 没有，判断认领是否开始
+        getApiWhitelistAcquisitionTime()
+      }
+    } else {
+      await getApiWhitelistAcquisitionTime()
+      if (whitelistAcquisitionTime.value.status !== '2') {
+        getApiWhitelistSubscribeTime()
+      }
+    }
+  }, { deep: true, immediate: true }
+);
 </script>
 
 <style scoped lang="less">
