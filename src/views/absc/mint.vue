@@ -44,42 +44,43 @@
           </a-button>
         </div>
         <div v-if="(abscDrawCheck == 1) || (abscDrawCheck == 3)" class="mint-text md:w-[532px] w-hull px-[32px] "></div>
-            <div v-if="abscDrawCheck == 1">
-              The activity has not started yet
-            </div>
-            <div v-if="abscDrawCheck == 3">
-              The activity has ended
-            </div>
+        <div v-if="abscDrawCheck == 1">
+          The activity has not started yet
         </div>
-        <div v-if="walletAddress.walletAddress" class="mint-text md:w-[532px] w-hull px-[32px] ">
-          <div v-if="aptosAddress" class="mb-[8px]">balance: <span class="!text-[#E527FF]">{{ abscBalance }}</span> ABSC</div>
-          <div>
-            You have started
-            <span class="!text-[#E527FF]">{{ recordData.length }}</span>
-            activity once,
-            which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
-          </div>
+        <div v-if="abscDrawCheck == 3">
+          The activity has ended
+        </div>
+      </div>
+      <div v-if="walletAddress.walletAddress" class="mint-text md:w-[532px] w-hull px-[32px] ">
+        <div v-if="aptosAddress" class="mb-[8px]">balance: <span class="!text-[#E527FF]">{{ abscBalance }}</span> ABSC
+        </div>
+        <div>
+          You have started
+          <span class="!text-[#E527FF]">{{ recordData.length }}</span>
+          activity once,
+          which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="w-screen" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
-      <div class="md:px-[0px] px-[32px] md:pt-[82px] pt-[0px] max-w-[1440px] mx-auto pb-[75px]">
-        <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center mb-[20px]">
-          Your activity result
-        </div>
-        <div class="text-[14px] mb-[10px] font-medium text-center text-[#FFFFFF]">Reveal Time: <span
-            class="text-[#F41FFF]">Jan. 19, 2024 10 UTF-8</span></div>
-        <div v-if="recordData.length"
-          class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
-          <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
-            <div v-if="!item?.child?.blank">
-              <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px] mb-[30px]" />
-              <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
-                <div>Rarity:</div>
-                <div>{{ getLevelLabel(item?.child?.level) }}</div>
-              </div>
+  <div class="w-screen" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
+    <div class="md:px-[0px] px-[32px] md:pt-[82px] pt-[0px] max-w-[1440px] mx-auto pb-[75px]">
+      <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center mb-[20px]">
+        Your activity result
+      </div>
+      <div class="text-[14px] mb-[10px] font-medium text-center text-[#FFFFFF]">Reveal Time: <span
+          class="text-[#F41FFF]">Jan. 19, 2024 10 UTF-8</span></div>
+      <div v-if="recordData.length"
+        class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
+        <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
+          <div v-if="!item?.child?.blank">
+            <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px] mb-[30px]" />
+            <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
+              <div>Rarity:</div>
+              <div>{{ getLevelLabel(item?.child?.level) }}</div>
             </div>
+          </div>
 
           <div v-else class="text-[#fff] md:text-[18px] text-[14px] font-extrabold">
             <img src="@/assets/images/null.png" class="rounded-[16px]" />
@@ -142,12 +143,12 @@
       <div class="absolute left-[410px] top-[70px] cursor-pointer z-10" @click="showModalbtn">
         <span class="close-btn">X</span>
       </div>
-      <div class="absolute">
+      <div class="absolute bg-black opacity-[0.85] p-[20px] rounded-[25px]">
         <img src="@/assets/images/absc-cube.png" class="w-[380px] mx-auto" />
       </div>
-      <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px] absolute bottom-[350px]">Now you can check your draw
+      <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px] absolute bottom-[335px]">Now you can check your draw
         results!</div>
-      <div class="absolute bottom-[280px]">
+      <div class="absolute bottom-[272px]">
         <a-button class=" w-[198px] h-[40px] rounded-[25px]" @click="viewResult">View Results</a-button>
       </div>
     </div>
@@ -324,7 +325,7 @@ const connectWallet = async () => {
 // 返回可支付 apt 的 NFT 数组
 const payableNFTs = (nfts: any[], amount: number) => {
   let num = 0;
-  let list :string[] = [];
+  let list: string[] = [];
   for (let i = 0; i < nfts.length; i++) {
     num = num + nfts[i].token_properties.amt
     list.push(nfts[i].token_data_id);
@@ -351,8 +352,8 @@ const transactionApt20 = async () => {
     function: '0x1fc2f33ab6b624e3e632ba861b755fd8e61d2c2e6cf8292e415880b4c198224d::apts::split',
     type_arguments: [],
   };
-  console.log("tx",transaction);
-  
+  console.log("tx", transaction);
+
   const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
   const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
   const txn = await client.waitForTransactionWithResult(
@@ -445,7 +446,7 @@ levelLabel.set(4, 'S');
 levelLabel.set(5, 'R');
 levelLabel.set(6, 'N');
 
-const getLevelLabel = (level:number):string =>{
+const getLevelLabel = (level: number): string => {
   return levelLabel.get(level)
 }
 
