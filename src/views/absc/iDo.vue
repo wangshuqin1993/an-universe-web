@@ -9,8 +9,8 @@
           <span class="title-text text-[26px] text-[24px] md:text-[48px] ml-3">$ABSC Token IDO</span>
         </div>
         <div class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[37px]">
-          As the mapping token of the leading inscription ABSC based on APT-20 on the BSC chain,
-          the $ABSC token will become the first mapping token of the Bmaker ecosystem and can be exchanged with BSC
+          As the governance token of the leading inscription ABSC based on APT-20 on the BSC chain,
+          the $ABSC token will become the first governance token of the Bmaker ecosystem and can be exchanged with BSC
           stablecoins based on the Bmaker ecosystem.
           $ABSC can also be staked to obtain the corresponding amount of Bmaker ecosystem stablecoins,
           which can be used on any chain supported by the BSC ecosystem.
@@ -71,7 +71,7 @@ const fakeInfo = ref([
     desc: 'Launch at'
   },
   {
-    amount: '1',
+    amount: '0.00X BNB',
     desc: '$ABSC Price'
   },
   {
@@ -79,7 +79,7 @@ const fakeInfo = ref([
     desc: 'Target IDO amount'
   },
   {
-    amount: '$100,000',
+    amount: '$100,000 BNB',
     desc: 'Current amount'
   }
 ])

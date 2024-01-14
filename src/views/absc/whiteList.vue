@@ -42,9 +42,10 @@
     <div class="whitelist-absc-container w-[90%] md:max-w-[931px] py-[50px] mt-[70px] mx-auto">
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
-        <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[24px] text-[16px]">As the mapping token of
+        <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[24px] text-[16px]">As the governance token
+          of
           the leading inscription ABSC based on APT-20 on the BSC chain,
-          the $ABSC token will become the first mapping token of the Bmaker ecosystem and can be exchanged with BSC
+          the $ABSC token will become the first governance token of the Bmaker ecosystem and can be exchanged with BSC
           stablecoins based on the Bmaker ecosystem.
           $ABSC can also be staked to obtain the corresponding amount of Bmaker ecosystem stablecoins,
           which can be used on any chain supported by the BSC ecosystem.

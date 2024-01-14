@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-[798px] mx-auto md:px-[0px] px-[32px] md:pb-[36px] pb-[32px]">
-    <div class="text-center text-[16px] text-[#fff] font-bold mb-[20px]">NFT rights</div>
+    <div class="text-center text-[16px] text-[#fff] font-bold mb-[20px]">NFT RIGHTS</div>
     <div class="mb-[30px]">
       <a-table :dataSource="dataSource" :columns="columns" :pagination="false" :showHeader="false" bordered />
     </div>
@@ -39,17 +39,17 @@ const dataSource = ref([
   {
     index: 1,
     rights: 'Community Identity',
-    desc: 'The genesis NFT is a proof of identity to enter the core community of BSC'
+    desc: 'The genesis NFT is the proof of identity to enter the core community of BSC'
   },
   {
     index: 2,
     rights: 'Discount Voucher',
-    desc: 'Obtain a discount voucher during the IDO of mapped tokens of BSC stablecoins on various public chains'
+    desc: 'Obtain a discount voucher during the IDO of governance tokens of BSC stablecoins on various public chains'
   },
   {
     index: 3,
     rights: 'Airdrop',
-    desc: 'Receive an airdrop every time BSC releases a stablecoin or a mapped token of a stablecoin on any public chain'
+    desc: 'Receive an airdrop every time BSC releases a stablecoin or a governance token of a stablecoin on any public chain'
   },
   {
     index: 4,
