@@ -51,7 +51,7 @@
             </div>
         </div>
         <div v-if="walletAddress.walletAddress" class="mint-text md:w-[532px] w-hull px-[32px] ">
-          <div class="mb-[8px]">balance: <span class="!text-[#E527FF]">{{ abscBalance }}</span> ABSC</div>
+          <div v-if="aptosAddress" class="mb-[8px]">balance: <span class="!text-[#E527FF]">{{ abscBalance }}</span> ABSC</div>
           <div>
             You have started
             <span class="!text-[#E527FF]">{{ recordData.length }}</span>
