@@ -67,12 +67,8 @@
         <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center mb-[20px]">
           Your activity result
         </div>
-        <!--
-        <div class="text-[14px] mb-[10px] font-medium text-center text-[#FFFFFF]">You have started <span
-            class="text-[#F41FFF]">0</span>
-          activity
-          once</div>
-        -->
+        <div class="text-[14px] mb-[10px] font-medium text-center text-[#FFFFFF]">Reveal Time: <span
+            class="text-[#F41FFF]">Jan. 19, 2024 10 UTF-8</span></div>
         <div v-if="recordData.length"
           class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
           <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
