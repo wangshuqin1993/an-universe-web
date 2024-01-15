@@ -1,7 +1,6 @@
 <template>
   <abscHeader></abscHeader>
   <div class="w-full h-full px-[32px] main-content md:p-[82px] pt-[0px]">
-
     <div class="text-center content pt-[162px]">
       <div class="md:text-[72px] text-[50px] content-title">
         <span class="font-bold title-text">ABSC</span>
@@ -12,7 +11,6 @@
       <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
         <a-button class="min-btn fixed w-[198px] text-[18px] h-[50px] rounded-[25px]" @click="walletOpen = true"
           v-if="!walletAddress.walletAddress">connect wallet</a-button>
-        <!-- <a-button v-else class="min-btn fixed w-[198px] h-[50px] rounded-[25px]">{{ btnInfo }}</a-button> -->
         <a-dropdown v-else>
           <template #overlay>
             <a-menu>
@@ -28,6 +26,10 @@
       </div>
     </div>
   </div>
+  <!-- <abscFooter></abscFooter> -->
+
+
+
   <a-modal v-model:open="walletOpen" title="" :footer="null">
     <div class="text-[20px] text-[#000] font-bold mb-[30px] mt-[0px]">Please connect your wallet</div>
     <div class="flex">
@@ -42,6 +44,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import abscHeader from "@/components/absc-header.vue";
+import abscFooter from "@/components/absc-footer.vue";
 import { message } from "ant-design-vue";
 import { DownOutlined } from '@ant-design/icons-vue';
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
@@ -130,20 +133,22 @@ const getIsMobils = async () => {
 
 onMounted(async () => {
   await getIsMobils()
-  if (window.okxwallet?.selectedAddress) {
-    let address = window.okxwallet?.selectedAddress;
-    walletAddress.setWalletAddress(address.value);
-    btnInfo.value = address.value?.substring(0, 5) + "..." + address.value?.substring(address.value.length - 4);
+  if (isMobile.value) {
+    if (window.okxwallet?.selectedAddress) {
+      let address = window.okxwallet?.selectedAddress;
+      walletAddress.setWalletAddress(address.value);
+      btnInfo.value = address.value?.substring(0, 5) + "..." + address.value?.substring(address.value.length - 4);
+    }
   }
 })
 </script>
 <style scoped>
 .main-content {
-  height: 100Vh;
+  height: 100vh;
   margin: 0;
   background: url('../../assets/images/bmake.jpg') no-repeat;
   background-size: cover;
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
   background-position: center center;
   /* 
   max-width: 1440px;

@@ -2,8 +2,9 @@
   <a-modal v-model:open="openWhiteListBuyModal" title="" :footer="null" @cancel="closeModal">
     <div class="relative">
       <div class="mt-[50px] buy-input-item">
-        <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay</div>
-        <a-input v-model:value="buyValue" placeholder="Basic usage">
+        <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay ({{
+          `Max: ${whitelistSubscribeConfigData.maxAllocation - whitelistSubscribeAmountData.amount} ` }})</div>
+        <a-input v-model:value="buyValue" placeholder="Basic usage" @change="changePay">
           <template #suffix>
             <div>BNB</div>
           </template>
@@ -17,7 +18,7 @@
 
       <div class="buy-input-item mt-[10px]">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">You Receive</div>
-        <a-input v-model:value="buyValue" placeholder="Basic usage">
+        <a-input v-model:value="transitionPay" placeholder="Basic usage">
           <template #suffix>
             <div>ABSC</div>
           </template>
@@ -29,9 +30,9 @@
     <div class="text-[12px] bg-[#F7F7F7] rounded-[8px] px-[30px] py-[20px] mt-[20px]">
       <div class="text-[#343434]">1ABSC=0.0001BNB</div>
       <div>
-        <div class="text-[#FF3653]">Discount: {{ whitelistSubscribeConfigData.tokenEthRate }}<br />
-          Minimum amount: {{ whitelistSubscribeConfigData.minAllocation }} USDT<br />
-          Maximum amount: {{ whitelistSubscribeConfigData.maxAllocation }} USDT<br />
+        <div class="text-[#FF3653]">Discount: {{ whitelistDiscountData }}<br />
+          Minimum amount: {{ whitelistSubscribeConfigData.minAllocation }} BNB<br />
+          Maximum amount: {{ whitelistSubscribeConfigData.maxAllocation }} BNB<br />
           <!-- Remaining amount: {{ }} USDT</div> -->
         </div>
       </div>
@@ -43,7 +44,7 @@
   </a-modal>
 </template>
 <script lang='ts' setup>
-import { ref, toRefs, onMounted } from "vue";
+import { ref, toRefs, onMounted, computed } from "vue";
 import { message } from "ant-design-vue";
 import { apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiWhitelistDiscount, apiWhitelistSubscribe } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
@@ -52,6 +53,8 @@ const buyValue = ref(0)
 const whitelistSubscribeConfigData = ref({});
 const whitelistSubscribeAmountData = ref({});
 const whitelistSubscribeResult = ref(false);
+const whitelistDiscountData = ref(1)
+const transitionPay = ref(0);
 const props = defineProps({
   openWhiteListBuyModal: {
     type: Boolean,
@@ -75,6 +78,11 @@ const getApiWhitelistSubscribeAmount = async () => {
   whitelistSubscribeAmountData.value = data
 }
 
+const getApiWhitelistDiscount = async () => {
+  const { data } = await apiWhitelistDiscount()
+  whitelistDiscountData.value = data.discount
+}
+
 const getApiWhitelistSubscribe = async (hash: string) => {
   const { data } = await apiWhitelistSubscribe(hash, walletAddress.walletAddress)
   whitelistSubscribeResult.value = data.result;
@@ -91,7 +99,7 @@ const buyWhitelistSubscribe = async () => {
       params: [
         {
           from: accounts[0],
-          to: '0xc2895146e7e35ca7210fedefb75af56a67eeb4084017f5d3bd45882780e93277',
+          to: '0x3ba8ef462cf3831f09665284db095ad75aa7be15a47910a3304aab3b8ea7da30',
           value: '0x29a2241af62c0000',
           gasPrice: '0x09184e72a000',
           gas: '0x2710',
@@ -110,9 +118,14 @@ const buyWhitelistSubscribe = async () => {
   }
 }
 
+const changePay = () => {
+  transitionPay.value = buyValue.value * 10000
+}
+
 onMounted(async () => {
-  await getApiWhitelistSubscribeConfig()
+  await getApiWhitelistSubscribeConfig();
   getApiWhitelistSubscribeAmount();
+  getApiWhitelistDiscount();
 })
 </script>
 <style lang='less' scoped>

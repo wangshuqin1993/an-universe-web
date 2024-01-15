@@ -3,7 +3,7 @@
   <abscHeader></abscHeader>
   <div class="w-full h-full bg-black pb-[75px]">
     <div class="max-w-[1440px] mx-auto md:px-[0px] px-[32px]">
-      <div class="title-text md:pt-[166px] pt-[100px]">$ABSC Token IDO Whit</div>
+      <div class="title-text md:pt-[166px] pt-[100px]"><span class="title-text">$ABSC Token IDO Whitelist</span></div>
       <div class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-center mt-[37px]">
         The $ABSC token IDO will be launched soon, and users with whitelist spots can enjoy corresponding price discounts.
         Users holding $BSC Genesis NFT can exchange for whitelist spots by burning ABSC inscriptions.
@@ -13,8 +13,8 @@
     <div>
       <div
         class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-[47px] border border-[#463947] border-solid mx-auto">
-        <span class="pt-[15px] px-[21px] font-bold text-[24px] text-[#fff]">{{ whitelistAcquisitionTime.start }} am — {{
-          whitelistAcquisitionTime.end }}
+        <span class="pt-[15px] px-[21px] font-bold text-[24px] text-[#fff]">{{ startTime }} am — {{
+          endTime }}
           am(UTC+8)</span>
         <span class="pb-[15px] text-[#8D8D8D] text-[18px]">Exchange time</span>
       </div>
@@ -126,6 +126,8 @@ const whitelistSubscribeTime = ref({});
 const whitelistSubscribeAmountData = ref({});
 const btnInfo = ref('');
 const disabled = ref(false);
+const startTime = ref('');
+const endTime = ref('');
 
 
 const columns = ref([
@@ -194,7 +196,7 @@ const handleExchangeModal = async () => {
   if (btnInfo.value.includes('Whitelist')) {
     // 点击获取白名单
     await getApiWhitelistVerify();
-    if (whitelistAbscNFTdata.value && whitelistAbscNFTdata.value.result) {
+    if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
       // 有白名单判断IDO是否开始
       getApiWhitelistSubscribeTime()
     } else {
@@ -203,9 +205,12 @@ const handleExchangeModal = async () => {
     }
   } else {
     await getApiWhitelistVerify();
-    if (whitelistAbscNFTdata.value && whitelistAbscNFTdata.value.result) {
+    if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
       // 有白名单判断IDO是否开始
       getApiWhitelistSubscribeTime()
+      if (whitelistSubscribeTime.value.status === '2') {
+        openWhiteListBuyModal.value = true;
+      }
     }
     // openWhiteListBuyModal.value = true;
     // 点击开始IDO
@@ -223,10 +228,13 @@ const getApiWhitelistAcquisitionTime = async () => {
   } else if (data.status == '2') {
     btnInfo.value = 'Get Whitelist'
     disabled.value = false;
+    startTime.value = data.start
+    endTime.value = data.end
   } else {
     btnInfo.value = '活动已结束';
     disabled.value = true;
   }
+
   console.log('认领的data', data)
 }
 
@@ -240,6 +248,8 @@ const getApiWhitelistSubscribeTime = async () => {
   } else if (data.status == '2') {
     btnInfo.value = 'IDO';
     disabled.value = false;
+    startTime.value = data.start
+    endTime.value = data.end
     getApiWhitelistSubscribeAmount()
   } else {
     btnInfo.value = 'IDO已结束';
@@ -280,22 +290,70 @@ const getApiWhitelistVerify = async () => {
 }
 
 
+// onMounted(async () => {
+//   console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
+//   if (walletAddress.walletAddress) {
+//     await getApiWhitelistVerify()
+//     console.log(whitelistVerifyData.value, 'oioi')
+//     if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
+//       // 有白名单判断IDO是否开始
+//       getApiWhitelistSubscribeTime()
+//     } else {
+//       // 没有，判断认领是否开始
+//       getApiWhitelistAcquisitionTime()
+//     }
+//   } else {
+//     await getApiWhitelistAcquisitionTime()
+//     if (whitelistAcquisitionTime.value.status !== '2') {
+//       await getApiWhitelistSubscribeTime()
+
+//       // startTime.value = whitelistSubscribeTime.value.start
+//       // endTime.value = whitelistSubscribeTime.value.end
+//     } else {
+//       // 认领开始
+//       // startTime.value = whitelistAcquisitionTime.value.start
+//       // endTime.value = whitelistAcquisitionTime.value.end
+//     }
+//   }
+// })
+
 onMounted(async () => {
   console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
   if (walletAddress.walletAddress) {
     await getApiWhitelistVerify()
-    console.log(whitelistVerifyData.value)
+    console.log(whitelistVerifyData.value, 'oioi')
     if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
       // 有白名单判断IDO是否开始
       getApiWhitelistSubscribeTime()
+      // startTime.value = whitelistSubscribeTime.start
+      // endTime.value = whitelistSubscribeTime.end
     } else {
       // 没有，判断认领是否开始
       getApiWhitelistAcquisitionTime()
+      // startTime.value = whitelistSubscribeTime.start
+      // endTime.value = whitelistSubscribeTime.end
     }
   } else {
+    // ido是否开始
     await getApiWhitelistAcquisitionTime()
     if (whitelistAcquisitionTime.value.status !== '2') {
-      getApiWhitelistSubscribeTime()
+      await getApiWhitelistSubscribeTime()
+      if (whitelistAcquisitionTime.value.status == '1') {
+        disabled.value = true;
+        btnInfo.value = 'Get Whitelist'
+      } else if (whitelistAcquisitionTime.value.status == '3') {
+        disabled.value = true;
+        btnInfo.value = 'Get Whitelist'
+      }
+
+      // startTime.value = whitelistSubscribeTime.value.start
+      // endTime.value = whitelistSubscribeTime.value.end
+    }
+
+    else {
+      // 认领开始 显示认领时间
+      // startTime.value = whitelistAcquisitionTime.value.start
+      // endTime.value = whitelistAcquisitionTime.value.end
     }
   }
 })
@@ -317,7 +375,10 @@ watch(
     } else {
       await getApiWhitelistAcquisitionTime()
       if (whitelistAcquisitionTime.value.status !== '2') {
-        getApiWhitelistSubscribeTime()
+        await getApiWhitelistSubscribeTime()
+      } else if (whitelistAcquisitionTime.value.status == '1') {
+        disabled.value = true;
+        btnInfo.value = 'Get Whitelist'
       }
     }
   }, { deep: true, immediate: true }
@@ -335,6 +396,13 @@ watch(
   font-weight: 900;
   font-size: 48px;
 }
+
+// .title-text- {
+//   background-image: linear-gradient(to right, #60638B 0%, #F9F9F9 25%, #FFFFFF 50%, #60638B 100%);
+//   -webkit-background-clip: text;
+//   background-clip: text;
+//   color: transparent;
+// }
 
 .min-btn {
   display: flex;

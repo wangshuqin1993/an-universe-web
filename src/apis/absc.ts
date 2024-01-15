@@ -173,7 +173,7 @@ export function apiWhitelistSubscribeAmount(address: string)  {
   return Promise.resolve({
     code: 200,
     data: {
-      amount: "100",
+      amount: "10",
       abscAmount: '776555'
     }
   })

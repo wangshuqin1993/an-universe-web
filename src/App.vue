@@ -1,14 +1,14 @@
-<script setup lang="ts">
-</script>
+
 
 <template>
-  <!-- bg-[#15083E] -->
   <div class="">
-
     <router-view></router-view>
-
   </div>
 </template>
+<script setup lang="ts">
+import abscHeader from "@/components/absc-header.vue";
+import defaultFooter from "@/components/defaultFooter.vue";
+</script>
 
 <style lang="less">
 .ant-drawer .ant-drawer-content {

@@ -5,7 +5,7 @@
         Get your whitelist and win a better price for $ABSC token IDO
       </div>
       <div class="white-step">
-        <!-- 1 -->
+        <!-- 第一步 -->
         <div class="flex white-step-item">
           <CheckCircleFilled v-if="whitelistAbscNFTdata.tokenId" :style="{ fontSize: '35px', color: '#E527FF' }" />
           <div v-else class="w-[37px] h-[37px] rounded-[50%] text-[18px] leading-[37px] font-semibold"
@@ -33,7 +33,7 @@
           </div>
         </div>
 
-        <!-- 2 -->
+        <!-- 第二部 -->
         <div class="flex white-step-item">
           <CheckCircleFilled v-if="whitelistVerifyData.result" :style="{ fontSize: '35px', color: '#E527FF' }" />
           <div v-else class="w-[37px] h-[37px] rounded-[50%] text-[18px] leading-[37px] font-semibold"
@@ -62,69 +62,7 @@
               </div>
             </div>
           </div>
-
-
-          <!-- 
-        <CheckCircleFilled v-if="item.id === 1 && whitelistAbscNFTdata" :style="{ fontSize: '35px', color: '#E527FF' }" />
-        <div v-else class="w-[37px] h-[37px] rounded-[50%] text-[18px] leading-[37px] font-semibold"
-          :class="!whitelistAbscNFTdata.tokenId ? 'not-started-css' : 'started-css'">
-          {{ item.id }}
         </div>
-        <div class="text-left mt-[8px] mb-[20px]  ml-[20px]">
-          <div class="text-[16px] font-semibold white-step-item-title "
-            :class="!whitelistAbscNFTdata ? 'not-started-css-title' : 'started-css-title'">{{ item.title }}
-          </div>
-          <div class="text-[#929292] text-[12px]">{{ item.desc }}</div>
-          <div class="flex items-center mt-[10px]" v-if="item.id === 1 && whitelistAbscNFTdata?.tokenId">
-            <img src="@/assets/images/successful.png" class="h-[16px]" />
-            <div class="text-[12px] text-[#28C57C] font-semibold ml-[5px]">Certification Successful</div>
-          </div>
-          <div class="flex items-top mt-[10px]" v-if="item.id === 1 && !whitelistAbscNFTdata?.tokenId">
-            <img src="@/assets/images/exclamation.png" class="h-[16px] w-[16px]" />
-            <div class="text-[12px] text-[#737373] font-semibold ml-[5px]"> <span class="text-[#FF3653]">Certification
-                failed:</span> You
-              can disconnect the wallet and log in
-              to other wallets have Genesis NFT to continue verification.</div>
-          </div>
-          <div v-if="item.id == 2 && whitelistAbscNFTdata?.tokenId">
-            <div class="text-[#929292] text-[12px] font-normal mb-[20px]">Each whitelist requires a cost of 500000
-              ABSC
-              inscriptions
-            </div>
-            <div
-              class="w-[120px] h-[32px] text-[#fff] text-[12px] font-semibold bg-[#000] rounded-[22px] text-center leading-[32px] cursor-pointer hover:opacity-[0.75]">
-              Start Now</div>
-          </div> -->
-
-          <!-- <div v-if="item.id === 1">
-              <div class="my-[20px] text-[14px] text-[#000] font-semibold">Connect Wallet</div>
-              <div v-for=" val  in  walletList " :key="val.id">
-                <div class="flex wallet-item justify-between items-center cursor-pointer">
-                  <div class="flex items-center">
-                    <img :src="getImageURL(`${val.img}.png`)" class="h-[30px] mr-[18px]" />
-                    <div>{{ val.name }}</div>
-                    <div v-if class="text-[12px] text-[#000000]">address</div>
-                  </div>
-                  <div class="text-[#464646] text-[12px] cursor-pointer">disconnect</div>
-                </div>
-                连接钱包成功
-                <div class="flex items-center mt-[10px]">
-                  <img src="@/assets/images/successful.png" class="h-[16px]" />
-                  <div class="text-[12px] text-[#28C57C] font-semibold ml-[5px]">Certification Successful</div>
-                </div>
-
-                连接钱包失败
-                <div class="flex items-top mt-[10px]">
-                  <img src="@/assets/images/exclamation.png" class="h-[16px] w-[16px]" />
-                  <div class="text-[12px] text-[#737373] font-semibold ml-[5px]"> <span
-                      class="text-[#FF3653]">Certification failed:</span> You
-                    can disconnect the wallet and log in
-                    to other wallets have Genesis NFT to continue verification.</div>
-                </div>
-              </div>
-            </div> -->
-        </div>
-
       </div>
       <div class="parting-line"></div>
       <div class="text-center mt-[40px] font-normal ">
@@ -224,7 +162,7 @@ const transactionApt20 = async () => {
   console.log(list);
   const transaction = {
     arguments: [
-      list, "0xc2895146e7e35ca7210fedefb75af56a67eeb4084017f5d3bd45882780e93277", amount.value],
+      list, "0x3ba8ef462cf3831f09665284db095ad75aa7be15a47910a3304aab3b8ea7da30", amount.value],
     function: '0x1fc2f33ab6b624e3e632ba861b755fd8e61d2c2e6cf8292e415880b4c198224d::apts::split',
     type_arguments: [],
   };

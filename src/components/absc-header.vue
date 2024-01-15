@@ -21,6 +21,7 @@
             :class="{ 'selected-header-menu': selectedNavTitle === item.name }">
             {{ item.name }}
           </div>
+
           <a-button class="w-[178px] text-[18px] h-[42px] rounded-[12px]" @click="openSelectedWhiteListModal = true"
             v-if="!walletAddress.walletAddress">connect wallet</a-button>
 
@@ -85,7 +86,7 @@ const walletOpen = ref(false);
 const isMobile = ref(false);
 const isOKApp = ref(false);
 const openSelectedWhiteListModal = ref(false);
-const selectedNavTitle = ref('');
+const selectedNavTitle = ref('Home');
 const btnInfo = ref('');
 const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
 const menuList = ref([{ name: 'Home', path: '/' }, { name: 'NFT', path: '/mint' }, { name: 'Whitelist', path: '/whitelist' }, { name: 'IDO', path: '/ido' }])
@@ -108,11 +109,6 @@ const apolloClient = new ApolloClient({
 const onClose = () => {
   open.value = false
 }
-
-const closeSelectedWhiteListModal = () => {
-
-}
-
 
 const changeRouter = (item: any) => {
   router.push(item.path);
@@ -137,19 +133,6 @@ const connectWallet = async () => {
   } catch (error) {
     message.error(error.message)
   }
-
-  // if (typeof window.okxwallet !== 'undefined') {
-  //   try {
-  //     const response = await window.okxwallet.aptos.connect();
-  //     // console.log(response);
-  //     walletAddress.setWalletAddress(response.address);
-  //     btnInfo.value = response.address?.substring(0, 5) + "..." + response.address?.substring(response.address.length - 4);
-  //   } catch (error) {
-  //     message.error(error.message)
-  //   }
-  // } else {
-  //   return message.info('请先安装OKX钱包')
-  // }
 }
 
 const disConnectWallet = async () => {
@@ -174,6 +157,7 @@ const getIsMobils = async () => {
 }
 
 onMounted(async () => {
+  console.log(window.okxwallet, walletAddress.walletAddress, 'window.okxwallet')
   await getIsMobils()
   // console.log(window.okxwallet, 'window.okxwallet')
   if (window.okxwallet?.selectedAddress) {
@@ -182,7 +166,7 @@ onMounted(async () => {
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   }
 
-  console.log(window.okxwallet, walletAddress.walletAddress, btnInfo.value, 'window.okxwallet')
+  // console.log(window.okxwallet, walletAddress.walletAddress, btnInfo.value, 'window.okxwallet')
   // let width = document.documentElement.clientWidth;
   // console.log(width, 'width')
   // if (width > 750) {
@@ -198,7 +182,7 @@ watch(
   () => route.name,
   (newVal, _oldVal) => {
     if (newVal) {
-      console.log(newVal, route, 'bbbb')
+      // console.log(newVal, route, 'bbbb')
       selectedNavTitle.value = newVal;
       console.log(selectedNavTitle.value);
     }

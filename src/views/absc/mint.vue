@@ -129,6 +129,7 @@
         <div class="ml-[10px]">Attention</div>
       </div>
       <div class="text-[#737373] text-[14px]">The NFT won from the blind box will be airdropped directly to your BSC
+        wallet by Jan 19th 12am UTC+8.
         address:
         {{ walletAddress.walletAddress }}</div>
       <div class="text-center mt-[40px]">
