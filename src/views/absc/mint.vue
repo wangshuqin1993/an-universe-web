@@ -367,10 +367,14 @@ const transactionApt20 = async () => {
   showModal.value = true;
   loading.value = false;
   await getAbscDraw(txn.hash);
-  getAbscBalance()
+  await getAbscBalance()
 }
 
 const getAbscBalance = () => {
+  if (!aptosAddress.value || aptosAddress.value == "") {
+    abscBalance.value = 0
+    return;
+  }
   getOwnersNFTs().then(data => {
     console.log(data);
     abscNFTList.value = data.data.current_token_datas_v2;
@@ -422,7 +426,7 @@ onMounted(async () => {
     walletAddress.setWalletAddress(address);
 
     getAbscRecord()
-    getAbscBalance()
+    //getAbscBalance()
   }
   getAbscBlindBoxNumber()
   getAbscDrawCheck()
