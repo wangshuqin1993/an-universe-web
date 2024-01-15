@@ -334,27 +334,33 @@ onMounted(async () => {
       // endTime.value = whitelistSubscribeTime.end
     }
   } else {
-    // ido是否开始
+    // 认领是否开始
     await getApiWhitelistAcquisitionTime()
-    if (whitelistAcquisitionTime.value.status !== '2') {
-      await getApiWhitelistSubscribeTime()
-      if (whitelistAcquisitionTime.value.status == '1') {
-        disabled.value = true;
-        btnInfo.value = 'Get Whitelist'
-      } else if (whitelistAcquisitionTime.value.status == '3') {
-        disabled.value = true;
-        btnInfo.value = 'Get Whitelist'
-      }
-
-      // startTime.value = whitelistSubscribeTime.value.start
-      // endTime.value = whitelistSubscribeTime.value.end
+    if (whitelistAcquisitionTime.value.status == '1') {
+      disabled.value = true;
+      btnInfo.value = 'Get Whitelist'
+    } else if (whitelistAcquisitionTime.value.status == '3') {
+      getApiWhitelistSubscribeTime()
     }
+    // if (whitelistAcquisitionTime.value.status !== '2') {
+    //   await getApiWhitelistSubscribeTime()
+    //   if (whitelistAcquisitionTime.value.status == '1') {
+    //     disabled.value = true;
+    //     btnInfo.value = 'Get Whitelist'
+    //   } else if (whitelistAcquisitionTime.value.status == '3') {
+    //     disabled.value = true;
+    //     btnInfo.value = 'Get Whitelist'
+    //   }
 
-    else {
-      // 认领开始 显示认领时间
-      // startTime.value = whitelistAcquisitionTime.value.start
-      // endTime.value = whitelistAcquisitionTime.value.end
-    }
+    //   // startTime.value = whitelistSubscribeTime.value.start
+    //   // endTime.value = whitelistSubscribeTime.value.end
+    // }
+
+    // else {
+    //   // 认领开始 显示认领时间
+    //   // startTime.value = whitelistAcquisitionTime.value.start
+    //   // endTime.value = whitelistAcquisitionTime.value.end
+    // }
   }
 })
 
@@ -374,12 +380,23 @@ watch(
       }
     } else {
       await getApiWhitelistAcquisitionTime()
-      if (whitelistAcquisitionTime.value.status !== '2') {
-        await getApiWhitelistSubscribeTime()
-      } else if (whitelistAcquisitionTime.value.status == '1') {
+      if (whitelistAcquisitionTime.value.status == '1') {
         disabled.value = true;
         btnInfo.value = 'Get Whitelist'
+      } else if (whitelistAcquisitionTime.value.status == '3') {
+        getApiWhitelistSubscribeTime()
       }
+      // await getApiWhitelistAcquisitionTime()
+      // if (whitelistAcquisitionTime.value.status !== '2') {
+      //   // await getApiWhitelistSubscribeTime()
+      //   if (whitelistAcquisitionTime.value.status == '1') {
+      //     disabled.value = true;
+      //     btnInfo.value = 'Get Whitelist'
+      //   } else if (whitelistAcquisitionTime.value.status == '3') {
+      //     disabled.value = true;
+      //     btnInfo.value = 'Get Whitelist'
+      //   }
+      // }
     }
   }, { deep: true, immediate: true }
 );
