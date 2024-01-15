@@ -103,14 +103,11 @@ const buyWhitelistSubscribe = async () => {
         if (txHash) {
           getApiWhitelistSubscribe(txHash)
         }
-
-
       })
       .catch((error) => console.error);
   } catch (error) {
     console.log(error);
   }
-
 }
 
 onMounted(async () => {

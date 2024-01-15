@@ -202,9 +202,13 @@ const handleExchangeModal = async () => {
       openWhiteListModal.value = true;
     }
   } else {
-    openWhiteListBuyModal.value = true;
+    await getApiWhitelistVerify();
+    if (whitelistAbscNFTdata.value && whitelistAbscNFTdata.value.result) {
+      // 有白名单判断IDO是否开始
+      getApiWhitelistSubscribeTime()
+    }
+    // openWhiteListBuyModal.value = true;
     // 点击开始IDO
-
   }
 
 }
@@ -278,7 +282,6 @@ const getApiWhitelistVerify = async () => {
 
 onMounted(async () => {
   console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
-  // debugger
   if (walletAddress.walletAddress) {
     await getApiWhitelistVerify()
     console.log(whitelistVerifyData.value)
