@@ -37,19 +37,21 @@
       </div>
     </div>
     <div class="flex justify-center items-center mt-[40px]">
-      <div class="cancel-btn">Cancel</div>
-      <a-button class="w-[178px] h-[37px]">Buy</a-button>
+      <div class="cancel-btn" @click="closeModal">Cancel</div>
+      <a-button class="w-[178px] h-[37px]" @click="buyWhitelistSubscribe">Buy</a-button>
     </div>
   </a-modal>
 </template>
 <script lang='ts' setup>
 import { ref, toRefs, onMounted } from "vue";
+import { message } from "ant-design-vue";
 import { apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiWhitelistDiscount, apiWhitelistSubscribe } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const walletAddress = useWalletAddress();
 const buyValue = ref(0)
 const whitelistSubscribeConfigData = ref({});
 const whitelistSubscribeAmountData = ref({});
+const whitelistSubscribeResult = ref(false);
 const props = defineProps({
   openWhiteListBuyModal: {
     type: Boolean,
@@ -58,9 +60,9 @@ const props = defineProps({
 })
 
 const { openWhiteListBuyModal } = toRefs(props)
-const emit = defineEmits(['closeWhiteListBuyModal'])
+const emit = defineEmits(['closeWhiteListBuyModal', 'getWhitelistSubscribeResult'])
 const closeModal = () => {
-  emit('closeWhiteListBuyModal', false)
+  emit('closeWhiteListBuyModal')
 }
 
 const getApiWhitelistSubscribeConfig = async () => {
@@ -71,6 +73,41 @@ const getApiWhitelistSubscribeConfig = async () => {
 const getApiWhitelistSubscribeAmount = async () => {
   const { data } = await apiWhitelistSubscribeAmount(walletAddress.walletAddress)
   whitelistSubscribeAmountData.value = data
+}
+
+const getApiWhitelistSubscribe = async (hash: string) => {
+  const { data } = await apiWhitelistSubscribe(hash, walletAddress.walletAddress)
+  whitelistSubscribeResult.value = data.result;
+  emit('getWhitelistSubscribeResult', data.result)
+  closeModal()
+}
+
+const buyWhitelistSubscribe = async () => {
+  if (buyValue > whitelistSubscribeAmountData.value.amount) return message.error('超出购买最大值')
+  try {
+    const accounts = await okxwallet.request({ method: 'eth_requestAccounts' });
+    okxwallet.request({
+      method: 'eth_sendTransaction',
+      params: [
+        {
+          from: accounts[0],
+          to: '0xc2895146e7e35ca7210fedefb75af56a67eeb4084017f5d3bd45882780e93277',
+          value: '0x29a2241af62c0000',
+          gasPrice: '0x09184e72a000',
+          gas: '0x2710',
+        },
+      ],
+    })
+      .then((txHash) => {
+        console.log(txHash)
+        if (txHash) {
+          getApiWhitelistSubscribe(txHash)
+        }
+      })
+      .catch((error) => console.error);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 onMounted(async () => {
