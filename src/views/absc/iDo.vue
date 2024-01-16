@@ -2,7 +2,7 @@
 <template>
   <abscHeader></abscHeader>
   <div class="w-full h-full bg-black md:pb-[64px] pb-[32px]">
-    <div class="max-w-[1440px] mx-auto md:px-[0px] px-[32px]">
+    <div class="max-w-[1440px] mx-auto px-[32px]">
       <div>
         <div class="flex justify-center items-center md:pt-[166px] pt-[100px]">
           <img src="@/assets/images/absc-tokens.png" class="md:h-[50px] h-[38px] self-center" />
@@ -64,6 +64,8 @@
 import { ref, onMounted } from "vue";
 import abscHeader from "@/components/absc-header.vue";
 import Progress from "@/components/progress.vue";
+import { IDOApi } from "@/apis/idoApi"
+const idoApiData = new IDOApi(window.okxwallet, 'test');
 
 const fakeInfo = ref([
   {

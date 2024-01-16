@@ -7,7 +7,6 @@
         <img src="@/assets/images/TG.png" class="h-[22px]" />
       </div>
     </div>
-
   </div>
 </template>
 <script lang='ts' setup>

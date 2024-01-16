@@ -29,9 +29,9 @@
       </div>
       <div v-if="whitelistVerifyData.result && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">You
         have
-        obtained the <span class="text-[#E527FF]">{{
-          whitelistVerifyData.level }}</span>
-        whitelist,
+        obtained the <span class="text-[#E527FF]">{{ LeveLabellEnums[whitelistVerifyData?.level]
+        }}</span>
+        level of whitelist,
         corresponding to your NFT with
         Token ID <span class="text-[#E527FF]">{{ whitelistVerifyData.tokenId }}</span></div>
 
@@ -111,6 +111,8 @@ import whiteListBuyModal from './components/whiteListBuyModal.vue';
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import { apiWhitelistAcquisitionTime, apiWhitelistVerify, apiWhitelistSubscribeTime, apiWhitelistSubscribeAmount } from "@/apis/absc";
+import { chainApi } from "@/apis/chainApi";
+import { LeveLabellEnums } from "@/enums/levelLabel";
 const walletAddress = useWalletAddress()
 
 const open = ref(false)
@@ -128,6 +130,7 @@ const btnInfo = ref('');
 const disabled = ref(false);
 const startTime = ref('');
 const endTime = ref('');
+const balanceValue = ref(0)
 
 
 const columns = ref([
@@ -192,6 +195,7 @@ const data = ref([
 
 // 点击按钮
 const handleExchangeModal = async () => {
+
   if (!walletAddress.walletAddress) return openSelectedWhiteListModal.value = true;
   if (btnInfo.value.includes('Whitelist')) {
     // 点击获取白名单
@@ -252,7 +256,7 @@ const getApiWhitelistSubscribeTime = async () => {
     endTime.value = data.end
     getApiWhitelistSubscribeAmount()
   } else {
-    btnInfo.value = 'IDO已结束';
+    btnInfo.value = 'IDO has ended';
     disabled.value = true;
   }
 }
@@ -262,6 +266,11 @@ const getApiWhitelistSubscribeAmount = async () => {
   whitelistSubscribeAmountData.value = data
 }
 
+const getBalanceValue = async () => {
+  const chainApidata = new chainApi(window.okxwallet)
+  balanceValue.value = await chainApidata.getBalance(walletAddress.walletAddress)
+  console.log(balanceValue.value, 'providers');
+}
 
 const getWhiteListDone = () => {
   getApiWhitelistVerify()
@@ -320,6 +329,7 @@ const getApiWhitelistVerify = async () => {
 onMounted(async () => {
   console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
   if (walletAddress.walletAddress) {
+
     await getApiWhitelistVerify()
     console.log(whitelistVerifyData.value, 'oioi')
     if (whitelistVerifyData.value && whitelistVerifyData.value.result) {

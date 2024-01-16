@@ -78,7 +78,8 @@
             <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px] mb-[30px]" />
             <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
               <div>Rarity:</div>
-              <div>{{ getLevelLabel(item?.child?.level) }}</div>
+              <!-- <div>{{ getLevelLabel(item?.child?.level) }}</div> -->
+              <div>{{ LeveLabellEnums[item?.child?.level] }}</div>
             </div>
           </div>
 
@@ -169,6 +170,7 @@ import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core
 import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById, apiAbscDrawCheck } from "@/apis/absc";
 import useAssets from "@/stores/useAssets";
 import { useWalletAddress } from "@/stores/useWalletAddress";
+import { LeveLabellEnums } from "@/enums/levelLabel"
 const walletAddress = useWalletAddress()
 import gql from 'graphql-tag';
 const { getImageURL } = useAssets();
@@ -344,7 +346,7 @@ const payableNFTs = (nfts: any[], amount: number) => {
 // // 交易 APT20 
 const transactionApt20 = async () => {
   let list = payableNFTs(abscNFTList.value, amount.value);
-  if (list.length == 0) {
+  if (list.length == 0) { 
     throw new Error("Insufficient balance of ABSC inscriptions");
   }
   const transaction = {
@@ -406,15 +408,6 @@ const getIsMobils = async () => {
   const isAndroid = /android|XiaoMi|MiuiBrowser/i.test(ua);
   isMobile.value = isIOS || isAndroid;
   isOKApp.value = /OKApp/i.test(ua);
-  // if (isMobile && !isOKApp) {
-  //   const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
-  //   window.location.href = encodedUrl;
-  // }
-  // else if (window.okxwallet) {
-  //   // const accounts = await window.okxwallet.request({
-  //   //   method: "eth_requestAccounts",
-  //   // });
-  // }
 }
 
 
@@ -424,9 +417,7 @@ onMounted(async () => {
   if (window.okxwallet.selectedAddress) {
     let address = window.okxwallet.selectedAddress;
     walletAddress.setWalletAddress(address);
-
     getAbscRecord()
-    //getAbscBalance()
   }
   getAbscBlindBoxNumber()
   getAbscDrawCheck()
@@ -444,17 +435,17 @@ watch(
   }, { deep: true, immediate: true }
 );
 
-const levelLabel = new Map();
-levelLabel.set(1, 'UR');
-levelLabel.set(2, 'SSR');
-levelLabel.set(3, 'SR');
-levelLabel.set(4, 'S');
-levelLabel.set(5, 'R');
-levelLabel.set(6, 'N');
+// const levelLabel = new Map();
+// levelLabel.set(1, 'UR');
+// levelLabel.set(2, 'SSR');
+// levelLabel.set(3, 'SR');
+// levelLabel.set(4, 'S');
+// levelLabel.set(5, 'R');
+// levelLabel.set(6, 'N');
 
-const getLevelLabel = (level: number): string => {
-  return levelLabel.get(level)
-}
+// const getLevelLabel = (level: number): string => {
+//   return levelLabel.get(level)
+// }
 
 </script>
 

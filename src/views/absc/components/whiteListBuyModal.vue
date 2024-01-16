@@ -7,11 +7,12 @@
         <a-input v-model:value="buyValue" placeholder="Basic usage" @change="changePay">
           <template #suffix>
             <div>BNB</div>
+            <a-button @click="getMaxValue()">Max</a-button>
           </template>
         </a-input>
         <div class="flex justify-between mt-[5px]">
           <div class="text-[#6A6A6A ]">$300.12</div>
-          <div class="text-[#000000]">Balance: {{ whitelistSubscribeAmountData.amount }}</div>
+          <div class="text-[#000000]">Balance: {{ balanceValue }}</div>
         </div>
       </div>
       <img src="@/assets/images/swap.png" class="swap-posi" />
@@ -23,7 +24,11 @@
             <div>ABSC</div>
           </template>
         </a-input>
-        <div class="text-[#000000]">You $ABSC balance: {{ whitelistSubscribeAmountData.abscAmount }}</div>
+        <div class="flex justify-between mt-[5px]">
+          <div></div>
+          <div class="text-[#000000]">You $ABSC balance: {{ whitelistSubscribeAmountData.abscAmount }}</div>
+        </div>
+
       </div>
     </div>
 
@@ -48,6 +53,7 @@ import { ref, toRefs, onMounted, computed } from "vue";
 import { message } from "ant-design-vue";
 import { apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiWhitelistDiscount, apiWhitelistSubscribe } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
+import { chainApi } from "@/apis/chainApi"
 const walletAddress = useWalletAddress();
 const buyValue = ref(0)
 const whitelistSubscribeConfigData = ref({});
@@ -55,6 +61,8 @@ const whitelistSubscribeAmountData = ref({});
 const whitelistSubscribeResult = ref(false);
 const whitelistDiscountData = ref(1)
 const transitionPay = ref(0);
+const balanceValue = ref(0);
+// const maxValue = ref(0);
 const props = defineProps({
   openWhiteListBuyModal: {
     type: Boolean,
@@ -62,10 +70,17 @@ const props = defineProps({
   }
 })
 
+
+
 const { openWhiteListBuyModal } = toRefs(props)
 const emit = defineEmits(['closeWhiteListBuyModal', 'getWhitelistSubscribeResult'])
 const closeModal = () => {
   emit('closeWhiteListBuyModal')
+}
+
+const getMaxValue = () => {
+  buyValue.value = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
+  changePay()
 }
 
 const getApiWhitelistSubscribeConfig = async () => {
@@ -91,39 +106,58 @@ const getApiWhitelistSubscribe = async (hash: string) => {
 }
 
 const buyWhitelistSubscribe = async () => {
-  if (buyValue > whitelistSubscribeAmountData.value.amount) return message.error('超出购买最大值')
+  const Max = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
+  if (buyValue > Max) return message.error('Exceed the maximum purchase value')
   try {
-    const accounts = await okxwallet.request({ method: 'eth_requestAccounts' });
-    okxwallet.request({
-      method: 'eth_sendTransaction',
-      params: [
-        {
-          from: accounts[0],
-          to: '0x3ba8ef462cf3831f09665284db095ad75aa7be15a47910a3304aab3b8ea7da30',
-          value: '0x29a2241af62c0000',
-          gasPrice: '0x09184e72a000',
-          gas: '0x2710',
-        },
-      ],
-    })
-      .then((txHash) => {
-        console.log(txHash)
-        if (txHash) {
-          getApiWhitelistSubscribe(txHash)
-        }
-      })
-      .catch((error) => console.error);
-  } catch (error) {
-    console.log(error);
+    const data = await chainApidata.transfer(walletAddress.walletAddress, buyValue)
+    if (data) {
+      getApiWhitelistSubscribe(data)
+    }
+  } catch (err) {
+    message.error(err)
   }
+
+  // try {
+  //   const accounts = await okxwallet.request({ method: 'eth_requestAccounts' });
+  //   okxwallet.request({
+  //     method: 'eth_sendTransaction',
+  //     params: [
+  //       {
+  //         from: accounts[0],
+  //         to: '0x3ba8ef462cf3831f09665284db095ad75aa7be15a47910a3304aab3b8ea7da30',
+  //         value: '0x29a2241af62c0000',
+  //         gasPrice: '0x09184e72a000',
+  //         gas: '0x2710',
+  //       },
+  //     ],
+  //   })
+  //     .then((txHash) => {
+  //       console.log(txHash)
+  //       if (txHash) {
+  //         getApiWhitelistSubscribe(txHash)
+  //       }
+  //     })
+  //     .catch((error) => console.error);
+  // } catch (error) {
+  //   console.log(error);
+  // }
 }
 
 const changePay = () => {
   transitionPay.value = buyValue.value * 10000
 }
 
+const getBalanceValue = async () => {
+  balanceValue.value = await chainApidata.getBalance(walletAddress.walletAddress)
+  console.log(balanceValue.value, 'balanceValue');
+}
+
 onMounted(async () => {
+  if (window.okxwallet) {
+    const chainApidata = new chainApi(window.okxwallet)
+  }
   await getApiWhitelistSubscribeConfig();
+  await getBalanceValue()
   getApiWhitelistSubscribeAmount();
   getApiWhitelistDiscount();
 })

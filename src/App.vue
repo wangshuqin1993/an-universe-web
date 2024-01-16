@@ -7,7 +7,7 @@
 </template>
 <script setup lang="ts">
 import abscHeader from "@/components/absc-header.vue";
-import defaultFooter from "@/components/defaultFooter.vue";
+import defaultFooter from "@/components/absc-Footer.vue";
 </script>
 
 <style lang="less">
