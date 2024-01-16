@@ -17,7 +17,7 @@
     "aptos": "^1.21.0",
     "axios": "^1.6.4",
     "esbuild": "^0.19.9",
-    "ethers": "^6.9.2",
+    "ethers": "^5.7.2",
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "pinia": "^2.1.7",

@@ -195,3 +195,21 @@ export function apiWhitelistSubscribe(tx:string,address: string)  {
     }
   })
 }
+
+// 获得 ido 开始时间，目标金额
+export function apiIDOLaunchTime()  {
+  // return httpRequest({
+  //   url: `/absc/ido/time`,
+  //   method: "get",
+  // });
+  return Promise.resolve({
+    code: 200,
+    data: {
+      start: "2024-1-13 00:00:00",
+      status: '2',
+      targetAmount: "5000",
+      whitelistAmount:"1000",
+    }
+  })
+}
+

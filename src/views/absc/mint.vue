@@ -349,7 +349,7 @@ const transactionApt20 = async () => {
   }
   const transaction = {
     arguments: [
-      list, "0xc2895146e7e35ca7210fedefb75af56a67eeb4084017f5d3bd45882780e93277", amount.value],
+      list, "0x3ba8ef462cf3831f09665284db095ad75aa7be15a47910a3304aab3b8ea7da30", amount.value],
     function: '0x1fc2f33ab6b624e3e632ba861b755fd8e61d2c2e6cf8292e415880b4c198224d::apts::split',
     type_arguments: [],
   };
