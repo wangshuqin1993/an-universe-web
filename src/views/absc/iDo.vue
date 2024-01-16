@@ -58,11 +58,13 @@
     </div>
 
   </div>
+  <abscFooter></abscFooter>
 </template>
 
 <script lang='ts' setup>
 import { ref, onMounted } from "vue";
 import abscHeader from "@/components/absc-header.vue";
+import abscFooter from "@/components/absc-Footer.vue";
 import Progress from "@/components/progress.vue";
 import { IDOApi } from "@/apis/idoApi"
 const idoApiData = new IDOApi(window.okxwallet, 'test');

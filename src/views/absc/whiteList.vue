@@ -77,6 +77,7 @@
       </div>
     </div>
   </div>
+  <abscFooter></abscFooter>
 
   <!-- <a-modal v-model:open="open" title="" :footer="null">
     <div class="text-[18px] text-[#000] font-semibold mb-[20px] mt-[50px] font-bold">Please enter BSC address</div>
@@ -106,6 +107,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
 import abscHeader from "@/components/absc-header.vue";
+import abscFooter from "@/components/absc-Footer.vue";
 import WhiteListModal from './components/WhiteListModal.vue';
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
 import selectWalletListModal from "@/components/selectWalletListModal.vue";

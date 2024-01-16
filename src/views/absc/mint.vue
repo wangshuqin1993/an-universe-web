@@ -4,18 +4,15 @@
 
     <div class="w-screen h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
       <div class="px-[32px] pt-[82px]">
-        <div class="absc-title "><span class="title-text text-[30px] md:text-[48px] ">BSC Golden Shovel</span></div>
+        <div class="absc-title "><span class="title-text text-[30px] md:text-[48px] ">$BSC Golden Shovel</span></div>
         <div class="absc-sub-title md:w-[860px] w-hull mx-auto">
-          <div>
+          <div class="text-left">
             $BSC Golden Shovel is a collection of 7777 NFTs issued on
-            the BSC chain. As the genesis NFT of the<br />
+            the BSC chain. As the genesis NFT of the
             BMaker&$BSC project, it plays an important role in the subsequent
             development of the ecosystem.<br />
-          </div>
-          <div class="mt-[20px]">
             According to different rarity, $BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
-            to<br />
-            different rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
+            to different<br /> rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
           </div>
         </div>
         <!-- <div class="absc-blind-container md:w-[860px] w-hull">
@@ -37,7 +34,7 @@
           </a-button>
         </div>
       -->
-        <div class="text-center mt-[40px]  px-[32px]">
+        <div class="text-center mt-[30px] px-[32px]">
           <a-button :disabled="abscDrawCheck !== 2"
             class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]" :loading="loading"
             @click="showOpen">Start now
@@ -120,6 +117,7 @@
     <nftDesc></nftDesc>
     <nftRights></nftRights>
   </div>
+  <abscFooter></abscFooter>
 
 
 
@@ -142,7 +140,7 @@
 
   <ADModal :show="showModal">
     <div class="absc-cube-container">
-      <div class="absolute left-[410px] top-[70px] cursor-pointer z-10" @click="showModalbtn">
+      <div class="absolute right-[150px] top-[50px] z-10 cursor-pointer" @click="showModalbtn">
         <span class="close-btn">X</span>
       </div>
       <div class="absolute bg-black opacity-[0.85] p-[20px] rounded-[25px]">
@@ -162,6 +160,7 @@ import { ref, onMounted, watch } from "vue";
 import { ExclamationCircleTwoTone, setTwoToneColor } from "@ant-design/icons-vue"
 import { message } from "ant-design-vue";
 import abscHeader from "@/components/absc-header.vue";
+import abscFooter from "@/components/absc-Footer.vue";
 import nftDesc from './components/nftDesc.vue';
 import nftRights from "./components/nftRights.vue";
 import ADModal from '@/components/ADModal.vue';
@@ -450,6 +449,43 @@ watch(
 </script>
 
 <style scoped  lang="less">
+@media screen and (max-width: 1350px) {
+  .bg1-container {
+    height: 100vh;
+    background-image: url("../../assets/images/mint-bg1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover !important;
+    background-position: center !important;
+    background-clip: content-box !important;
+  }
+
+  .phone-bg1-container {
+    height: 100vh;
+    background-image: url("../../assets/images/phone-mint-bg1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover !important;
+    background-position: center !important;
+    background-clip: content-box !important;
+  }
+
+  .bg2-container {
+    height: 100vh;
+    background-image: url("../../assets/images/mint-bg2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover !important;
+    background-position: center !important;
+    background-clip: content-box !important;
+  }
+
+  .phone-bg2-container {
+    height: 100vh;
+    background-image: url("../../assets/images/phone-mint-bg2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover !important;
+    background-position: center !important;
+    background-clip: content-box !important;
+  }
+}
 .bg1-container {
   // position: relative;
   background-image: url("../../assets/images/mint-bg1.jpg");
@@ -475,6 +511,7 @@ watch(
   background-size: 100vw 100vh;
 }
 
+
 .contant {
   // min-height: 180vh;
   // background-image: url("../../assets/images/absc-core-show.png");
@@ -496,11 +533,16 @@ watch(
 }
 
 .absc-sub-title {
+  background: rgba(213,165,0,0.15);
+  padding: 15px 24px;
+  border-radius: 10px;
+  backdrop-filter: blur(0px);
   font-family: Arial;
   font-size: 16px;
-  color: rgba(124, 124, 124, 1);
+  color: #B3B3B3;
   text-align: center;
-  margin-top: 32px;
+  font-weight: 500;
+  margin-top: 20px;
   line-height: 18px;
 }
 
