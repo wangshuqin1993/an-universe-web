@@ -103,8 +103,6 @@ const connectWallet = async () => {
   //   //   message.error(error.message)
   //   // }
   // }
-
-
 }
 
 const disConnectWallet = async () => {
