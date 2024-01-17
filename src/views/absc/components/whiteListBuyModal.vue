@@ -106,10 +106,11 @@ const getApiWhitelistSubscribe = async (hash: string) => {
 }
 
 const buyWhitelistSubscribe = async () => {
+  const walletChainApi = await getChainApidata()
   const Max = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
   if (buyValue > Max) return message.error('Exceed the maximum purchase value')
   try {
-    const data = await chainApidata.transfer(walletAddress.walletAddress, buyValue)
+    const data = await walletChainApi.transfer(walletAddress.walletAddress, buyValue)
     if (data) {
       getApiWhitelistSubscribe(data)
     }
@@ -148,16 +149,26 @@ const changePay = () => {
 }
 
 const getBalanceValue = async () => {
-  balanceValue.value = await chainApidata.getBalance(walletAddress.walletAddress)
+  const walletChainApi = await getChainApidata()
+  balanceValue.value = await walletChainApi.getBalance(walletAddress.walletAddress)
   console.log(balanceValue.value, 'balanceValue');
 }
 
-onMounted(async () => {
-  if (window.okxwallet) {
+const getChainApidata = async () => {
+  if (window.okxwallet?.selectedAddress) {
     const chainApidata = new chainApi(window.okxwallet)
+    return chainApidata
+  } else {
+    const chainApidata = new chainApi(window.ethereum)
+    return chainApidata
+  }
+}
+
+onMounted(async () => {
+  if (walletAddress.walletAddress) {
+    await getBalanceValue()
   }
   await getApiWhitelistSubscribeConfig();
-  await getBalanceValue()
   getApiWhitelistSubscribeAmount();
   getApiWhitelistDiscount();
 })

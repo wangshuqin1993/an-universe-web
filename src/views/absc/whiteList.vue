@@ -267,7 +267,12 @@ const getApiWhitelistSubscribeAmount = async () => {
 }
 
 const getBalanceValue = async () => {
-  const chainApidata = new chainApi(window.okxwallet)
+  if (window.okxwallet?.selectedAddress) {
+    const chainApidata = new chainApi(window.okxwallet)
+  } else {
+    const chainApidata = new chainApi(window.ethereum)
+  }
+
   balanceValue.value = await chainApidata.getBalance(walletAddress.walletAddress)
   console.log(balanceValue.value, 'providers');
 }

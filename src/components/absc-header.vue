@@ -136,6 +136,7 @@ const connectWallet = async () => {
 }
 
 const disConnectWallet = async () => {
+  // if(window.okxwallet?.)
   let connectionStatus = await window.okxwallet.isConnected();
   console.log(connectionStatus, 'connectionStatus')
 
@@ -162,6 +163,12 @@ onMounted(async () => {
   // console.log(window.okxwallet, 'window.okxwallet')
   if (window.okxwallet?.selectedAddress) {
     let address = window.okxwallet?.selectedAddress;
+    walletAddress.setWalletAddress(address);
+    btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+  }
+  // console.log(window.ethereum, 'window.ethereum')
+  if (window.ethereum?.selectedAddress) {
+    let address = window.ethereum?.selectedAddress;
     walletAddress.setWalletAddress(address);
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   }

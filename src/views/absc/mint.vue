@@ -346,7 +346,7 @@ const payableNFTs = (nfts: any[], amount: number) => {
 // // 交易 APT20 
 const transactionApt20 = async () => {
   let list = payableNFTs(abscNFTList.value, amount.value);
-  if (list.length == 0) { 
+  if (list.length == 0) {
     throw new Error("Insufficient balance of ABSC inscriptions");
   }
   const transaction = {
