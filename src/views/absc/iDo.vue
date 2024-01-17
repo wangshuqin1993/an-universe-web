@@ -133,11 +133,13 @@
       <a-button class="w-[178px] h-[37px]" @click="buyIDOSubscribe">Buy</a-button>
     </div>
   </a-modal>
+  <abscFooter></abscFooter>
 </template>
 
 <script lang='ts' setup>
 import { ref, onMounted, watch } from "vue";
 import abscHeader from "@/components/absc-header.vue";
+import abscFooter from "@/components/absc-Footer.vue";
 import { message } from "ant-design-vue";
 import Progress from "@/components/progress.vue";
 import { IDOApi } from "@/apis/idoApi"

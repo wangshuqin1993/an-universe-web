@@ -4,18 +4,15 @@
 
     <div class="w-screen h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
       <div class="px-[32px] pt-[82px]">
-        <div class="absc-title "><span class="title-text text-[30px] md:text-[48px] ">BSC Golden Shovel</span></div>
+        <div class="absc-title "><span class="title-text text-[30px] md:text-[48px] ">$BSC Golden Shovel</span></div>
         <div class="absc-sub-title md:w-[860px] w-hull mx-auto">
-          <div>
-            $BSC Golden Shovel is a collection of 7777 NFTs issued on
-            the BSC chain. As the genesis NFT of the<br />
+          <div class="text-left">
+            $BSC Golden Shovel is a collection of 1000 NFTs issued on
+            the BSC chain. As the genesis NFT of the
             BMaker&$BSC project, it plays an important role in the subsequent
             development of the ecosystem.<br />
-          </div>
-          <div class="mt-[20px]">
             According to different rarity, $BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
-            to<br />
-            different rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
+            to different<br /> rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
           </div>
         </div>
         <!-- <div class="absc-blind-container md:w-[860px] w-hull">
@@ -37,7 +34,7 @@
           </a-button>
         </div>
       -->
-        <div class="text-center mt-[40px]  px-[32px]">
+        <div class="text-center mt-[30px] px-[32px]">
           <a-button :disabled="abscDrawCheck !== 2"
             class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]" :loading="loading"
             @click="showOpen">Start now
@@ -48,7 +45,9 @@
           The activity has not started yet
         </div>
         <div v-if="abscDrawCheck == 3">
-          The activity has ended
+          <a class="text-[#017AFF] cursor-pointer underline text-[14px]" href="https://element.market/bsc">
+            You can click to trade it in the market
+          </a>
         </div>
       </div>
       <div v-if="walletAddress.walletAddress" class="mint-text md:w-[532px] w-hull px-[32px] ">
@@ -57,8 +56,8 @@
         <div>
           You have started
           <span class="!text-[#E527FF]">{{ recordData.length }}</span>
-          activity once,
-          which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> $ABSC
+          activities,
+          which costs <span class="!text-[#E527FF]">{{ recordData.length * 100000 }}</span> ABSC inscriptions
         </div>
       </div>
     </div>
@@ -70,7 +69,7 @@
         Your activity result
       </div>
       <div class="text-[14px] mb-[10px] font-medium text-center text-[#FFFFFF]">Reveal Time: <span
-          class="text-[#F41FFF]">Jan. 19, 2024 10 UTF-8</span></div>
+          class="text-[#F41FFF]">Jan 19th 12:00 AM (UTC+8)</span></div>
       <div v-if="recordData.length"
         class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
         <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
@@ -102,7 +101,7 @@
       <div class="font-[Montserrat Black] text-[#fff] text-[36px] font-black">NFT Description</div>
       <div class="font-[Arial] text-[#7C7C7C] text-[16px] mt-[29px] mx-auto leading-[18px]">
         <div>
-          $BSC Golden Shovel is a collection of 7777 NFTs issued on
+          $BSC Golden Shovel is a collection of 1000 NFTs issued on
           the BSC chain. As the genesis NFT of the<br />
           BMaker&$BSC project, it plays an important role in the subsequent
           development of the ecosystem.<br />
@@ -120,10 +119,11 @@
     <nftDesc></nftDesc>
     <nftRights></nftRights>
   </div>
+  <abscFooter></abscFooter>
 
 
 
-  <a-modal v-model:open="open" title="" :footer="null">
+  <a-modal v-model:open="open" title="" :footer="null" @cancel="loading=false">
     <div class="text-center">
       <div class="flex items-center justify-center text-center text-[21px] font-semibold mt-[50px] mb-[30px] ">
         <ExclamationCircleTwoTone style="fontSize: 20px" />
@@ -142,7 +142,7 @@
 
   <ADModal :show="showModal">
     <div class="absc-cube-container">
-      <div class="absolute left-[410px] top-[70px] cursor-pointer z-10" @click="showModalbtn">
+      <div class="absolute right-[150px] top-[50px] z-10 cursor-pointer" @click="showModalbtn">
         <span class="close-btn">X</span>
       </div>
       <div class="absolute bg-black opacity-[0.85] p-[20px] rounded-[25px]">
@@ -162,6 +162,7 @@ import { ref, onMounted, watch } from "vue";
 import { ExclamationCircleTwoTone, setTwoToneColor } from "@ant-design/icons-vue"
 import { message } from "ant-design-vue";
 import abscHeader from "@/components/absc-header.vue";
+import abscFooter from "@/components/absc-Footer.vue";
 import nftDesc from './components/nftDesc.vue';
 import nftRights from "./components/nftRights.vue";
 import ADModal from '@/components/ADModal.vue';
@@ -227,6 +228,8 @@ const getAbscDrawCheck = async () => {
 const getAbscRecord = async () => {
   const { data } = await apiAbscRecord(walletAddress.walletAddress)
   recordData.value = data || [];
+  //  recordData.value = [];
+
   recordData.value.map(async (item) => {
     item.child = await getAbscBlindBoxById(item.blindBoxId)
   })
@@ -260,6 +263,7 @@ const showOpen = async () => {
     if (walletAddress.walletAddress) {
       const response = await window.okxwallet.aptos.connect();
       if (response.address) {
+        loading.value = true;
         aptosAddress.value = response.address;
         await getAbscBalance()
         open.value = true;
@@ -346,6 +350,7 @@ const payableNFTs = (nfts: any[], amount: number) => {
 
 // // 交易 APT20 
 const transactionApt20 = async () => {
+  await getAbscBalance()
   let list = payableNFTs(abscNFTList.value, amount.value);
   if (list.length == 0) {
     throw new Error("Insufficient balance of ABSC inscriptions");
@@ -373,18 +378,18 @@ const transactionApt20 = async () => {
   await getAbscBalance()
 }
 
-const getAbscBalance = () => {
+const getAbscBalance = async () => {
   if (!aptosAddress.value || aptosAddress.value == "") {
     abscBalance.value = 0
     return;
   }
-  getOwnersNFTs().then(data => {
-    console.log(data);
-    abscNFTList.value = data.data.current_token_datas_v2;
-    abscBalance.value = abscNFTList.value.reduce((prev: number, cur: { token_properties: { amt: number; }; }) => {
-      return prev + Number(cur.token_properties.amt)
-    }, 0)
-  })
+  console.log("getAbscBalance")
+  let data = await getOwnersNFTs();
+  console.log("getAbscBalance data", data.data.current_token_datas_v2)
+  abscNFTList.value = data.data.current_token_datas_v2;
+  abscBalance.value = abscNFTList.value.reduce((prev: number, cur: { token_properties: { amt: number; }; }) => {
+    return prev + Number(cur.token_properties.amt)
+  }, 0)
 }
 
 const getOwnersNFTs = () => {
@@ -399,7 +404,8 @@ const getOwnersNFTs = () => {
       }`,
     variables: {
       address: aptosAddress.value,
-    }
+    },
+    fetchPolicy: "no-cache",
   })
 }
 
@@ -439,6 +445,44 @@ watch(
 </script>
 
 <style scoped  lang="less">
+@media screen and (max-width: 1350px) {
+  .bg1-container {
+    height: 100vh;
+    background-image: url("../../assets/images/mint-bg1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover !important;
+    background-position: center !important;
+    background-clip: content-box !important;
+  }
+
+  .phone-bg1-container {
+    height: 100vh;
+    background-image: url("../../assets/images/phone-mint-bg1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover !important;
+    background-position: center !important;
+    background-clip: content-box !important;
+  }
+
+  .bg2-container {
+   // height: 100vh;
+   // height: 100%;
+    background-image: url("../../assets/images/mint-bg2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover !important;
+    background-position: center !important;
+    background-clip: content-box !important;
+  }
+
+  .phone-bg2-container {
+    height: 100vh;
+    background-image: url("../../assets/images/phone-mint-bg2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover !important;
+    background-position: center !important;
+    background-clip: content-box !important;
+  }
+}
 .bg1-container {
   // position: relative;
   background-image: url("../../assets/images/mint-bg1.jpg");
@@ -464,6 +508,7 @@ watch(
   background-size: 100vw 100vh;
 }
 
+
 .contant {
   // min-height: 180vh;
   // background-image: url("../../assets/images/absc-core-show.png");
@@ -485,11 +530,16 @@ watch(
 }
 
 .absc-sub-title {
+  background: rgba(213,165,0,0.15);
+  padding: 15px 24px;
+  border-radius: 10px;
+  backdrop-filter: blur(0px);
   font-family: Arial;
   font-size: 16px;
-  color: rgba(124, 124, 124, 1);
+  color: #B3B3B3;
   text-align: center;
-  margin-top: 32px;
+  font-weight: 500;
+  margin-top: 20px;
   line-height: 18px;
 }
 
