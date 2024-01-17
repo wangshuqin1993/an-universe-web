@@ -57,6 +57,8 @@ const isOKApp = ref(false);
 const walletOpen = ref(false);
 const btnInfo = ref('');
 
+const baseUrl = ref(import.meta.env.VITE_BASE_URL)
+
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
   // 你需要在这里使用绝对路径
@@ -74,7 +76,7 @@ const apolloClient = new ApolloClient({
 
 const connectWallet = async () => {
   if (isMobile.value && !isOKApp.value) {
-    const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
+    const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent(baseUrl.value));
     window.location.href = encodedUrl;
   } else {
     try {
