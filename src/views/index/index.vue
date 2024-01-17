@@ -6,7 +6,7 @@
         <span class="font-bold title-text">ABSC</span>
       </div>
       <div class="md:text-[18px] text-[14px]">
-        <span class="title-text">$ABSC： build BTC & all assets in aptos</span>
+        <span class="title-text">$ABSC: Asset Base in Bmaker & Btc Stable Coin Paradigm</span>
       </div>
       <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
         <a-button class="min-btn fixed w-[198px] text-[18px] h-[50px] rounded-[25px]" @click="walletOpen = true"
@@ -77,36 +77,25 @@ const connectWallet = async () => {
   if (isMobile.value && !isOKApp.value) {
     const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
     window.location.href = encodedUrl;
-
+  } else {
     try {
       const response = await okxwallet.request({ method: 'eth_requestAccounts' });
       const res = await okxwallet.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0x38' }],
       });
-      if (window.okxwallet.selectedAddress) {
+      if (window.okxwallet?.selectedAddress) {
         let address = window.okxwallet.selectedAddress
         walletAddress.setWalletAddress(address);
         btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
       } else {
         message.info('Please provide a wallet that supports BSC!')
       }
+      walletOpen.value = false
     } catch (error) {
       message.error(error.message)
     }
-
-    // try {
-    //   const response = await window.okxwallet.aptos.connect();
-    //   // console.log(response);
-    //   address.value = response.address;
-    //   walletAddress.setWalletAddress(address.value)
-    //   btnInfo.value = address.value?.substring(0, 5) + "..." + address.value?.substring(address.value.length - 4);
-    // } catch (error) {
-    //   message.error(error.message)
-    // }
   }
-
-
 }
 
 const disConnectWallet = async () => {

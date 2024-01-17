@@ -40,14 +40,15 @@
             @click="showOpen">Start now
           </a-button>
         </div>
-        <div v-if="(abscDrawCheck == 1) || (abscDrawCheck == 3)" class="mint-text md:w-[532px] w-hull px-[32px] "></div>
-        <div v-if="abscDrawCheck == 1">
-          The activity has not started yet
-        </div>
-        <div v-if="abscDrawCheck == 3">
-          <a class="text-[#017AFF] cursor-pointer underline text-[14px]" href="https://element.market/bsc">
-            You can click to trade it in the market
-          </a>
+        <div v-if="(abscDrawCheck == 1) || (abscDrawCheck == 3)" class="mint-text md:w-[532px] w-hull px-[32px] ">
+         <div v-if="abscDrawCheck == 1">
+            The activity has not started yet
+          </div>
+          <div v-if="abscDrawCheck == 3">
+            <a class="text-[#017AFF] cursor-pointer underline text-[14px]" href="https://element.market/bsc">
+              You can click to trade it in the market
+            </a>
+          </div>
         </div>
       </div>
       <div v-if="walletAddress.walletAddress" class="mint-text md:w-[532px] w-hull px-[32px] ">
@@ -62,7 +63,6 @@
       </div>
     </div>
   </div>
-
   <div class="w-screen" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
     <div class="md:px-[0px] px-[32px] md:pt-[82px] pt-[0px] max-w-[1440px] mx-auto pb-[75px]">
       <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center mb-[20px]">
@@ -260,7 +260,7 @@ const showOpen = async () => {
       await connectWallet();
     }
     if (walletAddress.walletAddress) {
-      const response = await window.okxwallet.aptos.connect();
+      const response = await window.okxwallet?.aptos.connect();
       if (response.address) {
         loading.value = true;
         aptosAddress.value = response.address;
@@ -315,7 +315,7 @@ const connectWallet = async () => {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0x38' }],
       });
-      if (window.okxwallet.selectedAddress) {
+      if (window.okxwallet?.selectedAddress) {
         let address = window.okxwallet.selectedAddress
         walletAddress.setWalletAddress(address);
         getAbscRecord()
@@ -361,7 +361,6 @@ const transactionApt20 = async () => {
     type_arguments: [],
   };
   console.log("tx", transaction);
-
   const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
   const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
   const txn = await client.waitForTransactionWithResult(
@@ -408,7 +407,7 @@ const getOwnersNFTs = () => {
   })
 }
 
-const getIsMobils = async () => {
+const getIsMobils = () => {
   const ua = navigator.userAgent;
   const isIOS = /iphone|ipad|ipod|ios/i.test(ua);
   const isAndroid = /android|XiaoMi|MiuiBrowser/i.test(ua);
@@ -420,11 +419,13 @@ const getIsMobils = async () => {
 onMounted(async () => {
   // if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
   await getIsMobils()
-  if (window.okxwallet.selectedAddress) {
+  
+  if (window.okxwallet?.selectedAddress) {
     let address = window.okxwallet.selectedAddress;
     walletAddress.setWalletAddress(address);
     getAbscRecord()
   }
+
   getAbscBlindBoxNumber()
   getAbscDrawCheck()
 })
