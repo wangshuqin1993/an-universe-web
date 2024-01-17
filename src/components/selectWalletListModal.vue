@@ -20,7 +20,8 @@ import { message } from "ant-design-vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const { getImageURL } = useAssets();
 const walletAddress = useWalletAddress()
-const walletList = ref([{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }, { name: "MetaMask", img: 'Metamask', id: 2 }])
+// { name: "MetaMask", img: 'Metamask', id: 2 }
+const walletList = ref([{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 },])
 const props = defineProps({
   openSelectedWhiteListModal: {
     type: Boolean,
