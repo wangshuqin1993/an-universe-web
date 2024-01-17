@@ -24,7 +24,7 @@ const columns = ref([
     align: 'center'
   },
   {
-    title: 'Example of rights',
+    title: 'Rights',
     dataIndex: 'rights',
     key: 'rights',
     align: 'center'
@@ -36,37 +36,37 @@ const data = ref([
     key: '1',
     level: 'UR',
     amount: 13,
-    rights: 'Discount voucher 70% during $ABSC IDO',
+    rights: '30% off during $ABSC IDO',
   },
   {
     key: '2',
     level: 'SSR',
     amount: 40,
-    rights: 'Discount voucher 80% during $ABSC IDO',
+    rights: '20% off during $ABSC IDO',
   },
   {
     key: '3',
     level: 'SR',
     amount: 65,
-    rights: 'Discount voucher 90% during $ABSC IDO',
+    rights: '10% off during $ABSC IDO',
   },
   {
     key: '4',
     level: 'S',
     amount: 130,
-    rights: 'Voucher worth 80U during $ABSC IDO',
+    rights: 'Deduction of 80U during IDO',
   },
   {
     key: '5',
     level: 'R',
     amount: 260,
-    rights: 'Voucher worth 50U during $ABSC IDO',
+    rights: 'Deduction of 50U during IDO',
   },
   {
     key: '6',
     level: 'N',
     amount: 492,
-    rights: 'Voucher worth 30U during $ABSC IDO',
+    rights: 'Deduction of 30U during IDO',
   },
 ]);
 
