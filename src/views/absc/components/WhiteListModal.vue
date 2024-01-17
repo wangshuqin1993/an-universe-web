@@ -152,7 +152,7 @@ const getApiWhitelistVerify = async () => {
 }
 
 const getApiWhitelistApplication = async (hash: string) => {
-  const { data } = await apiWhitelistApplication(hash, aptosAddress.value, walletAddress.walletAddress)
+  const { data } = await apiWhitelistApplication(hash, whitelistAbscNFTdata.value.tokenId, whitelistAbscNFTdata.value.level, walletAddress.walletAddress)
   whitelistApplicationResult.value = data.result
 }
 
@@ -197,8 +197,8 @@ const payableNFTs = (nfts: any[], amount: number) => {
   return list;
 }
 
-onMounted(() => {
-  getApiWhitelistAbscNFT()
+onMounted(async () => {
+  await getApiWhitelistAbscNFT()
 })
 
 
