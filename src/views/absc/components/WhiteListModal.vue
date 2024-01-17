@@ -198,7 +198,9 @@ const payableNFTs = (nfts: any[], amount: number) => {
 }
 
 onMounted(async () => {
-  await getApiWhitelistAbscNFT()
+  if (walletAddress.walletAddress) {
+    getApiWhitelistAbscNFT()
+  }
 })
 
 

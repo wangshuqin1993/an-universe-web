@@ -2,7 +2,7 @@
 <template>
   <abscHeader></abscHeader>
   <div class="w-full h-full bg-black md:pb-[64px] pb-[32px]">
-    <div class="max-w-[1440px] mx-auto px-[32px]">
+    <div class="max-w-[1440px] mx-auto px-[32px] md:px-[120px]">
       <div>
         <div class="flex justify-center items-center md:pt-[166px] pt-[100px]">
           <img src="@/assets/images/absc-tokens.png" class="md:h-[50px] h-[38px] self-center" />

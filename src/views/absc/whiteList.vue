@@ -232,13 +232,12 @@ const getApiWhitelistAcquisitionTime = async () => {
   } else if (data.status == '2') {
     btnInfo.value = 'Get Whitelist'
     disabled.value = false;
-    startTime.value = data.start
-    endTime.value = data.end
   } else {
     btnInfo.value = '活动已结束';
     disabled.value = true;
   }
-
+  startTime.value = data.start
+  endTime.value = data.end
   console.log('认领的data', data)
 }
 
