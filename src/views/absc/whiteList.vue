@@ -80,7 +80,7 @@
 
   <!-- <a-modal v-model:open="open" title="" :footer="null">
     <div class="text-[18px] text-[#000] font-semibold mb-[20px] mt-[50px] font-bold">Please enter BSC address</div>
-    <a-input class="h-[54px] bg-[#F3F3F3]" v-model:value="bscAddress" placeholder="Please enter BSC address" />
+    <a-input class="h-[54px] bg-[#F3F3F3]" v-model:value="abscAddress" placeholder="Please enter BSC address" />
     <div class="text-[#737373] text-[12px] mt-[14px]">
       <ExclamationCircleTwoTone style="fontSize: 14px" />
       <span class="align-middle ml-[4px]">Note: The BSC chain address is used to detect whether it is qualified for the
@@ -116,7 +116,7 @@ import { LeveLabellEnums } from "@/enums/levelLabel";
 const walletAddress = useWalletAddress()
 
 const open = ref(false)
-const bscAddress = ref("");
+const abscAddress = ref("");
 const openWhiteListModal = ref(false);
 const openWhiteListBuyModal = ref(false);
 const openSelectedWhiteListModal = ref(false);
@@ -415,6 +415,8 @@ watch(
     }
   }, { deep: true, immediate: true }
 );
+
+
 </script>
 
 <style scoped lang="less">
@@ -428,13 +430,6 @@ watch(
   font-weight: 900;
   font-size: 48px;
 }
-
-// .title-text- {
-//   background-image: linear-gradient(to right, #60638B 0%, #F9F9F9 25%, #FFFFFF 50%, #60638B 100%);
-//   -webkit-background-clip: text;
-//   background-clip: text;
-//   color: transparent;
-// }
 
 .min-btn {
   display: flex;

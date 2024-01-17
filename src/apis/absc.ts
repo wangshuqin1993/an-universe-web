@@ -88,12 +88,6 @@ export function apiWhitelistApplication(hash:string, tokenId: number, level:numb
     }  
   });
 
-  // {
-//  "address":"",
-//  "hash": "",
-//  "tokenId": 1,
-//  "level":1
-// }
   // return Promise.resolve({
   //   code: 200,
   //   data: {
@@ -108,7 +102,7 @@ export function apiWhitelistVerify(address: string)  {
     url: `/absc/whitelist/verify`,
     method: "get",
     params: {
-    address: "address"
+    address: address,
     }
   });
   // return Promise.resolve({
@@ -188,12 +182,12 @@ export function apiWhitelistSubscribeAmount(address: string)  {
   // })
 }
 // 白名单成员购买 参数 tx adress
-export function apiWhitelistSubscribe(tx:string,address: string)  {
+export function apiWhitelistSubscribe(hash:string,address: string)  {
   return httpRequest({
     url: `/absc/whitelist/subscribe`,
     method: "post",
     params: {
-      hash: tx,
+      hash: hash,
       address: address
     }  
   });
@@ -207,18 +201,18 @@ export function apiWhitelistSubscribe(tx:string,address: string)  {
 
 // 获得 ido 开始时间，目标金额
 export function apiIDOLaunchTime()  {
-  // return httpRequest({
-  //   url: `/absc/ido/time`,
-  //   method: "get",
-  // });
-  return Promise.resolve({
-    code: 200,
-    data: {
-      start: "2024-1-13 00:00:00",
-      status: '2',
-      targetAmount: "5000",
-      whitelistAmount:"1000",
-    }
-  })
+  return httpRequest({
+    url: `/absc/ido/time`,
+    method: "get",
+  });
+  // return Promise.resolve({
+  //   code: 200,
+  //   data: {
+  //     start: "2024-1-13 00:00:00",
+  //     status: '2',
+  //     targetAmount: "5000",
+  //     whitelistAmount:"1000",
+  //   }
+  // })
 }
 

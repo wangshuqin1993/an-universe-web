@@ -137,16 +137,30 @@ const connectWallet = async () => {
 
 const disConnectWallet = async () => {
   // if(window.okxwallet?.)
-  let connectionStatus = await window.okxwallet.isConnected();
-  console.log(connectionStatus, 'connectionStatus')
+  if (window.ethereum.isConnected()) {
+    try {
+      const data = window.ethereum.disconnect()
+      walletAddress.setWalletAddress('');
+      // window.location.reload()
+    } catch (err) {
+      message.error(error.message)
+    }
+  } else {
+    let connectionStatus = await window.okxwallet.isConnected();
+    console.log(connectionStatus, 'connectionStatus')
 
-  try {
-    const response = window.okxwallet.disconnect()
-    console.log(response, 'response')
-    walletAddress.setWalletAddress('');
-  } catch (error) {
-    message.error(error.message)
+    try {
+      const response = window.okxwallet.disconnect()
+      console.log(response, 'response')
+      walletAddress.setWalletAddress('');
+      // window.location.reload()
+    } catch (error) {
+      message.error(error.message)
+    }
   }
+
+
+
 }
 
 const getIsMobils = async () => {

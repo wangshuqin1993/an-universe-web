@@ -171,8 +171,9 @@ import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById,
 import useAssets from "@/stores/useAssets";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import { LeveLabellEnums } from "@/enums/levelLabel"
-const walletAddress = useWalletAddress()
 import gql from 'graphql-tag';
+
+const walletAddress = useWalletAddress()
 const { getImageURL } = useAssets();
 
 setTwoToneColor('#FAAD14')
@@ -434,18 +435,6 @@ watch(
     }
   }, { deep: true, immediate: true }
 );
-
-// const levelLabel = new Map();
-// levelLabel.set(1, 'UR');
-// levelLabel.set(2, 'SSR');
-// levelLabel.set(3, 'SR');
-// levelLabel.set(4, 'S');
-// levelLabel.set(5, 'R');
-// levelLabel.set(6, 'N');
-
-// const getLevelLabel = (level: number): string => {
-//   return levelLabel.get(level)
-// }
 
 </script>
 
