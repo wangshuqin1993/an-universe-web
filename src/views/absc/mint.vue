@@ -3,8 +3,8 @@
   <div class="w-full h-full">
 
     <div class="w-screen h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
-      <div class="px-[32px] pt-[82px]">
-        <div class="absc-title "><span class="title-text text-[30px] md:text-[48px] ">$BSC Golden Shovel</span></div>
+      <div class="px-[32px] pt-[52px]">
+        <div class="absc-title "><span class="title-text text-[24px] md:text-[32px] ">$BSC Golden Shovel</span></div>
         <div class="absc-sub-title md:w-[860px] w-hull mx-auto">
           <div class="text-left">
             $BSC Golden Shovel is a collection of 1000 NFTs issued on
@@ -34,10 +34,10 @@
           </a-button>
         </div>
       -->
-        <div class="text-center mt-[30px] px-[32px]">
+        <div class="text-center mt-[24px] px-[32px]">
           <a-button :disabled="abscDrawCheck !== 2"
-            class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]" :loading="loading"
-            @click="showOpen">Start now
+            class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px] text-[18px]"
+            :loading="loading" @click="showOpen">Start now
           </a-button>
         </div>
         <div v-if="(abscDrawCheck == 1) || (abscDrawCheck == 3)" class="mint-text md:w-[532px] w-hull px-[32px] "></div>
@@ -97,8 +97,8 @@
       </div>
     </div>
 
-    <div class="max-w-[798px] mx-auto text-center">
-      <div class="font-[Montserrat Black] text-[#fff] text-[36px] font-black">NFT Description</div>
+    <div class="max-w-[798px] mx-auto text-center px-[32px]">
+      <div class="font-[Montserrat Black] text-[#fff] md:text-[36px] text-[24px] font-black">NFT Description</div>
       <div class="font-[Arial] text-[#7C7C7C] text-[16px] mt-[29px] mx-auto leading-[18px]">
         <div>
           $BSC Golden Shovel is a collection of 1000 NFTs issued on
@@ -108,7 +108,7 @@
         </div>
         <div class="mt-[20px] pb-[20px]">
           According to different rarity, $BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
-          to<br />
+          to
           different rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
         </div>
       </div>
@@ -123,7 +123,7 @@
 
 
 
-  <a-modal v-model:open="open" title="" :footer="null" @cancel="loading=false">
+  <a-modal v-model:open="open" title="" :footer="null" @cancel="loading = false">
     <div class="text-center">
       <div class="flex items-center justify-center text-center text-[21px] font-semibold mt-[50px] mb-[30px] ">
         <ExclamationCircleTwoTone style="fontSize: 20px" />
@@ -465,8 +465,8 @@ watch(
   }
 
   .bg2-container {
-   // height: 100vh;
-   // height: 100%;
+    // height: 100vh;
+    // height: 100%;
     background-image: url("../../assets/images/mint-bg2.jpg");
     background-repeat: no-repeat;
     background-size: cover !important;
@@ -483,6 +483,7 @@ watch(
     background-clip: content-box !important;
   }
 }
+
 .bg1-container {
   // position: relative;
   background-image: url("../../assets/images/mint-bg1.jpg");
@@ -530,16 +531,16 @@ watch(
 }
 
 .absc-sub-title {
-  background: rgba(213,165,0,0.15);
+  background: rgba(213, 165, 0, 0.15);
   padding: 15px 24px;
   border-radius: 10px;
   backdrop-filter: blur(0px);
   font-family: Arial;
-  font-size: 16px;
+  font-size: 14px;
   color: #B3B3B3;
   text-align: center;
   font-weight: 500;
-  margin-top: 20px;
+  margin-top: 16px;
   line-height: 18px;
 }
 
