@@ -77,7 +77,6 @@ const connectWallet = async () => {
   if (isMobile.value && !isOKApp.value) {
     const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
     window.location.href = encodedUrl;
-
     try {
       const response = await okxwallet.request({ method: 'eth_requestAccounts' });
       const res = await okxwallet.request({
