@@ -3,8 +3,8 @@
   <div class="w-full h-full">
 
     <div class="w-screen h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
-      <div class="px-[32px] pt-[52px]">
-        <div class="absc-title "><span class="title-text text-[24px] md:text-[32px] ">$BSC Golden Shovel</span></div>
+      <div class="px-[32px] pt-[82px]">
+        <div class="absc-title "><span class="title-text text-[24px] md:text-[48px] ">$BSC Golden Shovel</span></div>
         <div class="absc-sub-title md:w-[860px] w-hull mx-auto">
           <div class="text-left">
             $BSC Golden Shovel is a collection of 1000 NFTs issued on
@@ -34,7 +34,7 @@
           </a-button>
         </div>
       -->
-        <div class="text-center mt-[24px] px-[32px]">
+        <div class="text-center mt-[30px] px-[32px]">
           <a-button :disabled="abscDrawCheck !== 2"
             class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px] text-[18px]"
             :loading="loading" @click="showOpen">Start now
@@ -139,10 +139,12 @@
       </div>
     </div>
   </a-modal>
+  <!--   width: 650px;
+  height: 650px;  md:w-[650px] md:h-[650px] w-[100%] h-[100%]-->
 
   <ADModal :show="showModal">
-    <div class="absc-cube-container">
-      <div class="absolute right-[150px] top-[50px] z-10 cursor-pointer" @click="showModalbtn">
+    <div class="absc-cube-container w-[650px] h-[650px]" v-if="!isMobile">
+      <div class="absolute md:right-[150px] right-[0] top-[50px] z-10 cursor-pointer" @click="showModalbtn">
         <span class="close-btn">X</span>
       </div>
       <div class="absolute bg-black opacity-[0.85] p-[20px] rounded-[25px]">
@@ -152,6 +154,22 @@
         results!</div>
       <div class="absolute bottom-[272px]">
         <a-button class=" w-[198px] h-[40px] rounded-[25px]" @click="viewResult">View Results</a-button>
+      </div>
+    </div>
+    <div class="fixed text-[#fff] w-[300px] h-[340px] fixed-css" v-else>
+      <div class="relative">
+        <div class="absolute right-[24px] top-[24px] z-10 cursor-pointer" @click="showModalbtn">
+          <span class="close-btn">X</span>
+        </div>
+        <div class="absolute bg-black opacity-[0.85] p-[20px] rounded-[25px] text-center">
+          <img src="@/assets/images/absc-cube.png" class="w-[380px] mx-auto" />
+          <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px] mb-[10px]">
+            Now you can check your
+            draw
+            results!
+          </div>
+          <a-button class=" w-[198px] h-[40px] rounded-[25px]" @click="viewResult">View Results</a-button>
+        </div>
       </div>
     </div>
   </ADModal>
@@ -484,8 +502,30 @@ watch(
   }
 }
 
+// @media screen and (max-width: 1440px) {
+//   .absc-sub-title {
+//     background: rgba(213, 165, 0, 0.15);
+//     padding: 15px 24px;
+//     border-radius: 10px;
+//     backdrop-filter: blur(0px);
+//     font-family: Arial;
+//     font-size: 14px;
+//     color: #B3B3B3;
+//     text-align: center;
+//     font-weight: 500;
+//     margin-top: 16px;
+//     line-height: 18px;
+//   }
+
+// }
+
+.fixed-css {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
 .bg1-container {
-  // position: relative;
   background-image: url("../../assets/images/mint-bg1.jpg");
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
@@ -536,11 +576,11 @@ watch(
   border-radius: 10px;
   backdrop-filter: blur(0px);
   font-family: Arial;
-  font-size: 14px;
+  font-size: 16px;
   color: #B3B3B3;
   text-align: center;
   font-weight: 500;
-  margin-top: 16px;
+  margin-top: 20px;
   line-height: 18px;
 }
 
@@ -630,8 +670,6 @@ watch(
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 650px;
-  height: 650px;
   text-align: center;
   opacity: 1;
 }

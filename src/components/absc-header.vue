@@ -136,32 +136,46 @@ const connectWallet = async () => {
 }
 
 const disConnectWallet = async () => {
-  // if(window.okxwallet?.)
-  if (window.ethereum.isConnected()) {
-    try {
-      const data = window.ethereum.disconnect()
-      walletAddress.setWalletAddress('');
-      // window.location.reload()
-    } catch (err) {
-      message.error(error.message)
-    }
-  } else {
-    let connectionStatus = await window.okxwallet.isConnected();
+  if (window.okxwallet?.selectedAddress) {
+    let connectionStatus = await window.okxwallet?.isConnected();
     console.log(connectionStatus, 'connectionStatus')
-
     try {
-      const response = window.okxwallet.disconnect()
+      const response = await window.okxwallet.disconnect()
       console.log(response, 'response')
       walletAddress.setWalletAddress('');
-      // window.location.reload()
+      btnInfo.value = 'connect wallet'
+      window.location.reload()
     } catch (error) {
       message.error(error.message)
     }
   }
-
-
-
 }
+// if (window.ethereum?.isConnected()) {
+
+//   console.log(window.ethereum.isConnected(), window.ethereum.disconnect(), 'test')
+//   try {
+//     const data = await window.ethereum.disconnect()
+//     walletAddress.setWalletAddress('');
+//     // window.location.reload()
+//     btnInfo.value = 'connect wallet'
+//   } catch (error) {
+//     message.error(error.message)
+//   }
+// } else {
+//   let connectionStatus = await window.okxwallet?.isConnected();
+//   console.log(connectionStatus, 'connectionStatus')
+
+//   try {
+//     const response = await window.okxwallet.disconnect()
+//     console.log(response, 'response')
+//     walletAddress.setWalletAddress('');
+//     btnInfo.value = 'connect wallet'
+//     // window.location.reload()
+//   } catch (error) {
+//     message.error(error.message)
+//   }
+// }
+// }
 
 const getIsMobils = async () => {
   const ua = navigator.userAgent;
@@ -215,6 +229,11 @@ watch(() => walletAddress.walletAddress,
     if (newVal) {
       console.log(newVal, 'kkkk')
       walletAddress.setWalletAddress(newVal)
+      btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
+    }
+
+    if (newVal == '') {
+      btnInfo.value = 'connect wallet'
     }
   }, { deep: true, immediate: true })
 
