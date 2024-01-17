@@ -45,7 +45,7 @@
             The activity has not started yet
           </div>
           <div v-if="abscDrawCheck == 3">
-            <a class="text-[#017AFF] cursor-pointer underline text-[14px]" target="_blank" href="https://element.market/bsc">
+            <a class="text-[#017AFF] cursor-pointer underline text-[14px]" target="_blank" :href="elementUrl">
               You can click to trade it in the market
             </a>
           </div>
@@ -225,6 +225,7 @@ const recordData = ref([])
 const isMobile = ref(false)
 const isOKApp = ref(false)
 const baseUrl = ref(import.meta.env.VITE_BASE_URL)
+const elementUrl = ref(import.meta.env.VITE_ElEMENT_URL)
 
 const showModalbtn = () => {
   showModal.value = !showModal.value
