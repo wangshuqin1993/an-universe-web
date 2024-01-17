@@ -15,7 +15,7 @@
           <template #overlay>
             <a-menu>
               <a-menu-item>
-                <div @click="disConnectWallet" class="text-center">disConnect</div>
+                <div @click="disConnectWallet" class="text-center">Disconnect</div>
               </a-menu-item>
             </a-menu>
           </template>
