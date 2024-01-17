@@ -15,7 +15,7 @@
           <template #overlay>
             <a-menu>
               <a-menu-item>
-                <div @click="disConnectWallet" class="text-center">disConnect</div>
+                <div @click="disConnectWallet" class="text-center">Disconnect</div>
               </a-menu-item>
             </a-menu>
           </template>
@@ -55,7 +55,6 @@ const router = useRouter();
 const isMobile = ref(false);
 const isOKApp = ref(false);
 const walletOpen = ref(false);
-const address = ref('');
 const btnInfo = ref('');
 
 // 与 API 的 HTTP 连接

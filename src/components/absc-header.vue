@@ -30,7 +30,7 @@
             <template #overlay>
               <a-menu>
                 <a-menu-item>
-                  <div @click="disConnectWallet" class="text-center">disConnect</div>
+                  <div @click="disConnectWallet" class="text-center">Disconnect</div>
                 </a-menu-item>
               </a-menu>
             </template>
@@ -136,16 +136,31 @@ const connectWallet = async () => {
 }
 
 const disConnectWallet = async () => {
-  let connectionStatus = await window.okxwallet.isConnected();
-  console.log(connectionStatus, 'connectionStatus')
+  // if(window.okxwallet?.)
+  if (window.ethereum.isConnected()) {
+    try {
+      const data = window.ethereum.disconnect()
+      walletAddress.setWalletAddress('');
+      // window.location.reload()
+    } catch (err) {
+      message.error(error.message)
+    }
+  } else {
+    let connectionStatus = await window.okxwallet.isConnected();
+    console.log(connectionStatus, 'connectionStatus')
 
-  try {
-    const response = window.okxwallet.disconnect()
-    console.log(response, 'response')
-    walletAddress.setWalletAddress('');
-  } catch (error) {
-    message.error(error.message)
+    try {
+      const response = window.okxwallet.disconnect()
+      console.log(response, 'response')
+      walletAddress.setWalletAddress('');
+      // window.location.reload()
+    } catch (error) {
+      message.error(error.message)
+    }
   }
+
+
+
 }
 
 const getIsMobils = async () => {
@@ -162,6 +177,12 @@ onMounted(async () => {
   // console.log(window.okxwallet, 'window.okxwallet')
   if (window.okxwallet?.selectedAddress) {
     let address = window.okxwallet?.selectedAddress;
+    walletAddress.setWalletAddress(address);
+    btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+  }
+  // console.log(window.ethereum, 'window.ethereum')
+  if (window.ethereum?.selectedAddress) {
+    let address = window.ethereum?.selectedAddress;
     walletAddress.setWalletAddress(address);
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   }

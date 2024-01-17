@@ -51,9 +51,9 @@ export class IDOApi {
     return this.contractApi.query('maxAllocation');
   }
 
-  async purchase(value:BigNumber): Promise<any> {
+  async purchase(value:string): Promise<any> {
     return this.contractApi.sendTransaction('purchase', {
-      value: value,
+      value: ethers.utils.parseEther(value),
       gasLimit: 100000,
     });
   }
