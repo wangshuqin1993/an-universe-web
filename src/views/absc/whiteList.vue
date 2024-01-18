@@ -36,14 +36,6 @@
         level of whitelist,
         corresponding to your NFT with
         Token ID <span class="text-[#E527FF]">{{ whitelistVerifyData.tokenId }}</span></div>
-
-      <!-- <div class="text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center mt-[19px] mb-[9px]">
-        balance：<span class="text-[#F41FFF]">1200000</span> ABSC</div>
-      <div
-        class="w-[90%] md:w-full text-[14px] font-[Montserrat, Montserrat] font-medium text-[#fff] text-center mx-auto">
-        You have obtained the <span class="text-[#F41FFF]">UR</span> whitelist, corresponding to your NFT with Token ID
-        <span class="text-[#F41FFF]">1268</span>
-      </div> -->
     </div>
 
     <div v-if="!whitelistSubscribeResult"

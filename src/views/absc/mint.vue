@@ -4,7 +4,7 @@
 
     <div class="w-screen h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
       <div class="px-[32px] pt-[82px]">
-        <div class="absc-title "><span class="title-text text-[24px] md:text-[48px] ">$BSC Golden Shovel</span></div>
+        <div class="absc-title "><span class="title-text text-[24px] 2xl:text-[48px]">$BSC Golden Shovel</span></div>
         <div class="absc-sub-title md:w-[860px] w-hull mx-auto">
           <div class="text-left">
             $BSC Golden Shovel is a collection of 1000 NFTs issued on
