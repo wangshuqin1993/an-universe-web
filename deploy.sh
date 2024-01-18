@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -rf dist/
-npm run build
+npm run build-test
 docker build -t hamstershare/hamster-nft-frontend:$1 .
 docker push hamstershare/hamster-nft-frontend:$1
 kubectl apply -f pipeline.yml -n hamster

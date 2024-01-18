@@ -45,7 +45,7 @@
             The activity has not started yet
           </div>
           <div v-if="abscDrawCheck == 3">
-            <a class="text-[#017AFF] cursor-pointer underline text-[14px]" href="https://element.market/bsc">
+            <a class="text-[#017AFF] cursor-pointer underline text-[14px]" target="_blank" :href="elementUrl">
               You can click to trade it in the market
             </a>
           </div>
@@ -58,7 +58,7 @@
           You have started
           <span class="!text-[#E527FF]">{{ recordData.length }}</span>
           activities,
-          which costs <span class="!text-[#E527FF]">{{ recordData.length * 100000 }}</span> ABSC inscriptions
+          which costs <span class="!text-[#E527FF]">{{ recordData.length * amount }}</span> ABSC inscriptions
         </div>
       </div>
     </div>
@@ -176,7 +176,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, Ref } from "vue";
 import { ExclamationCircleTwoTone, setTwoToneColor } from "@ant-design/icons-vue"
 import { message } from "ant-design-vue";
 import abscHeader from "@/components/absc-header.vue";
@@ -216,7 +216,7 @@ const abscDrawCheck = ref(0);
 const abscBalance = ref(0);
 const abscNFTList = ref([]);
 const aptosAddress = ref("");
-const amount = ref(10);
+const amount = ref(Number(import.meta.env.VITE_BURN));
 const open = ref(false);
 const showModal = ref(false)
 const loading = ref(false);
@@ -224,10 +224,12 @@ const disabledMint = ref(false);
 const recordData = ref([])
 const isMobile = ref(false)
 const isOKApp = ref(false)
+const baseUrl = ref(import.meta.env.VITE_BASE_URL)
+const elementUrl = ref(import.meta.env.VITE_ElEMENT_URL)
 
 const showModalbtn = () => {
   showModal.value = !showModal.value
-  console.log('showModal.value:', showModal.value)
+  //console.log('showModal.value:', showModal.value)
 }
 
 const getAbscBlindBoxNumber = async () => {
@@ -268,7 +270,7 @@ const getAbscDraw = async (hash: string) => {
     getAbscRecord();
     open.value = false;
   } else {
-
+    throw new Error(res.data.message);
   }
 }
 
@@ -318,7 +320,7 @@ const gotIt = async () => {
     open.value = false;
     loading.value = false;
     message.error(error.message);
-    console.error(error);
+    //console.error(error);
   }
 }
 
@@ -326,7 +328,7 @@ const gotIt = async () => {
 const connectWallet = async () => {
   try {
     if (isMobile.value && !isOKApp.value) {
-      const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
+      const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent(baseUrl.value));
       window.location.href = encodedUrl;
     } else {
       await okxwallet.request({ method: 'eth_requestAccounts' });
@@ -353,12 +355,13 @@ const payableNFTs = (nfts: any[], amount: number) => {
   let num = 0;
   let list: string[] = [];
   for (let i = 0; i < nfts.length; i++) {
-    num = num + nfts[i].token_properties.amt
+    num = num + Number(nfts[i].token_properties.amt)
     list.push(nfts[i].token_data_id);
-    if (num > amount) {
+    if (num >= amount) {
       break;
     }
   }
+  //console.log("num",num)
   if (num < amount) {
     throw new Error("Insufficient balance of ABSC inscriptions");
   }
@@ -369,6 +372,7 @@ const payableNFTs = (nfts: any[], amount: number) => {
 // // 交易 APT20 
 const transactionApt20 = async () => {
   await getAbscBalance()
+  //console.log("amount",amount.value)
   let list = payableNFTs(abscNFTList.value, amount.value);
   if (list.length == 0) {
     throw new Error("Insufficient balance of ABSC inscriptions");
@@ -379,7 +383,7 @@ const transactionApt20 = async () => {
     function: '0x1fc2f33ab6b624e3e632ba861b755fd8e61d2c2e6cf8292e415880b4c198224d::apts::split',
     type_arguments: [],
   };
-  console.log("tx", transaction);
+  //console.log("tx", transaction);
   const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
   const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
   const txn = await client.waitForTransactionWithResult(
@@ -388,11 +392,11 @@ const transactionApt20 = async () => {
       checkSuccess: true
     }
   );
-  console.log(txn, 'txn')
-  showModal.value = true;
-  loading.value = false;
+  //console.log(txn, 'txn')
   await getAbscDraw(txn.hash);
   await getAbscBalance()
+  showModal.value = true;
+  loading.value = false;
 }
 
 const getAbscBalance = async () => {
@@ -400,9 +404,7 @@ const getAbscBalance = async () => {
     abscBalance.value = 0
     return;
   }
-  console.log("getAbscBalance")
   let data = await getOwnersNFTs();
-  console.log("getAbscBalance data", data.data.current_token_datas_v2)
   abscNFTList.value = data.data.current_token_datas_v2;
   abscBalance.value = abscNFTList.value.reduce((prev: number, cur: { token_properties: { amt: number; }; }) => {
     return prev + Number(cur.token_properties.amt)

@@ -31,7 +31,7 @@ service.interceptors.request.use(
   },
   function (error) {
     // 对请求错误做些什么
-    // console.log(error);
+    //console.log("error", error);
     return Promise.reject(error);
   }
 );
@@ -49,11 +49,9 @@ service.interceptors.response.use(
     return dataAxios;
   },
   function (error: any) {
-    // if (error.response.status === 401) {
-    //   localStorage.removeItem('token');
-    //   localStorage.removeItem('userInfo')
-    //   window.location.href = '/login';
-    // }
+    if (error.response.status === 400) {
+      return Promise.reject(new Error(error.response.data.message));
+    }
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
     // console.log(error);

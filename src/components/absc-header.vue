@@ -89,7 +89,8 @@ const openSelectedWhiteListModal = ref(false);
 const selectedNavTitle = ref('Home');
 const btnInfo = ref('');
 const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
-const menuList = ref([{ name: 'Home', path: '/' }, { name: 'NFT', path: '/mint' }, { name: 'Whitelist', path: '/whitelist' }, { name: 'IDO', path: '/ido' }])
+// { name: 'Whitelist', path: '/whitelist' }, { name: 'IDO', path: '/ido' }
+const menuList = ref([{ name: 'Home', path: '/' }, { name: 'NFT', path: '/mint' },])
 
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
