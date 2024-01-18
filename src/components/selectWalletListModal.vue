@@ -3,7 +3,7 @@
     <div>
       <div class="my-[20px] text-[14px] text-[#000] font-semibold">
         <div class="mb-[30px] text-[18px]">Connect Wallet</div>
-        <div v-for="val in walletList " :key="val.name" @click="connectWallet(id)">
+        <div v-for="val in walletList " :key="val.name" @click="connectWallet(val.id)">
           <div class="flex wallet-item w-[50%] items-center cursor-pointer">
             <img :src="getImageURL(`${val.img}.png`)" class="h-[30px] mr-[18px]" />
             <div>{{ val.name }}</div>
@@ -37,12 +37,12 @@ const closeModal = () => {
 const connectWallet = async (id: number) => {
   if (id === 1) {
     try {
-      const response = await okxwallet.request({ method: 'eth_requestAccounts' });
-      const res = await okxwallet.request({
+      const response = await window.okxwallet.request({ method: 'eth_requestAccounts' });
+      const res = await window.okxwallet.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0x38' }],
       });
-      if (window.okxwallet.selectedAddress) {
+      if (window.okxwallet?.selectedAddress) {
         let address = window.okxwallet.selectedAddress
         walletAddress.setWalletAddress(address);
         closeModal()
@@ -60,7 +60,6 @@ const connectWallet = async (id: number) => {
     closeModal()
     console.log(accounts, 'accounts')
   }
-
 }
 </script>
 <style lang='less' scoped>

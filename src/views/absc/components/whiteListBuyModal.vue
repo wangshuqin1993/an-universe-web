@@ -38,7 +38,6 @@
         <div class="text-[#FF3653]">Discount: {{ whitelistDiscountData }}<br />
           Minimum amount: {{ whitelistSubscribeConfigData.minAllocation }} BNB<br />
           Maximum amount: {{ whitelistSubscribeConfigData.maxAllocation }} BNB<br />
-          <!-- Remaining amount: {{ }} USDT</div> -->
         </div>
       </div>
     </div>
@@ -62,7 +61,7 @@ const whitelistSubscribeResult = ref(false);
 const whitelistDiscountData = ref(1)
 const transitionPay = ref(0);
 const balanceValue = ref(0);
-// const maxValue = ref(0);
+
 const props = defineProps({
   openWhiteListBuyModal: {
     type: Boolean,
@@ -89,12 +88,17 @@ const getApiWhitelistSubscribeConfig = async () => {
 }
 
 const getApiWhitelistSubscribeAmount = async () => {
-  const { data } = await apiWhitelistSubscribeAmount(walletAddress.walletAddress)
-  whitelistSubscribeAmountData.value = data
+  try {
+    const { data } = await apiWhitelistSubscribeAmount(walletAddress.walletAddress)
+    whitelistSubscribeAmountData.value = data
+  } catch (err) {
+    message.error(err.message)
+  }
 }
 
+// 获得白名单折扣
 const getApiWhitelistDiscount = async () => {
-  const { data } = await apiWhitelistDiscount()
+  const { data } = await apiWhitelistDiscount(walletAddress.walletAddress)
   whitelistDiscountData.value = data.discount
 }
 
@@ -110,38 +114,13 @@ const buyWhitelistSubscribe = async () => {
   const Max = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
   if (buyValue > Max) return message.error('Exceed the maximum purchase value')
   try {
-    const data = await walletChainApi.transfer(walletAddress.walletAddress, buyValue)
+    const data = await walletChainApi.transfer(walletAddress.walletAddress, buyValue.value)
     if (data) {
       getApiWhitelistSubscribe(data)
     }
   } catch (err) {
     message.error(err)
   }
-
-  // try {
-  //   const accounts = await okxwallet.request({ method: 'eth_requestAccounts' });
-  //   okxwallet.request({
-  //     method: 'eth_sendTransaction',
-  //     params: [
-  //       {
-  //         from: accounts[0],
-  //         to: '0x3ba8ef462cf3831f09665284db095ad75aa7be15a47910a3304aab3b8ea7da30',
-  //         value: '0x29a2241af62c0000',
-  //         gasPrice: '0x09184e72a000',
-  //         gas: '0x2710',
-  //       },
-  //     ],
-  //   })
-  //     .then((txHash) => {
-  //       console.log(txHash)
-  //       if (txHash) {
-  //         getApiWhitelistSubscribe(txHash)
-  //       }
-  //     })
-  //     .catch((error) => console.error);
-  // } catch (error) {
-  //   console.log(error);
-  // }
 }
 
 const changePay = () => {
@@ -166,11 +145,11 @@ const getChainApidata = async () => {
 
 onMounted(async () => {
   if (walletAddress.walletAddress) {
-    await getBalanceValue()
+    getBalanceValue()
+    getApiWhitelistSubscribeAmount();
+    getApiWhitelistDiscount();
   }
-  await getApiWhitelistSubscribeConfig();
-  getApiWhitelistSubscribeAmount();
-  getApiWhitelistDiscount();
+  getApiWhitelistSubscribeConfig();
 })
 </script>
 <style lang='less' scoped>

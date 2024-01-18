@@ -29,7 +29,7 @@
         class="text-center text-[#fff] mt-[20px]"> Your $ABSC balance：<span class="text-[#E527FF]">{{
           whitelistSubscribeAmountData.abscAmount }}</span> ABSC
       </div>
-      <div v-if="whitelistVerifyData.result && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">You
+      <div v-if="whitelistVerifyData.joined && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">You
         have
         obtained the <span class="text-[#E527FF]">{{ LeveLabellEnums[whitelistVerifyData?.level]
         }}</span>
@@ -122,7 +122,7 @@ const whitelistAbscNFTdata = ref({});
 const whitelistAcquisitionTime = ref({});
 const whitelistSubscribeTime = ref({});
 const whitelistSubscribeAmountData = ref({});
-const btnInfo = ref('');
+const btnInfo = ref('Get Whitelist');
 const disabled = ref(false);
 const startTime = ref('');
 const endTime = ref('');
@@ -195,7 +195,7 @@ const handleExchangeModal = async () => {
   if (btnInfo.value.includes('Whitelist')) {
     // 点击获取白名单
     await getApiWhitelistVerify();
-    if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
+    if (whitelistVerifyData.value && whitelistVerifyData.value.joined) {
       // 有白名单判断IDO是否开始
       getApiWhitelistSubscribeTime()
     } else {
@@ -204,7 +204,7 @@ const handleExchangeModal = async () => {
     }
   } else {
     await getApiWhitelistVerify();
-    if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
+    if (whitelistVerifyData.value && whitelistVerifyData.value.joined) {
       // 有白名单判断IDO是否开始
       getApiWhitelistSubscribeTime()
       if (whitelistSubscribeTime.value.status === '2') {
@@ -291,16 +291,17 @@ const getWhitelistSubscribeResult = (result: boolean) => {
   whitelistSubscribeResult.value = result
 }
 
-// 用来判断是否有白名单
+// 白名单的接口
 const getApiWhitelistVerify = async () => {
   const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
   whitelistVerifyData.value = data;
 }
 
+// 判断有没有白名单
 const initDataHasWhitelistVerify = async () => {
   await getApiWhitelistVerify()
   console.log(whitelistVerifyData.value, 'oioi')
-  if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
+  if (whitelistVerifyData.value && whitelistVerifyData.value.joined) {
     // 有白名单判断IDO是否开始
     getApiWhitelistSubscribeTime()
   } else {
@@ -309,6 +310,7 @@ const initDataHasWhitelistVerify = async () => {
   }
 }
 
+// 没有白名单判断认领是否开始
 const initDataNoWhitelistVerify = async () => {
   await getApiWhitelistAcquisitionTime()
   if (whitelistAcquisitionTime.value.status == '1') {

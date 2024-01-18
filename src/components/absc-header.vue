@@ -99,25 +99,25 @@ const changeRouter = (item: any) => {
   open.value = false
 }
 // 连接钱包
-const connectWallet = async () => {
-  walletOpen.value = false;
-  try {
-    const response = await okxwallet.request({ method: 'eth_requestAccounts' });
-    const res = await okxwallet.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0x38' }],
-    });
-    if (window.okxwallet.selectedAddress) {
-      let address = window.okxwallet.selectedAddress
-      walletAddress.setWalletAddress(address);
-      btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
-    } else {
-      message.info('Please provide a wallet that supports BSC!')
-    }
-  } catch (error) {
-    message.error(error.message)
-  }
-}
+// const connectWallet = async () => {
+//   walletOpen.value = false;
+//   try {
+//     const response = await okxwallet.request({ method: 'eth_requestAccounts' });
+//     const res = await okxwallet.request({
+//       method: 'wallet_switchEthereumChain',
+//       params: [{ chainId: '0x38' }],
+//     });
+//     if (window.okxwallet.selectedAddress) {
+//       let address = window.okxwallet.selectedAddress
+//       walletAddress.setWalletAddress(address);
+//       btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+//     } else {
+//       message.info('Please provide a wallet that supports BSC!')
+//     }
+//   } catch (error) {
+//     message.error(error.message)
+//   }
+// }
 
 const disConnectWallet = async () => {
   if (window.okxwallet?.selectedAddress) {
@@ -137,16 +137,19 @@ const disConnectWallet = async () => {
   } else {
     let connectionStatus = await window.ethereum?.isConnected()
     if (connectionStatus) {
-      debugger
       try {
-        window.ethereum.request({
-          "method": "wallet_revokePermissions",
-          "params": [
-            {
-              "eth_accounts": {}
-            }
-          ]
-        });
+        await window.ethereum.disconnect()
+        // window.ethereum.request({
+        //   "method": "wallet_revokePermissions",
+        //   "params": [
+        //     {
+        //       "eth_accounts": {}
+        //     }
+        //   ]
+        // });
+        walletAddress.setWalletAddress('');
+        window.location.reload()
+        btnInfo.value = 'connect wallet'
       } catch (error) {
         message.error(error.message)
       }
@@ -175,7 +178,7 @@ const getIsMobils = async () => {
 }
 
 onMounted(async () => {
-  console.log(window.okxwallet, window.ethereum, 'window.okxwallet')
+  console.log(window.okxwallet, window.ethereum.isMetaMask, 'window.okxwallet')
   await getIsMobils()
   if (window.okxwallet?.selectedAddress) {
     let address = window.okxwallet?.selectedAddress;

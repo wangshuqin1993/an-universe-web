@@ -7,10 +7,12 @@
       <div class="white-step">
         <!-- 第一步 -->
         <div class="flex white-step-item">
-          <CheckCircleFilled v-if="whitelistAbscNFTdata.tokenId" :style="{ fontSize: '35px', color: '#E527FF' }" />
-          <div v-else class="w-[37px] h-[37px] rounded-[50%] text-[18px] leading-[37px] font-semibold"
-            :class="whitelistAbscNFTdata ? 'started-css' : 'not-started-css'">
-            1
+          <div>
+            <CheckCircleFilled v-if="whitelistAbscNFTdata.tokenId" :style="{ fontSize: '35px', color: '#E527FF' }" />
+            <div v-else class="w-[37px] h-[37px] rounded-[50%] text-[18px] leading-[37px] font-semibold"
+              :class="whitelistAbscNFTdata ? 'started-css' : 'not-started-css'">
+              1
+            </div>
           </div>
           <div class="text-left mt-[8px] mb-[20px]  ml-[20px]">
             <div class="text-[16px] font-semibold white-step-item-title "
@@ -35,10 +37,12 @@
 
         <!-- 第二部 -->
         <div class="flex white-step-item">
-          <CheckCircleFilled v-if="whitelistVerifyData.result" :style="{ fontSize: '35px', color: '#E527FF' }" />
-          <div v-else class="w-[37px] h-[37px] rounded-[50%] text-[18px] leading-[37px] font-semibold"
-            :class="whitelistAbscNFTdata.tokenId ? 'started-css' : 'not-started-css'">
-            2
+          <div>
+            <CheckCircleFilled v-if="whitelistVerifyData.joined" :style="{ fontSize: '35px', color: '#E527FF' }" />
+            <div v-else class="w-[37px] h-[37px] rounded-[50%] text-[18px] leading-[37px] font-semibold"
+              :class="whitelistAbscNFTdata.tokenId ? 'started-css' : 'not-started-css'">
+              2
+            </div>
           </div>
           <div class="text-left mt-[8px] mb-[20px]  ml-[20px]">
             <div class="text-[16px] font-semibold white-step-item-title "
@@ -49,7 +53,7 @@
                 ABSC
                 inscriptions
               </div>
-              <div @click="startNow" v-if="!whitelistVerifyData.result"
+              <div @click="startNow" v-if="!whitelistVerifyData.joined"
                 class="w-[120px] h-[32px] text-[#fff] text-[12px] font-semibold bg-[#000] rounded-[22px] text-center leading-[32px] cursor-pointer hover:opacity-[0.75]">
                 Start Now</div>
               <div class="flex items-center" v-else>
