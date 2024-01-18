@@ -4,7 +4,7 @@
 
     <div class="w-screen h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
       <div class="px-[32px] pt-[82px]">
-        <div class="absc-title "><span class="title-text text-[30px] md:text-[48px] ">$BSC Golden Shovel</span></div>
+        <div class="absc-title "><span class="title-text text-[24px] md:text-[48px] ">$BSC Golden Shovel</span></div>
         <div class="absc-sub-title md:w-[860px] w-hull mx-auto">
           <div class="text-left">
             $BSC Golden Shovel is a collection of 1000 NFTs issued on
@@ -36,16 +36,19 @@
       -->
         <div class="text-center mt-[30px] px-[32px]">
           <a-button :disabled="abscDrawCheck !== 2"
-            class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px]" :loading="loading"
-            @click="showOpen">Start now
+            class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px] text-[18px]"
+            :loading="loading" @click="showOpen">Start now
           </a-button>
         </div>
-        <div v-if="(abscDrawCheck == 1) || (abscDrawCheck == 3)" class="mint-text md:w-[532px] w-hull px-[32px] "></div>
-        <div v-if="abscDrawCheck == 1">
-          The activity has not started yet
-        </div>
-        <div v-if="abscDrawCheck == 3">
-          The activity has ended
+        <div v-if="(abscDrawCheck == 1) || (abscDrawCheck == 3)" class="mint-text md:w-[532px] w-hull px-[32px] ">
+          <div v-if="abscDrawCheck == 1">
+            The activity has not started yet
+          </div>
+          <div v-if="abscDrawCheck == 3">
+            <a class="text-[#017AFF] cursor-pointer underline text-[14px]" target="_blank" :href="elementUrl">
+              You can click to trade it in the market
+            </a>
+          </div>
         </div>
       </div>
       <div v-if="walletAddress.walletAddress" class="mint-text md:w-[532px] w-hull px-[32px] ">
@@ -55,19 +58,22 @@
           You have started
           <span class="!text-[#E527FF]">{{ recordData.length }}</span>
           activities,
-          which costs <span class="!text-[#E527FF]">{{ recordData.length * 10 }}</span> ABSC inscriptions
+          which costs <span class="!text-[#E527FF]">{{ recordData.length * amount }}</span> ABSC inscriptions
         </div>
       </div>
     </div>
   </div>
-
   <div class="w-screen" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
     <div class="md:px-[0px] px-[32px] md:pt-[82px] pt-[0px] max-w-[1440px] mx-auto pb-[75px]">
       <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center mb-[20px]">
         Your activity result
       </div>
       <div class="text-[14px] mb-[10px] font-medium text-center text-[#FFFFFF]">Reveal Time: <span
+<<<<<<< HEAD
           class="text-[#F41FFF]">Jan-19th 10:00 AM（UTC+8）</span></div>
+=======
+          class="text-[#F41FFF]">Jan 19th 12:00 AM (UTC+8)</span></div>
+>>>>>>> absc
       <div v-if="recordData.length"
         class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
         <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
@@ -95,18 +101,18 @@
       </div>
     </div>
 
-    <div class="max-w-[798px] mx-auto text-center">
-      <div class="font-[Montserrat Black] text-[#fff] text-[36px] font-black">NFT Description</div>
+    <div class="max-w-[798px] mx-auto text-center px-[32px]">
+      <div class="font-[Montserrat Black] text-[#fff] md:text-[36px] text-[24px] font-black">NFT Description</div>
       <div class="font-[Arial] text-[#7C7C7C] text-[16px] mt-[29px] mx-auto leading-[18px]">
         <div>
-          $BSC Golden Shovel is a collection of 7777 NFTs issued on
+          $BSC Golden Shovel is a collection of 1000 NFTs issued on
           the BSC chain. As the genesis NFT of the<br />
           BMaker&$BSC project, it plays an important role in the subsequent
           development of the ecosystem.<br />
         </div>
         <div class="mt-[20px] pb-[20px]">
           According to different rarity, $BSC Golden Shovel NFT is divided into 6 levels, each level corresponding
-          to<br />
+          to
           different rights. You can lottery the BSC Golden Shovel NFT by burning ABSC inscriptions.
         </div>
       </div>
@@ -121,7 +127,7 @@
 
 
 
-  <a-modal v-model:open="open" title="" :footer="null">
+  <a-modal v-model:open="open" title="" :footer="null" @cancel="loading = false">
     <div class="text-center">
       <div class="flex items-center justify-center text-center text-[21px] font-semibold mt-[50px] mb-[30px] ">
         <ExclamationCircleTwoTone style="fontSize: 20px" />
@@ -137,10 +143,12 @@
       </div>
     </div>
   </a-modal>
+  <!--   width: 650px;
+  height: 650px;  md:w-[650px] md:h-[650px] w-[100%] h-[100%]-->
 
   <ADModal :show="showModal">
-    <div class="absc-cube-container">
-      <div class="absolute right-[150px] top-[50px] z-10 cursor-pointer" @click="showModalbtn">
+    <div class="absc-cube-container w-[650px] h-[650px]" v-if="!isMobile">
+      <div class="absolute md:right-[150px] right-[0] top-[50px] z-10 cursor-pointer" @click="showModalbtn">
         <span class="close-btn">X</span>
       </div>
       <div class="absolute bg-black opacity-[0.85] p-[20px] rounded-[25px]">
@@ -152,11 +160,27 @@
         <a-button class=" w-[198px] h-[40px] rounded-[25px]" @click="viewResult">View Results</a-button>
       </div>
     </div>
+    <div class="fixed text-[#fff] w-[300px] h-[340px] fixed-css" v-else>
+      <div class="relative">
+        <div class="absolute right-[24px] top-[24px] z-10 cursor-pointer" @click="showModalbtn">
+          <span class="close-btn">X</span>
+        </div>
+        <div class="absolute bg-black opacity-[0.85] p-[20px] rounded-[25px] text-center">
+          <img src="@/assets/images/absc-cube.png" class="w-[380px] mx-auto" />
+          <div class="font-[Montserrat] font-600 text-[#FFF] text-[14px] mb-[10px]">
+            Now you can check your
+            draw
+            results!
+          </div>
+          <a-button class=" w-[198px] h-[40px] rounded-[25px]" @click="viewResult">View Results</a-button>
+        </div>
+      </div>
+    </div>
   </ADModal>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, Ref } from "vue";
 import { ExclamationCircleTwoTone, setTwoToneColor } from "@ant-design/icons-vue"
 import { message } from "ant-design-vue";
 import abscHeader from "@/components/absc-header.vue";
@@ -170,8 +194,9 @@ import { apiAbscDraw, apiAbscRecord, apiAbscBlindBoxNumber, apiAbscBlindBoxById,
 import useAssets from "@/stores/useAssets";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import { LeveLabellEnums } from "@/enums/levelLabel"
-const walletAddress = useWalletAddress()
 import gql from 'graphql-tag';
+
+const walletAddress = useWalletAddress()
 const { getImageURL } = useAssets();
 
 setTwoToneColor('#FAAD14')
@@ -195,7 +220,7 @@ const abscDrawCheck = ref(0);
 const abscBalance = ref(0);
 const abscNFTList = ref([]);
 const aptosAddress = ref("");
-const amount = ref(10);
+const amount = ref(Number(import.meta.env.VITE_BURN));
 const open = ref(false);
 const showModal = ref(false)
 const loading = ref(false);
@@ -203,10 +228,12 @@ const disabledMint = ref(false);
 const recordData = ref([])
 const isMobile = ref(false)
 const isOKApp = ref(false)
+const baseUrl = ref(import.meta.env.VITE_BASE_URL)
+const elementUrl = ref(import.meta.env.VITE_ElEMENT_URL)
 
 const showModalbtn = () => {
   showModal.value = !showModal.value
-  console.log('showModal.value:', showModal.value)
+  //console.log('showModal.value:', showModal.value)
 }
 
 const getAbscBlindBoxNumber = async () => {
@@ -225,6 +252,8 @@ const getAbscDrawCheck = async () => {
 const getAbscRecord = async () => {
   const { data } = await apiAbscRecord(walletAddress.walletAddress)
   recordData.value = data || [];
+  //  recordData.value = [];
+
   recordData.value.map(async (item) => {
     item.child = await getAbscBlindBoxById(item.blindBoxId)
   })
@@ -245,7 +274,7 @@ const getAbscDraw = async (hash: string) => {
     getAbscRecord();
     open.value = false;
   } else {
-
+    throw new Error(res.data.message);
   }
 }
 
@@ -256,19 +285,20 @@ const showOpen = async () => {
       await connectWallet();
     }
     if (walletAddress.walletAddress) {
-      const response = await window.okxwallet.aptos.connect();
+      const response = await window.okxwallet?.aptos.connect();
       if (response.address) {
+        loading.value = true;
         aptosAddress.value = response.address;
         await getAbscBalance()
         open.value = true;
       } else {
-        message.error("Aptos Wallet without link")
+        message.error("Aptos Wallet without link", 5)
       }
     } else {
-      message.error("Wallet without link")
+      message.error("Wallet without link", 5)
     }
   } else {
-    message.info('The activity has ended')
+    message.info('The activity has ended', 5)
   }
 }
 
@@ -294,7 +324,7 @@ const gotIt = async () => {
     open.value = false;
     loading.value = false;
     message.error(error.message);
-    console.error(error);
+    //console.error(error);
   }
 }
 
@@ -302,7 +332,7 @@ const gotIt = async () => {
 const connectWallet = async () => {
   try {
     if (isMobile.value && !isOKApp.value) {
-      const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent('https://absc-mint.hamster.newtouch.com'));
+      const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent(baseUrl.value));
       window.location.href = encodedUrl;
     } else {
       await okxwallet.request({ method: 'eth_requestAccounts' });
@@ -310,16 +340,16 @@ const connectWallet = async () => {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0x38' }],
       });
-      if (window.okxwallet.selectedAddress) {
+      if (window.okxwallet?.selectedAddress) {
         let address = window.okxwallet.selectedAddress
         walletAddress.setWalletAddress(address);
         getAbscRecord()
       } else {
-        message.info('Please provide a wallet that supports BSC!')
+        message.info('Please provide a wallet that supports BSC!', 5)
       }
     }
   } catch (err) {
-    message.error(err.message)
+    message.error(err.message, 5)
   }
 
 }
@@ -329,12 +359,13 @@ const payableNFTs = (nfts: any[], amount: number) => {
   let num = 0;
   let list: string[] = [];
   for (let i = 0; i < nfts.length; i++) {
-    num = num + nfts[i].token_properties.amt
+    num = num + Number(nfts[i].token_properties.amt)
     list.push(nfts[i].token_data_id);
-    if (num > amount) {
+    if (num >= amount) {
       break;
     }
   }
+  //console.log("num",num)
   if (num < amount) {
     throw new Error("Insufficient balance of ABSC inscriptions");
   }
@@ -344,8 +375,10 @@ const payableNFTs = (nfts: any[], amount: number) => {
 
 // // 交易 APT20 
 const transactionApt20 = async () => {
+  await getAbscBalance()
+  //console.log("amount",amount.value)
   let list = payableNFTs(abscNFTList.value, amount.value);
-  if (list.length == 0) { 
+  if (list.length == 0) {
     throw new Error("Insufficient balance of ABSC inscriptions");
   }
   const transaction = {
@@ -354,8 +387,7 @@ const transactionApt20 = async () => {
     function: '0x1fc2f33ab6b624e3e632ba861b755fd8e61d2c2e6cf8292e415880b4c198224d::apts::split',
     type_arguments: [],
   };
-  console.log("tx", transaction);
-
+  //console.log("tx", transaction);
   const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
   const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
   const txn = await client.waitForTransactionWithResult(
@@ -364,25 +396,23 @@ const transactionApt20 = async () => {
       checkSuccess: true
     }
   );
-  console.log(txn, 'txn')
-  showModal.value = true;
-  loading.value = false;
+  //console.log(txn, 'txn')
   await getAbscDraw(txn.hash);
   await getAbscBalance()
+  showModal.value = true;
+  loading.value = false;
 }
 
-const getAbscBalance = () => {
+const getAbscBalance = async () => {
   if (!aptosAddress.value || aptosAddress.value == "") {
     abscBalance.value = 0
     return;
   }
-  getOwnersNFTs().then(data => {
-    console.log(data);
-    abscNFTList.value = data.data.current_token_datas_v2;
-    abscBalance.value = abscNFTList.value.reduce((prev: number, cur: { token_properties: { amt: number; }; }) => {
-      return prev + Number(cur.token_properties.amt)
-    }, 0)
-  })
+  let data = await getOwnersNFTs();
+  abscNFTList.value = data.data.current_token_datas_v2;
+  abscBalance.value = abscNFTList.value.reduce((prev: number, cur: { token_properties: { amt: number; }; }) => {
+    return prev + Number(cur.token_properties.amt)
+  }, 0)
 }
 
 const getOwnersNFTs = () => {
@@ -397,11 +427,12 @@ const getOwnersNFTs = () => {
       }`,
     variables: {
       address: aptosAddress.value,
-    }
+    },
+    fetchPolicy: "no-cache",
   })
 }
 
-const getIsMobils = async () => {
+const getIsMobils = () => {
   const ua = navigator.userAgent;
   const isIOS = /iphone|ipad|ipod|ios/i.test(ua);
   const isAndroid = /android|XiaoMi|MiuiBrowser/i.test(ua);
@@ -413,11 +444,13 @@ const getIsMobils = async () => {
 onMounted(async () => {
   // if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
   await getIsMobils()
-  if (window.okxwallet.selectedAddress) {
+
+  if (window.okxwallet?.selectedAddress) {
     let address = window.okxwallet.selectedAddress;
     walletAddress.setWalletAddress(address);
     getAbscRecord()
   }
+
   getAbscBlindBoxNumber()
   getAbscDrawCheck()
 })
@@ -433,18 +466,6 @@ watch(
     }
   }, { deep: true, immediate: true }
 );
-
-// const levelLabel = new Map();
-// levelLabel.set(1, 'UR');
-// levelLabel.set(2, 'SSR');
-// levelLabel.set(3, 'SR');
-// levelLabel.set(4, 'S');
-// levelLabel.set(5, 'R');
-// levelLabel.set(6, 'N');
-
-// const getLevelLabel = (level: number): string => {
-//   return levelLabel.get(level)
-// }
 
 </script>
 
@@ -469,7 +490,8 @@ watch(
   }
 
   .bg2-container {
-    height: 100vh;
+    // height: 100vh;
+    // height: 100%;
     background-image: url("../../assets/images/mint-bg2.jpg");
     background-repeat: no-repeat;
     background-size: cover !important;
@@ -486,8 +508,31 @@ watch(
     background-clip: content-box !important;
   }
 }
+
+// @media screen and (max-width: 1440px) {
+//   .absc-sub-title {
+//     background: rgba(213, 165, 0, 0.15);
+//     padding: 15px 24px;
+//     border-radius: 10px;
+//     backdrop-filter: blur(0px);
+//     font-family: Arial;
+//     font-size: 14px;
+//     color: #B3B3B3;
+//     text-align: center;
+//     font-weight: 500;
+//     margin-top: 16px;
+//     line-height: 18px;
+//   }
+
+// }
+
+.fixed-css {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
 .bg1-container {
-  // position: relative;
   background-image: url("../../assets/images/mint-bg1.jpg");
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
@@ -533,7 +578,7 @@ watch(
 }
 
 .absc-sub-title {
-  background: rgba(213,165,0,0.15);
+  background: rgba(213, 165, 0, 0.15);
   padding: 15px 24px;
   border-radius: 10px;
   backdrop-filter: blur(0px);
@@ -632,8 +677,6 @@ watch(
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 650px;
-  height: 650px;
   text-align: center;
   opacity: 1;
 }

@@ -30,7 +30,7 @@
             <template #overlay>
               <a-menu>
                 <a-menu-item>
-                  <div @click="disConnectWallet" class="text-center">disConnect</div>
+                  <div @click="disConnectWallet" class="text-center">Disconnect</div>
                 </a-menu-item>
               </a-menu>
             </template>
@@ -89,7 +89,8 @@ const openSelectedWhiteListModal = ref(false);
 const selectedNavTitle = ref('Home');
 const btnInfo = ref('');
 const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
-const menuList = ref([{ name: 'Home', path: '/' }, { name: 'NFT', path: '/mint' }, { name: 'Whitelist', path: '/whitelist' }, { name: 'IDO', path: '/ido' }])
+// { name: 'Whitelist', path: '/whitelist' }, { name: 'IDO', path: '/ido' }
+const menuList = ref([{ name: 'Home', path: '/' }, { name: 'NFT', path: '/mint' },])
 
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
@@ -136,17 +137,46 @@ const connectWallet = async () => {
 }
 
 const disConnectWallet = async () => {
-  let connectionStatus = await window.okxwallet.isConnected();
-  console.log(connectionStatus, 'connectionStatus')
-
-  try {
-    const response = window.okxwallet.disconnect()
-    console.log(response, 'response')
-    walletAddress.setWalletAddress('');
-  } catch (error) {
-    message.error(error.message)
+  if (window.okxwallet?.selectedAddress) {
+    let connectionStatus = await window.okxwallet?.isConnected();
+    console.log(connectionStatus, 'connectionStatus')
+    try {
+      const response = await window.okxwallet.disconnect()
+      console.log(response, 'response')
+      walletAddress.setWalletAddress('');
+      btnInfo.value = 'connect wallet'
+      window.location.reload()
+    } catch (error) {
+      message.error(error.message)
+    }
   }
 }
+// if (window.ethereum?.isConnected()) {
+
+//   console.log(window.ethereum.isConnected(), window.ethereum.disconnect(), 'test')
+//   try {
+//     const data = await window.ethereum.disconnect()
+//     walletAddress.setWalletAddress('');
+//     // window.location.reload()
+//     btnInfo.value = 'connect wallet'
+//   } catch (error) {
+//     message.error(error.message)
+//   }
+// } else {
+//   let connectionStatus = await window.okxwallet?.isConnected();
+//   console.log(connectionStatus, 'connectionStatus')
+
+//   try {
+//     const response = await window.okxwallet.disconnect()
+//     console.log(response, 'response')
+//     walletAddress.setWalletAddress('');
+//     btnInfo.value = 'connect wallet'
+//     // window.location.reload()
+//   } catch (error) {
+//     message.error(error.message)
+//   }
+// }
+// }
 
 const getIsMobils = async () => {
   const ua = navigator.userAgent;
@@ -162,6 +192,12 @@ onMounted(async () => {
   // console.log(window.okxwallet, 'window.okxwallet')
   if (window.okxwallet?.selectedAddress) {
     let address = window.okxwallet?.selectedAddress;
+    walletAddress.setWalletAddress(address);
+    btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+  }
+  // console.log(window.ethereum, 'window.ethereum')
+  if (window.ethereum?.selectedAddress) {
+    let address = window.ethereum?.selectedAddress;
     walletAddress.setWalletAddress(address);
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   }
@@ -194,6 +230,11 @@ watch(() => walletAddress.walletAddress,
     if (newVal) {
       console.log(newVal, 'kkkk')
       walletAddress.setWalletAddress(newVal)
+      btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
+    }
+
+    if (newVal == '') {
+      btnInfo.value = 'connect wallet'
     }
   }, { deep: true, immediate: true })
 

@@ -6,11 +6,7 @@
     </div>
     <div class="text-center py-[20px] md:px-[60px] px-[20px] activity-box">
       <div class="text-[18px] text-[#fff] font-bold mb-[12px]">Blind box activity</div>
-      <div class="text-[12px] text-[#7C7C7C]">The blind box activity is an event set up for ABSC inscription holders
-        toconsume
-        inscriptions and obtain
-        the genesis NFT. Each participation in the event will consume 100,000 ABSC inscriptions. We wish every
-        ABSC inscription holder can obtain their desired genesis NFT.
+      <div class="text-[12px] text-[#7C7C7C]">The blind box activity is an event set up for ABSC inscription holders to consume inscriptions and obtain the genesis NFT. Each participation in the event will consume 100,000 ABSC inscriptions. We wish every ABSC inscription holder can obtain their desired genesis NFT.
       </div>
     </div>
   </div>

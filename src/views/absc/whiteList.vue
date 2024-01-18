@@ -3,7 +3,9 @@
   <abscHeader></abscHeader>
   <div class="w-full h-full bg-black pb-[75px]">
     <div class="max-w-[1440px] mx-auto md:px-[0px] px-[32px]">
-      <div class="title-text md:pt-[166px] pt-[100px]"><span class="title-text">$ABSC Token IDO Whitelist</span></div>
+      <div class="title-text md:pt-[166px] pt-[100px]"><span class="title-text-color md:text-[48px] text-[30px]">$ABSC
+          Token IDO
+          Whitelist</span></div>
       <div class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-center mt-[37px]">
         The $ABSC token IDO will be launched soon, and users with whitelist spots can enjoy corresponding price discounts.
         Users holding $BSC Genesis NFT can exchange for whitelist spots by burning ABSC inscriptions.
@@ -13,10 +15,10 @@
     <div>
       <div
         class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-[47px] border border-[#463947] border-solid mx-auto">
-        <span class="pt-[15px] px-[21px] font-bold text-[24px] text-[#fff]">{{ startTime }} am — {{
+        <span class="pt-[15px] px-[21px] font-bold md:text-[24px] text-[18px] text-[#fff]">{{ startTime }} am — {{
           endTime }}
           am(UTC+8)</span>
-        <span class="pb-[15px] text-[#8D8D8D] text-[18px]">Exchange time</span>
+        <span class="pb-[15px] text-[#8D8D8D] md:text-[18px] text-[14px]">Exchange time</span>
       </div>
       <div class="text-center mt-[40px]">
         <a-button class="w-[278px] h-[60px] rounded-[30px] text-[18px]" @click="handleExchangeModal"
@@ -81,7 +83,7 @@
 
   <!-- <a-modal v-model:open="open" title="" :footer="null">
     <div class="text-[18px] text-[#000] font-semibold mb-[20px] mt-[50px] font-bold">Please enter BSC address</div>
-    <a-input class="h-[54px] bg-[#F3F3F3]" v-model:value="bscAddress" placeholder="Please enter BSC address" />
+    <a-input class="h-[54px] bg-[#F3F3F3]" v-model:value="abscAddress" placeholder="Please enter BSC address" />
     <div class="text-[#737373] text-[12px] mt-[14px]">
       <ExclamationCircleTwoTone style="fontSize: 14px" />
       <span class="align-middle ml-[4px]">Note: The BSC chain address is used to detect whether it is qualified for the
@@ -118,7 +120,7 @@ import { LeveLabellEnums } from "@/enums/levelLabel";
 const walletAddress = useWalletAddress()
 
 const open = ref(false)
-const bscAddress = ref("");
+const abscAddress = ref("");
 const openWhiteListModal = ref(false);
 const openWhiteListBuyModal = ref(false);
 const openSelectedWhiteListModal = ref(false);
@@ -234,13 +236,12 @@ const getApiWhitelistAcquisitionTime = async () => {
   } else if (data.status == '2') {
     btnInfo.value = 'Get Whitelist'
     disabled.value = false;
-    startTime.value = data.start
-    endTime.value = data.end
   } else {
     btnInfo.value = '活动已结束';
     disabled.value = true;
   }
-
+  startTime.value = data.start
+  endTime.value = data.end
   console.log('认领的data', data)
 }
 
@@ -269,7 +270,12 @@ const getApiWhitelistSubscribeAmount = async () => {
 }
 
 const getBalanceValue = async () => {
-  const chainApidata = new chainApi(window.okxwallet)
+  if (window.okxwallet?.selectedAddress) {
+    const chainApidata = new chainApi(window.okxwallet)
+  } else {
+    const chainApidata = new chainApi(window.ethereum)
+  }
+
   balanceValue.value = await chainApidata.getBalance(walletAddress.walletAddress)
   console.log(balanceValue.value, 'providers');
 }
@@ -412,26 +418,23 @@ watch(
     }
   }, { deep: true, immediate: true }
 );
+
+
 </script>
 
 <style scoped lang="less">
 .title-text {
   font-family: Montserrat Black;
   text-align: center;
-  background-image: linear-gradient(to right, #60638B 0%, #F9F9F9 25%, #FFFFFF 50%, #60638B 100%);
-  -webkit-background-clip: te xt;
-  background-clip: text;
-  color: transparent;
   font-weight: 900;
-  font-size: 48px;
 }
 
-// .title-text- {
-//   background-image: linear-gradient(to right, #60638B 0%, #F9F9F9 25%, #FFFFFF 50%, #60638B 100%);
-//   -webkit-background-clip: text;
-//   background-clip: text;
-//   color: transparent;
-// }
+.title-text-color {
+  background-image: linear-gradient(to right, #60638B 0%, #F9F9F9 25%, #FFFFFF 50%, #60638B 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 .min-btn {
   display: flex;
