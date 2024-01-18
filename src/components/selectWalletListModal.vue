@@ -3,7 +3,7 @@
     <div>
       <div class="my-[20px] text-[14px] text-[#000] font-semibold">
         <div class="mb-[30px] text-[18px]">Connect Wallet</div>
-        <div v-for="val in walletList " :key="val.name" @click="connectWallet(id)">
+        <div v-for="val in walletList " :key="val.name" @click="connectWallet(val.id)">
           <div class="flex wallet-item w-[50%] items-center cursor-pointer">
             <img :src="getImageURL(`${val.img}.png`)" class="h-[30px] mr-[18px]" />
             <div>{{ val.name }}</div>

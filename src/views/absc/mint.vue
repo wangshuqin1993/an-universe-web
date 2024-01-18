@@ -3,9 +3,9 @@
   <div class="w-full h-full">
 
     <div class="w-full h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
-      <div class="px-[32px] pt-[82px]">
-        <div class="absc-title "><span class="title-text text-[24px] md:text-[48px] ">$BSC Golden Shovel</span></div>
-        <div class="absc-sub-title md:w-[860px] w-hull mx-auto">
+      <div class="px-[32px] 2xl:pt-[82px] pt-[60px]">
+        <div class="absc-title "><span class="title-text text-[32px] 2xl:text-[48px] ">$BSC Golden Shovel</span></div>
+        <div class="absc-sub-title 2xl:text-[16px] text-[14px] md:w-[860px] w-hull mx-auto">
           <div class="text-left">
             $BSC Golden Shovel is a collection of 1000 NFTs issued on
             the BSC chain. As the genesis NFT of the
@@ -34,7 +34,7 @@
           </a-button>
         </div>
       -->
-        <div class="text-center mt-[30px] px-[32px]">
+        <div class="text-center 2xl:mt-[30px] mt-[20px] px-[32px]">
           <a-button :disabled="abscDrawCheck !== 2"
             class="h-[50px] md:h-[60px] w-[240px] md:w-[278px] rounded-[25px] md:rounded-[30px] text-[18px]"
             :loading="loading" @click="showOpen">Start now
@@ -506,23 +506,6 @@ watch(
   }
 }
 
-// @media screen and (max-width: 1440px) {
-//   .absc-sub-title {
-//     background: rgba(213, 165, 0, 0.15);
-//     padding: 15px 24px;
-//     border-radius: 10px;
-//     backdrop-filter: blur(0px);
-//     font-family: Arial;
-//     font-size: 14px;
-//     color: #B3B3B3;
-//     text-align: center;
-//     font-weight: 500;
-//     margin-top: 16px;
-//     line-height: 18px;
-//   }
-
-// }
-
 .fixed-css {
   top: 50%;
   left: 50%;
@@ -580,7 +563,6 @@ watch(
   border-radius: 10px;
   backdrop-filter: blur(0px);
   font-family: Arial;
-  font-size: 16px;
   color: #B3B3B3;
   text-align: center;
   font-weight: 500;
