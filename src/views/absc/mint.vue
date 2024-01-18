@@ -2,7 +2,7 @@
   <abscHeader></abscHeader>
   <div class="w-full h-full">
 
-    <div class="w-screen h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
+    <div class="w-full h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
       <div class="px-[32px] pt-[82px]">
         <div class="absc-title "><span class="title-text text-[24px] md:text-[48px] ">$BSC Golden Shovel</span></div>
         <div class="absc-sub-title md:w-[860px] w-hull mx-auto">
@@ -63,7 +63,7 @@
       </div>
     </div>
   </div>
-  <div class="w-screen" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
+  <div class="w-full" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
     <div class="md:px-[0px] px-[32px] md:pt-[82px] pt-[0px] max-w-[1440px] mx-auto pb-[75px]">
       <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center mb-[20px]">
         Your activity result
@@ -496,7 +496,8 @@ watch(
   }
 
   .phone-bg2-container {
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     background-image: url("../../assets/images/phone-mint-bg2.jpg");
     background-repeat: no-repeat;
     background-size: cover !important;
