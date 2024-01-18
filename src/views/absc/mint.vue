@@ -77,7 +77,6 @@
             <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px] mb-[30px]" />
             <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
               <div>Rarity:</div>
-              <!-- <div>{{ getLevelLabel(item?.child?.level) }}</div> -->
               <div>{{ LeveLabellEnums[item?.child?.level] }}</div>
             </div>
           </div>

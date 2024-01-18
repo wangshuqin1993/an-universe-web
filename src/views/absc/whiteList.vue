@@ -191,7 +191,6 @@ const data = ref([
 
 // 点击按钮
 const handleExchangeModal = async () => {
-
   if (!walletAddress.walletAddress) return openSelectedWhiteListModal.value = true;
   if (btnInfo.value.includes('Whitelist')) {
     // 点击获取白名单
@@ -247,13 +246,13 @@ const getApiWhitelistSubscribeTime = async () => {
   } else if (data.status == '2') {
     btnInfo.value = 'IDO';
     disabled.value = false;
-    startTime.value = data.start
-    endTime.value = data.end
     getApiWhitelistSubscribeAmount()
   } else {
     btnInfo.value = 'IDO has ended';
     disabled.value = true;
   }
+  startTime.value = data.start
+  endTime.value = data.end
 }
 
 const getApiWhitelistSubscribeAmount = async () => {
@@ -298,79 +297,35 @@ const getApiWhitelistVerify = async () => {
   whitelistVerifyData.value = data;
 }
 
+const initDataHasWhitelistVerify = async () => {
+  await getApiWhitelistVerify()
+  console.log(whitelistVerifyData.value, 'oioi')
+  if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
+    // 有白名单判断IDO是否开始
+    getApiWhitelistSubscribeTime()
+  } else {
+    // 没有，判断认领是否开始
+    getApiWhitelistAcquisitionTime()
+  }
+}
 
-// onMounted(async () => {
-//   console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
-//   if (walletAddress.walletAddress) {
-//     await getApiWhitelistVerify()
-//     console.log(whitelistVerifyData.value, 'oioi')
-//     if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
-//       // 有白名单判断IDO是否开始
-//       getApiWhitelistSubscribeTime()
-//     } else {
-//       // 没有，判断认领是否开始
-//       getApiWhitelistAcquisitionTime()
-//     }
-//   } else {
-//     await getApiWhitelistAcquisitionTime()
-//     if (whitelistAcquisitionTime.value.status !== '2') {
-//       await getApiWhitelistSubscribeTime()
-
-//       // startTime.value = whitelistSubscribeTime.value.start
-//       // endTime.value = whitelistSubscribeTime.value.end
-//     } else {
-//       // 认领开始
-//       // startTime.value = whitelistAcquisitionTime.value.start
-//       // endTime.value = whitelistAcquisitionTime.value.end
-//     }
-//   }
-// })
+const initDataNoWhitelistVerify = async () => {
+  await getApiWhitelistAcquisitionTime()
+  if (whitelistAcquisitionTime.value.status == '1') {
+    disabled.value = true;
+    btnInfo.value = 'Get Whitelist'
+  } else if (whitelistAcquisitionTime.value.status == '3') {
+    getApiWhitelistSubscribeTime()
+  }
+}
 
 onMounted(async () => {
   console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
   if (walletAddress.walletAddress) {
-
-    await getApiWhitelistVerify()
-    console.log(whitelistVerifyData.value, 'oioi')
-    if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
-      // 有白名单判断IDO是否开始
-      getApiWhitelistSubscribeTime()
-      // startTime.value = whitelistSubscribeTime.start
-      // endTime.value = whitelistSubscribeTime.end
-    } else {
-      // 没有，判断认领是否开始
-      getApiWhitelistAcquisitionTime()
-      // startTime.value = whitelistSubscribeTime.start
-      // endTime.value = whitelistSubscribeTime.end
-    }
+    await initDataHasWhitelistVerify()
   } else {
     // 认领是否开始
-    await getApiWhitelistAcquisitionTime()
-    if (whitelistAcquisitionTime.value.status == '1') {
-      disabled.value = true;
-      btnInfo.value = 'Get Whitelist'
-    } else if (whitelistAcquisitionTime.value.status == '3') {
-      getApiWhitelistSubscribeTime()
-    }
-    // if (whitelistAcquisitionTime.value.status !== '2') {
-    //   await getApiWhitelistSubscribeTime()
-    //   if (whitelistAcquisitionTime.value.status == '1') {
-    //     disabled.value = true;
-    //     btnInfo.value = 'Get Whitelist'
-    //   } else if (whitelistAcquisitionTime.value.status == '3') {
-    //     disabled.value = true;
-    //     btnInfo.value = 'Get Whitelist'
-    //   }
-
-    //   // startTime.value = whitelistSubscribeTime.value.start
-    //   // endTime.value = whitelistSubscribeTime.value.end
-    // }
-
-    // else {
-    //   // 认领开始 显示认领时间
-    //   // startTime.value = whitelistAcquisitionTime.value.start
-    //   // endTime.value = whitelistAcquisitionTime.value.end
-    // }
+    await initDataNoWhitelistVerify()
   }
 })
 
@@ -379,34 +334,9 @@ watch(
   async (newVal, _oldVal) => {
     console.log(newVal, 'new')
     if (newVal != '') {
-      await getApiWhitelistVerify()
-      if (whitelistVerifyData.value && whitelistVerifyData.value.result) {
-        // 有白名单判断IDO是否开始
-        console.log('有了白名单')
-        getApiWhitelistSubscribeTime()
-      } else {
-        // 没有，判断认领是否开始
-        getApiWhitelistAcquisitionTime()
-      }
+      await initDataHasWhitelistVerify()
     } else {
-      await getApiWhitelistAcquisitionTime()
-      if (whitelistAcquisitionTime.value.status == '1') {
-        disabled.value = true;
-        btnInfo.value = 'Get Whitelist'
-      } else if (whitelistAcquisitionTime.value.status == '3') {
-        getApiWhitelistSubscribeTime()
-      }
-      // await getApiWhitelistAcquisitionTime()
-      // if (whitelistAcquisitionTime.value.status !== '2') {
-      //   // await getApiWhitelistSubscribeTime()
-      //   if (whitelistAcquisitionTime.value.status == '1') {
-      //     disabled.value = true;
-      //     btnInfo.value = 'Get Whitelist'
-      //   } else if (whitelistAcquisitionTime.value.status == '3') {
-      //     disabled.value = true;
-      //     btnInfo.value = 'Get Whitelist'
-      //   }
-      // }
+      await initDataNoWhitelistVerify()
     }
   }, { deep: true, immediate: true }
 );

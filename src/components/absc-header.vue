@@ -9,13 +9,6 @@
           <img src="@/assets/images/mobileShow.png" class="w-[24px] mt-[10px]" />
         </div>
         <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
-          <!-- <div class="md:mr-[50px] mr-[16px] self-center">Home</div>
-          <div class="md:mr-[50px] mr-[16px] self-center">Roadmap</div>
-          <div class="md:mr-[50px] mr-[16px] self-center cursor-pointer hover:text-[#F41FFF]" @click="router.push('/ido')"
-            :class="{ 'selected-header-menu': selectedNavTitle === 'ido' }">IDO</div>
-          <div class="cursor-pointer min-btn hover:opacity-[0.85]" @click="router.push('/mint')">
-            Mint (Coming Soon)
-          </div> -->
           <div v-for="item in menuList" :key="item.path"
             class="md:mr-[50px] mr-[16px] self-center cursor-pointer hover:text-[#F41FFF]" @click="router.push(item.path)"
             :class="{ 'selected-header-menu': selectedNavTitle === item.name }">
@@ -60,15 +53,6 @@
   <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
     @closeSelectedWhiteListModal="openSelectedWhiteListModal = false">
   </selectWalletListModal>
-  <!-- <a-modal v-model:open="walletOpen" title="" :footer="null">
-    <div class="text-[20px] text-[#000] font-bold mb-[30px] mt-[0px]">Please connect your wallet</div>
-    <div class="flex">
-      <div class="text-center wallet-item" @click="connectWallet">
-        <img src="@/assets/images/OKXWallet-logo.png" class="w-[54px] mx-auto" />
-        <div class="mt-[10px]">OKX WAllet</div>
-      </div>
-    </div>
-  </a-modal> -->
 </template>
 <script lang='ts' setup>
 import { ref, onMounted, watch } from "vue";
@@ -138,44 +122,49 @@ const connectWallet = async () => {
 const disConnectWallet = async () => {
   if (window.okxwallet?.selectedAddress) {
     let connectionStatus = await window.okxwallet?.isConnected();
-    console.log(connectionStatus, 'connectionStatus')
-    try {
-      const response = await window.okxwallet.disconnect()
-      console.log(response, 'response')
-      walletAddress.setWalletAddress('');
-      btnInfo.value = 'connect wallet'
-      window.location.reload()
-    } catch (error) {
-      message.error(error.message)
+    // console.log(connectionStatus, 'connectionStatus')
+    if (connectionStatus) {
+      try {
+        const response = await window.okxwallet.disconnect()
+        console.log(response, 'response')
+        walletAddress.setWalletAddress('');
+        btnInfo.value = 'connect wallet'
+        window.location.reload()
+      } catch (error) {
+        message.error(error.message)
+      }
     }
+  } else {
+    let connectionStatus = await window.ethereum?.isConnected()
+    if (connectionStatus) {
+      debugger
+      try {
+        window.ethereum.request({
+          "method": "wallet_revokePermissions",
+          "params": [
+            {
+              "eth_accounts": {}
+            }
+          ]
+        });
+      } catch (error) {
+        message.error(error.message)
+      }
+    }
+
+    // let connectionStatus = await window.ethereum?.isConnected()
+    // if (connectionStatus) {
+    //   try {
+    //     const data = await window.ethereum.disconnect()
+    //     walletAddress.setWalletAddress('');
+    //     window.location.reload()
+    //     btnInfo.value = 'connect wallet'
+    //   } catch (error) {
+    //     message.error(error.message)
+    //   }
+    // }
   }
 }
-// if (window.ethereum?.isConnected()) {
-
-//   console.log(window.ethereum.isConnected(), window.ethereum.disconnect(), 'test')
-//   try {
-//     const data = await window.ethereum.disconnect()
-//     walletAddress.setWalletAddress('');
-//     // window.location.reload()
-//     btnInfo.value = 'connect wallet'
-//   } catch (error) {
-//     message.error(error.message)
-//   }
-// } else {
-//   let connectionStatus = await window.okxwallet?.isConnected();
-//   console.log(connectionStatus, 'connectionStatus')
-
-//   try {
-//     const response = await window.okxwallet.disconnect()
-//     console.log(response, 'response')
-//     walletAddress.setWalletAddress('');
-//     btnInfo.value = 'connect wallet'
-//     // window.location.reload()
-//   } catch (error) {
-//     message.error(error.message)
-//   }
-// }
-// }
 
 const getIsMobils = async () => {
   const ua = navigator.userAgent;
@@ -186,15 +175,13 @@ const getIsMobils = async () => {
 }
 
 onMounted(async () => {
-  console.log(window.okxwallet, walletAddress.walletAddress, 'window.okxwallet')
+  console.log(window.okxwallet, window.ethereum, 'window.okxwallet')
   await getIsMobils()
-  // console.log(window.okxwallet, 'window.okxwallet')
   if (window.okxwallet?.selectedAddress) {
     let address = window.okxwallet?.selectedAddress;
     walletAddress.setWalletAddress(address);
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   }
-  // console.log(window.ethereum, 'window.ethereum')
   if (window.ethereum?.selectedAddress) {
     let address = window.ethereum?.selectedAddress;
     walletAddress.setWalletAddress(address);
@@ -227,7 +214,7 @@ watch(
 watch(() => walletAddress.walletAddress,
   (newVal, _oldVal) => {
     if (newVal) {
-      console.log(newVal, 'kkkk')
+      console.log(newVal, 'header watch walletAddress')
       walletAddress.setWalletAddress(newVal)
       btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
     }
