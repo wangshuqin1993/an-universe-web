@@ -2,7 +2,7 @@
   <abscHeader></abscHeader>
   <div class="w-full h-full">
 
-    <div class="w-screen h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
+    <div class="h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
       <div class="px-[32px] pt-[82px]">
         <div class="absc-title "><span class="title-text text-[24px] 2xl:text-[48px]">$BSC Golden Shovel</span></div>
         <div class="absc-sub-title md:w-[860px] w-hull mx-auto">
@@ -63,7 +63,7 @@
       </div>
     </div>
   </div>
-  <div class="w-screen" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
+  <div class="" :class="isMobile == true ? 'phone-bg2-container' : 'bg2-container'">
     <div class="md:px-[0px] px-[32px] md:pt-[82px] pt-[0px] max-w-[1440px] mx-auto pb-[75px]">
       <div class="text-[#FFFFFF] font-[Montserrat Black] text-[20px] md:text-[36px] font-bold text-center mb-[20px]">
         Your activity result
@@ -473,6 +473,7 @@ watch(
     background-size: cover !important;
     background-position: center !important;
     background-clip: content-box !important;
+    width: 100%;
   }
 
   .phone-bg1-container {
@@ -485,6 +486,8 @@ watch(
   }
 
   .bg2-container {
+    width: 100%;
+    // width: calc(100vw - 17px);
     // height: 100vh;
     // height: 100%;
     background-image: url("../../assets/images/mint-bg2.jpg");
@@ -495,7 +498,8 @@ watch(
   }
 
   .phone-bg2-container {
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     background-image: url("../../assets/images/phone-mint-bg2.jpg");
     background-repeat: no-repeat;
     background-size: cover !important;
@@ -503,23 +507,6 @@ watch(
     background-clip: content-box !important;
   }
 }
-
-// @media screen and (max-width: 1440px) {
-//   .absc-sub-title {
-//     background: rgba(213, 165, 0, 0.15);
-//     padding: 15px 24px;
-//     border-radius: 10px;
-//     backdrop-filter: blur(0px);
-//     font-family: Arial;
-//     font-size: 14px;
-//     color: #B3B3B3;
-//     text-align: center;
-//     font-weight: 500;
-//     margin-top: 16px;
-//     line-height: 18px;
-//   }
-
-// }
 
 .fixed-css {
   top: 50%;
@@ -531,6 +518,7 @@ watch(
   background-image: url("../../assets/images/mint-bg1.jpg");
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
+  width: 100%;
 }
 
 .phone-bg1-container {
@@ -540,6 +528,7 @@ watch(
 }
 
 .bg2-container {
+  width: 100%;
   background-image: url("../../assets/images/mint-bg2.jpg");
   background-repeat: no-repeat;
   background-size: 100vw 100%;
