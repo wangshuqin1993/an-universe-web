@@ -41,7 +41,7 @@
           </a-button>
         </div>
         <div v-if="(abscDrawCheck == 1) || (abscDrawCheck == 3)" class="mint-text md:w-[532px] w-hull px-[32px] ">
-         <div v-if="abscDrawCheck == 1">
+          <div v-if="abscDrawCheck == 1">
             The activity has not started yet
           </div>
           <div v-if="abscDrawCheck == 3">
@@ -288,13 +288,13 @@ const showOpen = async () => {
         await getAbscBalance()
         open.value = true;
       } else {
-        message.error("Aptos Wallet without link")
+        message.error("Aptos Wallet without link", 5)
       }
     } else {
-      message.error("Wallet without link")
+      message.error("Wallet without link", 5)
     }
   } else {
-    message.info('The activity has ended')
+    message.info('The activity has ended', 5)
   }
 }
 
@@ -341,11 +341,11 @@ const connectWallet = async () => {
         walletAddress.setWalletAddress(address);
         getAbscRecord()
       } else {
-        message.info('Please provide a wallet that supports BSC!')
+        message.info('Please provide a wallet that supports BSC!', 5)
       }
     }
   } catch (err) {
-    message.error(err.message)
+    message.error(err.message, 5)
   }
 
 }
@@ -440,7 +440,7 @@ const getIsMobils = () => {
 onMounted(async () => {
   // if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
   await getIsMobils()
-  
+
   if (window.okxwallet?.selectedAddress) {
     let address = window.okxwallet.selectedAddress;
     walletAddress.setWalletAddress(address);
