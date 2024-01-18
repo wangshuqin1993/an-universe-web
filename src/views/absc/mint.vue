@@ -85,7 +85,7 @@
           <div v-else class="text-[#fff] md:text-[18px] text-[14px] font-extrabold">
             <img src="@/assets/images/null.png" class="rounded-[16px]" />
             <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold mt-[20px]">
-              <div>Didn't get reward</div>
+              <div>Waiting for $ABSC airdrop</div>
             </div>
           </div>
         </div>
