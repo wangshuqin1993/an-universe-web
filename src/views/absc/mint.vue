@@ -69,7 +69,11 @@
         Your activity result
       </div>
       <div class="text-[14px] mb-[10px] font-medium text-center text-[#FFFFFF]">Reveal Time: <span
+<<<<<<< HEAD
+          class="text-[#F41FFF]">Jan-19th 10:00 AM（UTC+8）</span></div>
+=======
           class="text-[#F41FFF]">Jan 19th 12:00 AM (UTC+8)</span></div>
+>>>>>>> absc
       <div v-if="recordData.length"
         class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] pb-[136px]">
         <div class="card-container" v-for="( item, index ) in  recordData " :key="index">
