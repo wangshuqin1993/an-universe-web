@@ -9,7 +9,9 @@
     </div>
   </div>
 </template>
+
 <script lang='ts' setup>
+
 const clickTwitter = () => {
   window.open('https://twitter.com/bscstable')
 }
@@ -18,6 +20,7 @@ const clickTG = () => {
   window.open('https://t.me/aptbscs')
 }
 </script>
+
 <style lang='less' scoped>
 .footer-border {
   border-top: 1px solid #363636;
