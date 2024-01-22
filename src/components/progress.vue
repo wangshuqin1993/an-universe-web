@@ -2,12 +2,12 @@
   <div class="progress ">
     <div class="flex justify-between text-[16px]" v-if="!showInfo">
       <div></div>
-      <div class="text-[#fff] mb-[5px] text-[14px] text-[#FF3B0F]">{{ percentValue + '%' }}</div>
+      <div class="text-[#fff] mb-[5px] text-[18px] text-[#FF3B0F]">{{ percentValue + '%' }}</div>
     </div>
 
-    <a-progress :percent="percentValue" :size="[300, 36]" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }"
+    <a-progress :percent="50" :size="[300, 30]" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }"
       :show-info="showInfo" />
-    <div class="md:text-[21px] text-[14px] font-bold float-right mt-[18px]">
+    <div class="md:text-[18px] text-[14px] float-right mt-[18px]">
       <div class="text-right">
         <span class="text-[#FF3B0F]">{{ totalAmountData }}/</span>
         <span class="text-[#88898A]">{{ targetAmount }}</span>
@@ -86,6 +86,7 @@ watch(
 
 :deep(.ant-progress-text) {
   position: absolute;
+  font-size: 18px;
   top: -30px;
   right: 0px;
 }
@@ -93,6 +94,5 @@ watch(
 :deep(.ant-progress.ant-progress-show-info .ant-progress-outer) {
   margin-inline-end: unset !important;
   padding-inline-end: unset !important;
-
 }
 </style>

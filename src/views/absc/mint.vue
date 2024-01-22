@@ -77,7 +77,6 @@
             <img :src="getImageURL(`ABSC-NFT-0${item?.child?.level}.png`)" class="rounded-[16px] mb-[30px]" />
             <div class="flex justify-center text-[#fff] md:text-[18px] text-[14px] font-extrabold">
               <div>Rarity:</div>
-              <!-- <div>{{ getLevelLabel(item?.child?.level) }}</div> -->
               <div>{{ LeveLabellEnums[item?.child?.level] }}</div>
             </div>
           </div>
@@ -475,6 +474,7 @@ watch(
     background-size: cover !important;
     background-position: center !important;
     background-clip: content-box !important;
+    width: 100%;
   }
 
   .phone-bg1-container {
@@ -487,6 +487,8 @@ watch(
   }
 
   .bg2-container {
+    width: 100%;
+    // width: calc(100vw - 17px);
     // height: 100vh;
     // height: 100%;
     background-image: url("../../assets/images/mint-bg2.jpg");
@@ -517,6 +519,7 @@ watch(
   background-image: url("../../assets/images/mint-bg1.jpg");
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
+  width: 100%;
 }
 
 .phone-bg1-container {
@@ -526,6 +529,7 @@ watch(
 }
 
 .bg2-container {
+  width: 100%;
   background-image: url("../../assets/images/mint-bg2.jpg");
   background-repeat: no-repeat;
   background-size: 100vw 100%;

@@ -185,15 +185,16 @@ const idoBtnClick = async () => {
 const getTokenEthRateData = async () => {
   const walletApiIDO = await getIDOApiData()
   tokenEthRateData.value = await walletApiIDO.getTokenEthRate()
-  console.log(tokenEthRateData.value.toNumber(), 'tokenEthRateData.value ')
+  console.log(tokenEthRateData.value, 'tokenEthRateData.value ')
 }
 
 // 总额 + IDOLaunchInfoData.value.whitelistAmount
 const getTotalAmountData = async () => {
   const walletApiIDO = await getIDOApiData()
   const data = await walletApiIDO.getTotalAmount()
-  totalAmountData.value = data.toNumber() + Number(IDOLaunchInfoData.value.whitelistAmount)
-  console.log(totalAmountData.value, data, 'totalAmountData.value')
+  console.log(data, 'getTotalAmount')
+  // totalAmountData.value = data.toNumber() + Number(IDOLaunchInfoData.value.whitelistAmount)
+  // console.log(totalAmountData.value, data, 'totalAmountData.value')
 }
 
 // 获取余额
@@ -264,6 +265,7 @@ const getBNBBalance = async () => {
 // 获取状态
 const getApiIDOLaunchTime = async () => {
   const { data } = await apiIDOLaunchTime()
+  data.status = '2'
   IDOLaunchInfoData.value = data
   if (data.status === '1') {
     disabled.value = true
@@ -303,14 +305,14 @@ onMounted(() => {
 watch(
   () => walletAddress.walletAddress,
   async (newVal, _oldVal) => {
-    // console.log(newVal, 'new')
-    if (newVal != '') {
-      getApiIDOLaunchTime()
-      getTotalAmountData()
-      getTokenEthRateData()
-      getTokensBalanceData()
-      getBNBBalance()
-    }
+    console.log(newVal, 'new')
+    // if (newVal != '') {
+    //   getApiIDOLaunchTime()
+    //   getTotalAmountData()
+    //   getTokenEthRateData()
+    //   getTokensBalanceData()
+    //   getBNBBalance()
+    // }
   }, { deep: true, immediate: true }
 );
 </script>

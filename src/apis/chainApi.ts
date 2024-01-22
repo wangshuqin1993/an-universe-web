@@ -14,6 +14,9 @@ export class chainApi {
 			to: address,
 			value: ethers.utils.parseEther(value),
     })
+    return new Promise<any>((resolve) => {
+      resolve(data);
+    });
   }
 
   async getBalance(address:string) {

@@ -20,8 +20,7 @@ import { message } from "ant-design-vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const { getImageURL } = useAssets();
 const walletAddress = useWalletAddress()
-// { name: "MetaMask", img: 'Metamask', id: 2 }
-const walletList = ref([{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 },])
+const walletList = ref([{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }, { name: "MetaMask", img: 'Metamask', id: 2 }])
 const props = defineProps({
   openSelectedWhiteListModal: {
     type: Boolean,
@@ -38,12 +37,12 @@ const closeModal = () => {
 const connectWallet = async (id: number) => {
   if (id === 1) {
     try {
-      const response = await okxwallet.request({ method: 'eth_requestAccounts' });
-      const res = await okxwallet.request({
+      const response = await window.okxwallet.request({ method: 'eth_requestAccounts' });
+      const res = await window.okxwallet.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0x38' }],
       });
-      if (window.okxwallet.selectedAddress) {
+      if (window.okxwallet?.selectedAddress) {
         let address = window.okxwallet.selectedAddress
         walletAddress.setWalletAddress(address);
         closeModal()
@@ -58,10 +57,13 @@ const connectWallet = async (id: number) => {
     // 小狐狸地址
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x61' }], });
     walletAddress.setWalletAddress(accounts[0]);
+    localStorage.setItem('metaMaskWalletAddress', accounts[0])
+    // const providerData = new ethers.providers.Web3Provider(window.ethereum);
+    // 这个之如果为null 就说明没有连接到小狐狸，如果有值就是连接的用户钱包地址
+    // const accounts = providerData.provider.selectedAddress
     closeModal()
     console.log(accounts, 'accounts')
   }
-
 }
 </script>
 <style lang='less' scoped>

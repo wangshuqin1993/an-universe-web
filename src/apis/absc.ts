@@ -49,14 +49,6 @@ export function apiWhitelistAcquisitionTime()  {
     url: `/absc/whitelist/acquisition/time`,
     method: "get",
   });
-  // return Promise.resolve({
-  //   code: 200,
-  //   data: {
-  //     start: "2024-1-13 00:00:00",
-  //     end: "2024-1-14 00:00:00",
-  //     status: '2'
-  //   }
-  // })
 }
 
 //获得用户 absc 的单个 NFT 信息
@@ -66,13 +58,6 @@ export function apiWhitelistAbscNFT(address: string)  {
     method: "get",
     params: {address: address}
   });
-  // return Promise.resolve({
-  //   code: 200,
-  //   data: {
-  //     tokenId: 1,
-  //     level: 2
-  //   }
-  // })
 }
 
 // 白名单申请
@@ -80,20 +65,13 @@ export function apiWhitelistApplication(hash:string, tokenId: number, level:numb
   return httpRequest({
     url: `/absc/whitelist/application`,
     method: "post",
-    params: {
+    data: {
       hash: hash,
       address: address,
       level:level,
       tokenId:tokenId,
     }  
   });
-
-  // return Promise.resolve({
-  //   code: 200,
-  //   data: {
-  //     result: true
-  //   }
-  // })
 }
 
 // 获得白名单验证
@@ -102,17 +80,9 @@ export function apiWhitelistVerify(address: string)  {
     url: `/absc/whitelist/verify`,
     method: "get",
     params: {
-    address: address,
+      address: address,
     }
   });
-  // return Promise.resolve({
-  //   code: 200,
-  //   data: {
-  //     result: true,
-  //     tokenId: 1,
-  //     level: 2
-  //   }
-  // })
 }
 
 // 添加白名单获取时间
@@ -121,14 +91,6 @@ export function apiWhitelistSubscribeTime()  {
     url: `/absc/whitelist/subscribe/time`,
     method: "get",
   });
-  // return Promise.resolve({
-  //   code: 200,
-  //   data: {
-  //     start: "2024-1-13 00:00:00",
-  //     end: "2024-1-14 00:00:00",
-  //     status: '2'
-  //   }
-  // })
 }
 
 // 获得白名单折扣
@@ -140,12 +102,6 @@ export function apiWhitelistDiscount(address: string)  {
      address: address
     }
   });
-  // return Promise.resolve({
-  //   code: 200,
-  //   data: {
-  //     discount: "0.7"
-  //   }
-  // })
 }
 
 // ABSC 的认购信息配置
@@ -154,14 +110,6 @@ export function apiWhitelistSubscribeConfig()  {
     url: `/absc/whitelist/subscribe/config`,
     method: "get",
   });
-  // return Promise.resolve({
-  //   code: 200,
-  //   data: {
-  //     tokenEthRate: "0.7",
-  //     maxAllocation: "100",
-  //     minAllocation: "1"
-  //   }
-  // })
 }
 
 // 通过 adress 返回已购买金额数
@@ -173,30 +121,17 @@ export function apiWhitelistSubscribeAmount(address: string)  {
      address: address
     }
   });
-  // return Promise.resolve({
-  //   code: 200,
-  //   data: {
-  //     amount: "10",
-  //     abscAmount: '776555'
-  //   }
-  // })
 }
 // 白名单成员购买 参数 tx adress
 export function apiWhitelistSubscribe(hash:string,address: string)  {
   return httpRequest({
     url: `/absc/whitelist/subscribe`,
     method: "post",
-    params: {
+    data: {
       hash: hash,
       address: address
     }  
   });
-  // return Promise.resolve({
-  //   code: 200,
-  //   data: {
-  //     result: true
-  //   }
-  // })
 }
 
 // 获得 ido 开始时间，目标金额
@@ -205,14 +140,75 @@ export function apiIDOLaunchTime()  {
     url: `/absc/ido/time`,
     method: "get",
   });
-  // return Promise.resolve({
-  //   code: 200,
-  //   data: {
-  //     start: "2024-1-13 00:00:00",
-  //     status: '2',
-  //     targetAmount: "5000",
-  //     whitelistAmount:"1000",
-  //   }
-  // })
 }
 
+// /absc/whitelist/qualification/check   GET  query参数:address   白名单资格校验
+export function apiAbscQualificationCheck(address:string)  {
+  return httpRequest({
+    url: `/absc/whitelist/qualification/check`,
+    method: "get",
+    params: {
+      address:address
+    }
+  });
+}
+
+// /absc/nft/equity/check   GET   query参数：address   nft权益资格交易案
+export function apiNFTEquityCheck(address:string)  {
+  return httpRequest({
+    url: `/absc/nft/equity/check`,
+    method: "get",
+    params: {
+      address:address
+    }
+  });
+}
+
+// 东东:
+// /absc/nft/equity/subscribe   POST  body参数{
+// 	"address":"",
+// 	"hash": ""
+// },  nft权益ido购买
+
+export function apiNFTEquitySubscribe(address:string, hash:string)  {
+  return httpRequest({
+    url: `/absc/nft/equity/subscribe`,
+    method: "post",
+    data: {
+      address:address,
+      hash: hash
+    }
+  });
+}
+
+// 东东:
+// /absc/nft/equity/time   GET  nft权益活动时间
+export function apiNFTEquityTime()  {
+  return httpRequest({
+    url: `/absc/nft/equity/time`,
+    method: "get",
+  });
+}
+
+// 东东:
+// /absc/nft/equity/amount  GET   query参数：address     nft权益中查询地址已经购买的金额
+export function apiNFTEquityAmount(address:string)  {
+  return httpRequest({
+    url: `/absc/nft/equity/amount`,
+    method: "get",
+    params: {
+      address:address
+    }
+  });
+}
+
+// /absc/nft/equity/discount GET  query参数：address   返回值字符串
+export function apiNFTEquityDiscount(address:string)  {
+  return httpRequest({
+    url: `/absc/nft/equity/discount`,
+    method: "get",
+    params: {
+      address:address
+    }
+  });
+}
