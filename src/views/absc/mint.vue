@@ -276,6 +276,7 @@ const getAbscDraw = async (hash: string) => {
 
 
 const showOpen = async () => {
+  await getAbscBlindBoxNumber()
   if (!surplusAmount.value) {
     if (!walletAddress.walletAddress) {
       await connectWallet();
