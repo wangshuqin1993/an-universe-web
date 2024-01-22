@@ -16,7 +16,8 @@
           </div>
           <div class="text-left mt-[8px] mb-[20px]  ml-[20px]">
             <div class="text-[16px] font-semibold white-step-item-title "
-              :class="whitelistAbscNFTdata.tokenId ? 'started-css-title' : 'not-started-css-title'">Genesis NFT holder
+              :class="whitelistAbscNFTdata.tokenId ? 'started-css-title' : 'not-started-css-title'">UR-level Genesis NFT
+              holder
               certification
             </div>
             <div class="text-[#929292] text-[12px]">Please connect your wallet to complete Genesis NFT holder
@@ -30,7 +31,7 @@
               <div class="text-[12px] text-[#737373] font-semibold ml-[5px]"> <span class="text-[#FF3653]">Certification
                   failed:</span> You
                 can disconnect the wallet and log in
-                to other wallets have Genesis NFT to continue verification.</div>
+                to other wallets have UR-level Genesis NFT to continue verification.</div>
             </div>
           </div>
         </div>
@@ -77,14 +78,15 @@
   </a-modal>
 </template>
 <script lang='ts' setup>
-import { ref, toRefs, onMounted } from "vue";
+import { ref, toRefs, onMounted, watch } from "vue";
 import { CheckCircleFilled } from "@ant-design/icons-vue";
 import useAssets from "@/stores/useAssets";
 import { message } from "ant-design-vue";
 import { AptosClient } from "aptos";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
-import { apiWhitelistAbscNFT, apiWhitelistVerify, apiWhitelistApplication } from "@/apis/absc";
+import { apiAbscQualificationCheck, apiWhitelistVerify, apiWhitelistApplication } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
+import gql from 'graphql-tag';
 const { getImageURL } = useAssets();
 const walletAddress = useWalletAddress();
 const disabledWhiteListBtn = ref(true);
@@ -92,6 +94,7 @@ const amount = ref(10);
 const abscNFTList = ref([]);
 const aptosAddress = ref('');
 const whitelistApplicationResult = ref(false);
+const abscBalance = ref(0)
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
   // 你需要在这里使用绝对路径
@@ -122,14 +125,18 @@ const closeModal = () => {
 
 // 有NFT可以Start Now
 const getApiWhitelistAbscNFT = async () => {
-  const { data } = await apiWhitelistAbscNFT(walletAddress.walletAddress)
-  whitelistAbscNFTdata.value = data;
-  console.log(data)
+  try {
+    const { data } = await apiAbscQualificationCheck(walletAddress.walletAddress)
+    whitelistAbscNFTdata.value = data;
+    console.log(data, '有nft')
+  } catch (error) {
+    message.error(error.message)
+  }
 }
 
 const getWhiteListDone = () => {
-  closeModal()
   emit('getWhiteListDone')
+  closeModal()
 }
 
 const startNow = async () => {
@@ -149,19 +156,24 @@ const startNow = async () => {
 const getApiWhitelistVerify = async () => {
   const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
   whitelistVerifyData.value = data;
-  if (data.result) {
+  if (data.joined) {
     disabledWhiteListBtn.value = false
   }
   console.log(data, 'apiWhitelistVerify')
 }
 
 const getApiWhitelistApplication = async (hash: string) => {
-  const { data } = await apiWhitelistApplication(hash, whitelistAbscNFTdata.value.tokenId, whitelistAbscNFTdata.value.level, walletAddress.walletAddress)
-  whitelistApplicationResult.value = data.result
+  const res = await apiWhitelistApplication(hash, whitelistAbscNFTdata.value.tokenId, whitelistAbscNFTdata.value.level, walletAddress.walletAddress)
+  if (res.code == 200) {
+    whitelistApplicationResult.value = true
+  } else {
+    whitelistApplicationResult.value = false
+  }
 }
 
 // // 交易 APT20 
 const transactionApt20 = async () => {
+  await getAbscBalance()
   let list = payableNFTs(abscNFTList.value, amount.value);
   console.log(list);
   const transaction = {
@@ -182,6 +194,7 @@ const transactionApt20 = async () => {
     if (txn) {
       await getApiWhitelistApplication(txn.hash);
       getApiWhitelistVerify()
+      getAbscBalance()
     }
   } catch (error) {
     message.error(error.message)
@@ -200,6 +213,45 @@ const payableNFTs = (nfts: any[], amount: number) => {
   }
   return list;
 }
+
+const getAbscBalance = async () => {
+  if (!aptosAddress.value || aptosAddress.value == "") {
+    abscBalance.value = 0
+    return;
+  }
+  let data = await getOwnersNFTs();
+  abscNFTList.value = data.data.current_token_datas_v2;
+  abscBalance.value = abscNFTList.value.reduce((prev: number, cur: { token_properties: { amt: number; }; }) => {
+    return prev + Number(cur.token_properties.amt)
+  }, 0)
+}
+
+
+const getOwnersNFTs = () => {
+  return apolloClient.query({
+    query: gql`query getOwnersNFTs($address:String) {
+        current_token_datas_v2(
+          where: {current_token_ownership: {owner_address: {_eq: $address }, amount: {_gt: "0"}}, current_collection: {creator_address: {_eq: "0xadeb45c274f9f4f535afe8957a8cf9ffecbd2b79026fba6c207111136d963f14"}, collection_name: {_eq: "ABSC"}}}
+        ) {
+          token_data_id
+          token_properties
+        }
+      }`,
+    variables: {
+      address: aptosAddress.value,
+    },
+    fetchPolicy: "no-cache",
+  })
+}
+
+watch(
+  () => walletAddress.walletAddress,
+  async (newVal, _oldVal) => {
+    if (newVal != '') {
+      getApiWhitelistAbscNFT()
+    }
+  }, { deep: true, immediate: true }
+);
 
 onMounted(async () => {
   if (walletAddress.walletAddress) {

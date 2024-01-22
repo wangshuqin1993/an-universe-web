@@ -73,7 +73,7 @@ const openSelectedWhiteListModal = ref(false);
 const selectedNavTitle = ref('Home');
 const btnInfo = ref('');
 const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
-const menuList = ref([{ name: 'Home', path: '/' }, { name: 'NFT', path: '/mint' }, { name: 'Whitelist', path: '/whitelist' }, { name: 'IDO', path: '/ido' }])
+const menuList = ref([{ name: 'Home', path: '/' }, { name: 'NFT', path: '/mint' }, { name: 'Whitelist', path: '/whitelist' }, { name: 'NFT(Ido)', path: '/nftIdo' }, { name: 'IDO', path: '/ido' }])
 
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
@@ -129,7 +129,7 @@ const disConnectWallet = async () => {
         console.log(response, 'response')
         walletAddress.setWalletAddress('');
         btnInfo.value = 'connect wallet'
-        window.location.reload()
+        // window.location.reload()
       } catch (error) {
         message.error(error.message)
       }
@@ -137,8 +137,11 @@ const disConnectWallet = async () => {
   } else {
     let connectionStatus = await window.ethereum?.isConnected()
     if (connectionStatus) {
+      window.ethereum.isMetaMask = false
       try {
-        await window.ethereum.disconnect()
+        console.log(window.ethereum, window.ethereum._metamask, '909090')
+        // await window.ethereum.metamask.disconnect('MetaMask')
+        // const data = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ eth_accounts: '' }], });
         // window.ethereum.request({
         //   "method": "wallet_revokePermissions",
         //   "params": [
@@ -148,7 +151,8 @@ const disConnectWallet = async () => {
         //   ]
         // });
         walletAddress.setWalletAddress('');
-        window.location.reload()
+        localStorage.removeItem('metaMaskWalletAddress')
+        // window.location.reload()
         btnInfo.value = 'connect wallet'
       } catch (error) {
         message.error(error.message)
@@ -179,14 +183,19 @@ const getIsMobils = async () => {
 
 onMounted(async () => {
   console.log(window.okxwallet, window.ethereum.isMetaMask, 'window.okxwallet')
+  console.log(window.ethereum?.provider, walletAddress.walletAddress, 'window.ethereum');
   await getIsMobils()
   if (window.okxwallet?.selectedAddress) {
     let address = window.okxwallet?.selectedAddress;
     walletAddress.setWalletAddress(address);
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
-  }
-  if (window.ethereum?.selectedAddress) {
-    let address = window.ethereum?.selectedAddress;
+  } else {
+    // const data = await window.ethereum.request({
+    //   "method": "eth_requestAccounts",
+    //   "params": []
+    // });
+    // const address = data[0]
+    let address = window.ethereum?.selectedAddress || localStorage.getItem('metaMaskWalletAddress');
     walletAddress.setWalletAddress(address);
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   }

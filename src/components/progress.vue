@@ -5,9 +5,9 @@
       <div class="text-[#fff] mb-[5px] text-[18px] text-[#FF3B0F]">{{ percentValue + '%' }}</div>
     </div>
 
-    <a-progress :percent="percentValue" :size="[300, 36]" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }"
+    <a-progress :percent="50" :size="[300, 30]" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }"
       :show-info="showInfo" />
-    <div class="md:text-[21px] text-[14px] font-bold float-right mt-[18px]">
+    <div class="md:text-[18px] text-[14px] float-right mt-[18px]">
       <div class="text-right">
         <span class="text-[#FF3B0F]">{{ totalAmountData }}/</span>
         <span class="text-[#88898A]">{{ targetAmount }}</span>

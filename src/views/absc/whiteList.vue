@@ -7,14 +7,18 @@
           Token IDO
           Whitelist</span></div>
       <div class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-center mt-[37px]">
-        The $ABSC token IDO will be launched soon, and users with whitelist spots can enjoy corresponding price discounts.
-        Users holding $BSC Genesis NFT can exchange for whitelist spots by burning ABSC inscriptions.
-        Each exchange requires burning 500,000 ABSC inscriptions, and each address can only exchange once for each NFT.
+        The $ABSC token IDO will be conducted soon, and users who hold the whitelist can enjoy a 30% discount on the
+
+        IDO price and corresponding quota. You can obtain the whitelist by participating in various activities in the ABSC
+
+        community. In addition, users who hold UR-level $BSC Genesis NFTs can exchange for the whitelist by burning
+
+        500,000 ABSC inscriptions, and each address can only exchange once for each NFT.
       </div>
     </div>
     <div>
       <div
-        class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-[47px] border border-[#463947] border-solid mx-auto">
+        class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-full border border-[#463947] border-solid mx-auto">
         <span class="pt-[15px] px-[21px] font-bold md:text-[24px] text-[18px] text-[#fff]">{{ startTime }} am — {{
           endTime }}
           am(UTC+8)</span>
@@ -42,33 +46,39 @@
       class="whitelist-absc-container w-[90%] md:max-w-[931px] py-[50px] mt-[70px] mx-auto">
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
-        <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[24px] text-[16px]">As the governance token
-          of
-          the leading inscription ABSC based on APT-20 on the BSC chain,
-          the $ABSC token will become the first governance token of the Bmaker ecosystem and can be exchanged with BSC
-          stablecoins based on the Bmaker ecosystem.
-          $ABSC can also be staked to obtain the corresponding amount of Bmaker ecosystem stablecoins,
-          which can be used on any chain supported by the BSC ecosystem.
-          The $ABSC token is an important value support for the Bmaker ecosystem stablecoins.
+        <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[24px] text-[16px]">As the mapping token of
+          the leading inscription ABSC based on APT-20 on the BSC chain, the $ABSC token
+
+          will become the first mapping token of the Bmaker ecosystem and can be exchanged with BSC stablecoins
+
+          based on the Bmaker ecosystem. $ABSC can also be staked toobtain the corresponding amount of Bmaker
+
+          ecosystem stablecoins, which can be used on any chain supported by the BSC ecosystem. The $ABSC
+
+          token is an important value support for the Bmaker ecosystem stablecoins.
         </span>
       </div>
       <div class="flex flex-col items-center justify-center mt-[32px]">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token IDO Whitelist</span>
         <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[24px] text-[16px]">The $ABSC token IDO
-          will
-          be launched soon, and users with whitelist spots can enjoy corresponding price discounts.
-          Users holding $BSC Genesis NFT can exchange for whitelist spots by burning ABSC inscriptions.
-          Each exchange requires burning 500,000 ABSC inscriptions, and each address can only exchange once for each NFT.
+          will be conducted soon, and users who hold the whitelist can enjoy a 30% discount on the
+
+          IDO price and corresponding quota. You can obtain the whitelist by participating in various activities in the
+          ABSC
+
+          community. In addition, users who hold UR-level $BSC Genesis NFTs can exchange for the whitelist by burning
+
+          500,000 ABSC inscriptions, and each address can only exchange once for each NFT.
           <div class="mt-[12px]">
-            Exchange time：{{ whitelistAcquisitionTime.start }} am—— {{ whitelistAcquisitionTime.end }} am（UTC+8）
+            Exchange time：{{ startTime }} am—— {{ endTime }} am（UTC+8）
           </div>
         </span>
       </div>
 
-      <div class="flex flex-col items-center justify-center mt-[32px]">
+      <!-- <div class="flex flex-col items-center justify-center mt-[32px]">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold mb-[19px]">Whitelist information:</span>
         <a-table :columns="columns" :data-source="data" bordered :pagination="false"></a-table>
-      </div>
+      </div> -->
     </div>
   </div>
   <abscFooter></abscFooter>
@@ -90,7 +100,7 @@
   <WhiteListModal :openWhiteListModal="openWhiteListModal" @closeWhiteListModal="openWhiteListModal = false"
     @getWhiteListDone="getWhiteListDone">
   </WhiteListModal>
-  <whiteListBuyModal :openWhiteListBuyModal="openWhiteListBuyModal"
+  <whiteListBuyModal :openWhiteListBuyModal="openWhiteListBuyModal" pageName="Whitelist"
     @getWhitelistSubscribeResult="getWhitelistSubscribeResult" @closeWhiteListBuyModal="openWhiteListBuyModal = false">
   </whiteListBuyModal>
   <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
@@ -106,7 +116,7 @@ import WhiteListModal from './components/WhiteListModal.vue';
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
-import { apiWhitelistAcquisitionTime, apiWhitelistVerify, apiWhitelistSubscribeTime, apiWhitelistSubscribeAmount } from "@/apis/absc";
+import { apiWhitelistAcquisitionTime, apiWhitelistVerify, apiWhitelistSubscribeTime, apiWhitelistSubscribeAmount, apiNFTEquitySubscribe } from "@/apis/absc";
 import { chainApi } from "@/apis/chainApi";
 import { LeveLabellEnums } from "@/enums/levelLabel";
 const walletAddress = useWalletAddress()
@@ -189,6 +199,7 @@ const data = ref([
   },
 ]);
 
+
 // 点击按钮
 const handleExchangeModal = async () => {
   if (!walletAddress.walletAddress) return openSelectedWhiteListModal.value = true;
@@ -228,7 +239,7 @@ const getApiWhitelistAcquisitionTime = async () => {
     btnInfo.value = 'Get Whitelist'
     disabled.value = false;
   } else {
-    btnInfo.value = '活动已结束';
+    btnInfo.value = 'Get Whitelist has ended';
     disabled.value = true;
   }
   startTime.value = data.start
@@ -239,6 +250,7 @@ const getApiWhitelistAcquisitionTime = async () => {
 // 添加白名单时间
 const getApiWhitelistSubscribeTime = async () => {
   const { data } = await apiWhitelistSubscribeTime()
+  // data.status = '3'
   whitelistSubscribeTime.value = data
   if (data.status == '1') {
     btnInfo.value = 'IDO(coming soon)';
@@ -260,16 +272,16 @@ const getApiWhitelistSubscribeAmount = async () => {
   whitelistSubscribeAmountData.value = data
 }
 
-const getBalanceValue = async () => {
-  if (window.okxwallet?.selectedAddress) {
-    const chainApidata = new chainApi(window.okxwallet)
-  } else {
-    const chainApidata = new chainApi(window.ethereum)
-  }
+// const getBalanceValue = async () => {
+//   if (window.okxwallet?.selectedAddress) {
+//     const chainApidata = new chainApi(window.okxwallet)
+//   } else {
+//     const chainApidata = new chainApi(window.ethereum)
+//   }
 
-  balanceValue.value = await chainApidata.getBalance(walletAddress.walletAddress)
-  console.log(balanceValue.value, 'providers');
-}
+//   balanceValue.value = await chainApidata.getBalance(walletAddress.walletAddress)
+//   console.log(balanceValue.value, 'providers');
+// }
 
 const getWhiteListDone = () => {
   getApiWhitelistVerify()
@@ -280,7 +292,7 @@ const getWhiteListDone = () => {
 const closeSelectedWhiteListModal = async () => {
   openSelectedWhiteListModal.value = false;
   await getApiWhitelistVerify()
-  if (whitelistAbscNFTdata.value && whitelistAbscNFTdata.value.result) {
+  if (whitelistVerifyData.value && whitelistVerifyData.value.joined) {
     // 有白名单判断IDO是否开始
     getApiWhitelistSubscribeTime()
   }
@@ -289,6 +301,7 @@ const closeSelectedWhiteListModal = async () => {
 // 购买成功
 const getWhitelistSubscribeResult = (result: boolean) => {
   whitelistSubscribeResult.value = result
+  getApiWhitelistSubscribeAmount()
 }
 
 // 白名单的接口
@@ -300,7 +313,6 @@ const getApiWhitelistVerify = async () => {
 // 判断有没有白名单
 const initDataHasWhitelistVerify = async () => {
   await getApiWhitelistVerify()
-  console.log(whitelistVerifyData.value, 'oioi')
   if (whitelistVerifyData.value && whitelistVerifyData.value.joined) {
     // 有白名单判断IDO是否开始
     getApiWhitelistSubscribeTime()

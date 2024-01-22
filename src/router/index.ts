@@ -23,6 +23,11 @@ let router = createRouter({
       name: "Whitelist",
       component: () => import('@/views/absc/whiteList.vue'),
     },
+    {
+      path: "/nftIdo",
+      name: "NFT(Ido)",
+      component: () => import('@/views/absc/nftIdo.vue'),
+    },
   ],
   // 每次切换路由页面滚动到顶部
   scrollBehavior() {
