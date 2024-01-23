@@ -31,12 +31,7 @@ export function createContractApi(
 
   const sendTransaction = async (methodName: string, ...args: any[]): Promise<any> => {
     const tx = await transferContract[methodName](...args);
-    //return tx.wait();
-    return new Promise<any>((resolve) => {
-      if (tx) {
-        resolve(tx);
-      }
-    });
+    return tx.wait();
   };
 
   const getContract = () => {
