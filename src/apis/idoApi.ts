@@ -2,6 +2,7 @@ import { EIP1193Provider } from '@web3-onboard/core';
 import { BigNumber,ethers } from 'ethers';
 import { createContractApi } from './contractApi'
 import { networkConfig, abis } from './contractConfig';
+import * as internal from 'stream';
 
 export class IDOApi {
   private contractApi;
@@ -29,18 +30,18 @@ export class IDOApi {
     return this.contract.interface.parseLog(log);
   }
 
-  async getTokenEthRate(): Promise<any> {
-    return this.contractApi.query('tokenEthRate');
+  async getTokenEthRate(stage:number): Promise<any> {
+    return this.contractApi.query('tokenEthRate',stage);
   }
 
   // whiteListAmount + totalAmount
-  async getTotalAmount(): Promise<any> {
-    return this.contractApi.query('totalAmount');
+  async getTotalAmount(stage): Promise<any> {
+    return this.contractApi.query('totalAmount',stage);
   }
 
   // res * tokenEthRate / 100
-  async getTokensBalance(address: string): Promise<any> {
-    return this.contractApi.query('allocations',address);
+  async getTokensBalance(stage :number,address: string): Promise<any> {
+    return this.contractApi.query('totalErc20Amount',stage,address);
   }
 
   async getMinAllocation(): Promise<any> {
@@ -63,5 +64,7 @@ export class IDOApi {
       gasLimit: 100000,
     });
   }
-
+  async stage(): Promise<any> {
+    return this.contractApi.query('stage');
+  }
 }
