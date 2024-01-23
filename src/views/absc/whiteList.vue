@@ -306,8 +306,12 @@ const getWhitelistSubscribeResult = (result: boolean) => {
 
 // 白名单的接口
 const getApiWhitelistVerify = async () => {
-  const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
-  whitelistVerifyData.value = data;
+  try {
+    const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
+    whitelistVerifyData.value = data;
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 // 判断有没有白名单

@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="text-center ido-content  md:p-[66px] p-[32px] md:mt-[60px] mt-[32px]">
-        <idoStep></idoStep>
+        <idoStep :stageData="IDOLaunchInfoData"></idoStep>
         <div class="md:mb-[70px] mb-[40px] mt-[100px]">
           <a-button ghost
             class="md:h-[60px] h-[48px] md:w-[278px] w-[178px] md:rounded-[30px] rounded-[25px] mb-[20px]  text-[18px] mr-[20px]">
@@ -178,7 +178,7 @@ const idoBtnClick = async () => {
   if (!walletAddress.walletAddress) {
     openSelectedWhiteListModal.value = true;
   } else {
-    if (IDOLaunchInfoData.value.status === '2') {
+    if (IDOLaunchInfoData.value.status == '2') {
       // 购买
       openIDOBuyModal.value = true;
       getTokenEthRateData()
@@ -194,7 +194,7 @@ const idoBtnClick = async () => {
 const getTokenEthRateData = async () => {
   const walletApiIDO = await getIDOApiData()
   tokenEthRateData.value = await walletApiIDO.getTokenEthRate(stageValue.value)
-  console.log(tokenEthRateData.value, 'tokenEthRateData.value ')
+  console.log(tokenEthRateData.value.toNumber(), 'tokenEthRateData.value ')
 }
 
 // 总额 + IDOLaunchInfoData.value.whitelistAmount
@@ -282,16 +282,15 @@ const getBNBBalance = async () => {
 
 // 获取状态
 const getApiIDOLaunchTime = async () => {
-  const { data } = await apiIDOLaunchTime()
-  data.status = '2'
+  const { data } = await apiIDOLaunchTime(stageValue.value)
   IDOLaunchInfoData.value = data
-  if (data.status === '1') {
+  if (data.status == '1') {
     disabled.value = true
     btnInfo.value = 'Coming Soon'
-  } else if (data.status === '2') {
+  } else if (data.status == '2') {
     disabled.value = false
     btnInfo.value = 'Start Now'
-  } else if (data.status === '3') {
+  } else if (data.status == '3') {
     disabled.value = true
     btnInfo.value = 'Claim'
   } else {
@@ -308,16 +307,14 @@ const changePay = () => {
 
 onMounted(async () => {
   await getStage()
+  getApiIDOLaunchTime()
   if (walletAddress.walletAddress) {
     getBNBBalance()
     getTotalAmountData()
     getTokenEthRateData()
     getTokensBalanceData()
   }
-
   // console.log(window.ethereum, 'window.ethereum')
-  getApiIDOLaunchTime()
-
 })
 
 
@@ -326,11 +323,11 @@ watch(
   async (newVal, _oldVal) => {
     console.log(newVal, 'new')
     if (newVal != '') {
-      getApiIDOLaunchTime()
-      getTotalAmountData()
-      getTokenEthRateData()
-      getTokensBalanceData()
-      getBNBBalance()
+      // getApiIDOLaunchTime()
+      // getTotalAmountData()
+      // getTokenEthRateData()
+      // getTokensBalanceData()
+      // getBNBBalance()
     }
   }, { deep: true, immediate: true }
 );

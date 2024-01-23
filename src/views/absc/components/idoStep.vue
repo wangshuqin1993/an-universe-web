@@ -2,16 +2,15 @@
   <div>
     <a-steps v-model:current="current" :items="[
       {
-        title: 'Finished',
+        title: 'Stage 1',
         description,
       },
       {
-        title: 'In Progress',
+        title: 'Stage 2',
         description,
-        subTitle: 'Left 00:00:08',
       },
       {
-        title: 'Waiting',
+        title: 'Stage 3',
         description,
         // disabled: true,
       },
@@ -21,7 +20,7 @@
       class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] w-full mx-auto mt-[60px] md:mb-[64px] mb-[32px]">
       <div
         class="flex justify-center items-center flex-col text-center h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ IDOLaunchInfoData.start
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ stageData.start
         }}</span>
         <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Launch at</span>
       </div>
@@ -33,7 +32,7 @@
       <div
         class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
         <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{
-          IDOLaunchInfoData.targetAmount
+          stageData.targetAmount
         }}</span>
         <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Target IDO amount</span>
       </div>
@@ -48,10 +47,17 @@
   </div>
 </template>
 <script lang='ts' setup>
-import { ref } from "vue";
+import { ref, toRefs } from "vue";
 import Progress from "@/components/progress.vue";
 const description = ref('This is a description.')
 const IDOLaunchInfoData = ref({ start: '2024-01-23', targetAmount: '100' })
+const props = defineProps({
+  stageData: {
+    type: Object,
+    default: () => { }
+  }
+})
+const { stageData } = toRefs(props)
 const current = ref<number>(0)
 const changeStep = (current: any) => {
   console.log(current, 'value')

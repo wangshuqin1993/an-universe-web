@@ -135,11 +135,20 @@ export function apiWhitelistSubscribe(hash:string,address: string)  {
 }
 
 // 获得 ido 开始时间，目标金额
-export function apiIDOLaunchTime()  {
-  return httpRequest({
-    url: `/absc/ido/time`,
-    method: "get",
-  });
+export function apiIDOLaunchTime(stage:number)  {
+  // return httpRequest({
+  //   url: `/absc/ido/time`,
+  //   method: "get",
+  // });
+  let bodys = [{start:"2024-1-26:20",status:2,targetAmount:333,waitlistAmount:100},
+  {start:"2024-1-28:20",status:1,targetAmount:1000,waitlistAmount:100},
+  {start:"2024-2-4:20",status:1,targetAmount:2000,waitlistAmount:100}]
+  return new Promise((resolve) => {
+      resolve({
+        code : '200',
+        data:bodys[stage-1],
+       });
+    })
 }
 
 // /absc/whitelist/qualification/check   GET  query参数:address   白名单资格校验
@@ -164,12 +173,6 @@ export function apiNFTEquityCheck(address:string)  {
   });
 }
 
-// 东东:
-// /absc/nft/equity/subscribe   POST  body参数{
-// 	"address":"",
-// 	"hash": ""
-// },  nft权益ido购买
-
 export function apiNFTEquitySubscribe(address:string, hash:string)  {
   return httpRequest({
     url: `/absc/nft/equity/subscribe`,
@@ -181,7 +184,6 @@ export function apiNFTEquitySubscribe(address:string, hash:string)  {
   });
 }
 
-// 东东:
 // /absc/nft/equity/time   GET  nft权益活动时间
 export function apiNFTEquityTime()  {
   return httpRequest({
@@ -190,7 +192,6 @@ export function apiNFTEquityTime()  {
   });
 }
 
-// 东东:
 // /absc/nft/equity/amount  GET   query参数：address     nft权益中查询地址已经购买的金额
 export function apiNFTEquityAmount(address:string)  {
   return httpRequest({
