@@ -31,7 +31,7 @@
       </div>
       <div v-if="whitelistSubscribeTime.status == '2' && walletAddress.walletAddress"
         class="text-center text-[#fff] mt-[20px]"> Your $ABSC balance：<span class="text-[#E527FF]">{{
-          whitelistSubscribeAmountData.abscAmount }}</span> ABSC
+          whitelistSubscribeAmountData?.abscAmount }}</span> ABSC
       </div>
       <div v-if="whitelistVerifyData.joined && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">You
         have

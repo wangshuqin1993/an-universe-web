@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="text-center ido-content  md:p-[66px] p-[32px] md:mt-[60px] mt-[32px]">
-        <idoStep :stageValue="stageValue" :stageData="IDOLaunchInfoData"></idoStep>
+        <idoStep :stageValue="stageValue" :stageData="state.IDOLaunchInfoData" :stepAmount="totalAmountData"></idoStep>
         <div class="md:mb-[70px] mb-[40px] mt-[100px]">
           <a-button ghost
             class="md:h-[60px] h-[48px] md:w-[278px] w-[178px] md:rounded-[30px] rounded-[25px] mb-[20px]  text-[18px] mr-[20px]">
@@ -33,7 +33,7 @@
         <!-- padding: 30px 45px 100px; -->
         <div class="progress pt-[32px] md:pb-[100px] pb-[70px] md:px-[45px] px-[32px] text-left">
           <div class="text-[#ffffff] mb-[28px] text-[18px] font-bold">$ABSC Token IDO overall progress</div>
-          <Progress :targetAmount="IDOLaunchInfoData.targetAmount" :totalAmountData="totalAmountData"></Progress>
+          <Progress :targetAmount="1667" :totalAmountData="totalAmountDataAll"></Progress>
         </div>
 
       </div>
@@ -143,7 +143,7 @@
 </template>
 
 <script lang='ts' setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, reactive } from "vue";
 import abscHeader from "@/components/absc-header.vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import { message } from "ant-design-vue";
@@ -155,6 +155,9 @@ import { apiIDOLaunchTime, apiIDOLaunchAmount } from "@/apis/absc"
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const walletAddress = useWalletAddress()
+const state = reactive({
+  IDOLaunchInfoData: {}
+})
 const IDOLaunchInfoData = ref({});
 const disabled = ref(false)
 const openIDOBuyModal = ref(false);
@@ -168,6 +171,7 @@ const BNBBalance = ref(0)
 const ABSCBalance = ref(0)
 const purchaseResult = ref(false);
 const stageValue = ref(0)
+const totalAmountDataAll = ref(0)
 
 
 const transitionPay = ref(0)
@@ -178,7 +182,7 @@ const idoBtnClick = async () => {
   if (!walletAddress.walletAddress) {
     openSelectedWhiteListModal.value = true;
   } else {
-    if (IDOLaunchInfoData.value.status == '2') {
+    if (state.IDOLaunchInfoData?.status == '2') {
       // 购买
       openIDOBuyModal.value = true;
       getTokenEthRateData()
@@ -189,6 +193,7 @@ const idoBtnClick = async () => {
     }
   }
 }
+
 
 const getApiIDOLaunchAmount = async () => {
   const { data } = await apiIDOLaunchAmount()
@@ -202,13 +207,21 @@ const getTokenEthRateData = async () => {
   console.log(tokenEthRateData.value.toNumber(), 'tokenEthRateData.value ')
 }
 
-// 总额 + IDOLaunchInfoData.value.whitelistAmount
+// 总额 + state.IDOLaunchInfoData.whitelistAmount
 const getTotalAmountData = async () => {
   const walletApiIDO = await getIDOApiData()
   const data = await walletApiIDO.getTotalAmount(stageValue.value)
-  console.log(data, 'getTotalAmount')
-  // totalAmountData.value = data.toNumber() + Number(IDOLaunchInfoData.value.whitelistAmount)
+  totalAmountData.value = data
+  // totalAmountData.value = data.toNumber() + Number(state.IDOLaunchInfoData.whitelistAmount)
   // console.log(totalAmountData.value, data, 'totalAmountData.value')
+}
+
+const getTotalAmountDataAll = async () => {
+  const walletApiIDO = await getIDOApiData()
+  for (let i = 1; i <= stageValue.value; i++) {
+    const data = await walletApiIDO.getTotalAmount(stageValue.value)
+    totalAmountDataAll.value += Number(data)
+  }
 }
 
 // 获取 step
@@ -225,7 +238,7 @@ const getTokensBalanceData = async () => {
   const walletApiIDO = await getIDOApiData()
   const data = await walletApiIDO.getTokensBalance(stageValue.value, walletAddress.walletAddress)
   tokensBalanceData.value = data
-  console.log(tokensBalanceData.value, 'tokensBalanceData.value')
+  // console.log(tokensBalanceData.value, 'tokensBalanceData.value')
 }
 
 
@@ -287,7 +300,7 @@ const getBNBBalance = async () => {
 // 获取状态
 const getApiIDOLaunchTime = async () => {
   const { data } = await apiIDOLaunchTime(stageValue.value)
-  IDOLaunchInfoData.value = data
+  state.IDOLaunchInfoData = data
   if (data.status == '1') {
     disabled.value = true
     btnInfo.value = 'Coming Soon'
@@ -318,6 +331,7 @@ onMounted(async () => {
     getTotalAmountData()
     getTokenEthRateData()
     getTokensBalanceData()
+    getTotalAmountDataAll()
   }
   // console.log(window.ethereum, 'window.ethereum')
 })
