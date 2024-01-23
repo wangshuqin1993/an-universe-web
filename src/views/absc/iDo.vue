@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="text-center ido-content  md:p-[66px] p-[32px] md:mt-[60px] mt-[32px]">
-        <idoStep :stageData="IDOLaunchInfoData"></idoStep>
+        <idoStep :stageValue="stageValue" :stageData="IDOLaunchInfoData"></idoStep>
         <div class="md:mb-[70px] mb-[40px] mt-[100px]">
           <a-button ghost
             class="md:h-[60px] h-[48px] md:w-[278px] w-[178px] md:rounded-[30px] rounded-[25px] mb-[20px]  text-[18px] mr-[20px]">
@@ -151,7 +151,7 @@ import Progress from "@/components/progress.vue";
 import idoStep from "./components/idoStep.vue";
 import { IDOApi } from "@/apis/idoApi"
 import { chainApi } from "@/apis/chainApi"
-import { apiIDOLaunchTime } from "@/apis/absc"
+import { apiIDOLaunchTime, apiIDOLaunchAmount } from "@/apis/absc"
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const walletAddress = useWalletAddress()
@@ -188,6 +188,11 @@ const idoBtnClick = async () => {
       toClaim()
     }
   }
+}
+
+const getApiIDOLaunchAmount = async () => {
+  const { data } = await apiIDOLaunchAmount()
+  console.log(data, 'total amount')
 }
 
 // 获取转换率
@@ -307,6 +312,7 @@ const changePay = () => {
 onMounted(async () => {
   await getStage()
   getApiIDOLaunchTime()
+  getApiIDOLaunchAmount()
   if (walletAddress.walletAddress) {
     getBNBBalance()
     getTotalAmountData()

@@ -136,20 +136,26 @@ export function apiWhitelistSubscribe(hash:string,address: string)  {
 
 // 获得 ido 开始时间，目标金额
 export function apiIDOLaunchTime(stage:number)  {
-  // return httpRequest({
-  //   url: `/absc/ido/time`,
-  //   method: "get",
-  // });
-  let bodys = [{start:"2024-1-26:20",status:2,targetAmount:333,waitlistAmount:100},
-  {start:"2024-1-28:20",status:1,targetAmount:1000,waitlistAmount:100},
-  {start:"2024-2-4:20",status:1,targetAmount:2000,waitlistAmount:100}]
-  return new Promise((resolve) => {
-      resolve({
-        code : '200',
-        data:bodys[stage-1],
-       });
-    })
+  return httpRequest({
+    url: `/absc/ido/time`,
+    method: "get",
+    params: {
+      stage:stage
+    }
+  });
 }
+// /absc/ido/total/amount  GET   白名单ido总金额
+export function apiIDOLaunchAmount()  {
+  return httpRequest({
+    url: `/absc/ido/amount`,
+    method: "get",
+    // params: {
+    //   stage:stage
+    // }
+  });
+}
+
+
 
 // /absc/whitelist/qualification/check   GET  query 参数:address   白名单资格校验
 export function apiAbscQualificationCheck(address:string)  {
