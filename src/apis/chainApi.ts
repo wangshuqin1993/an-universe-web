@@ -19,7 +19,8 @@ export class chainApi {
     });
   }
 
-  async getBalance(address:string) {
+  async getBalance(address: string) {
+    console.log('getBalance', this.provider);
     const signer = this.provider.getSigner();
     let balance = await this.provider.getBalance(address);
     return new Promise<any>((resolve) => {

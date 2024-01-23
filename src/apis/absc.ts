@@ -151,7 +151,7 @@ export function apiIDOLaunchTime(stage:number)  {
     })
 }
 
-// /absc/whitelist/qualification/check   GET  query参数:address   白名单资格校验
+// /absc/whitelist/qualification/check   GET  query 参数:address   白名单资格校验
 export function apiAbscQualificationCheck(address:string)  {
   return httpRequest({
     url: `/absc/whitelist/qualification/check`,
@@ -162,7 +162,7 @@ export function apiAbscQualificationCheck(address:string)  {
   });
 }
 
-// /absc/nft/equity/check   GET   query参数：address   nft权益资格交易案
+// /absc/nft/equity/check   GET   query 参数：address   nft 权益资格交易案
 export function apiNFTEquityCheck(address:string)  {
   return httpRequest({
     url: `/absc/nft/equity/check`,
@@ -184,7 +184,7 @@ export function apiNFTEquitySubscribe(address:string, hash:string)  {
   });
 }
 
-// /absc/nft/equity/time   GET  nft权益活动时间
+// /absc/nft/equity/time   GET  nft 权益活动时间
 export function apiNFTEquityTime()  {
   return httpRequest({
     url: `/absc/nft/equity/time`,
@@ -192,7 +192,7 @@ export function apiNFTEquityTime()  {
   });
 }
 
-// /absc/nft/equity/amount  GET   query参数：address     nft权益中查询地址已经购买的金额
+// /absc/nft/equity/amount  GET   query 参数：address     nft 权益中查询地址已经购买的金额
 export function apiNFTEquityAmount(address:string)  {
   return httpRequest({
     url: `/absc/nft/equity/amount`,
@@ -203,7 +203,7 @@ export function apiNFTEquityAmount(address:string)  {
   });
 }
 
-// /absc/nft/equity/discount GET  query参数：address   返回值字符串
+// /absc/nft/equity/discount GET  query 参数：address   返回值字符串
 export function apiNFTEquityDiscount(address:string)  {
   return httpRequest({
     url: `/absc/nft/equity/discount`,
@@ -212,4 +212,11 @@ export function apiNFTEquityDiscount(address:string)  {
       address:address
     }
   });
+}
+
+export function getBnbPrice() {
+  return httpRequest({
+    url: `/api/v3/ticker/price?symbol=BNBUSDT`,
+    method:"get"
+  })
 }
