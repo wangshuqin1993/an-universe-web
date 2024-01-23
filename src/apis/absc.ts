@@ -144,7 +144,7 @@ export function apiIDOLaunchTime(stage:number)  {
     }
   });
 }
-// /absc/ido/total/amount  GET   白名单ido总金额
+// /absc/ido/total/amount  GET   白名单 ido 总金额
 export function apiIDOLaunchAmount()  {
   return httpRequest({
     url: `/absc/ido/total/amount`,
@@ -220,9 +220,12 @@ export function apiNFTEquityDiscount(address:string)  {
   });
 }
 
-export function getBnbPrice() {
-  return httpRequest({
-    url: `/api/v3/ticker/price?symbol=BNBUSDT`,
+export async function getBnbPrice() {
+  const res = await httpRequest({
+    url: `/absc/bnb/price`,
     method:"get"
   })
+  return new Promise<any>((resolve) => {
+    resolve(res.data.price);
+  });
 }
