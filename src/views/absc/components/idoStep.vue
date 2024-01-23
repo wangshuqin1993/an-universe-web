@@ -60,7 +60,7 @@ const changeStep = (current: any) => {
 <style lang='less' scoped>
 :deep(.ant-steps .ant-steps-item-finish .ant-steps-item-icon) {
   background-color: #FAD9FF !important;
-  border-color: #FAD9FF !important;
+  border-color: #E527FF !important;
 }
 
 :deep(.ant-steps .ant-steps-item:not(.ant-steps-item-active):not(.ant-steps-item-process)>.ant-steps-item-container[role='button']:hover .ant-steps-item-icon) {
@@ -94,5 +94,51 @@ const changeStep = (current: any) => {
 :deep(.ant-steps .ant-steps-item-process .ant-steps-item-icon) {
   color: #fff;
   background-color: #E527FF;
+}
+
+:deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after){
+  background-color: #4D4C4C;
+}
+
+:deep(:where(.css-dev-only-do-not-override-1qb1s0s).ant-steps .ant-steps-item-wait .ant-steps-item-icon){
+  background-color: #484848;
+}
+
+:deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item-wait .ant-steps-item-icon >.ant-steps-icon){
+  color: white;
+}
+
+:deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-description){
+  color: #E527FF;
+}
+:deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-description){
+  color: #E527FF;
+}
+
+:deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title){
+  color: #FFFFFF;
+}
+:deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title){
+  color: #FFFFFF;
+}
+
+:deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item-subtitle){
+  color: #6F6F6F;
+}
+
+:deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item-process .ant-steps-item-icon){
+  border-color:#E527FF;
+}
+
+:deep(.anticon svg) {
+  vertical-align: baseline;
+}
+
+:deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after){
+  background-color: #E527FF;
+}
+
+:deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after){
+  background-color: #4D4C4C;
 }
 </style>
