@@ -147,7 +147,7 @@ export function apiIDOLaunchTime(stage:number)  {
 // /absc/ido/total/amount  GET   白名单 ido 总金额
 export function apiIDOLaunchAmount()  {
   return httpRequest({
-    url: `/absc/ido/amount`,
+    url: `/absc/ido/total/amount`,
     method: "get",
     // params: {
     //   stage:stage

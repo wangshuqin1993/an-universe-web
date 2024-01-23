@@ -36,7 +36,10 @@ export class IDOApi {
 
   // whiteListAmount + totalAmount
   async getTotalAmount(stage): Promise<any> {
-    return this.contractApi.query('totalAmount',stage);
+    const amount = await this.contractApi.query('totalAmount',stage);
+    return new Promise<any>((resolve) => {
+      resolve(ethers.utils.formatEther(amount));
+    });
   }
 
   // res * tokenEthRate / 100

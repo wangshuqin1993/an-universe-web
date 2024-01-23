@@ -5,7 +5,7 @@
       <div class="text-[#fff] mb-[5px] text-[18px] text-[#FF3B0F]">{{ percentValue + '%' }}</div>
     </div>
 
-    <a-progress :percent="50" :size="[300, 30]" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }"
+    <a-progress :percent="percentValue" :size="[300, 30]" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }"
       :show-info="showInfo" />
     <div class="md:text-[18px] text-[14px] float-right mt-[18px]">
       <div class="text-right">
@@ -89,6 +89,10 @@ watch(
   font-size: 18px;
   top: -30px;
   right: 0px;
+}
+
+:deep(.ant-progress .ant-progress-text) {
+  width: unset;
 }
 
 :deep(.ant-progress.ant-progress-show-info .ant-progress-outer) {

@@ -2,8 +2,9 @@
   <a-modal v-model:open="openWhiteListBuyModal" title="" :footer="null" @cancel="closeModal">
     <div class="relative">
       <div class="mt-[50px] buy-input-item">
+        <!-- maxValue -->
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay ({{
-          `Max: ${whitelistSubscribeConfigData.maxAllocation - whitelistSubscribeAmountData.amount} ` }})</div>
+          `Max: ${whitelistSubscribeConfigData?.maxAllocation - whitelistSubscribeAmountData?.amount} ` }})</div>
         <a-input v-model:value="buyValue" placeholder="Basic usage" @change="changePay">
           <template #suffix>
             <div>BNB</div>
@@ -27,7 +28,7 @@
         </a-input>
         <div class="flex justify-between mt-[5px]">
           <div></div>
-          <div class="text-[#000000]">You $ABSC balance: {{ whitelistSubscribeAmountData.abscAmount }}</div>
+          <div class="text-[#000000]">You $ABSC balance: {{ whitelistSubscribeAmountData?.abscAmount }}</div>
         </div>
 
       </div>
@@ -38,8 +39,8 @@
       <div>
         <div class="text-[#FF3653]">
           <div v-if="whitelistDiscountData != '1'">Discount: {{ whitelistDiscountData }}</div>
-          Minimum amount: {{ whitelistSubscribeConfigData.minAllocation }} BNB<br />
-          Maximum amount: {{ whitelistSubscribeConfigData.maxAllocation }} BNB<br />
+          Minimum amount: {{ whitelistSubscribeConfigData?.minAllocation }} BNB<br />
+          Maximum amount: {{ whitelistSubscribeConfigData?.maxAllocation }} BNB<br />
         </div>
       </div>
     </div>
@@ -52,7 +53,7 @@
 <script lang='ts' setup>
 import { ref, toRefs, onMounted, watch } from "vue";
 import { message } from "ant-design-vue";
-import { apiWhitelistVerify, apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiWhitelistDiscount, apiNFTEquityDiscount, apiWhitelistSubscribe, apiNFTEquitySubscribe } from "@/apis/absc";
+import { apiWhitelistVerify, apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiNFTEquityAmount, apiWhitelistDiscount, apiNFTEquityDiscount, apiWhitelistSubscribe, apiNFTEquitySubscribe } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import { chainApi } from "@/apis/chainApi"
 const walletAddress = useWalletAddress();
@@ -65,6 +66,7 @@ const whitelistDiscountData = ref(1)
 const loading = ref(false)
 const transitionPay = ref(0);
 const balanceValue = ref(0);
+const maxValue = ref(0)
 
 const props = defineProps({
   openWhiteListBuyModal: {
@@ -107,6 +109,18 @@ const getApiWhitelistSubscribeAmount = async () => {
     message.error(err.message)
   }
 }
+
+const getApiNFTEquityAmount = async () => {
+  try {
+    const { data } = await apiNFTEquityAmount(walletAddress.walletAddress)
+    whitelistSubscribeAmountData.value = data
+    // NFTEquityAmountData.value = data
+  } catch (err) {
+    message.error(err.message)
+  }
+
+}
+
 
 // 获得白名单折扣
 const getApiWhitelistDiscount = async () => {
@@ -208,7 +222,7 @@ const getChainApidata = async () => {
 onMounted(async () => {
   if (walletAddress.walletAddress) {
     getBalanceValue()
-    getApiWhitelistSubscribeAmount();
+    pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
     pageName.value == 'Whitelist' ? getApiWhitelistDiscount() : getApiNFTEquityDiscount()
   }
   getApiWhitelistSubscribeConfig();
@@ -222,7 +236,8 @@ watch(
     if (newVal) {
       getBalanceValue()
       getApiWhitelistSubscribeConfig();
-      getApiWhitelistSubscribeAmount()
+      pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
+      // getApiWhitelistSubscribeAmount()
     }
   }, { deep: true }
 );
