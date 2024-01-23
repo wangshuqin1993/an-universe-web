@@ -132,7 +132,7 @@
     </div>
 
     <div class="text-[12px] bg-[#F7F7F7] rounded-[8px] px-[30px] py-[20px] mt-[20px]">
-      <div class="text-[#343434]">{{ '1ABSC=' + tokenEthRateData / 100 + 'BNB' }}</div>
+      <div class="text-[#343434]">{{ '1ABSC=' + 100 / (tokenEthRateData) + 'BNB' }}</div>
     </div>
     <div class="flex justify-center items-center mt-[40px]">
       <div class="cancel-btn" @click="openIDOBuyModal = false">Cancel</div>
@@ -206,7 +206,7 @@ const getTotalAmountData = async () => {
   // console.log(totalAmountData.value, data, 'totalAmountData.value')
 }
 
-// 获取step
+// 获取 step
 const getStage = async () => {
   const walletApiIDO = await getIDOApiData()
   const data = await walletApiIDO.stage()
@@ -219,7 +219,7 @@ const getStage = async () => {
 const getTokensBalanceData = async () => {
   const walletApiIDO = await getIDOApiData()
   const data = await walletApiIDO.getTokensBalance(stageValue.value, walletAddress.walletAddress)
-  tokensBalanceData.value = (data * tokenEthRateData.value) / 100
+  tokensBalanceData.value = data
   console.log(tokensBalanceData.value, 'tokensBalanceData.value')
 }
 
@@ -258,17 +258,16 @@ const toClaim = async () => {
 const buyIDOSubscribe = async () => {
   const walletApiIDO = await getIDOApiData()
   try {
-    const data = await walletApiIDO.purchase(buyValue.value)
-    // console.log(data, '购买返回值')
-    if (data) {
-      openIDOBuyModal.value = false;
-      purchaseResult.value = true
-      buyValue.value = 0;
-      getTokensBalanceData()
-      getApiIDOLaunchTime()
-    }
+    await walletApiIDO.purchase(String(buyValue.value))
+    openIDOBuyModal.value = false;
+    purchaseResult.value = true
+    buyValue.value = 0;
+    getTokensBalanceData()
   } catch (err) {
-    message.error(err.message)
+    const walletApiChain = await getChainApiData()
+    let errorMessage = await walletApiChain.getTransactionErrorInfo(err.transactionHash);
+    console.error(errorMessage);
+    message.error('transaction error: ' + err.transactionHash);
     purchaseResult.value = false
   }
 
@@ -322,12 +321,12 @@ watch(
   () => walletAddress.walletAddress,
   async (newVal, _oldVal) => {
     console.log(newVal, 'new')
-    if (newVal != '') {
+    if (newVal && newVal != '') {
       // getApiIDOLaunchTime()
-      // getTotalAmountData()
-      // getTokenEthRateData()
-      // getTokensBalanceData()
-      // getBNBBalance()
+      getTotalAmountData()
+      getTokenEthRateData()
+      getTokensBalanceData()
+      getBNBBalance()
     }
   }, { deep: true, immediate: true }
 );

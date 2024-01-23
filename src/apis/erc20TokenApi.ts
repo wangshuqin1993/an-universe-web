@@ -2,7 +2,7 @@ import { createContractApi } from './contractApi'
 import { networkConfig, abis } from './contractConfig';
 import { BigNumber, ethers } from 'ethers';
 import { EIP1193Provider } from '@web3-onboard/core';
-
+import { JsonRpcProvider } from '@ethersproject/providers'
 export class Erc20TokenApi {
   private contractApi;
   public contract;
@@ -15,7 +15,7 @@ export class Erc20TokenApi {
 
     const contractAddress = this.getErc20Token(network)
 
-    this.contractApi = createContractApi(contractAddress, contractABI, provider);
+    this.contractApi = createContractApi(contractAddress, contractABI, provider,new JsonRpcProvider(networkConfig[network].url));
 
     this.contract = this.contractApi.getContract();
   }

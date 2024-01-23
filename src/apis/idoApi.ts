@@ -40,8 +40,11 @@ export class IDOApi {
   }
 
   // res * tokenEthRate / 100
-  async getTokensBalance(stage :number,address: string): Promise<any> {
-    return this.contractApi.query('totalErc20Amount',stage,address);
+  async getTokensBalance(stage: number, address: string): Promise<any> {
+    const balance = await this.contractApi.query('erc20Allocations', stage, address);
+    return new Promise<any>((resolve) => {
+      resolve(ethers.utils.formatEther(balance));
+    });
   }
 
   async getMinAllocation(): Promise<any> {
@@ -55,13 +58,13 @@ export class IDOApi {
   async purchase(value:string): Promise<any> {
     return this.contractApi.sendTransaction('purchase', {
       value: ethers.utils.parseEther(value),
-      gasLimit: 100000,
+      gasLimit: 10000000,
     });
   }
 
   async claim(): Promise<any> {
     return this.contractApi.sendTransaction('claim', {
-      gasLimit: 100000,
+      gasLimit: 10000000,
     });
   }
   
