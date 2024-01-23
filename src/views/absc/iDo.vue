@@ -151,7 +151,7 @@ import Progress from "@/components/progress.vue";
 import idoStep from "./components/idoStep.vue";
 import { IDOApi } from "@/apis/idoApi"
 import { chainApi } from "@/apis/chainApi"
-import { apiIDOLaunchTime, apiIDOLaunchAmount } from "@/apis/absc"
+import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice } from "@/apis/absc"
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const walletAddress = useWalletAddress()
@@ -322,10 +322,18 @@ const changePay = () => {
 }
 
 
+const getBnbPriceData = async () => {
+  const { data } = await getBnbPrice()
+  console.log(data);
+
+}
+
+
 onMounted(async () => {
   await getStage()
   getApiIDOLaunchTime()
   getApiIDOLaunchAmount()
+  getBnbPriceData()
   if (walletAddress.walletAddress) {
     getBNBBalance()
     getTotalAmountData()

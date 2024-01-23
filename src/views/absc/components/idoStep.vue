@@ -14,7 +14,8 @@
       <div
         class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
         <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ stageData?.unitPrice }}
-          USDT</span>
+          BNB</span>
+        <span class="text-[12px] text-[#8D8D8D]">≈ {{ }} USDT</span>
         <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">$ABSC Price</span>
       </div>
       <div
