@@ -64,6 +64,7 @@ export class IDOApi {
       gasLimit: 100000,
     });
   }
+  
   async stage(): Promise<any> {
     return this.contractApi.query('stage');
   }

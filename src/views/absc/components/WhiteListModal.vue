@@ -253,6 +253,15 @@ watch(
   }, { deep: true, immediate: true }
 );
 
+watch(
+  () => props.openWhiteListModal,
+  async (newVal, _oldVal) => {
+    if (newVal) {
+      getApiWhitelistAbscNFT()
+    }
+  }, { deep: true, immediate: true }
+);
+
 onMounted(async () => {
   if (walletAddress.walletAddress) {
     getApiWhitelistAbscNFT()

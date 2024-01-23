@@ -166,7 +166,8 @@ const tokensBalanceData = ref(0)
 const buyValue = ref(0);
 const BNBBalance = ref(0)
 const ABSCBalance = ref(0)
-const purchaseResult = ref(false)
+const purchaseResult = ref(false);
+const stageValue = ref(0)
 
 
 const transitionPay = ref(0)
@@ -192,23 +193,32 @@ const idoBtnClick = async () => {
 // 获取转换率
 const getTokenEthRateData = async () => {
   const walletApiIDO = await getIDOApiData()
-  tokenEthRateData.value = await walletApiIDO.getTokenEthRate()
+  tokenEthRateData.value = await walletApiIDO.getTokenEthRate(stageValue.value)
   console.log(tokenEthRateData.value, 'tokenEthRateData.value ')
 }
 
 // 总额 + IDOLaunchInfoData.value.whitelistAmount
 const getTotalAmountData = async () => {
   const walletApiIDO = await getIDOApiData()
-  const data = await walletApiIDO.getTotalAmount()
+  const data = await walletApiIDO.getTotalAmount(stageValue.value)
   console.log(data, 'getTotalAmount')
   // totalAmountData.value = data.toNumber() + Number(IDOLaunchInfoData.value.whitelistAmount)
   // console.log(totalAmountData.value, data, 'totalAmountData.value')
 }
 
+// 获取step
+const getStage = async () => {
+  const walletApiIDO = await getIDOApiData()
+  const data = await walletApiIDO.stage()
+  stageValue.value = data
+  console.log(data, 'stage');
+
+}
+
 // 获取余额
 const getTokensBalanceData = async () => {
   const walletApiIDO = await getIDOApiData()
-  const data = await walletApiIDO.getTokensBalance(walletAddress.walletAddress)
+  const data = await walletApiIDO.getTokensBalance(stageValue.value, walletAddress.walletAddress)
   tokensBalanceData.value = (data * tokenEthRateData.value) / 100
   console.log(tokensBalanceData.value, 'tokensBalanceData.value')
 }
@@ -296,7 +306,8 @@ const changePay = () => {
 }
 
 
-onMounted(() => {
+onMounted(async () => {
+  await getStage()
   if (walletAddress.walletAddress) {
     getBNBBalance()
     getTotalAmountData()
@@ -314,13 +325,13 @@ watch(
   () => walletAddress.walletAddress,
   async (newVal, _oldVal) => {
     console.log(newVal, 'new')
-    // if (newVal != '') {
-    //   getApiIDOLaunchTime()
-    //   getTotalAmountData()
-    //   getTokenEthRateData()
-    //   getTokensBalanceData()
-    //   getBNBBalance()
-    // }
+    if (newVal != '') {
+      getApiIDOLaunchTime()
+      getTotalAmountData()
+      getTokenEthRateData()
+      getTokensBalanceData()
+      getBNBBalance()
+    }
   }, { deep: true, immediate: true }
 );
 </script>
