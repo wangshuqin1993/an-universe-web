@@ -18,20 +18,9 @@
         </div>
       </div>
 
+
       <div
         class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] w-full mx-auto mt-[60px] md:mb-[120px] mb-[64px]">
-        <!-- <div v-for="(item, index) in fakeInfo" :key="index">
-          <div v-if="item.time"
-            class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-            <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ item.time }}</span>
-            <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">{{ item.desc }}</span>
-          </div>
-          <div v-else
-            class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-            <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px">{{ item.amount }}</span>
-            <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">{{ item.desc }}</span>
-          </div>
-        </div> -->
         <div
           class="flex justify-center items-center flex-col text-center h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
           <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ IDOLaunchInfoData.start
@@ -58,6 +47,7 @@
           <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Current amount</span>
         </div>
       </div>
+      <idoStep></idoStep>
       <Progress :targetAmount="IDOLaunchInfoData.targetAmount" :totalAmountData="totalAmountData"></Progress>
       <div class="text-center md:mt-[86px] mt-[86px]">
         <div class="md:mb-[105px] mb-[50px]">
@@ -142,6 +132,7 @@ import abscHeader from "@/components/absc-header.vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import { message } from "ant-design-vue";
 import Progress from "@/components/progress.vue";
+import idoStep from "./components/idoStep.vue";
 import { IDOApi } from "@/apis/idoApi"
 import { chainApi } from "@/apis/chainApi"
 import { apiIDOLaunchTime } from "@/apis/absc"
@@ -160,6 +151,7 @@ const buyValue = ref(0);
 const BNBBalance = ref(0)
 const ABSCBalance = ref(0)
 const purchaseResult = ref(false)
+
 
 const transitionPay = ref(0)
 // const idoApiData: any = ref()
