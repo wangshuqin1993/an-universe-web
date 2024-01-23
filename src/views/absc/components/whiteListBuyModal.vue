@@ -132,7 +132,7 @@ const getApiWhitelistDiscount = async () => {
   }
 }
 
-// nft(ido)折扣
+// nft(ido) 折扣
 const getApiNFTEquityDiscount = async () => {
   try {
     const { data } = await apiNFTEquityDiscount(walletAddress.walletAddress)
@@ -210,6 +210,7 @@ const getBalanceValue = async () => {
 
 const getChainApidata = async () => {
   if (window.okxwallet?.selectedAddress) {
+    console.log(window.okxwallet)
     const chainApidata = new chainApi(window.okxwallet)
     return chainApidata
   } else {
