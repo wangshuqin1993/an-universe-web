@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-steps :current="1" :items="[
+    <a-steps v-model:current="current" :items="[
       {
         title: 'Finished',
         description,
@@ -13,13 +13,49 @@
       {
         title: 'Waiting',
         description,
+        // disabled: true,
       },
-    ]"></a-steps>
+    ]" @change="changeStep">
+    </a-steps>
+    <div
+      class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] w-full mx-auto mt-[60px] md:mb-[64px] mb-[32px]">
+      <div
+        class="flex justify-center items-center flex-col text-center h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ IDOLaunchInfoData.start
+        }}</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Launch at</span>
+      </div>
+      <div
+        class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">1 USDT</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">$ABSC Price</span>
+      </div>
+      <div
+        class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{
+          IDOLaunchInfoData.targetAmount
+        }}</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Target IDO amount</span>
+      </div>
+      <div
+        class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">99999</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Current amount</span>
+      </div>
+    </div>
+    <Progress :targetAmount="'800'" :totalAmountData="1000"></Progress>
+
   </div>
 </template>
 <script lang='ts' setup>
 import { ref } from "vue";
+import Progress from "@/components/progress.vue";
 const description = ref('This is a description.')
+const IDOLaunchInfoData = ref({ start: '2024-01-23', targetAmount: '100' })
+const current = ref<number>(0)
+const changeStep = (current: any) => {
+  console.log(current, 'value')
+}
 </script>
 <style lang='less' scoped>
 :deep(.ant-steps .ant-steps-item-finish .ant-steps-item-icon) {

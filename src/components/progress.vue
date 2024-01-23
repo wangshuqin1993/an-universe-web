@@ -1,5 +1,5 @@
 <template>
-  <div class="progress ">
+  <div class="">
     <div class="flex justify-between text-[16px]" v-if="!showInfo">
       <div></div>
       <div class="text-[#fff] mb-[5px] text-[18px] text-[#FF3B0F]">{{ percentValue + '%' }}</div>
