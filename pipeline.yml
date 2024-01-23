@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: hamster-nft-frontend
-          image: hamstershare/hamster-nft-frontend:0.1.0
+          image: hamstershare/hamster-nft-frontend:0.1.1
           imagePullPolicy: Always
           ports:
             - containerPort: 80
