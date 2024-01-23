@@ -221,11 +221,12 @@ export function apiNFTEquityDiscount(address:string)  {
 }
 
 export async function getBnbPrice() {
-  const res = await httpRequest({
-    url: `/absc/bnb/price`,
-    method:"get"
-  })
+  // const res = await httpRequest({
+  //   url: `/absc/bnb/price`,
+  //   method:"get"
+  // })
   return new Promise<any>((resolve) => {
-    resolve(res.data.price);
+    // resolve(res.data.price);
+    resolve('296.6')
   });
 }

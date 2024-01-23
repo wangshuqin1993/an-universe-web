@@ -10,7 +10,8 @@
         </div>
       </div>
       <div class="text-center ido-content  md:p-[66px] p-[32px] md:mt-[60px] mt-[32px]">
-        <idoStep :stageValue="stageValue" :stageData="state.IDOLaunchInfoData" :stepAmount="totalAmountData"></idoStep>
+        <idoStep :stageValue="stageValue" :stageData="state.IDOLaunchInfoData" :stepAmount="totalAmountData"
+          :bnbPriceData="bnbPriceData"></idoStep>
         <div class="md:mb-[70px] mb-[40px] mt-[100px]">
           <a-button ghost
             class="md:h-[60px] h-[48px] md:w-[278px] w-[178px] md:rounded-[30px] rounded-[25px] mb-[20px]  text-[18px] mr-[20px]">
@@ -33,7 +34,7 @@
         <!-- padding: 30px 45px 100px; -->
         <div class="progress pt-[32px] md:pb-[100px] pb-[70px] md:px-[45px] px-[32px] text-left">
           <div class="text-[#ffffff] mb-[28px] text-[18px] font-bold">$ABSC Token IDO overall progress</div>
-          <Progress :targetAmount="1667" :totalAmountData="totalAmountDataAll"></Progress>
+          <Progress :targetAmount="1667" :totalAmountData="totalAmountDataAll" :bnbPriceData="bnbPriceData"></Progress>
         </div>
 
       </div>
@@ -172,7 +173,7 @@ const ABSCBalance = ref(0)
 const purchaseResult = ref(false);
 const stageValue = ref(0)
 const totalAmountDataAll = ref(0)
-
+const bnbPriceData = ref(0)
 
 const transitionPay = ref(0)
 // const idoApiData: any = ref()
@@ -323,9 +324,9 @@ const changePay = () => {
 
 
 const getBnbPriceData = async () => {
-  const { data } = await getBnbPrice()
-  console.log(data);
-
+  const res = await getBnbPrice()
+  console.log(res);
+  bnbPriceData.value = Number(res)
 }
 
 

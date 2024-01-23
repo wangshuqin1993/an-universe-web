@@ -13,7 +13,7 @@
         <span class="text-[#88898A]">{{ targetAmount }}</span>
       </div>
       <div class="text-[#88898A]">
-        Amount of BNB raised: <span class="text-[#E526FF]">-</span>
+        Amount of BNB raised: <span class="text-[#E526FF]">{{ '$' + bnbPriceData }}</span>
       </div>
       <!-- <div>{{ getV() }}</div> -->
     </div>
@@ -30,10 +30,14 @@ const props = defineProps({
   totalAmountData: {
     type: Number,
     default: 0
+  },
+  bnbPriceData: {
+    type: Number,
+    default: 0,
   }
 })
 const percentValue = ref(0)
-const { targetAmount, totalAmountData } = toRefs(props);
+const { targetAmount, totalAmountData, bnbPriceData } = toRefs(props);
 
 console.log(targetAmount.value, totalAmountData.value, 'qwertyui')
 

@@ -15,7 +15,7 @@
         class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
         <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ stageData?.unitPrice }}
           BNB</span>
-        <span class="text-[12px] text-[#8D8D8D]">≈ {{ }} USDT</span>
+        <span class="text-[14px] text-[#8D8D8D]">≈ ${{ getPriceData(stageData?.unitPrice) }}</span>
         <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">$ABSC Price</span>
       </div>
       <div
@@ -23,20 +23,23 @@
         <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{
           stageData?.targetAmount
         }}</span>
+        <span class="text-[14px] text-[#8D8D8D]">≈ $ {{ getPriceData(stageData?.targetAmount) }}</span>
         <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Target IDO amount</span>
       </div>
       <div
         class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
         <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ stepAmount }}</span>
+        <span class="text-[14px] text-[#8D8D8D]">≈ ${{ getPriceData(stepAmount) }}</span>
         <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Current amount</span>
       </div>
     </div>
-    <Progress :targetAmount="stageData?.targetAmount" :totalAmountData="stepAmount"></Progress>
+    <Progress :targetAmount="stageData?.targetAmount" :totalAmountData="stepAmount"
+      :bnbPriceData="bnbPriceData"></Progress>
 
   </div>
 </template>
 <script lang='ts' setup>
-import { ref, toRefs, watch, onMounted } from "vue";
+import { ref, toRefs, watch, onMounted, computed } from "vue";
 import Progress from "@/components/progress.vue";
 const description = ref('This is a description.')
 import { StepStatusEnums } from "@/enums/levelLabel";
@@ -53,6 +56,10 @@ const props = defineProps({
   stageData: {
     type: Object,
     default: () => { }
+  },
+  bnbPriceData: {
+    type: Number,
+    default: 0,
   }
 })
 
@@ -74,8 +81,18 @@ const stepItems = ref([{
   disabled: true,
 },])
 
-const { stageValue, stageData } = toRefs(props)
+const { stageValue, stageData, bnbPriceData } = toRefs(props)
 console.log(stageValue.value, stageData.value, 'stageData')
+
+// const getV = computed(() => {
+//   bnbPriceData.value = bnbPriceData.value 
+// })
+
+
+const getPriceData = (value: number) => {
+  return (bnbPriceData.value * value).toFixed(6)
+}
+
 
 // stageValue.value - 1为当前
 // stepItems.value[stageValue.value - 1].status = StepStatusEnums[stageData.value?.status]
