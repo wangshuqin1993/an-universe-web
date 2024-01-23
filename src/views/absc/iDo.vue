@@ -8,30 +8,39 @@
           <img src="@/assets/images/absc-tokens.png" class="md:h-[50px] h-[38px] self-center" />
           <span class="title-text text-[26px] text-[24px] md:text-[48px] ml-3">$ABSC Token IDO</span>
         </div>
-        <div class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mt-[37px]">
-          As the governance token of the leading inscription ABSC based on APT-20 on the BSC chain,
-          the $ABSC token will become the first governance token of the Bmaker ecosystem and can be exchanged with BSC
-          stablecoins based on the Bmaker ecosystem.
-          $ABSC can also be staked to obtain the corresponding amount of Bmaker ecosystem stablecoins,
-          which can be used on any chain supported by the BSC ecosystem.
-          The $ABSC token is an important value support for the Bmaker ecosystem stablecoins.
+      </div>
+      <div class="text-center ido-content  md:p-[66px] p-[32px] md:mt-[60px] mt-[32px]">
+        <idoStep></idoStep>
+        <div class="md:mb-[70px] mb-[40px] mt-[100px]">
+          <a-button ghost
+            class="md:h-[60px] h-[48px] md:w-[278px] w-[178px] md:rounded-[30px] rounded-[25px] mb-[20px]  text-[18px] mr-[20px]">
+            Refund
+          </a-button>
+          <a-button :disabled="disabled" @click="idoBtnClick"
+            class="md:h-[60px] h-[48px] md:w-[278px] w-[178px] md:rounded-[30px] rounded-[25px] mb-[20px]  text-[18px]">
+            {{ btnInfo }}
+          </a-button>
+          <div v-if="purchaseResult" class="text-center text-[14px] text-[#fff]">
+            <div> Your $ABSC balance<span class="text-[#E527FF] mb-[10px]">{{ tokensBalanceData }} ABSC</span></div>
+            <div>The $ABSC token will enable claim function after the IDO ends. Please pay attention to the official
+              announcement.</div>
+          </div>
+          <div class="text-[#88898A] text-[12px] text-left mt-[10px] refund-text w-full md:max-w-[908px] mx-auto">
+            If the IDO is not completed within 14 days, you can full refund.<br />
+            If the IDO complete, The $ABSC token will can claim. Please pay attention to the official announcement.
+          </div>
         </div>
+        <!-- padding: 30px 45px 100px; -->
+        <div class="progress pt-[32px] md:pb-[100px] pb-[70px] md:px-[45px] px-[32px] text-left">
+          <div class="text-[#ffffff] mb-[28px] text-[18px] font-bold">$ABSC Token IDO overall progress</div>
+          <Progress :targetAmount="IDOLaunchInfoData.targetAmount" :totalAmountData="totalAmountData"></Progress>
+        </div>
+
       </div>
 
-      <div
+
+      <!-- <div
         class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] w-full mx-auto mt-[60px] md:mb-[120px] mb-[64px]">
-        <!-- <div v-for="(item, index) in fakeInfo" :key="index">
-          <div v-if="item.time"
-            class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-            <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ item.time }}</span>
-            <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">{{ item.desc }}</span>
-          </div>
-          <div v-else
-            class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-            <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px">{{ item.amount }}</span>
-            <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">{{ item.desc }}</span>
-          </div>
-        </div> -->
         <div
           class="flex justify-center items-center flex-col text-center h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
           <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ IDOLaunchInfoData.start
@@ -57,22 +66,19 @@
           }}</span>
           <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Current amount</span>
         </div>
-      </div>
-      <Progress :targetAmount="IDOLaunchInfoData.targetAmount" :totalAmountData="totalAmountData"></Progress>
-      <div class="text-center md:mt-[86px] mt-[86px]">
-        <div class="md:mb-[105px] mb-[50px]">
-          <a-button :disabled="disabled" @click="idoBtnClick"
-            class="md:h-[60px] h-[48px] md:w-[278px] w-[178px] md:rounded-[30px] rounded-[25px] mb-[20px]  text-[18px]">
-            {{ btnInfo }}
-          </a-button>
-          <div v-if="purchaseResult" class="text-center text-[14px] text-[#fff]">
-            <div> Your $ABSC balance<span class="text-[#E527FF] mb-[10px]">{{ tokensBalanceData }} ABSC</span></div>
-            <div>The $ABSC token will enable claim function after the IDO ends. Please pay attention to the official
-              announcement.</div>
-          </div>
-        </div>
+      </div> -->
 
-        <div class="text-[#fff] md:text-[36px] text-[24px] font-bold md:mb-[64px] mb-[32px]">$ABSC Token</div>
+
+      <div class="text-center md:mt-[86px] mt-[86px]">
+        <div class="text-[#fff] md:text-[36px] text-[24px] font-bold mb-[32px]">$ABSC Token</div>
+        <div class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mb-[30px]">
+          As the governance token of the leading inscription ABSC based on APT-20 on the BSC chain,
+          the $ABSC token will become the first governance token of the Bmaker ecosystem and can be exchanged with BSC
+          stablecoins based on the Bmaker ecosystem.
+          $ABSC can also be staked to obtain the corresponding amount of Bmaker ecosystem stablecoins,
+          which can be used on any chain supported by the BSC ecosystem.
+          The $ABSC token is an important value support for the Bmaker ecosystem stablecoins.
+        </div>
         <div class=" w-full rounded-[10px] text-[#fff]">
           <img src="@/assets/images/id-tokens.png" />
         </div>
@@ -142,6 +148,7 @@ import abscHeader from "@/components/absc-header.vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import { message } from "ant-design-vue";
 import Progress from "@/components/progress.vue";
+import idoStep from "./components/idoStep.vue";
 import { IDOApi } from "@/apis/idoApi"
 import { chainApi } from "@/apis/chainApi"
 import { apiIDOLaunchTime } from "@/apis/absc"
@@ -160,6 +167,7 @@ const buyValue = ref(0);
 const BNBBalance = ref(0)
 const ABSCBalance = ref(0)
 const purchaseResult = ref(false)
+
 
 const transitionPay = ref(0)
 // const idoApiData: any = ref()
@@ -333,6 +341,19 @@ watch(
   text-align: left;
 }
 
+.refund-text {
+  padding: 20px 30px;
+  background: rgba(108, 108, 108, 0.09);
+  border-radius: 5px;
+}
+
+.ido-content {
+  border: 1px solid #442989;
+  border-radius: 20px;
+  background: linear-gradient(152deg, rgba(60, 43, 157, 0.13) 0%, rgba(115, 10, 131, 0.15) 100%);
+  backdrop-filter: blur(30px);
+}
+
 .swap-posi {
   width: 63px;
   position: absolute;
@@ -343,6 +364,14 @@ watch(
 
 .ant-input-affix-wrapper {
   height: 49px;
+}
+
+
+.progress {
+  background: linear-gradient(152deg, rgba(60, 43, 157, 0.13) 0%, rgba(115, 10, 131, 0.15) 100%);
+  border-radius: 10px;
+  border: 1px solid #442989;
+  backdrop-filter: blur(30px);
 }
 
 .buy-input-item {

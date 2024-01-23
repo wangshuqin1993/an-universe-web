@@ -137,26 +137,30 @@ const disConnectWallet = async () => {
   } else {
     let connectionStatus = await window.ethereum?.isConnected()
     if (connectionStatus) {
-      window.ethereum.isMetaMask = false
-      try {
-        console.log(window.ethereum, window.ethereum._metamask, '909090')
-        // await window.ethereum.metamask.disconnect('MetaMask')
-        // const data = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ eth_accounts: '' }], });
-        // window.ethereum.request({
-        //   "method": "wallet_revokePermissions",
-        //   "params": [
-        //     {
-        //       "eth_accounts": {}
-        //     }
-        //   ]
-        // });
-        walletAddress.setWalletAddress('');
-        localStorage.removeItem('metaMaskWalletAddress')
-        // window.location.reload()
-        btnInfo.value = 'connect wallet'
-      } catch (error) {
-        message.error(error.message)
-      }
+      // window.ethereum.isMetaMask = false
+      walletAddress.setWalletAddress('');
+      localStorage.removeItem('metaMaskWalletAddress')
+      // window.location.reload()
+      btnInfo.value = 'connect wallet'
+      // try {
+      //   // console.log(window.ethereum, window.ethereum._metamask, '909090')
+      //   // await window.ethereum.metamask.disconnect('MetaMask')
+      //   // const data = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ eth_accounts: '' }], });
+      //   // window.ethereum.request({
+      //   //   "method": "wallet_revokePermissions",
+      //   //   "params": [
+      //   //     {
+      //   //       "eth_accounts": {}
+      //   //     }
+      //   //   ]
+      //   // });
+      //   walletAddress.setWalletAddress('');
+      //   localStorage.removeItem('metaMaskWalletAddress')
+      //   // window.location.reload()
+      //   btnInfo.value = 'connect wallet'
+      // } catch (error) {
+      //   message.error(error.message)
+      // }
     }
 
     // let connectionStatus = await window.ethereum?.isConnected()
@@ -201,13 +205,6 @@ onMounted(async () => {
   }
 
   // console.log(window.okxwallet, walletAddress.walletAddress, btnInfo.value, 'window.okxwallet')
-  // let width = document.documentElement.clientWidth;
-  // console.log(width, 'width')
-  // if (width > 750) {
-  //   isMobile.value = false
-  // } else {
-  //   isMobile.value = true;
-  // }
 })
 
 
@@ -230,7 +227,6 @@ watch(() => walletAddress.walletAddress,
       walletAddress.setWalletAddress(newVal)
       btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
     }
-
     if (newVal == '') {
       btnInfo.value = 'connect wallet'
     }
