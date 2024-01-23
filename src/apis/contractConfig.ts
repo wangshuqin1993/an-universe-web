@@ -3,10 +3,12 @@ export const networkConfig: Record<string, Record<string, string>> =
   mainnet: {
     idoToken: "",
     erc20Token: "",
+    url:"https://api.zan.top/node/v1/bsc/mainnet/6b55148012b74249962002e2154d5f26",
   },
   test: {
     idoToken: "0xD3eDc5DDa8fFAd6A301e4b7c3873e425bCdB037A",
     erc20Token: "0x2789a2172545217975BAe1BeaE2fAFe0d3F26312",
+    url:"https://api.zan.top/node/v1/bsc/testnet/6b55148012b74249962002e2154d5f26",
   }
 }
 
