@@ -179,8 +179,8 @@ const getApiWhitelistSubscribeTime = async () => {
       btnInfo.value = 'IDO has ended';
       disabled.value = true;
     }
-    startTime.value = data.start
-    endTime.value = data.end
+    startTime.value = data.start.slice(0, -3)
+    endTime.value = data.end.slice(0, -3)
   } catch (err) {
     message.error(err.message)
   }

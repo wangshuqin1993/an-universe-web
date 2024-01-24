@@ -15,7 +15,7 @@
         class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-full border border-[#463947] border-solid mx-auto">
         <span class="pt-[15px] px-[21px] font-bold md:text-[20px] text-[18px] text-[#fff]">{{
           startExchangeTime }} am — {{
-            endExchangeTime }}
+    endExchangeTime }}
           am(UTC+8)</span>
         <span class="pb-[15px] text-[#8D8D8D] md:text-[18px] text-[14px]">Exchange time</span>
       </div>
@@ -28,7 +28,8 @@
         Your $ABSC balance:<span class="text-[#E527FF]">{{
           NFTEquityAmountData.abscAmount }}</span> ABSC
       </div>
-      <div class="text-center text-[#FFF] mt-[20px] text-[14px]">The $ABSC tokens you purchased in the IDO will be airdropped
+      <div class="text-center text-[#FFF] mt-[20px] text-[14px]">The $ABSC tokens you purchased in the IDO will be
+        airdropped
         directly
         to your wallet soon. Please pay attention
         to check it.</div>
@@ -60,7 +61,7 @@
 
             IDO quotas, as described below.
             <div class="mt-[12px]">
-              Exchange time:{{ NFTEquityTime.start }} am—— {{ NFTEquityTime.end }} am (UTC+8)
+              Exchange time:{{ startExchangeTime }} am—— {{ endExchangeTime }} am (UTC+8)
             </div>
           </span>
         </div>
@@ -162,7 +163,6 @@ const btnInfo = ref('IDO(coming soon)');
 const handleExchangeModal = async () => {
   if (walletAddress.walletAddress) {
     await getApiNFTEquityCheck()
-    NFTEquityCheck.value = true;
     if (NFTEquityCheck.value) {
       openWhiteListBuyModal.value = true;
     } else {
@@ -194,9 +194,9 @@ const closeSelectedWhiteListModal = async () => {
 const getapiNFTEquityTime = async () => {
   const { data } = await apiNFTEquityTime()
   NFTEquityTime.value = data
-  startExchangeTime.value = NFTEquityTime.value.start?.slice(0,-3)
-  endExchangeTime.value = NFTEquityTime.value.end?.slice(0,-3)
-  console.log('NFTEquityTime.value',NFTEquityTime.value)
+  startExchangeTime.value = NFTEquityTime.value.start?.slice(0, -3)
+  endExchangeTime.value = NFTEquityTime.value.end?.slice(0, -3)
+  console.log('NFTEquityTime.value', NFTEquityTime.value)
   if (data.status == '1') {
     btnInfo.value = 'IDO(coming soon)';
     disabled.value = true;
@@ -243,12 +243,14 @@ watch(
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
 }
+
 .whitelist-absc-container {
-  background: linear-gradient(152deg, rgba(60,43,157,0.13) 0%, rgba(115,10,131,0.15) 100%);
+  background: linear-gradient(152deg, rgba(60, 43, 157, 0.13) 0%, rgba(115, 10, 131, 0.15) 100%);
   border-radius: 16px;
   border: 1px solid;
   border-image: linear-gradient(134deg, rgba(110, 86, 255, 0.24), rgba(240, 33, 255, 0.16)) 16px 16px;
 }
+
 .title-text {
   font-family: Montserrat Black;
   text-align: center;

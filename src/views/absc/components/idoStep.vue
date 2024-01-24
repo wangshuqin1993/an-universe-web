@@ -7,7 +7,7 @@
       <div
         class="flex justify-center items-center flex-col text-center h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
         <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">{{
-          stageData?.startTime?.Time
+          stageData?.startTime.slice(0, -3)
         }}</span>
         <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[12px]">Launch at</span>
       </div>

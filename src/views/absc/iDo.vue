@@ -28,7 +28,8 @@
           </div>
           <ul class="text-[#88898A] text-[12px] text-left mt-[10px] refund-text w-full md:max-w-[908px] mx-auto">
             <li>If the IDO is not completed within 14 days, you can full refund.</li>
-            <li>If the IDO complete, The $ABSC token will can claim. Please pay attention to the official announcement.</li>
+            <li>If the IDO complete, The $ABSC token will can claim. Please pay attention to the official announcement.
+            </li>
           </ul>
         </div>
         <div class="progress pt-[30px] md:pb-[90px] pb-[70px] md:px-[45px] px-[32px] text-left">
@@ -114,7 +115,7 @@
     </div>
     <div class="flex justify-center items-center mt-[40px]">
       <div class="cancel-btn" @click="openIDOBuyModal = false">Cancel</div>
-      <a-button class="w-[178px] h-[37px]" @click="buyIDOSubscribe">Buy</a-button>
+      <a-button class="w-[178px] h-[37px]" @click="buyIDOSubscribe" :loading="loading">Buy</a-button>
     </div>
   </a-modal>
   <abscFooter></abscFooter>
@@ -137,6 +138,7 @@ const state = reactive({
   IDOLaunchInfoData: {}
 })
 const disabled = ref(false)
+const loading = ref(false)
 const openIDOBuyModal = ref(false);
 const btnInfo = ref('Coming Soon')
 const openSelectedWhiteListModal = ref(false);
@@ -247,6 +249,7 @@ const toClaim = async () => {
 
 // purchase 买
 const buyIDOSubscribe = async () => {
+  loading.value = true;
   const walletApiIDO = await getIDOApiData()
   try {
     await walletApiIDO.purchase(String(buyValue.value))
@@ -254,13 +257,14 @@ const buyIDOSubscribe = async () => {
     purchaseResult.value = true
     buyValue.value = 0;
     getTokensBalanceData()
+    loading.value = false
   } catch (err) {
     const walletApiChain = await getChainApiData()
     let errorMessage = await walletApiChain.getTransactionErrorInfo(err.transactionHash);
     message.error('transaction error: ' + err.transactionHash);
     purchaseResult.value = false
+    loading.value = false
   }
-
 }
 
 const getBNBBalance = async () => {
@@ -312,7 +316,6 @@ onMounted(async () => {
     getBNBBalance()
     getTokenEthRateData()
     getTokensBalanceData()
-
   }
 })
 
@@ -328,7 +331,7 @@ watch(
       getBNBBalance()
       getTotalAmountDataAll()
     }
-  }, { deep: true, immediate: true }
+  }, { deep: true, immediate: false }
 );
 </script>
 
@@ -338,6 +341,7 @@ watch(
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
 }
+
 .title-text {
   background-image: linear-gradient(to right, #60638B 0%, #F9F9F9 25%, #FFFFFF 50%, #60638B 100%);
   -webkit-background-clip: text;
@@ -412,7 +416,7 @@ watch(
   }
 }
 
-li::before{
+li::before {
   content: '';
   width: 3px;
   height: 3px;
