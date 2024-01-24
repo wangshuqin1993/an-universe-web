@@ -128,7 +128,7 @@ const getApiWhitelistAbscNFT = async () => {
   try {
     const { data } = await apiAbscQualificationCheck(walletAddress.walletAddress)
     whitelistAbscNFTdata.value = data;
-    // console.log(data, '有nft')
+    // console.log(data, '有 nft')
   } catch (error) {
     message.error(error.message)
   }
@@ -254,7 +254,7 @@ watch(
   () => walletAddress.walletAddress,
   async (newVal, _oldVal) => {
     if (newVal != '') {
-      getApiWhitelistAbscNFT()
+      //getApiWhitelistAbscNFT()
     }
   }, { deep: true, immediate: true }
 );
@@ -270,7 +270,7 @@ watch(
 
 onMounted(async () => {
   if (walletAddress.walletAddress) {
-    getApiWhitelistAbscNFT()
+    //getApiWhitelistAbscNFT()
   }
 })
 
