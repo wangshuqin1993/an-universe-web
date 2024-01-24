@@ -140,7 +140,7 @@ onMounted(async () => {
       let address = window.okxwallet?.selectedAddress;
       walletAddress.setWalletAddress(address);
       btnInfo.value = address.substring(0, 5) + "..." + address.substring(address.length - 4);
-    } else if (window.ethereum?.selectedAddress) {
+    } else {
       let address = window.ethereum?.selectedAddress;
       walletAddress.setWalletAddress(address);
       btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);

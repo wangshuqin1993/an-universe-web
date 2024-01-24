@@ -4,7 +4,7 @@
       <div class="my-[20px] text-[14px] text-[#000] font-semibold">
         <div class="mb-[30px] text-[18px]">Connect Wallet</div>
         <div v-for="val in walletList " :key="val.name" @click="connectWallet(val.id)">
-          <div class="flex wallet-item w-[50%] items-center cursor-pointer">
+          <div class="flex wallet-item md:w-[50%] w-[100%] items-center cursor-pointer">
             <img :src="getImageURL(`${val.img}.png`)" class="h-[30px] mr-[18px]" />
             <div>{{ val.name }}</div>
           </div>
@@ -27,6 +27,8 @@ const props = defineProps({
     default: false,
   }
 })
+const isMobile = ref(false)
+const isOKApp = ref(false)
 const { openSelectedWhiteListModal } = toRefs(props)
 const emit = defineEmits(['closeSelectedWhiteListModal'])
 const closeModal = () => {
@@ -35,44 +37,54 @@ const closeModal = () => {
 
 // 连接钱包
 const connectWallet = async (id: number) => {
-  if (id === 1) {
-    try {
-      const response = await window.okxwallet.request({ method: 'eth_requestAccounts' });
-      const res = await window.okxwallet.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x61' }],
-      });
-      if (window.okxwallet?.selectedAddress) {
-        let address = window.okxwallet.selectedAddress
-        walletAddress.setWalletAddress(address);
-        closeModal()
-      } else {
-        closeModal()
-        message.info('Please provide a wallet that supports BSC!')
-      }
-    } catch (error) {
-      message.error(error.message)
-    }
+  if (isMobile.value && !isOKApp.value) {
+    const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent(baseUrl.value));
+    window.location.href = encodedUrl;
   } else {
-    // 小狐狸地址
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x61' }], });
-    walletAddress.setWalletAddress(accounts[0]);
-    localStorage.setItem('metaMaskWalletAddress', accounts[0])
-    // const providerData = new ethers.providers.Web3Provider(window.ethereum);
-    // 这个之如果为 null 就说明没有连接到小狐狸，如果有值就是连接的用户钱包地址
-    // const accounts = providerData.provider.selectedAddress
-    closeModal()
-    // console.log(accounts, 'accounts')
+    if (id === 1) {
+      try {
+        const response = await window.okxwallet.request({ method: 'eth_requestAccounts' });
+        const res = await window.okxwallet.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x61' }],
+        });
+        if (window.okxwallet?.selectedAddress) {
+          let address = window.okxwallet.selectedAddress
+          walletAddress.setWalletAddress(address);
+          closeModal()
+        } else {
+          closeModal()
+          message.info('Please provide a wallet that supports BSC!')
+        }
+      } catch (error) {
+        message.error(error.message)
+      }
+    } else {
+      // 小狐狸地址
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x61' }], });
+      walletAddress.setWalletAddress(accounts[0]);
+      localStorage.setItem('metaMaskWalletAddress', accounts[0])
+      // const providerData = new ethers.providers.Web3Provider(window.ethereum);
+      // 这个之如果为 null 就说明没有连接到小狐狸，如果有值就是连接的用户钱包地址
+      // const accounts = providerData.provider.selectedAddress
+      closeModal()
+      // console.log(accounts, 'accounts')
+    }
   }
 }
 
 
-onMounted(() => {
+const getIsMobils = async () => {
   const ua = navigator.userAgent;
   const isIOS = /iphone|ipad|ipod|ios/i.test(ua);
   const isAndroid = /android|XiaoMi|MiuiBrowser/i.test(ua);
-  const isMobile = isIOS || isAndroid;
-  if (isMobile) {
+  isMobile.value = isIOS || isAndroid;
+  isOKApp.value = /OKApp/i.test(ua);
+}
+
+onMounted(async () => {
+  await getIsMobils()
+  if (isMobile.value) {
     walletList.value = [{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }]
   } else {
     walletList.value = [{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }, { name: "MetaMask", img: 'Metamask', id: 2 }]
