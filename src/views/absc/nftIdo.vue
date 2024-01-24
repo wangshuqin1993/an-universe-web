@@ -233,7 +233,7 @@ watch(
     if (newVal != '') {
       getapiNFTEquityTime()
     }
-  }, { deep: true, immediate: true }
+  }, { deep: true, immediate: false }
 );
 
 </script>

@@ -26,21 +26,24 @@
             <div>The $ABSC token will enable claim function after the IDO ends. Please pay attention to the official
               announcement.</div>
           </div>
-          <ul class="text-[#88898A] text-[10px] md:text-[14px] text-left mt-[10px] refund-text w-full md:max-w-[908px] mx-auto">
+          <ul
+            class="text-[#88898A] text-[10px] md:text-[14px] text-left mt-[10px] refund-text w-full md:max-w-[908px] mx-auto">
             <li>If the IDO is not completed within 14 days, you can full refund.</li>
             <li>If the IDO complete, The $ABSC token will can claim. Please pay attention to the official announcement.
             </li>
           </ul>
         </div>
         <div class="progress pt-[30px] md:pb-[90px] pb-[70px] md:px-[45px] px-[32px] text-left">
-          <div class="text-[#ffffff] md:mb-[28px] mb-[36px] md:text-[18px] text-[12px] font-bold">$ABSC Token IDO overall progress</div>
+          <div class="text-[#ffffff] md:mb-[28px] mb-[36px] md:text-[18px] text-[12px] font-bold">$ABSC Token IDO overall
+            progress</div>
           <Progress :targetAmount="1667" :totalAmountData="totalAmountDataAll" :bnbPriceData="bnbPriceData"
             :size="30"></Progress>
         </div>
       </div>
       <div class="text-center md:mt-[86px] mt-[86px]">
         <div class="text-[#fff] md:text-[36px] text-[24px] font-bold md:mb-[32px] mb-[10px]">$ABSC Token</div>
-        <div class="text-[#7C7C7C] md:w-[770px] w-full mx-auto md:text-[16px] text-[14px] text-center mb-[20px] md:mb-[30px]">
+        <div
+          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto md:text-[16px] text-[14px] text-center mb-[20px] md:mb-[30px]">
           As the governance token of the leading inscription ABSC based on APT-20 on the BSC chain,
           the $ABSC token will become the first governance token of the Bmaker ecosystem and can be exchanged with BSC
           stablecoins based on the Bmaker ecosystem.
@@ -425,5 +428,4 @@ li::before {
   background: #88898A;
   vertical-align: middle;
   margin-right: 5px
-}
-</style>
+}</style>
