@@ -1,7 +1,7 @@
 
 <template>
   <abscHeader></abscHeader>
-  <div class="w-full h-full bg-black pb-[75px]">
+  <div class="w-full h-full bg-black pb-[75px] bg-container">
     <div class="max-w-[1440px] mx-auto md:px-[0px] px-[32px]">
       <div class="title-text md:pt-[166px] pt-[100px]"><span class="title-text-color md:text-[48px] text-[30px]">$ABSC
           Token IDO
@@ -19,7 +19,7 @@
     <div>
       <div
         class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-full border border-[#463947] border-solid mx-auto">
-        <span class="pt-[15px] px-[21px] font-bold md:text-[24px] text-[18px] text-[#fff]">{{ startTime }} am — {{
+        <span class="pt-[15px] px-[21px] font-bold md:text-[20px] text-[18px] text-[#fff]">{{ startTime }} am — {{
           endTime }}
           am(UTC+8)</span>
         <span class="pb-[15px] text-[#8D8D8D] md:text-[18px] text-[14px]">Exchange time</span>
@@ -156,8 +156,8 @@ const getApiWhitelistAcquisitionTime = async () => {
       btnInfo.value = 'Get Whitelist has ended';
       disabled.value = true;
     }
-    startTime.value = data.start
-    endTime.value = data.end
+    startTime.value = data.start.slice(0,-3)
+    endTime.value = data.end.slice(0,-3)
     // console.log('认领的data', data)
   } catch (err) {
     message.error(err.message)
@@ -277,6 +277,11 @@ watch(
 </script>
 
 <style scoped lang="less">
+.bg-container {
+  background-image: url('../../assets/images/bg-total.jpg');
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+}
 .title-text {
   font-family: Montserrat Black;
   text-align: center;
