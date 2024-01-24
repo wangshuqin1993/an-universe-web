@@ -106,7 +106,7 @@ const disConnectWallet = async () => {
         const response = await window.okxwallet.disconnect()
         walletAddress.setWalletAddress('');
         btnInfo.value = 'connect wallet'
-        // window.location.reload()
+        window.location.reload()
       } catch (error) {
         message.error(error.message)
       }
@@ -117,7 +117,7 @@ const disConnectWallet = async () => {
       // window.ethereum.isMetaMask = false
       walletAddress.setWalletAddress('');
       localStorage.removeItem('metaMaskWalletAddress')
-      // window.location.reload()
+      window.location.reload()
       btnInfo.value = 'connect wallet'
       // try {
       //   // console.log(window.ethereum, window.ethereum._metamask, '909090')
@@ -160,10 +160,11 @@ const getIsMobils = async () => {
   const isAndroid = /android|XiaoMi|MiuiBrowser/i.test(ua);
   isMobile.value = isIOS || isAndroid;
   isOKApp.value = /OKApp/i.test(ua);
+  // console.log(isMobile.value, isIOS, isAndroid, 'isMobile.value')
 }
 
 onMounted(async () => {
-  console.log(window.okxwallet, window.ethereum.isMetaMask, window.ethereum?.isConnected(), 'window.okxwallet')
+  // console.log(window.okxwallet, window.ethereum.isMetaMask, window.ethereum?.isConnected(), 'window.okxwallet')
   // console.log(window.ethereum?.provider, walletAddress.walletAddress, 'window.ethereum');
   await getIsMobils()
   let address = localStorage.getItem('metaMaskWalletAddress') || ''

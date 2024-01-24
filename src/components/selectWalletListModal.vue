@@ -14,13 +14,13 @@
   </a-modal>
 </template>
 <script lang='ts' setup>
-import { ref, toRefs } from "vue";
+import { ref, toRefs, onMounted } from "vue";
 import useAssets from "@/stores/useAssets";
 import { message } from "ant-design-vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const { getImageURL } = useAssets();
 const walletAddress = useWalletAddress()
-const walletList = ref([{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }, { name: "MetaMask", img: 'Metamask', id: 2 }])
+const walletList = ref([])
 const props = defineProps({
   openSelectedWhiteListModal: {
     type: Boolean,
@@ -65,6 +65,19 @@ const connectWallet = async (id: number) => {
     // console.log(accounts, 'accounts')
   }
 }
+
+
+onMounted(() => {
+  const ua = navigator.userAgent;
+  const isIOS = /iphone|ipad|ipod|ios/i.test(ua);
+  const isAndroid = /android|XiaoMi|MiuiBrowser/i.test(ua);
+  const isMobile = isIOS || isAndroid;
+  if (isMobile) {
+    walletList.value = [{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }]
+  } else {
+    walletList.value = [{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }, { name: "MetaMask", img: 'Metamask', id: 2 }]
+  }
+})
 </script>
 <style lang='less' scoped>
 .wallet-item {

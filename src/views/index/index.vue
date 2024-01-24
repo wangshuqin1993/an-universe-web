@@ -108,14 +108,18 @@ const disConnectWallet = async () => {
   } else {
     let connectionStatus = await window.ethereum?.isConnected()
     if (connectionStatus) {
-      try {
-        await window.ethereum.disconnect()
-        walletAddress.setWalletAddress('');
-        window.location.reload()
-        btnInfo.value = 'connect wallet'
-      } catch (error) {
-        message.error(error.message)
-      }
+      // try {
+      //   await window.ethereum.disconnect()
+      //   walletAddress.setWalletAddress('');
+      //   window.location.reload()
+      //   btnInfo.value = 'connect wallet'
+      // } catch (error) {
+      //   message.error(error.message)
+      // }
+      walletAddress.setWalletAddress('');
+      localStorage.removeItem('metaMaskWalletAddress')
+      window.location.reload()
+      btnInfo.value = 'connect wallet'
     }
   }
 }
@@ -136,9 +140,7 @@ onMounted(async () => {
       let address = window.okxwallet?.selectedAddress;
       walletAddress.setWalletAddress(address);
       btnInfo.value = address.substring(0, 5) + "..." + address.substring(address.length - 4);
-    }
-
-    if (window.ethereum?.selectedAddress) {
+    } else if (window.ethereum?.selectedAddress) {
       let address = window.ethereum?.selectedAddress;
       walletAddress.setWalletAddress(address);
       btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
@@ -149,7 +151,7 @@ onMounted(async () => {
 watch(() => walletAddress.walletAddress,
   (newVal, _oldVal) => {
     if (newVal) {
-      console.log(newVal, 'header watch walletAddress')
+      // console.log(newVal, 'header watch walletAddress')
       walletAddress.setWalletAddress(newVal)
       btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
     }
