@@ -1,7 +1,7 @@
 
 <template>
   <abscHeader></abscHeader>
-  <div class="w-full h-full bg-black md:pb-[64px] pb-[32px]">
+  <div class="w-full h-full bg-black md:pb-[64px] pb-[32px] bg-container">
     <div class="max-w-[1440px] mx-auto px-[32px] md:px-[120px]">
       <div>
         <div class="flex justify-center items-center md:pt-[166px] pt-[100px]">
@@ -326,6 +326,11 @@ watch(
 </script>
 
 <style lang='less' scoped>
+.bg-container {
+  background-image: url('../../assets/images/bg-total.jpg');
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+}
 .title-text {
   background-image: linear-gradient(to right, #60638B 0%, #F9F9F9 25%, #FFFFFF 50%, #60638B 100%);
   -webkit-background-clip: text;

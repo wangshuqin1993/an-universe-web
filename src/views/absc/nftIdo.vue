@@ -1,6 +1,6 @@
 <template>
   <abscHeader></abscHeader>
-  <div class="w-full h-full bg-black pb-[75px] text-center">
+  <div class="w-full h-full bg-black pb-[75px] text-center bg-container">
     <div class="max-w-[1440px] mx-auto md:px-[0px] px-[32px]">
       <div class="title-text md:pt-[166px] pt-[100px]"><span class="title-text-color md:text-[48px] text-[30px]">$ABSC
           Token IDO</span></div>
@@ -13,9 +13,9 @@
     <div>
       <div
         class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center mt-[49px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-full border border-[#463947] border-solid mx-auto">
-        <span class="pt-[15px] px-[21px] font-bold md:text-[24px] text-[18px] text-[#fff]">{{
-          NFTEquityTime.start }} am — {{
-    NFTEquityTime.end }}
+        <span class="pt-[15px] px-[21px] font-bold md:text-[20px] text-[18px] text-[#fff]">{{
+          startExchangeTime }} am — {{
+            endExchangeTime }}
           am(UTC+8)</span>
         <span class="pb-[15px] text-[#8D8D8D] md:text-[18px] text-[14px]">Exchange time</span>
       </div>
@@ -28,7 +28,7 @@
         Your $ABSC balance：<span class="text-[#E527FF]">{{
           NFTEquityAmountData.abscAmount }}</span> ABSC
       </div>
-      <div class="text-center text-[#FF3653] mt-[20px]">The $ABSC tokens you purchased in the IDO will be airdropped
+      <div class="text-center text-[#FFF] mt-[20px] text-[14px]">The $ABSC tokens you purchased in the IDO will be airdropped
         directly
         to your wallet soon. Please pay attention
         to check it.</div>
@@ -156,6 +156,8 @@ const openSelectedWhiteListModal = ref(false)
 const NFTEquityCheck = ref(false);
 const NFTEquityAmountData = ref({});
 const NFTEquityTime = ref({});
+const startExchangeTime = ref('')
+const endExchangeTime = ref('')
 const btnInfo = ref('IDO(coming soon)');
 const handleExchangeModal = async () => {
   if (walletAddress.walletAddress) {
@@ -192,6 +194,9 @@ const closeSelectedWhiteListModal = async () => {
 const getapiNFTEquityTime = async () => {
   const { data } = await apiNFTEquityTime()
   NFTEquityTime.value = data
+  startExchangeTime.value = NFTEquityTime.value.start?.slice(0,-3)
+  endExchangeTime.value = NFTEquityTime.value.end?.slice(0,-3)
+  console.log('NFTEquityTime.value',NFTEquityTime.value)
   if (data.status == '1') {
     btnInfo.value = 'IDO(coming soon)';
     disabled.value = true;
@@ -230,6 +235,17 @@ watch(
 
 </script>
 <style lang='less' scoped>
+.bg-container {
+  background-image: url('../../assets/images/bg-total.jpg');
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+}
+.whitelist-absc-container {
+  background: linear-gradient(152deg, rgba(60,43,157,0.13) 0%, rgba(115,10,131,0.15) 100%);
+  border-radius: 16px;
+  border: 1px solid;
+  border-image: linear-gradient(134deg, rgba(110, 86, 255, 0.24), rgba(240, 33, 255, 0.16)) 16px 16px;
+}
 .title-text {
   font-family: Montserrat Black;
   text-align: center;

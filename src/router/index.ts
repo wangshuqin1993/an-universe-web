@@ -25,7 +25,7 @@ let router = createRouter({
     },
     {
       path: "/nftIdo",
-      name: "NFT(Ido)",
+      name: "NFT(IDO)",
       component: () => import('@/views/absc/nftIdo.vue'),
     },
   ],

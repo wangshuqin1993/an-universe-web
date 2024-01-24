@@ -18,29 +18,29 @@
     ]" @change="changeStep">
     </a-steps>
     <div
-      class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] w-full mx-auto mt-[60px] md:mb-[64px] mb-[32px]">
+      class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] w-full mx-auto mt-[50px] md:mb-[30px] mb-[32px]">
       <div
-        class="flex justify-center items-center flex-col text-center h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ IDOLaunchInfoData.start
+        class="flex justify-center items-center flex-col text-center h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">{{ IDOLaunchInfoData.start
         }}</span>
-        <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Launch at</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[12px]">Launch at</span>
       </div>
       <div
-        class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">1 USDT</span>
-        <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">$ABSC Price</span>
+        class="flex justify-center items-center flex-col h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">1 USDT</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[12px]">$ABSC Price</span>
       </div>
       <div
-        class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{
+        class="flex justify-center items-center flex-col h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">{{
           IDOLaunchInfoData.targetAmount
         }}</span>
-        <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Target IDO amount</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[12px]">Target IDO amount</span>
       </div>
       <div
-        class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">99999</span>
-        <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Current amount</span>
+        class="flex justify-center items-center flex-col h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">99999</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[12px]">Current amount</span>
       </div>
     </div>
     <Progress :targetAmount="'800'" :totalAmountData="1000"></Progress>
@@ -140,5 +140,9 @@ const changeStep = (current: any) => {
 
 :deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after){
   background-color: #4D4C4C;
+}
+
+:deep(.css-dev-only-do-not-override-1qb1s0s.ant-steps .ant-steps-item:not(.ant-steps-item-active)>.ant-steps-item-container[role='button']:hover .ant-steps-item-subtitle){
+  color: #6F6F6F;
 }
 </style>
