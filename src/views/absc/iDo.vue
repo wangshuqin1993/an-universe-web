@@ -31,45 +31,11 @@
             If the IDO complete, The $ABSC token will can claim. Please pay attention to the official announcement.
           </div>
         </div>
-        <!-- padding: 30px 45px 100px; -->
         <div class="progress pt-[32px] md:pb-[100px] pb-[70px] md:px-[45px] px-[32px] text-left">
           <div class="text-[#ffffff] mb-[28px] text-[18px] font-bold">$ABSC Token IDO overall progress</div>
           <Progress :targetAmount="1667" :totalAmountData="totalAmountDataAll" :bnbPriceData="bnbPriceData"></Progress>
         </div>
-
       </div>
-
-
-      <!-- <div
-        class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] w-full mx-auto mt-[60px] md:mb-[120px] mb-[64px]">
-        <div
-          class="flex justify-center items-center flex-col text-center h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-          <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ IDOLaunchInfoData.start
-          }}</span>
-          <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Launch at</span>
-        </div>
-        <div
-          class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-          <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">1 USDT</span>
-          <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">$ABSC Price</span>
-        </div>
-        <div
-          class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-          <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{
-            IDOLaunchInfoData.targetAmount
-          }}</span>
-          <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Target IDO amount</span>
-        </div>
-        <div
-          class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-          <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{
-            totalAmountData
-          }}</span>
-          <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Current amount</span>
-        </div>
-      </div> -->
-
-
       <div class="text-center md:mt-[86px] mt-[86px]">
         <div class="text-[#fff] md:text-[36px] text-[24px] font-bold mb-[32px]">$ABSC Token</div>
         <div class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mb-[30px]">
@@ -88,11 +54,21 @@
         <div class="md:text-[21px] text-[18px] text-[#fff] font-bold md:mb-[30px] mb-[20px]">$ABSC IDO Terms of service
         </div>
         <div class="text-[#7C7C7C] text-[14px] ">
-          1.我是条款我是条款我是条款我是条款我是条款我是条款我是条款我是条款
-          2.我是条款我是条款我是条款我是条款我是条款我是条款我是条款我是条款我
-          3.我是条款我是条款我是条款我是条款我是条款我是条款我是条款是条款我是条款
-          4.我是条款我是条款我是条款我是条款我是条款我是条款我是条款
-          5.我是条款我是条款我是条款我是条款我是条款我是条款
+          1.Declaration
+          Welcome to participate in the $ABSC Token IDO activity. Your participation indicates that you have read and will
+          comply with the terms of service.<br />
+          2.Token
+          Our token ABSC will be issued on the BSC public chain, and will be distributed according to the shares obtained
+          by
+          you during the IDO after it ends.<br />
+          3.Refund
+          If the amount raised in the IDO does not reach the target, the full amount raised will be refunded, and the ABSC
+          shares already issued will be revoked.<br />
+          4.Regulations
+          You need to comply with the law and be fully responsible for ensuring that your IDO behavior complies with local
+          laws and regulations.<br />
+          5.We reserve the right to temporarily or permanently change or suspend part or all of the services without
+          notice.<br />
         </div>
       </div>
     </div>
@@ -159,7 +135,6 @@ const walletAddress = useWalletAddress()
 const state = reactive({
   IDOLaunchInfoData: {}
 })
-const IDOLaunchInfoData = ref({});
 const disabled = ref(false)
 const openIDOBuyModal = ref(false);
 const btnInfo = ref('Coming Soon')
@@ -169,7 +144,6 @@ const totalAmountData = ref(0);
 const tokensBalanceData = ref(0)
 const buyValue = ref(0);
 const BNBBalance = ref(0)
-const ABSCBalance = ref(0)
 const purchaseResult = ref(false);
 const stageValue = ref(0)
 const totalAmountDataAll = ref(0)
@@ -198,14 +172,14 @@ const idoBtnClick = async () => {
 
 const getApiIDOLaunchAmount = async () => {
   const { data } = await apiIDOLaunchAmount()
-  console.log(data, 'total amount')
+  // console.log(data, 'total amount')
 }
 
 // 获取转换率
 const getTokenEthRateData = async () => {
   const walletApiIDO = await getIDOApiData()
   tokenEthRateData.value = await walletApiIDO.getTokenEthRate(stageValue.value)
-  console.log(tokenEthRateData.value.toNumber(), 'tokenEthRateData.value ')
+  // console.log(tokenEthRateData.value.toNumber(), 'tokenEthRateData.value ')
 }
 
 // 总额 + state.IDOLaunchInfoData.whitelistAmount
@@ -214,7 +188,6 @@ const getTotalAmountData = async () => {
   const data = await walletApiIDO.getTotalAmount(stageValue.value)
   totalAmountData.value = data
   // totalAmountData.value = data.toNumber() + Number(state.IDOLaunchInfoData.whitelistAmount)
-  // console.log(totalAmountData.value, data, 'totalAmountData.value')
 }
 
 const getTotalAmountDataAll = async () => {
@@ -230,8 +203,6 @@ const getStage = async () => {
   const walletApiIDO = await getIDOApiData()
   const data = await walletApiIDO.stage()
   stageValue.value = data
-  console.log(data, 'stage');
-
 }
 
 // 获取余额
@@ -285,7 +256,6 @@ const buyIDOSubscribe = async () => {
   } catch (err) {
     const walletApiChain = await getChainApiData()
     let errorMessage = await walletApiChain.getTransactionErrorInfo(err.transactionHash);
-    console.error(errorMessage);
     message.error('transaction error: ' + err.transactionHash);
     purchaseResult.value = false
   }
@@ -295,7 +265,7 @@ const buyIDOSubscribe = async () => {
 const getBNBBalance = async () => {
   const walletApiChain = await getChainApiData()
   BNBBalance.value = await walletApiChain.getBalance(walletAddress.walletAddress)
-  console.log(BNBBalance.value, 'data')
+  // console.log(BNBBalance.value, 'data')
 }
 
 // 获取状态
@@ -325,7 +295,7 @@ const changePay = () => {
 
 const getBnbPriceData = async () => {
   const res = await getBnbPrice()
-  console.log(res);
+  // console.log(res);
   bnbPriceData.value = Number(res)
 }
 
@@ -342,14 +312,12 @@ onMounted(async () => {
     getTokensBalanceData()
     getTotalAmountDataAll()
   }
-  // console.log(window.ethereum, 'window.ethereum')
 })
 
 
 watch(
   () => walletAddress.walletAddress,
   async (newVal, _oldVal) => {
-    console.log(newVal, 'new')
     if (newVal && newVal != '') {
       // getApiIDOLaunchTime()
       getTotalAmountData()

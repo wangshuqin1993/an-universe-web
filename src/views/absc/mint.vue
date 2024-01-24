@@ -138,8 +138,6 @@
       </div>
     </div>
   </a-modal>
-  <!--   width: 650px;
-  height: 650px;  md:w-[650px] md:h-[650px] w-[100%] h-[100%]-->
 
   <ADModal :show="showModal">
     <div class="absc-cube-container w-[650px] h-[650px]" v-if="!isMobile">
@@ -228,13 +226,12 @@ const elementUrl = ref(import.meta.env.VITE_ElEMENT_URL)
 
 const showModalbtn = () => {
   showModal.value = !showModal.value
-  //console.log('showModal.value:', showModal.value)
 }
 
+// 剩余抽奖次数
 const getAbscBlindBoxNumber = async () => {
   const { data } = await apiAbscBlindBoxNumber();
   surplusAmount.value = data
-  //console.log(data, '剩余抽奖次数')
 }
 
 const getAbscDrawCheck = async () => {
@@ -247,7 +244,6 @@ const getAbscDrawCheck = async () => {
 const getAbscRecord = async () => {
   const { data } = await apiAbscRecord(walletAddress.walletAddress)
   recordData.value = data || [];
-  //  recordData.value = [];
 
   recordData.value.map(async (item) => {
     item.child = await getAbscBlindBoxById(item.blindBoxId)
@@ -301,7 +297,6 @@ const showOpen = async () => {
 // 列表详情
 const getAbscBlindBoxById = async (id: string) => {
   const { data } = await apiAbscBlindBoxById(id)
-  // console.log(data, '99999')
   return data
 }
 
@@ -320,7 +315,6 @@ const gotIt = async () => {
     open.value = false;
     loading.value = false;
     message.error(error.message);
-    //console.error(error);
   }
 }
 
@@ -372,7 +366,6 @@ const payableNFTs = (nfts: any[], amount: number) => {
 // // 交易 APT20 
 const transactionApt20 = async () => {
   await getAbscBalance()
-  //console.log("amount",amount.value)
   let list = payableNFTs(abscNFTList.value, amount.value);
   if (list.length == 0) {
     throw new Error("Insufficient balance of ABSC inscriptions");
@@ -488,9 +481,6 @@ watch(
 
   .bg2-container {
     width: 100%;
-    // width: calc(100vw - 17px);
-    // height: 100vh;
-    // height: 100%;
     background-image: url("../../assets/images/mint-bg2.jpg");
     background-repeat: no-repeat;
     background-size: cover !important;
@@ -539,19 +529,6 @@ watch(
   background-image: url("../../assets/images/phone-mint-bg2.jpg");
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
-}
-
-
-.contant {
-  // min-height: 180vh;
-  // background-image: url("../../assets/images/absc-core-show.png");
-  background-image: url("../../assets/images/absc-bg.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: center center;
-  // max-height: 120vh;
-  // background-attachment: fixed;
-  // background-position: top 300px right 0px;
 }
 
 .absc-title {
