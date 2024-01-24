@@ -60,6 +60,10 @@ const props = defineProps({
   bnbPriceData: {
     type: Number,
     default: 0,
+  },
+  stages: {
+    type: Array,
+    default: () => []
   }
 })
 
@@ -100,11 +104,9 @@ const initData = () => {
 }
 
 const getApiIDOLaunchTime = () => {
-  let arr = [1, 2, 3]
-  arr.map(async (item) => {
-    const { data } = await apiIDOLaunchTime(item)
-    stepItems.value[item - 1].description = `1ABSC = ${data.unitPrice}BNB`
-  })
+  if (props.stages && props.stages.length > 0) {
+    props.stages.forEach((t, index) => stepItems.value[index].description = `1ABSC = ${t.unitPrice}BNB`);
+  }
 }
 
 

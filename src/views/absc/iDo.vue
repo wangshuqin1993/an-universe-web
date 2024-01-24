@@ -11,7 +11,7 @@
       </div>
       <div class="text-center ido-content  md:p-[66px] p-[32px] md:mt-[60px] mt-[32px]">
         <idoStep :stageValue="stageValue" :stageData="state.IDOLaunchInfoData" :stepAmount="totalAmountData"
-          :bnbPriceData="bnbPriceData"></idoStep>
+          :bnbPriceData="bnbPriceData" :stages="stageTime"></idoStep>
         <div class="md:mb-[50px] mb-[40px] mt-[70px]">
           <a-button ghost
             class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] text-[14px] mr-[20px]">
@@ -278,7 +278,7 @@ const getBNBBalance = async () => {
 
 // 获取状态
 const getApiIDOLaunchTime = async () => {
-  const { data } = await apiIDOLaunchTime(stageValue.value)
+  const data = stageTime.value[stageValue.value - 1];
   state.IDOLaunchInfoData = data
   state.IDOLaunchInfoData.startTime = state.IDOLaunchInfoData.startTime.slice(0, -3)
   if (data.status == '1') {
@@ -308,9 +308,21 @@ const getBnbPriceData = async () => {
   bnbPriceData.value = Number(data.price)
 }
 
+let stageTime = ref([]);
+
+const getStageTime = async () => {
+  const stage1 = await apiIDOLaunchTime(1)
+  stageTime.value.push(stage1.data);
+  const stage2 = await apiIDOLaunchTime(2)
+  stageTime.value.push(stage2.data);
+  const stage3 = await apiIDOLaunchTime(3)
+  stageTime.value.push(stage3.data);
+  console.log(stageTime);
+}
 
 onMounted(async () => {
   await getStage()
+  await getStageTime()
   getApiIDOLaunchTime()
   getApiIDOLaunchAmount()
   getBnbPriceData()
