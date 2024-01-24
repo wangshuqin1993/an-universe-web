@@ -12,13 +12,13 @@
       <div class="text-center ido-content  md:p-[66px] p-[32px] md:mt-[60px] mt-[32px]">
         <idoStep :stageValue="stageValue" :stageData="state.IDOLaunchInfoData" :stepAmount="totalAmountData"
           :bnbPriceData="bnbPriceData"></idoStep>
-        <div class="md:mb-[50px] mb-[40px] mt-[80px]">
+        <div class="md:mb-[50px] mb-[40px] mt-[70px]">
           <a-button ghost
-            class="md:h-[60px] h-[48px] md:w-[278px] w-[178px] md:rounded-[30px] rounded-[25px] mb-[20px]  text-[18px] mr-[20px]">
+            class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] text-[14px] mr-[20px]">
             Refund
           </a-button>
           <a-button :disabled="disabled" @click="idoBtnClick"
-            class="md:h-[60px] h-[48px] md:w-[278px] w-[178px] md:rounded-[30px] rounded-[25px] mb-[20px]  text-[18px]">
+            class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] text-[14px]">
             {{ btnInfo }}
           </a-button>
           <div v-if="purchaseResult" class="text-center text-[14px] text-[#fff]">
@@ -26,20 +26,20 @@
             <div>The $ABSC token will enable claim function after the IDO ends. Please pay attention to the official
               announcement.</div>
           </div>
-          <ul class="text-[#88898A] text-[12px] text-left mt-[10px] refund-text w-full md:max-w-[908px] mx-auto">
+          <ul class="text-[#88898A] text-[10px] md:text-[14px] text-left mt-[10px] refund-text w-full md:max-w-[908px] mx-auto">
             <li>If the IDO is not completed within 14 days, you can full refund.</li>
             <li>If the IDO complete, The $ABSC token will can claim. Please pay attention to the official announcement.</li>
           </ul>
         </div>
         <div class="progress pt-[30px] md:pb-[90px] pb-[70px] md:px-[45px] px-[32px] text-left">
-          <div class="text-[#ffffff] mb-[28px] text-[18px] font-bold">$ABSC Token IDO overall progress</div>
+          <div class="text-[#ffffff] md:mb-[28px] mb-[36px] md:text-[18px] text-[12px] font-bold">$ABSC Token IDO overall progress</div>
           <Progress :targetAmount="1667" :totalAmountData="totalAmountDataAll" :bnbPriceData="bnbPriceData"
             :size="30"></Progress>
         </div>
       </div>
       <div class="text-center md:mt-[86px] mt-[86px]">
-        <div class="text-[#fff] md:text-[36px] text-[24px] font-bold mb-[32px]">$ABSC Token</div>
-        <div class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center mb-[30px]">
+        <div class="text-[#fff] md:text-[36px] text-[24px] font-bold md:mb-[32px] mb-[10px]">$ABSC Token</div>
+        <div class="text-[#7C7C7C] md:w-[770px] w-full mx-auto md:text-[16px] text-[14px] text-center mb-[20px] md:mb-[30px]">
           As the governance token of the leading inscription ABSC based on APT-20 on the BSC chain,
           the $ABSC token will become the first governance token of the Bmaker ecosystem and can be exchanged with BSC
           stablecoins based on the Bmaker ecosystem.
@@ -52,9 +52,9 @@
         </div>
       </div>
       <div class="service-box md:p-[50px] p-[24px] md:mt-[64px] mt-[32px]">
-        <div class="md:text-[21px] text-[18px] text-[#fff] font-bold md:mb-[30px] mb-[20px]">$ABSC IDO Terms of service
+        <div class="md:text-[21px] text-[18px] text-[#fff] font-bold md:mb-[30px] mb-[10px]">$ABSC IDO Terms of service
         </div>
-        <div class="text-[#7C7C7C] text-[14px] ">
+        <div class="text-[#7C7C7C] text-[14px]">
           1.Declaration
           Welcome to participate in the $ABSC Token IDO activity. Your participation indicates that you have read and will
           comply with the terms of service.<br />
