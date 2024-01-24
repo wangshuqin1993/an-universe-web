@@ -16,8 +16,10 @@ export function createContractApi(
 ): contractApi {
   let transferContract
   try {
-    const signer = provider.getSigner();
-    transferContract = new Contract(contractAddress, abi, signer);
+    if (provider) {
+      const signer = provider.getSigner();
+      transferContract = new Contract(contractAddress, abi, signer);
+    }
   } catch (error) {
     console.error(
       "not initialized signer"

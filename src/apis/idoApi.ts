@@ -12,8 +12,9 @@ export class IDOApi {
   private queryContractApi;
 
   constructor(walletProvider: EIP1193Provider, network: string) {
-
-    this.provider = new ethers.providers.Web3Provider(walletProvider)
+    if (walletProvider) {
+      this.provider = new ethers.providers.Web3Provider(walletProvider)
+    }
 
     const contractABI = abis.idoToken;
 
