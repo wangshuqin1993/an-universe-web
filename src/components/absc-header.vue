@@ -167,7 +167,7 @@ onMounted(async () => {
   // console.log(window.ethereum?.provider, walletAddress.walletAddress, 'window.ethereum');
   await getIsMobils()
   let address = localStorage.getItem('metaMaskWalletAddress') || ''
-  if (window.ethereum.isConnected() && address) {
+  if (address) {
     walletAddress.setWalletAddress(address);
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   } else {
