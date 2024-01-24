@@ -3,34 +3,34 @@
     <a-steps v-model:current="current" :items="stepItems" @change="changeStep">
     </a-steps>
     <div
-      class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] w-full mx-auto mt-[50px] md:mb-[30px] mb-[32px]">
+      class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] w-full mx-auto mt-[50px] md:pb-[30px] mb-[32px]">
       <div
-        class="flex justify-center items-center flex-col text-center h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{
+        class="flex justify-center items-center flex-col text-center h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">{{
           stageData?.startTime?.Time
         }}</span>
         <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[12px]">Launch at</span>
       </div>
       <div
-        class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ stageData?.unitPrice }}
+        class="flex justify-center items-center flex-col h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">{{ stageData?.unitPrice }}
           BNB</span>
         <span class="text-[14px] text-[#8D8D8D]">≈ ${{ getPriceData(stageData?.unitPrice) }}</span>
-        <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">$ABSC Price</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[8px]">$ABSC Price</span>
       </div>
       <div
-        class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{
+        class="flex justify-center items-center flex-col h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">{{
           stageData?.targetAmount
         }}</span>
         <span class="text-[14px] text-[#8D8D8D]">≈ $ {{ getPriceData(stageData?.targetAmount) }}</span>
-        <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Target IDO amount</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[8px]">Target IDO amount</span>
       </div>
       <div
-        class="flex justify-center items-center flex-col h-[134px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ stepAmount }}</span>
+        class="flex justify-center items-center flex-col h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">{{ stepAmount }}</span>
         <span class="text-[14px] text-[#8D8D8D]">≈ ${{ getPriceData(stepAmount) }}</span>
-        <span class="font-[Arial] text-[#8D8D8D] md:text-[18px] text-[14px] mt-[12px]">Current amount</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[8px]">Current amount</span>
       </div>
     </div>
     <Progress :targetAmount="stageData?.targetAmount" :totalAmountData="stepAmount"
