@@ -132,6 +132,7 @@ const getApiWhitelistDiscount = async () => {
 
 // nft(ido) 折扣
 const getApiNFTEquityDiscount = async () => {
+  debugger
   try {
     const { data } = await apiNFTEquityDiscount(walletAddress.walletAddress)
     whitelistDiscountData.value = data
@@ -147,9 +148,12 @@ const getApiWhitelistSubscribe = async (hash: string) => {
       whitelistSubscribeResult.value = true;
       emit('getWhitelistSubscribeResult', true)
       buyValue.value = 0
+      transitionPay.value = 0
+      loading.value = false
       closeModal()
     } else {
       whitelistSubscribeResult.value = false;
+      loading.value = false
       emit('getWhitelistSubscribeResult', false)
     }
   } catch (err) {
@@ -177,9 +181,20 @@ const getApiNFTEquitySubscribe = async (hash: string) => {
   }
 }
 
+// verify
+const verifyBuyValue = () => {
+  let bayMaxvalue = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
+  if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue) {
+    return message.error('The purchase value is out of the reasonable range')
+  } else {
+    return true
+  }
+}
+
 // 买
 const buyWhitelistSubscribe = async () => {
-  if (buyValue.value > 0) {
+  const isBuy = await verifyBuyValue()
+  if (isBuy) {
     const isWhitelistVerify = await getApiWhitelistVerify()
     if (!isWhitelistVerify.joined) return message.error('The address is not whitelisted');
     loading.value = true;
@@ -229,11 +244,21 @@ const getChainApidata = async () => {
 }
 
 onMounted(async () => {
+  console.log(walletAddress.walletAddress, 'walletAddress.walletAddress');
+
   if (walletAddress.walletAddress) {
+    if (pageName.value == 'Whitelist') {
+      getApiWhitelistSubscribeAmount()
+      getApiWhitelistDiscount()
+    } else {
+      getApiNFTEquityDiscount()
+      getApiNFTEquityAmount()
+    }
+    // pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
+    // pageName.value == 'Whitelist' ? getApiWhitelistDiscount() : getApiNFTEquityDiscount()
     getBalanceValue()
-    pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
-    pageName.value == 'Whitelist' ? getApiWhitelistDiscount() : getApiNFTEquityDiscount()
   }
+
   getApiWhitelistSubscribeConfig();
 })
 
@@ -244,9 +269,9 @@ watch(
     if (newVal) {
       getBalanceValue()
       pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
-      pageName.value == 'Whitelist' ? getApiWhitelistDiscount() : getApiNFTEquityDiscount()
+      // pageName.value == 'Whitelist' ? getApiWhitelistDiscount() : getApiNFTEquityDiscount()
     }
-  }, { deep: true }
+  }, { deep: true, immediate: true }
 );
 </script>
 <style lang='less' scoped>

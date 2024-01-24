@@ -2,6 +2,7 @@
 
 <template>
   <div class="">
+    <abscHeader></abscHeader>
     <router-view></router-view>
   </div>
 </template>

@@ -75,10 +75,10 @@
           </div>
         </div>
       </div>
-      <a-button @click="startNow" :loading="startNowLoading"
+      <!-- <a-button @click="startNow" :loading="startNowLoading"
         class="start-btn w-[120px] h-[32px] text-[#fff] text-[12px] font-semibold bg-[#000000] rounded-[22px] text-center hover:opacity-[0.75]">
         Start Now
-      </a-button>
+      </a-button> -->
       <div class="parting-line"></div>
     </div>
   </a-modal>
@@ -150,7 +150,7 @@ const startNow = async () => {
   startNowLoading.value = true;
   try {
     const response = await window.okxwallet.aptos.connect();
-    console.log(response);
+    // console.log(response);
     if (response.address) {
       aptosAddress.value = response.address;
       transactionApt20();

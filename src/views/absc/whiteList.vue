@@ -1,6 +1,6 @@
 
 <template>
-  <abscHeader></abscHeader>
+  <!-- <abscHeader></abscHeader> -->
   <div class="w-full h-full bg-black pb-[75px] bg-container">
     <div class="max-w-[1440px] mx-auto md:px-[0px] px-[32px]">
       <div class="title-text md:pt-[166px] pt-[100px]"><span class="title-text-color md:text-[48px] text-[30px]">$ABSC

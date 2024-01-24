@@ -1,5 +1,5 @@
 <template>
-  <abscHeader></abscHeader>
+  <!-- <abscHeader></abscHeader> -->
   <div class="w-full h-full px-[32px] main-content md:p-[82px] pt-[0px] relative">
     <div class="text-center content pt-[162px]">
       <div class="md:text-[72px] text-[50px] content-title">

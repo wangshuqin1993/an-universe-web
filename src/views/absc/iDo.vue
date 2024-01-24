@@ -1,6 +1,6 @@
 
 <template>
-  <abscHeader></abscHeader>
+  <!-- <abscHeader></abscHeader> -->
   <div class="w-full h-full bg-black md:pb-[64px] pb-[32px] bg-container">
     <div class="max-w-[1440px] mx-auto px-[32px] md:px-[120px]">
       <div>
@@ -280,6 +280,7 @@ const getBNBBalance = async () => {
 const getApiIDOLaunchTime = async () => {
   const { data } = await apiIDOLaunchTime(stageValue.value)
   state.IDOLaunchInfoData = data
+  state.IDOLaunchInfoData.startTime = state.IDOLaunchInfoData.startTime.slice(0, -3)
   if (data.status == '1') {
     disabled.value = true
     btnInfo.value = 'Coming Soon'
@@ -428,4 +429,5 @@ li::before {
   background: #88898A;
   vertical-align: middle;
   margin-right: 5px
-}</style>
+}
+</style>

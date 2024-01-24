@@ -1,5 +1,5 @@
 <template>
-  <abscHeader></abscHeader>
+  <!-- <abscHeader></abscHeader> -->
   <div class="w-full h-full">
 
     <div class="w-full h-screen" :class="isMobile == true ? 'phone-bg1-container' : 'bg1-container'">
