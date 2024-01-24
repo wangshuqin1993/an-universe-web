@@ -25,7 +25,7 @@
         </a-button>
       </div>
       <div v-if="NFTEquityTime.status == '2' && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">
-        Your $ABSC balance：<span class="text-[#E527FF]">{{
+        Your $ABSC balance:<span class="text-[#E527FF]">{{
           NFTEquityAmountData.abscAmount }}</span> ABSC
       </div>
       <div class="text-center text-[#FFF] mt-[20px] text-[14px]">The $ABSC tokens you purchased in the IDO will be airdropped
@@ -60,7 +60,7 @@
 
             IDO quotas, as described below.
             <div class="mt-[12px]">
-              Exchange time：{{ NFTEquityTime.start }} am—— {{ NFTEquityTime.end }} am（UTC+8）
+              Exchange time:{{ NFTEquityTime.start }} am—— {{ NFTEquityTime.end }} am (UTC+8)
             </div>
           </span>
         </div>
@@ -88,7 +88,7 @@ import abscFooter from "@/components/absc-Footer.vue";
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
-import { apiNFTEquityCheck, apiNFTEquityTime, apiNFTEquityAmount } from "@/apis/absc"
+import { apiNFTEquityCheck, apiNFTEquityTime, apiNFTEquityAmount, getBnbPrice } from "@/apis/absc"
 const walletAddress = useWalletAddress()
 const columns = ref([
   {
@@ -162,6 +162,7 @@ const btnInfo = ref('IDO(coming soon)');
 const handleExchangeModal = async () => {
   if (walletAddress.walletAddress) {
     await getApiNFTEquityCheck()
+    NFTEquityCheck.value = true;
     if (NFTEquityCheck.value) {
       openWhiteListBuyModal.value = true;
     } else {
@@ -177,7 +178,6 @@ const handleExchangeModal = async () => {
 const getApiNFTEquityCheck = async () => {
   try {
     const { data } = await apiNFTEquityCheck(walletAddress.walletAddress)
-    data.result = true
     NFTEquityCheck.value = data.result
   } catch (err) {
     message.error(err.message)
@@ -222,6 +222,9 @@ const getWhitelistSubscribeResult = () => {
 
 onMounted(() => {
   getapiNFTEquityTime()
+  getBnbPrice().then((res) => {
+    console.log(res);
+  });
 })
 
 watch(

@@ -19,11 +19,26 @@ export class chainApi {
     });
   }
 
-  async getBalance(address:string) {
+  async getBalance(address: string) {
+    console.log('getBalance', this.provider);
     const signer = this.provider.getSigner();
     let balance = await this.provider.getBalance(address);
     return new Promise<any>((resolve) => {
       resolve(ethers.utils.formatEther(balance));
     });
+  }
+
+  async getTransactionErrorInfo(txHash) {
+    try {
+      const transactionReceipt = await this.provider.getTransactionReceipt(txHash);
+      const revertReason = ethers.utils.toUtf8String(
+        ethers.utils.arrayify(transactionReceipt.logs[0].data)
+      );
+      console.error('Transaction failed with reason:', revertReason);
+      return revertReason;
+    } catch (error) {
+      console.error('Error retrieving transaction information:', error.message);
+      return 'Error retrieving transaction information';
+    }
   }
 }

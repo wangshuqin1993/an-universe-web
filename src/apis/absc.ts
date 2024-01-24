@@ -135,14 +135,29 @@ export function apiWhitelistSubscribe(hash:string,address: string)  {
 }
 
 // 获得 ido 开始时间，目标金额
-export function apiIDOLaunchTime()  {
+export function apiIDOLaunchTime(stage:number)  {
   return httpRequest({
     url: `/absc/ido/time`,
     method: "get",
+    params: {
+      stage:stage
+    }
+  });
+}
+// /absc/ido/total/amount  GET   白名单 ido 总金额
+export function apiIDOLaunchAmount()  {
+  return httpRequest({
+    url: `/absc/ido/total/amount`,
+    method: "get",
+    // params: {
+    //   stage:stage
+    // }
   });
 }
 
-// /absc/whitelist/qualification/check   GET  query参数:address   白名单资格校验
+
+
+// /absc/whitelist/qualification/check   GET  query 参数:address   白名单资格校验
 export function apiAbscQualificationCheck(address:string)  {
   return httpRequest({
     url: `/absc/whitelist/qualification/check`,
@@ -153,7 +168,7 @@ export function apiAbscQualificationCheck(address:string)  {
   });
 }
 
-// /absc/nft/equity/check   GET   query参数：address   nft权益资格交易案
+// /absc/nft/equity/check   GET   query 参数：address   nft 权益资格交易案
 export function apiNFTEquityCheck(address:string)  {
   return httpRequest({
     url: `/absc/nft/equity/check`,
@@ -163,12 +178,6 @@ export function apiNFTEquityCheck(address:string)  {
     }
   });
 }
-
-// 东东:
-// /absc/nft/equity/subscribe   POST  body参数{
-// 	"address":"",
-// 	"hash": ""
-// },  nft权益ido购买
 
 export function apiNFTEquitySubscribe(address:string, hash:string)  {
   return httpRequest({
@@ -181,8 +190,7 @@ export function apiNFTEquitySubscribe(address:string, hash:string)  {
   });
 }
 
-// 东东:
-// /absc/nft/equity/time   GET  nft权益活动时间
+// /absc/nft/equity/time   GET  nft 权益活动时间
 export function apiNFTEquityTime()  {
   return httpRequest({
     url: `/absc/nft/equity/time`,
@@ -190,8 +198,7 @@ export function apiNFTEquityTime()  {
   });
 }
 
-// 东东:
-// /absc/nft/equity/amount  GET   query参数：address     nft权益中查询地址已经购买的金额
+// /absc/nft/equity/amount  GET   query 参数：address     nft 权益中查询地址已经购买的金额
 export function apiNFTEquityAmount(address:string)  {
   return httpRequest({
     url: `/absc/nft/equity/amount`,
@@ -202,7 +209,7 @@ export function apiNFTEquityAmount(address:string)  {
   });
 }
 
-// /absc/nft/equity/discount GET  query参数：address   返回值字符串
+// /absc/nft/equity/discount GET  query 参数：address   返回值字符串
 export function apiNFTEquityDiscount(address:string)  {
   return httpRequest({
     url: `/absc/nft/equity/discount`,
@@ -210,5 +217,16 @@ export function apiNFTEquityDiscount(address:string)  {
     params: {
       address:address
     }
+  });
+}
+
+export async function getBnbPrice() {
+  // const res = await httpRequest({
+  //   url: `/absc/bnb/price`,
+  //   method:"get"
+  // })
+  return new Promise<any>((resolve) => {
+    // resolve(res.data.price);
+    resolve('296.6')
   });
 }

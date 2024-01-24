@@ -31,7 +31,7 @@
       </div>
       <div v-if="whitelistSubscribeTime.status == '2' && walletAddress.walletAddress"
         class="text-center text-[#fff] mt-[20px]"> Your $ABSC balance：<span class="text-[#E527FF]">{{
-          whitelistSubscribeAmountData.abscAmount }}</span> ABSC
+          whitelistSubscribeAmountData?.abscAmount }}</span> ABSC
       </div>
       <div v-if="whitelistVerifyData.joined && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">You
         have
@@ -74,29 +74,9 @@
           </div>
         </span>
       </div>
-
-      <!-- <div class="flex flex-col items-center justify-center mt-[32px]">
-        <span class="text-[#fff] md:text-[18px] text-[14px] font-bold mb-[19px]">Whitelist information:</span>
-        <a-table :columns="columns" :data-source="data" bordered :pagination="false"></a-table>
-      </div> -->
     </div>
   </div>
   <abscFooter></abscFooter>
-
-  <!-- <a-modal v-model:open="open" title="" :footer="null">
-    <div class="text-[18px] text-[#000] font-semibold mb-[20px] mt-[50px] font-bold">Please enter BSC address</div>
-    <a-input class="h-[54px] bg-[#F3F3F3]" v-model:value="abscAddress" placeholder="Please enter BSC address" />
-    <div class="text-[#737373] text-[12px] mt-[14px]">
-      <ExclamationCircleTwoTone style="fontSize: 14px" />
-      <span class="align-middle ml-[4px]">Note: The BSC chain address is used to detect whether it is qualified for the
-        redemption whitelist</span>
-    </div>
-    <div class="text-center mt-[40px]">
-      <a-button class="text-[14px] w-[178px] h-[38px] rounded-[5px]" @click="handleExchangeNow">Exchange Now</a-button>
-    </div>
-  </a-modal> -->
-
-
   <WhiteListModal :openWhiteListModal="openWhiteListModal" @closeWhiteListModal="openWhiteListModal = false"
     @getWhiteListDone="getWhiteListDone">
   </WhiteListModal>
@@ -110,25 +90,23 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
+import { message } from "ant-design-vue";
 import abscHeader from "@/components/absc-header.vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import WhiteListModal from './components/WhiteListModal.vue';
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
-import { apiWhitelistAcquisitionTime, apiWhitelistVerify, apiWhitelistSubscribeTime, apiWhitelistSubscribeAmount, apiNFTEquitySubscribe } from "@/apis/absc";
-import { chainApi } from "@/apis/chainApi";
+import { apiWhitelistAcquisitionTime, apiWhitelistVerify, apiWhitelistSubscribeTime, apiWhitelistSubscribeAmount } from "@/apis/absc";
 import { LeveLabellEnums } from "@/enums/levelLabel";
 const walletAddress = useWalletAddress()
 
-const open = ref(false)
-const abscAddress = ref("");
+// const open = ref(false)
 const openWhiteListModal = ref(false);
 const openWhiteListBuyModal = ref(false);
 const openSelectedWhiteListModal = ref(false);
 const whitelistSubscribeResult = ref(false);
 const whitelistVerifyData = ref({});
-const whitelistAbscNFTdata = ref({});
 const whitelistAcquisitionTime = ref({});
 const whitelistSubscribeTime = ref({});
 const whitelistSubscribeAmountData = ref({});
@@ -136,69 +114,6 @@ const btnInfo = ref('Get Whitelist');
 const disabled = ref(false);
 const startTime = ref('');
 const endTime = ref('');
-const balanceValue = ref(0)
-
-
-const columns = ref([
-  {
-    title: 'Type',
-    dataIndex: 'type',
-    key: 'type',
-    align: 'center'
-  },
-  {
-    title: 'IDO Quota',
-    dataIndex: 'quota',
-    key: 'quota',
-    align: 'center'
-  },
-  {
-    title: 'IDO Price',
-    dataIndex: 'price',
-    key: 'price',
-    align: 'center'
-  }
-]);
-
-const data = ref([
-  {
-    key: '1',
-    type: 'UR',
-    price: 13,
-    quota: 'Discount voucher 70% during $ABSC IDO',
-  },
-  {
-    key: '2',
-    type: 'SSR',
-    price: 40,
-    quota: 'Discount voucher 80% during $ABSC IDO',
-  },
-  {
-    key: '3',
-    type: 'SR',
-    price: 65,
-    quota: 'Discount voucher 90% during $ABSC IDO',
-  },
-  {
-    key: '4',
-    type: 'S',
-    price: 130,
-    quota: 'Voucher worth 80U during $ABSC IDO',
-  },
-  {
-    key: '5',
-    type: 'R',
-    price: 260,
-    quota: 'Voucher worth 50U during $ABSC IDO',
-  },
-  {
-    key: '6',
-    type: 'N',
-    price: 492,
-    quota: 'Voucher worth 30U during $ABSC IDO',
-  },
-]);
-
 
 // 点击按钮
 const handleExchangeModal = async () => {
@@ -222,8 +137,6 @@ const handleExchangeModal = async () => {
         openWhiteListBuyModal.value = true;
       }
     }
-    // openWhiteListBuyModal.value = true;
-    // 点击开始IDO
   }
 
 }
@@ -251,7 +164,6 @@ const getApiWhitelistAcquisitionTime = async () => {
 // 添加白名单时间
 const getApiWhitelistSubscribeTime = async () => {
   const { data } = await apiWhitelistSubscribeTime()
-  // data.status = '3'
   whitelistSubscribeTime.value = data
   if (data.status == '1') {
     btnInfo.value = 'IDO(coming soon)';
@@ -269,20 +181,15 @@ const getApiWhitelistSubscribeTime = async () => {
 }
 
 const getApiWhitelistSubscribeAmount = async () => {
-  const { data } = await apiWhitelistSubscribeAmount(walletAddress.walletAddress)
-  whitelistSubscribeAmountData.value = data
+  try {
+    const { data } = await apiWhitelistSubscribeAmount(walletAddress.walletAddress)
+    whitelistSubscribeAmountData.value = data
+  } catch (err) {
+    message.error(err.message)
+  }
+
 }
 
-// const getBalanceValue = async () => {
-//   if (window.okxwallet?.selectedAddress) {
-//     const chainApidata = new chainApi(window.okxwallet)
-//   } else {
-//     const chainApidata = new chainApi(window.ethereum)
-//   }
-
-//   balanceValue.value = await chainApidata.getBalance(walletAddress.walletAddress)
-//   console.log(balanceValue.value, 'providers');
-// }
 
 const getWhiteListDone = () => {
   getApiWhitelistVerify()
@@ -307,8 +214,12 @@ const getWhitelistSubscribeResult = (result: boolean) => {
 
 // 白名单的接口
 const getApiWhitelistVerify = async () => {
-  const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
-  whitelistVerifyData.value = data;
+  try {
+    const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
+    whitelistVerifyData.value = data;
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 // 判断有没有白名单

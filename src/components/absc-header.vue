@@ -126,7 +126,7 @@ const disConnectWallet = async () => {
     if (connectionStatus) {
       try {
         const response = await window.okxwallet.disconnect()
-        console.log(response, 'response')
+        // console.log(response, 'response')
         walletAddress.setWalletAddress('');
         btnInfo.value = 'connect wallet'
         // window.location.reload()
@@ -186,8 +186,8 @@ const getIsMobils = async () => {
 }
 
 onMounted(async () => {
-  console.log(window.okxwallet, window.ethereum.isMetaMask, 'window.okxwallet')
-  console.log(window.ethereum?.provider, walletAddress.walletAddress, 'window.ethereum');
+  // console.log(window.okxwallet, window.ethereum.isMetaMask, 'window.okxwallet')
+  // console.log(window.ethereum?.provider, walletAddress.walletAddress, 'window.ethereum');
   await getIsMobils()
   if (window.okxwallet?.selectedAddress) {
     let address = window.okxwallet?.selectedAddress;
@@ -199,7 +199,8 @@ onMounted(async () => {
     //   "params": []
     // });
     // const address = data[0]
-    let address = window.ethereum?.selectedAddress || localStorage.getItem('metaMaskWalletAddress');
+    // window.ethereum?.selectedAddress || 
+    let address = localStorage.getItem('metaMaskWalletAddress');
     walletAddress.setWalletAddress(address);
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   }
@@ -215,7 +216,7 @@ watch(
     if (newVal) {
       // console.log(newVal, route, 'bbbb')
       selectedNavTitle.value = newVal;
-      console.log(selectedNavTitle.value);
+      // console.log(selectedNavTitle.value);
     }
   }, { deep: true, immediate: true }
 );
@@ -223,7 +224,7 @@ watch(
 watch(() => walletAddress.walletAddress,
   (newVal, _oldVal) => {
     if (newVal) {
-      console.log(newVal, 'header watch walletAddress')
+      // console.log(newVal, 'header watch walletAddress')
       walletAddress.setWalletAddress(newVal)
       btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
     }
