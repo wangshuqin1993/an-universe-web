@@ -229,8 +229,6 @@ const getChainApidata = async () => {
 }
 
 onMounted(async () => {
-  console.log(pageName.value);
-
   if (walletAddress.walletAddress) {
     getBalanceValue()
     pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
@@ -245,9 +243,8 @@ watch(
   (newVal, _oldVal) => {
     if (newVal) {
       getBalanceValue()
-      //getApiWhitelistSubscribeConfig();
       pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
-      // getApiWhitelistSubscribeAmount()
+      pageName.value == 'Whitelist' ? getApiWhitelistDiscount() : getApiNFTEquityDiscount()
     }
   }, { deep: true }
 );
