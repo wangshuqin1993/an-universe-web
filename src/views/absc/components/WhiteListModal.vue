@@ -35,7 +35,6 @@
             </div>
           </div>
         </div>
-
         <!-- 第二部 -->
         <div class="flex white-step-item">
           <div>
@@ -45,18 +44,25 @@
               2
             </div>
           </div>
-          <div class="text-left mt-[8px] mb-[20px]  ml-[20px]">
+
+          <div class=" text-left mt-[8px] mb-[20px] ml-[20px]">
             <div class="text-[16px] font-semibold white-step-item-title "
               :class="whitelistAbscNFTdata.tokenId ? 'started-css-title' : 'not-started-css-title'">Burning ABSC
-              Inscription</div>
+              Inscription
+            </div>
             <div v-if="whitelistAbscNFTdata.tokenId">
               <div class="text-[#929292] text-[12px] font-normal mb-[20px]">Each whitelist requires a cost of 500000
                 ABSC
                 inscriptions
               </div>
-              <div @click="startNow" v-if="!whitelistVerifyData.joined"
+              <!-- <div @click="startNow" v-if="!whitelistVerifyData.joined"
                 class="w-[120px] h-[32px] text-[#fff] text-[12px] font-semibold bg-[#000] rounded-[22px] text-center leading-[32px] cursor-pointer hover:opacity-[0.75]">
-                Start Now</div>
+                Start Now
+              </div> -->
+              <a-button @click="startNow" v-if="!whitelistVerifyData.joined" :loading="startNowLoading"
+                class="start-btn w-[120px] h-[32px] text-[#fff] text-[12px] font-semibold bg-[#000000] rounded-[22px] text-center hover:opacity-[0.75]">
+                Start Now
+              </a-button>
               <div class="flex items-center" v-else>
                 <img src="@/assets/images/successful.png" class="h-[16px] mr-[5px]" />
                 <div>
@@ -69,11 +75,11 @@
           </div>
         </div>
       </div>
+      <a-button @click="startNow" :loading="startNowLoading"
+        class="start-btn w-[120px] h-[32px] text-[#fff] text-[12px] font-semibold bg-[#000000] rounded-[22px] text-center hover:opacity-[0.75]">
+        Start Now
+      </a-button>
       <div class="parting-line"></div>
-      <div class="text-center mt-[40px] font-normal ">
-        <a-button class="text-[14px] w-[178px] h-[38px] rounded-[5px]" :disabled="disabledWhiteListBtn"
-          @click="getWhiteListDone">done</a-button>
-      </div>
     </div>
   </a-modal>
 </template>
@@ -94,6 +100,7 @@ const amount = ref(10);
 const abscNFTList = ref([]);
 const aptosAddress = ref('');
 const whitelistApplicationResult = ref(false);
+const startNowLoading = ref(false)
 const abscBalance = ref(0)
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
@@ -128,7 +135,7 @@ const getApiWhitelistAbscNFT = async () => {
   try {
     const { data } = await apiAbscQualificationCheck(walletAddress.walletAddress)
     whitelistAbscNFTdata.value = data;
-    // console.log(data, '有nft')
+    // console.log(data, '有 nft')
   } catch (error) {
     message.error(error.message)
   }
@@ -140,6 +147,7 @@ const getWhiteListDone = () => {
 }
 
 const startNow = async () => {
+  startNowLoading.value = true;
   try {
     const response = await window.okxwallet.aptos.connect();
     console.log(response);
@@ -148,6 +156,7 @@ const startNow = async () => {
       transactionApt20();
     }
   } catch (error) {
+    startNowLoading.value = false;
     message.error(error.message)
   }
 }
@@ -186,22 +195,26 @@ const transactionApt20 = async () => {
   };
   // console.log(transaction);
   try {
-
     const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
     const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/');
     const txn = await client.waitForTransactionWithResult(
       pendingTransaction.hash,
     );
-    // console.log(txn, 'txn')
+    // // console.log(txn, 'txn')
     if (txn) {
       await getApiWhitelistApplication(txn.hash);
       getApiWhitelistVerify()
       getAbscBalance()
     }
+    startNowLoading.value = false;
   } catch (error) {
+    startNowLoading.value = false;
     message.error(error.message)
   }
 }
+
+
+
 // 返回可支付 apt 的 NFT 数组
 const payableNFTs = (nfts: any[], amount: number) => {
   let num = 0;
@@ -254,7 +267,7 @@ watch(
   () => walletAddress.walletAddress,
   async (newVal, _oldVal) => {
     if (newVal != '') {
-      getApiWhitelistAbscNFT()
+      //getApiWhitelistAbscNFT()
     }
   }, { deep: true, immediate: true }
 );
@@ -270,13 +283,17 @@ watch(
 
 onMounted(async () => {
   if (walletAddress.walletAddress) {
-    getApiWhitelistAbscNFT()
+    //getApiWhitelistAbscNFT()
   }
 })
 
 
 </script>
 <style lang='less' scoped>
+.start-btn.ant-btn {
+  background: #000000 !important;
+}
+
 .wallet-item {
   padding: 8px 30px;
   font-size: 12px;

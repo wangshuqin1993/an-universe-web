@@ -4,7 +4,7 @@
       <div class="mt-[50px] buy-input-item">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay ({{
           `Max: ${whitelistSubscribeConfigData?.maxAllocation - whitelistSubscribeAmountData?.amount} ` }})</div>
-        <a-input v-model:value="buyValue" placeholder="Basic usage" @change="changePay">
+        <a-input v-model:value="buyValue" placeholder="please enter" @change="changePay">
           <template #suffix>
             <div>BNB</div>
             <a-button @click="getMaxValue()">Max</a-button>
@@ -19,7 +19,7 @@
 
       <div class="buy-input-item mt-[10px]">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">You Receive</div>
-        <a-input v-model:value="transitionPay" placeholder="Basic usage">
+        <a-input v-model:value="transitionPay" placeholder="please enter">
           <template #suffix>
             <div>ABSC</div>
           </template>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="text-[12px] bg-[#F7F7F7] rounded-[8px] px-[30px] py-[20px] mt-[20px]">
-      <div class="text-[#343434]">1ABSC=0.0001BNB</div>
+      <div class="text-[#343434]">1ABSC={{ 1 / whitelistSubscribeConfigData?.tokenBnbRate }}BNB</div>
       <div>
         <div class="text-[#FF3653]">
           <div v-if="whitelistDiscountData != '1'">Discount: {{ whitelistDiscountData }}</div>
@@ -164,9 +164,12 @@ const getApiNFTEquitySubscribe = async (hash: string) => {
       NFTEquitySubscribeResult.value = true
       emit('getWhitelistSubscribeResult', true)
       buyValue.value = 0
+      transitionPay.value = 0
+      loading.value = false
       closeModal()
     } else {
       whitelistSubscribeResult.value = false;
+      loading.value = false
       emit('getWhitelistSubscribeResult', false)
     }
   } catch (err) {
@@ -176,27 +179,31 @@ const getApiNFTEquitySubscribe = async (hash: string) => {
 
 // 买
 const buyWhitelistSubscribe = async () => {
-  const isWhitelistVerify = await getApiWhitelistVerify()
-  if (!isWhitelistVerify.joined) return message.error('The address is not whitelisted');
-  loading.value = true;
-  const walletChainApi = await getChainApidata()
-  const Max = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
-  if (buyValue.value > Max) return message.error('Exceed the maximum purchase value')
-  try {
-    const data = await walletChainApi.transfer('0x5C8D243B165215871D0E199A362CfD33E5E69230', buyValue.value.toString())
-    // console.log(data, '交易成功')
-    if (data) {
-      pageName.value == 'Whitelist' ? getApiWhitelistSubscribe(data.hash) : getApiNFTEquitySubscribe(data.hash)
+  if (buyValue.value > 0) {
+    const isWhitelistVerify = await getApiWhitelistVerify()
+    if (!isWhitelistVerify.joined) return message.error('The address is not whitelisted');
+    loading.value = true;
+    const walletChainApi = await getChainApidata()
+    const Max = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
+    if (buyValue.value > Max) return message.error('Exceed the maximum purchase value')
+    try {
+      const data = await walletChainApi.transfer('0x5C8D243B165215871D0E199A362CfD33E5E69230', buyValue.value.toString())
+      // console.log(data, '交易成功')
+      if (data) {
+        pageName.value == 'Whitelist' ? getApiWhitelistSubscribe(data.hash) : getApiNFTEquitySubscribe(data.hash)
+      }
+      loading.value = false;
+    } catch (err) {
+      loading.value = false;
+      message.error(err)
     }
-    loading.value = false;
-  } catch (err) {
-    loading.value = false;
-    message.error(err)
+  } else {
+    return message.error('Purchase value error')
   }
 }
 
 const changePay = () => {
-  transitionPay.value = buyValue.value * 10000 / Number(whitelistDiscountData.value)
+  transitionPay.value = buyValue.value * whitelistSubscribeConfigData.value?.tokenBnbRate / Number(whitelistDiscountData.value)
 }
 
 const getBalanceValue = async () => {
@@ -217,6 +224,8 @@ const getChainApidata = async () => {
 }
 
 onMounted(async () => {
+  console.log(pageName.value);
+
   if (walletAddress.walletAddress) {
     getBalanceValue()
     pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
@@ -231,7 +240,7 @@ watch(
   (newVal, _oldVal) => {
     if (newVal) {
       getBalanceValue()
-      getApiWhitelistSubscribeConfig();
+      //getApiWhitelistSubscribeConfig();
       pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
       // getApiWhitelistSubscribeAmount()
     }

@@ -30,7 +30,7 @@
           }}</a-button>
       </div>
       <div v-if="whitelistSubscribeTime.status == '2' && walletAddress.walletAddress"
-        class="text-center text-[#fff] mt-[20px]"> Your $ABSC balance：<span class="text-[#E527FF]">{{
+        class="text-center text-[#fff] mt-[20px]"> Your $ABSC balance:<span class="text-[#E527FF]">{{
           whitelistSubscribeAmountData?.abscAmount }}</span> ABSC
       </div>
       <div v-if="whitelistVerifyData.joined && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">You
@@ -70,7 +70,7 @@
 
           500,000 ABSC inscriptions, and each address can only exchange once for each NFT.
           <div class="mt-[12px]">
-            Exchange time：{{ startTime }} am—— {{ endTime }} am（UTC+8）
+            Exchange time:{{ startTime }} am—— {{ endTime }} am (UTC+8)
           </div>
         </span>
       </div>
@@ -122,7 +122,7 @@ const handleExchangeModal = async () => {
     // 点击获取白名单
     await getApiWhitelistVerify();
     if (whitelistVerifyData.value && whitelistVerifyData.value.joined) {
-      // 有白名单判断IDO是否开始
+      // 有白名单判断 IDO 是否开始
       getApiWhitelistSubscribeTime()
     } else {
       // 没有白名单
@@ -131,14 +131,13 @@ const handleExchangeModal = async () => {
   } else {
     await getApiWhitelistVerify();
     if (whitelistVerifyData.value && whitelistVerifyData.value.joined) {
-      // 有白名单判断IDO是否开始
+      // 有白名单判断 IDO 是否开始
       getApiWhitelistSubscribeTime()
       if (whitelistSubscribeTime.value.status === '2') {
         openWhiteListBuyModal.value = true;
       }
     }
   }
-
 }
 
 // 活动开始时间
@@ -156,9 +155,9 @@ const getApiWhitelistAcquisitionTime = async () => {
       btnInfo.value = 'Get Whitelist has ended';
       disabled.value = true;
     }
-    startTime.value = data.start.slice(0,-3)
-    endTime.value = data.end.slice(0,-3)
-    // console.log('认领的data', data)
+    startTime.value = data.start.slice(0, -3)
+    endTime.value = data.end.slice(0, -3)
+    // console.log('认领的 data', data)
   } catch (err) {
     message.error(err.message)
   }
@@ -194,7 +193,6 @@ const getApiWhitelistSubscribeAmount = async () => {
   } catch (err) {
     message.error(err.message)
   }
-
 }
 
 
@@ -208,7 +206,7 @@ const closeSelectedWhiteListModal = async () => {
   openSelectedWhiteListModal.value = false;
   await getApiWhitelistVerify()
   if (whitelistVerifyData.value && whitelistVerifyData.value.joined) {
-    // 有白名单判断IDO是否开始
+    // 有白名单判断 IDO 是否开始
     getApiWhitelistSubscribeTime()
   }
 }
@@ -233,7 +231,7 @@ const getApiWhitelistVerify = async () => {
 const initDataHasWhitelistVerify = async () => {
   await getApiWhitelistVerify()
   if (whitelistVerifyData.value && whitelistVerifyData.value.joined) {
-    // 有白名单判断IDO是否开始
+    // 有白名单判断 IDO 是否开始
     getApiWhitelistSubscribeTime()
   } else {
     // 没有，判断认领是否开始
@@ -253,7 +251,7 @@ const initDataNoWhitelistVerify = async () => {
 }
 
 onMounted(async () => {
-  console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
+  // console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
   if (walletAddress.walletAddress) {
     await initDataHasWhitelistVerify()
   } else {
@@ -265,12 +263,12 @@ onMounted(async () => {
 watch(
   () => walletAddress.walletAddress,
   async (newVal, _oldVal) => {
-    if (newVal != '') {
+    if (newVal && newVal != '') {
       await initDataHasWhitelistVerify()
     } else {
-      await initDataNoWhitelistVerify()
+      //await initDataNoWhitelistVerify()
     }
-  }, { deep: true, immediate: true }
+  }, { deep: true, immediate: false }
 );
 
 
@@ -282,6 +280,7 @@ watch(
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
 }
+
 .title-text {
   font-family: Montserrat Black;
   text-align: center;
