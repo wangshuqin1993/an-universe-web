@@ -50,7 +50,7 @@ service.interceptors.response.use(
   },
   function (error: any) {
     if (error.response.status === 400) {
-      return Promise.reject(new Error(error.response.data.message));
+      //return Promise.reject(new Error(error.response.data.message));
     }
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么

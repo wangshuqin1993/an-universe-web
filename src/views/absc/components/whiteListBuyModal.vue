@@ -231,7 +231,7 @@ watch(
   (newVal, _oldVal) => {
     if (newVal) {
       getBalanceValue()
-      getApiWhitelistSubscribeConfig();
+      //getApiWhitelistSubscribeConfig();
       pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
       // getApiWhitelistSubscribeAmount()
     }
