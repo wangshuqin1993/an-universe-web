@@ -7,7 +7,7 @@
 
     <a-progress :percent="percentValue" :size="[300, 30]" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }"
       :show-info="showInfo" />
-    <div class="md:text-[14px] text-[14px] float-right mt-[18px]">
+    <div class="md:text-[14px] text-[12px] float-right md:mt-[18px] mt-[10px]">
       <div class="text-right">
         <span class="text-[#FF3B0F]">{{ totalAmountData }}/</span>
         <span class="text-[#88898A]">{{ targetAmount }}</span>
@@ -92,6 +92,13 @@ watch(
   font-size: 18px;
   top: -30px;
   right: 0px;
+}
+
+@media screen and (max-width: 768px) {
+  :deep(.ant-progress-text) {
+    font-size: 12px !important;
+    top: -22px;
+  }
 }
 
 :deep(.ant-progress .ant-progress-text) {
