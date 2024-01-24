@@ -9,26 +9,26 @@
         <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">{{
           stageData?.startTime.slice(0, -3)
         }}</span>
-        <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[12px]">Launch at</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[12px] mt-[12px]">Launch at</span>
       </div>
       <div
         class="flex justify-center items-center flex-col h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">{{ stageData?.unitPrice }}
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[12px]">{{ stageData?.unitPrice }}
           BNB</span>
-        <span class="text-[14px] text-[#8D8D8D]">≈ ${{ getPriceData(stageData?.unitPrice) }}</span>
-        <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[8px]">$ABSC Price</span>
+        <span class="text-[12px] text-[#8D8D8D]">≈ ${{ getPriceData(stageData?.unitPrice) }}</span>
+        <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[12px] mt-[8px]">$ABSC Price</span>
       </div>
       <div
         class="flex justify-center items-center flex-col h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">{{
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[12px]">{{
           stageData?.targetAmount
-        }} BNB</span>
+        }}</span>
         <span class="text-[14px] text-[#8D8D8D]">≈ $ {{ getPriceData(stageData?.targetAmount) }}</span>
         <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[8px]">Target IDO amount</span>
       </div>
       <div
         class="flex justify-center items-center flex-col h-[95px] bg-[#6C6C6C] rounded-[12px] border border-solid border-[#463947] bg-opacity-[0.09]">
-        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[24px] text-[18px]">{{ stepAmount }} BNB</span>
+        <span class="font-[Montserrat-Bold] font-bold text-[#fff] md:text-[18px] text-[18px]">{{ stepAmount }}</span>
         <span class="text-[14px] text-[#8D8D8D]">≈ ${{ getPriceData(stepAmount) }}</span>
         <span class="font-[Arial] text-[#8D8D8D] md:text-[14px] text-[14px] mt-[8px]">Current amount</span>
       </div>
