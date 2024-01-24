@@ -1,7 +1,7 @@
 
 <template>
   <abscHeader></abscHeader>
-  <div class="w-full h-full bg-black md:pb-[64px] pb-[32px]">
+  <div class="w-full h-full bg-black md:pb-[64px] pb-[32px] bg-container">
     <div class="max-w-[1440px] mx-auto px-[32px] md:px-[120px]">
       <div>
         <div class="flex justify-center items-center md:pt-[166px] pt-[100px]">
@@ -12,7 +12,7 @@
       <div class="text-center ido-content  md:p-[66px] p-[32px] md:mt-[60px] mt-[32px]">
         <idoStep :stageValue="stageValue" :stageData="state.IDOLaunchInfoData" :stepAmount="totalAmountData"
           :bnbPriceData="bnbPriceData"></idoStep>
-        <div class="md:mb-[70px] mb-[40px] mt-[100px]">
+        <div class="md:mb-[50px] mb-[40px] mt-[80px]">
           <a-button ghost
             class="md:h-[60px] h-[48px] md:w-[278px] w-[178px] md:rounded-[30px] rounded-[25px] mb-[20px]  text-[18px] mr-[20px]">
             Refund
@@ -26,12 +26,12 @@
             <div>The $ABSC token will enable claim function after the IDO ends. Please pay attention to the official
               announcement.</div>
           </div>
-          <div class="text-[#88898A] text-[12px] text-left mt-[10px] refund-text w-full md:max-w-[908px] mx-auto">
-            If the IDO is not completed within 14 days, you can full refund.<br />
-            If the IDO complete, The $ABSC token will can claim. Please pay attention to the official announcement.
-          </div>
+          <ul class="text-[#88898A] text-[12px] text-left mt-[10px] refund-text w-full md:max-w-[908px] mx-auto">
+            <li>If the IDO is not completed within 14 days, you can full refund.</li>
+            <li>If the IDO complete, The $ABSC token will can claim. Please pay attention to the official announcement.</li>
+          </ul>
         </div>
-        <div class="progress pt-[32px] md:pb-[100px] pb-[70px] md:px-[45px] px-[32px] text-left">
+        <div class="progress pt-[30px] md:pb-[90px] pb-[70px] md:px-[45px] px-[32px] text-left">
           <div class="text-[#ffffff] mb-[28px] text-[18px] font-bold">$ABSC Token IDO overall progress</div>
           <Progress :targetAmount="1667" :totalAmountData="totalAmountDataAll" :bnbPriceData="bnbPriceData"></Progress>
         </div>
@@ -305,12 +305,13 @@ onMounted(async () => {
   getApiIDOLaunchTime()
   getApiIDOLaunchAmount()
   getBnbPriceData()
+  getTotalAmountData()
+  getTotalAmountDataAll()
   if (walletAddress.walletAddress) {
     getBNBBalance()
-    getTotalAmountData()
     getTokenEthRateData()
     getTokensBalanceData()
-    getTotalAmountDataAll()
+
   }
 })
 
@@ -324,12 +325,18 @@ watch(
       getTokenEthRateData()
       getTokensBalanceData()
       getBNBBalance()
+      getTotalAmountDataAll()
     }
   }, { deep: true, immediate: true }
 );
 </script>
 
 <style lang='less' scoped>
+.bg-container {
+  background-image: url('../../assets/images/bg-total.jpg');
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+}
 .title-text {
   background-image: linear-gradient(to right, #60638B 0%, #F9F9F9 25%, #FFFFFF 50%, #60638B 100%);
   -webkit-background-clip: text;
@@ -373,7 +380,7 @@ watch(
 
 .progress {
   background: linear-gradient(152deg, rgba(60, 43, 157, 0.13) 0%, rgba(115, 10, 131, 0.15) 100%);
-  border-radius: 10px;
+  border-radius: 16px;
   border: 1px solid #442989;
   backdrop-filter: blur(30px);
 }
@@ -402,5 +409,16 @@ watch(
   &:hover {
     opacity: 0.65;
   }
+}
+
+li::before{
+  content: '';
+  width: 3px;
+  height: 3px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #88898A;
+  vertical-align: middle;
+  margin-right: 5px
 }
 </style>

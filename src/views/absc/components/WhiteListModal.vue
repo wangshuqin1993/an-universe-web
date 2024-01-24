@@ -128,7 +128,7 @@ const getApiWhitelistAbscNFT = async () => {
   try {
     const { data } = await apiAbscQualificationCheck(walletAddress.walletAddress)
     whitelistAbscNFTdata.value = data;
-    console.log(data, '有 nft')
+    // console.log(data, '有nft')
   } catch (error) {
     message.error(error.message)
   }
@@ -159,7 +159,7 @@ const getApiWhitelistVerify = async () => {
   if (data.joined) {
     disabledWhiteListBtn.value = false
   }
-  console.log(data, 'apiWhitelistVerify')
+  // console.log(data, 'apiWhitelistVerify')
 }
 
 const getApiWhitelistApplication = async (hash: string) => {
@@ -184,7 +184,7 @@ const transactionApt20 = async () => {
     function: '0x1fc2f33ab6b624e3e632ba861b755fd8e61d2c2e6cf8292e415880b4c198224d::apts::split',
     type_arguments: [],
   };
-  console.log(transaction);
+  // console.log(transaction);
   try {
 
     const pendingTransaction = await window.okxwallet.aptos.signAndSubmitTransaction(transaction);
@@ -192,7 +192,7 @@ const transactionApt20 = async () => {
     const txn = await client.waitForTransactionWithResult(
       pendingTransaction.hash,
     );
-    console.log(txn, 'txn')
+    // console.log(txn, 'txn')
     if (txn) {
       await getApiWhitelistApplication(txn.hash);
       getApiWhitelistVerify()

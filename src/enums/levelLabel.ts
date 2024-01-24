@@ -12,15 +12,3 @@ export enum StepStatusEnums {
   'process' = '2',
   'finish' = '3'
 }
-
-// export enum StepStatusDisabledEnums {
-//  'wait'= true,
-//   'process' = false,
-//   'finish' = false,
-// }
-
-// export enum StepStatusDisabledEnums {
-//  '1' = '',
-//   '2' = '',
-//   '3' = '',
-// }

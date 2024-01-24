@@ -2,12 +2,12 @@
   <div class="">
     <div class="flex justify-between text-[16px]" v-if="!showInfo">
       <div></div>
-      <div class="text-[#fff] mb-[5px] text-[18px] text-[#FF3B0F]">{{ percentValue + '%' }}</div>
+      <div class="text-[#fff] mb-[5px] text-[16px] text-[#FF3B0F]">{{ percentValue + '%' }}</div>
     </div>
 
     <a-progress :percent="percentValue" :size="[300, 30]" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }"
       :show-info="showInfo" />
-    <div class="md:text-[18px] text-[14px] float-right mt-[18px]">
+    <div class="md:text-[14px] text-[14px] float-right mt-[18px]">
       <div class="text-right">
         <span class="text-[#FF3B0F]">{{ totalAmountData }}/</span>
         <span class="text-[#88898A]">{{ targetAmount }}</span>
@@ -15,7 +15,6 @@
       <div class="text-[#88898A]">
         Amount of BNB raised: <span class="text-[#E526FF]">{{ '$' + bnbPriceData }}</span>
       </div>
-      <!-- <div>{{ getV() }}</div> -->
     </div>
   </div>
 </template>
