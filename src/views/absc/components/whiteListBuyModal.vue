@@ -190,7 +190,7 @@ const buyWhitelistSubscribe = async () => {
       const data = await walletChainApi.transfer('0x5C8D243B165215871D0E199A362CfD33E5E69230', buyValue.value.toString())
       // console.log(data, '交易成功')
       if (data) {
-        pageName.value == 'Whitelist' ? getApiWhitelistSubscribe(data.hash) : getApiNFTEquitySubscribe(data.hash)
+        pageName.value == 'Whitelist' ? await getApiWhitelistSubscribe(data.hash) : await getApiNFTEquitySubscribe(data.hash)
       }
       loading.value = false;
     } catch (err) {
