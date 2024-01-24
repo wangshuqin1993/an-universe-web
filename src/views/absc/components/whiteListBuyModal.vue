@@ -194,8 +194,13 @@ const buyWhitelistSubscribe = async () => {
       }
       loading.value = false;
     } catch (err) {
+      console.log("error: ", err.code)
+      if (err.code == 'ACTION_REJECTED') {
+        message.error("User Rejected")
+      } else {
+        message.error(err.message)
+      }
       loading.value = false;
-      message.error(err)
     }
   } else {
     return message.error('Purchase value error')
