@@ -3,8 +3,9 @@
     <div class="max-w-[1440px] mx-auto h-[49px] flex justify-between items-end  footer-border">
       <div class="text-[#999999] text-[14px] inline-block">@2024 ABSC</div>
       <div>
-        <img src="@/assets/images/Twitter.png" class="h-[18px] mr-[40px] inline-block" @click="clickTwitter" />
-        <img src="@/assets/images/TG.png" class="h-[18px] inline-block" @click="clickTG" />
+        <img src="@/assets/images/Twitter.png" class="h-[18px] mr-[40px] inline-block cursor-pointer"
+          @click="clickTwitter" />
+        <img src="@/assets/images/TG.png" class="h-[18px] inline-block cursor-pointer" @click="clickTG" />
       </div>
     </div>
   </div>

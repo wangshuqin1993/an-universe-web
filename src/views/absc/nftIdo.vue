@@ -4,7 +4,8 @@
     <div class="max-w-[1440px] mx-auto md:px-[0px] px-[32px]">
       <div class="title-text md:pt-[166px] pt-[100px]"><span class="title-text-color md:text-[48px] text-[30px]">$ABSC
           Token IDO</span></div>
-      <div class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-center md:mt-[37px] mt-[10px] text-[14px] md:text-[16px]">
+      <div
+        class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-center md:mt-[37px] mt-[10px] text-[14px] md:text-[16px]">
         In order to provide a better IDO experience for users who hold ABSC Genesis NFTs, we have
         opened an exclusive IDO channel for them, and provided corresponding IDO price discounts and exclusive
         IDO quotas, as described below.
@@ -25,7 +26,7 @@
         </a-button>
       </div>
       <div v-if="NFTEquityTime.status == '2' && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">
-        Your $ABSC balance:<span class="text-[#E527FF]">{{
+        Your $ABSC balance: <span class="text-[#E527FF]">{{
           NFTEquityAmountData.abscAmount }}</span> ABSC
       </div>
       <div class="text-center text-[#FFF] mt-[20px] text-[14px]">The $ABSC tokens you purchased in the IDO will be
@@ -35,10 +36,13 @@
         to check it.</div>
     </div>
 
-    <div class="whitelist-absc-container w-[90%] md:max-w-[931px] md:py-[50px] px-[10px] py-[30px] md:mt-[70px] mt-[60px] mx-auto">
+    <div
+      class="whitelist-absc-container w-[90%] md:max-w-[931px] md:py-[50px] px-[10px] py-[30px] md:mt-[70px] mt-[60px] mx-auto">
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
-        <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">As the mapping token of
+        <span
+          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">As
+          the mapping token of
           the leading inscription ABSC based on APT-20 on the BSC chain, the $ABSC token
 
           will become the first mapping token of the Bmaker ecosystem and can be exchanged with BSC stablecoins
@@ -53,7 +57,9 @@
       <div class="max-w-[798px] mx-auto md:px-[0px] px-[32px] md:pb-[64px] pb-[32px] text-center">
         <div class="flex flex-col items-center justify-center mt-[32px]">
           <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token IDO</span>
-          <span class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]"> In order to provide
+          <span
+            class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">
+            In order to provide
             a
             better IDO experience for users who hold ABSC Genesis NFTs, we have
 
@@ -262,5 +268,4 @@ watch(
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-}
-</style>
+}</style>

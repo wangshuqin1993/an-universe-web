@@ -22,7 +22,7 @@
             {{ btnInfo }}
           </a-button>
           <div v-if="purchaseResult" class="text-center text-[14px] text-[#fff]">
-            <div> Your $ABSC balance<span class="text-[#E527FF] mb-[10px]">{{ tokensBalanceData }} ABSC</span></div>
+            <div> Your $ABSC balance: <span class="text-[#E527FF] mb-[10px]">{{ tokensBalanceData }} ABSC</span></div>
             <div>The $ABSC token will enable claim function after the IDO ends. Please pay attention to the official
               announcement.</div>
           </div>
@@ -261,6 +261,7 @@ const buyIDOSubscribe = async () => {
     buyValue.value = 0;
     getTokensBalanceData()
     loading.value = false
+    message.success('Successfully')
   } catch (err) {
     const walletApiChain = await getChainApiData()
     let errorMessage = await walletApiChain.getTransactionErrorInfo(err.transactionHash);

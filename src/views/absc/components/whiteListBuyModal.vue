@@ -19,7 +19,7 @@
 
       <div class="buy-input-item mt-[10px]">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">You Receive</div>
-        <a-input v-model:value="transitionPay" placeholder="please enter">
+        <a-input v-model:value="transitionPay" placeholder="please enter" disabled>
           <template #suffix>
             <div>ABSC</div>
           </template>
@@ -184,7 +184,7 @@ const getApiNFTEquitySubscribe = async (hash: string) => {
 const verifyBuyValue = () => {
   let bayMaxvalue = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
   if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue) {
-    return message.error('The purchase value is out of the reasonable range')
+    return false
   } else {
     return true
   }
@@ -207,6 +207,7 @@ const buyWhitelistSubscribe = async () => {
         pageName.value == 'Whitelist' ? await getApiWhitelistSubscribe(data.hash) : await getApiNFTEquitySubscribe(data.hash)
       }
       loading.value = false;
+      message.success('Successfully')
     } catch (err) {
       console.log("error: ", err.code)
       if (err.code == 'ACTION_REJECTED') {
