@@ -138,7 +138,6 @@ const handleExchangeModal = async () => {
       }
     }
   }
-
 }
 
 // 活动开始时间
@@ -194,7 +193,6 @@ const getApiWhitelistSubscribeAmount = async () => {
   } catch (err) {
     message.error(err.message)
   }
-
 }
 
 
@@ -253,7 +251,7 @@ const initDataNoWhitelistVerify = async () => {
 }
 
 onMounted(async () => {
-  console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
+  // console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
   if (walletAddress.walletAddress) {
     await initDataHasWhitelistVerify()
   } else {

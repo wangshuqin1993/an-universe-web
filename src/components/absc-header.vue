@@ -163,26 +163,36 @@ const getIsMobils = async () => {
 }
 
 onMounted(async () => {
-  // console.log(window.okxwallet, window.ethereum.isMetaMask, 'window.okxwallet')
+  console.log(window.okxwallet, window.ethereum.isMetaMask, window.ethereum?.isConnected(), 'window.okxwallet')
   // console.log(window.ethereum?.provider, walletAddress.walletAddress, 'window.ethereum');
   await getIsMobils()
-  if (window.okxwallet?.selectedAddress) {
-    let address = window.okxwallet?.selectedAddress;
+  let address = localStorage.getItem('metaMaskWalletAddress') || ''
+  if (window.ethereum.isConnected() && address) {
     walletAddress.setWalletAddress(address);
     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
   } else {
-    // const data = await window.ethereum.request({
-    //   "method": "eth_requestAccounts",
-    //   "params": []
-    // });
-    // const address = data[0]
-    // window.ethereum?.selectedAddress || 
-    if (window.ethereum.isMetaMask) {
-      let address = localStorage.getItem('metaMaskWalletAddress') || '';
-      walletAddress.setWalletAddress(address);
-      btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
-    }
+    let okxAddress = window.okxwallet?.selectedAddress;
+    walletAddress.setWalletAddress(okxAddress);
+    btnInfo.value = okxAddress?.substring(0, 5) + "..." + okxAddress?.substring(okxAddress.length - 4);
   }
+
+  // if (window.okxwallet?.selectedAddress) {
+  //   let address = window.okxwallet?.selectedAddress;
+  //   walletAddress.setWalletAddress(address);
+  //   btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+  // } else {
+  //   // const data = await window.ethereum.request({
+  //   //   "method": "eth_requestAccounts",
+  //   //   "params": []
+  //   // });
+  //   // const address = data[0]
+  //   // window.ethereum?.selectedAddress || 
+  //   if (window.ethereum.isMetaMask) {
+  //     let address = localStorage.getItem('metaMaskWalletAddress') || '';
+  //     walletAddress.setWalletAddress(address);
+  //     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+  //   }
+  // }
 })
 
 

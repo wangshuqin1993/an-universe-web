@@ -5,7 +5,8 @@
       <div class="text-[#fff] mb-[5px] text-[18px] text-[#FF3B0F]">{{ percentValue + '%' }}</div>
     </div>
 
-    <a-progress :percent="percentValue" :size="[300, 30]" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }"
+    <!-- :size="[300, 30]" -->
+    <a-progress :percent="percentValue" :size="size" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }"
       :show-info="showInfo" />
     <div class="md:text-[18px] text-[14px] float-right mt-[18px]">
       <div class="text-right">
@@ -19,7 +20,7 @@
   </div>
 </template>
 <script lang='ts' setup>
-import { ref, toRefs, computed, watch } from "vue";
+import { ref, toRefs, watch } from "vue";
 const showInfo = ref(true)
 const props = defineProps({
   targetAmount: {
@@ -33,26 +34,15 @@ const props = defineProps({
   bnbPriceData: {
     type: Number,
     default: 0,
+  },
+  size: {
+    type: String || Number,
+    default: 'default',
   }
 })
 const percentValue = ref(0)
-const { targetAmount, totalAmountData, bnbPriceData } = toRefs(props);
+const { targetAmount, totalAmountData, bnbPriceData, size } = toRefs(props);
 
-console.log(targetAmount.value, totalAmountData.value, 'qwertyui')
-
-
-const getV = computed(() => {
-  return percentValue.value = totalAmountData.value / Number(targetAmount.value)
-})
-// const getPercentValue = computed(() => {
-//   if (percentValue.value > 100) {
-//     showInfo.value = true
-//   } else {
-//     showInfo.value = false
-//   }
-//   percentValue.value = totalAmountData.value / Number(targetAmount.value)
-//   console.log(percentValue.value, 'percentValue.value')
-// })
 const getPercentValue = () => {
   if (percentValue.value > 100) {
     showInfo.value = true
@@ -60,13 +50,12 @@ const getPercentValue = () => {
     showInfo.value = false
   }
   percentValue.value = totalAmountData.value / Number(targetAmount.value) * 100
-  console.log(percentValue.value, 'percentValue.value')
+  // console.log(percentValue.value, 'percentValue.value')
 }
 
 watch(
   () => props,
   async (newVal, _oldVal) => {
-    console.log(newVal, 'new props')
     if (newVal.totalAmountData && newVal.targetAmount) {
       getPercentValue()
     }
