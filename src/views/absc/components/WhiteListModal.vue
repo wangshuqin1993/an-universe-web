@@ -123,12 +123,12 @@ const closeModal = () => {
   emit('closeWhiteListModal', false)
 }
 
-// 有NFT可以Start Now
+// 有 NFT 可以 Start Now
 const getApiWhitelistAbscNFT = async () => {
   try {
     const { data } = await apiAbscQualificationCheck(walletAddress.walletAddress)
     whitelistAbscNFTdata.value = data;
-    console.log(data, '有nft')
+    console.log(data, '有 nft')
   } catch (error) {
     message.error(error.message)
   }
@@ -175,7 +175,9 @@ const getApiWhitelistApplication = async (hash: string) => {
 const transactionApt20 = async () => {
   await getAbscBalance()
   let list = payableNFTs(abscNFTList.value, amount.value);
-  console.log(list);
+  if (list.length == 0) {
+    throw new Error("Insufficient balance of ABSC inscriptions");
+  }
   const transaction = {
     arguments: [
       list, "0x3ba8ef462cf3831f09665284db095ad75aa7be15a47910a3304aab3b8ea7da30", amount.value],
@@ -203,13 +205,17 @@ const transactionApt20 = async () => {
 // 返回可支付 apt 的 NFT 数组
 const payableNFTs = (nfts: any[], amount: number) => {
   let num = 0;
-  let list = [];
+  let list: string[] = [];
   for (let i = 0; i < nfts.length; i++) {
-    num = num + nfts[i].token_properties.amt
+    num = num + Number(nfts[i].token_properties.amt)
     list.push(nfts[i].token_data_id);
-    if (num > amount) {
+    if (num >= amount) {
       break;
     }
+  }
+  //console.log("num",num)
+  if (num < amount) {
+    throw new Error("Insufficient balance of ABSC inscriptions");
   }
   return list;
 }
