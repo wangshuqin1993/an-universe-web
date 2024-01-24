@@ -15,7 +15,6 @@
       <div class="text-[#88898A]">
         Amount of BNB raised: <span class="text-[#E526FF]">{{ '$' + bnbPriceData }}</span>
       </div>
-      <!-- <div>{{ getV() }}</div> -->
     </div>
   </div>
 </template>

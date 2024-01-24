@@ -2,7 +2,6 @@
   <a-modal v-model:open="openWhiteListBuyModal" title="" :footer="null" @cancel="closeModal">
     <div class="relative">
       <div class="mt-[50px] buy-input-item">
-        <!-- maxValue -->
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay ({{
           `Max: ${whitelistSubscribeConfigData?.maxAllocation - whitelistSubscribeAmountData?.amount} ` }})</div>
         <a-input v-model:value="buyValue" placeholder="Basic usage" @change="changePay">
@@ -12,7 +11,6 @@
           </template>
         </a-input>
         <div class="flex justify-between mt-[5px]">
-          <!-- <div class="text-[#6A6A6A ]">$300.12</div> -->
           <div></div>
           <div class="text-[#000000]">Balance: {{ balanceValue }}</div>
         </div>
@@ -186,8 +184,7 @@ const buyWhitelistSubscribe = async () => {
   if (buyValue.value > Max) return message.error('Exceed the maximum purchase value')
   try {
     const data = await walletChainApi.transfer('0x5C8D243B165215871D0E199A362CfD33E5E69230', buyValue.value.toString())
-    // const data = await walletChainApi.transfer(walletAddress.walletAddress, buyValue.value)
-    console.log(data, '交易成功')
+    // console.log(data, '交易成功')
     if (data) {
       pageName.value == 'Whitelist' ? getApiWhitelistSubscribe(data.hash) : getApiNFTEquitySubscribe(data.hash)
     }
@@ -205,12 +202,12 @@ const changePay = () => {
 const getBalanceValue = async () => {
   const walletChainApi = await getChainApidata()
   balanceValue.value = await walletChainApi.getBalance(walletAddress.walletAddress)
-  console.log(balanceValue.value, 'balanceValue');
+  // console.log(balanceValue.value, 'balanceValue');
 }
 
 const getChainApidata = async () => {
   if (window.okxwallet?.selectedAddress) {
-    console.log(window.okxwallet)
+    // console.log(window.okxwallet)
     const chainApidata = new chainApi(window.okxwallet)
     return chainApidata
   } else {
@@ -232,7 +229,6 @@ onMounted(async () => {
 watch(
   () => props.openWhiteListBuyModal,
   (newVal, _oldVal) => {
-    console.log(newVal, 'new')
     if (newVal) {
       getBalanceValue()
       getApiWhitelistSubscribeConfig();
