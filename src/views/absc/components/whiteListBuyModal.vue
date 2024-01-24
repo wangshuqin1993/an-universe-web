@@ -132,7 +132,6 @@ const getApiWhitelistDiscount = async () => {
 
 // nft(ido) 折扣
 const getApiNFTEquityDiscount = async () => {
-  debugger
   try {
     const { data } = await apiNFTEquityDiscount(walletAddress.walletAddress)
     whitelistDiscountData.value = data
