@@ -226,7 +226,13 @@ export async function getBnbPrice() {
   //   method:"get"
   // })
   return new Promise<any>((resolve) => {
-    // resolve(res.data.price);
-    resolve('296.6')
+    resolve({
+      code: 200,
+      message: "success",
+      data: {
+        symbol: 'BNBUSDT',
+        price: '296.6',
+      }
+})
   });
 }

@@ -303,9 +303,9 @@ const changePay = () => {
 
 
 const getBnbPriceData = async () => {
-  const res = await getBnbPrice()
-  // console.log(res);
-  bnbPriceData.value = Number(res)
+  const { data } = await getBnbPrice()
+  // console.log(data);
+  bnbPriceData.value = Number(data.price)
 }
 
 
