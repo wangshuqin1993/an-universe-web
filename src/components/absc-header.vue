@@ -66,14 +66,13 @@ const walletAddress = useWalletAddress()
 const router = useRouter();
 const route = useRoute();
 const open = ref(false);
-const walletOpen = ref(false);
 const isMobile = ref(false);
 const isOKApp = ref(false);
 const openSelectedWhiteListModal = ref(false);
 const selectedNavTitle = ref('Home');
 const btnInfo = ref('');
 const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
-const menuList = ref([{ name: 'Home', path: '/' }, { name: 'NFT', path: '/mint' }, { name: 'Whitelist', path: '/whitelist' }, { name: 'NFT(Ido)', path: '/nftIdo' }, { name: 'IDO', path: '/ido' }])
+const menuList = ref([{ name: 'Home', path: '/' }, { name: 'NFT', path: '/mint' }, { name: 'Whitelist', path: '/whitelist' }, { name: 'NFT(IDO)', path: '/nftIdo' }, { name: 'IDO', path: '/ido' }])
 
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
@@ -98,35 +97,13 @@ const changeRouter = (item: any) => {
   router.push(item.path);
   open.value = false
 }
-// 连接钱包
-// const connectWallet = async () => {
-//   walletOpen.value = false;
-//   try {
-//     const response = await okxwallet.request({ method: 'eth_requestAccounts' });
-//     const res = await okxwallet.request({
-//       method: 'wallet_switchEthereumChain',
-//       params: [{ chainId: '0x38' }],
-//     });
-//     if (window.okxwallet.selectedAddress) {
-//       let address = window.okxwallet.selectedAddress
-//       walletAddress.setWalletAddress(address);
-//       btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
-//     } else {
-//       message.info('Please provide a wallet that supports BSC!')
-//     }
-//   } catch (error) {
-//     message.error(error.message)
-//   }
-// }
 
 const disConnectWallet = async () => {
   if (window.okxwallet?.selectedAddress) {
     let connectionStatus = await window.okxwallet?.isConnected();
-    // console.log(connectionStatus, 'connectionStatus')
     if (connectionStatus) {
       try {
         const response = await window.okxwallet.disconnect()
-        // console.log(response, 'response')
         walletAddress.setWalletAddress('');
         btnInfo.value = 'connect wallet'
         // window.location.reload()
@@ -200,12 +177,12 @@ onMounted(async () => {
     // });
     // const address = data[0]
     // window.ethereum?.selectedAddress || 
-    let address = localStorage.getItem('metaMaskWalletAddress');
-    walletAddress.setWalletAddress(address);
-    btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+    if (window.ethereum.isMetaMask) {
+      let address = localStorage.getItem('metaMaskWalletAddress') || '';
+      walletAddress.setWalletAddress(address);
+      btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+    }
   }
-
-  // console.log(window.okxwallet, walletAddress.walletAddress, btnInfo.value, 'window.okxwallet')
 })
 
 
@@ -214,9 +191,7 @@ watch(
   () => route.name,
   (newVal, _oldVal) => {
     if (newVal) {
-      // console.log(newVal, route, 'bbbb')
-      selectedNavTitle.value = newVal;
-      // console.log(selectedNavTitle.value);
+      selectedNavTitle.value = newVal as string;
     }
   }, { deep: true, immediate: true }
 );

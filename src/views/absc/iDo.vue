@@ -305,12 +305,13 @@ onMounted(async () => {
   getApiIDOLaunchTime()
   getApiIDOLaunchAmount()
   getBnbPriceData()
+  getTotalAmountData()
+  getTotalAmountDataAll()
   if (walletAddress.walletAddress) {
     getBNBBalance()
-    getTotalAmountData()
     getTokenEthRateData()
     getTokensBalanceData()
-    getTotalAmountDataAll()
+
   }
 })
 
@@ -324,6 +325,7 @@ watch(
       getTokenEthRateData()
       getTokensBalanceData()
       getBNBBalance()
+      getTotalAmountDataAll()
     }
   }, { deep: true, immediate: true }
 );

@@ -143,40 +143,48 @@ const handleExchangeModal = async () => {
 
 // 活动开始时间
 const getApiWhitelistAcquisitionTime = async () => {
-  const { data } = await apiWhitelistAcquisitionTime();
-  whitelistAcquisitionTime.value = data
-  if (data.status == '1') {
-    btnInfo.value = 'Get Whitelist'
-    disabled.value = true
-  } else if (data.status == '2') {
-    btnInfo.value = 'Get Whitelist'
-    disabled.value = false;
-  } else {
-    btnInfo.value = 'Get Whitelist has ended';
-    disabled.value = true;
+  try {
+    const { data } = await apiWhitelistAcquisitionTime();
+    whitelistAcquisitionTime.value = data
+    if (data.status == '1') {
+      btnInfo.value = 'Get Whitelist'
+      disabled.value = true
+    } else if (data.status == '2') {
+      btnInfo.value = 'Get Whitelist'
+      disabled.value = false;
+    } else {
+      btnInfo.value = 'Get Whitelist has ended';
+      disabled.value = true;
+    }
+    startTime.value = data.start
+    endTime.value = data.end
+    // console.log('认领的data', data)
+  } catch (err) {
+    message.error(err.message)
   }
-  startTime.value = data.start
-  endTime.value = data.end
-  // console.log('认领的data', data)
 }
 
 // 添加白名单时间
 const getApiWhitelistSubscribeTime = async () => {
-  const { data } = await apiWhitelistSubscribeTime()
-  whitelistSubscribeTime.value = data
-  if (data.status == '1') {
-    btnInfo.value = 'IDO(coming soon)';
-    disabled.value = true;
-  } else if (data.status == '2') {
-    btnInfo.value = 'IDO';
-    disabled.value = false;
-    getApiWhitelistSubscribeAmount()
-  } else {
-    btnInfo.value = 'IDO has ended';
-    disabled.value = true;
+  try {
+    const { data } = await apiWhitelistSubscribeTime()
+    whitelistSubscribeTime.value = data
+    if (data.status == '1') {
+      btnInfo.value = 'IDO(coming soon)';
+      disabled.value = true;
+    } else if (data.status == '2') {
+      btnInfo.value = 'IDO';
+      disabled.value = false;
+      getApiWhitelistSubscribeAmount()
+    } else {
+      btnInfo.value = 'IDO has ended';
+      disabled.value = true;
+    }
+    startTime.value = data.start
+    endTime.value = data.end
+  } catch (err) {
+    message.error(err.message)
   }
-  startTime.value = data.start
-  endTime.value = data.end
 }
 
 const getApiWhitelistSubscribeAmount = async () => {
@@ -257,7 +265,6 @@ onMounted(async () => {
 watch(
   () => walletAddress.walletAddress,
   async (newVal, _oldVal) => {
-    console.log(newVal, 'new')
     if (newVal != '') {
       await initDataHasWhitelistVerify()
     } else {

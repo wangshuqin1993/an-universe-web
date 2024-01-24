@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-steps v-model:current="current" :items="stepItems" @change="changeStep">
+    <a-steps v-model:current="current" :items="stepItems">
     </a-steps>
     <div
       class="grid grid-cols-2 md:grid-cols-4 justify-items-stretch gap-[20px] md:gap-[30px] w-full mx-auto mt-[60px] md:mb-[64px] mb-[32px]">
@@ -39,11 +39,11 @@
   </div>
 </template>
 <script lang='ts' setup>
-import { ref, toRefs, watch, onMounted, computed } from "vue";
+import { ref, toRefs, watch, onMounted } from "vue";
 import Progress from "@/components/progress.vue";
 const description = ref('This is a description.')
 import { StepStatusEnums } from "@/enums/levelLabel";
-
+const current = ref<number>(0)
 const props = defineProps({
   stageValue: {
     type: Number,
@@ -97,19 +97,10 @@ const initData = () => {
     stepItems.value[stageValue.value - 3].status = 'finish'
     stepItems.value[stageValue.value - 2].status = 'finish'
   }
-
 }
 
 
-const current = ref<number>(0)
-
-const changeStep = (current: any) => {
-  console.log(current, 'value')
-}
-
-onMounted(() => {
-
-})
+onMounted(() => { })
 
 watch(
   () => props,
