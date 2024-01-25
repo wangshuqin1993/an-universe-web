@@ -107,7 +107,7 @@ import { LeveLabellEnums } from "@/enums/levelLabel";
 const walletAddress = useWalletAddress()
 
 // const open = ref(false)
-const openWhiteListModal = ref(false);
+const openWhiteListModal = ref(true);
 const openWhiteListBuyModal = ref(false);
 const openSelectedWhiteListModal = ref(false);
 const whitelistSubscribeResult = ref(false);

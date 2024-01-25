@@ -22,17 +22,23 @@
             </div>
             <div class="text-[#929292] text-[12px]">Please connect your wallet to complete Genesis NFT holder
               certification</div>
-            <div class="flex items-center mt-[10px]" v-if="whitelistAbscNFTdata.tokenId">
-              <img src="@/assets/images/successful.png" class="h-[16px]" />
-              <div class="text-[12px] text-[#28C57C] font-semibold ml-[5px]">Certification Successful</div>
+            <div v-if="!whitelistAbscNFTdata.tokenId" class="text-[12px] text-[#E527FF] font-semibold ml-[5px] mt-[6px]">
+              <LoadingOutlined class="text-[14px] mr-[8px]" /> checking...
             </div>
-            <div class="flex items-top mt-[10px]" v-if="!whitelistAbscNFTdata.tokenId">
-              <img src="@/assets/images/exclamation.png" class="h-[16px] w-[16px]" />
-              <div class="text-[12px] text-[#737373] font-semibold ml-[5px]"> <span class="text-[#FF3653]">Certification
-                  failed:</span> You
-                can disconnect the wallet and log in
-                to other wallets have UR-level Genesis NFT to continue verification.</div>
+            <div v-else>
+              <div class="flex items-center mt-[10px]" v-if="whitelistAbscNFTdata.tokenId">
+                <img src="@/assets/images/successful.png" class="h-[16px]" />
+                <div class="text-[12px] text-[#28C57C] font-semibold ml-[5px]">Certification Successful</div>
+              </div>
+              <div class="flex items-top mt-[10px]" v-if="!whitelistAbscNFTdata.tokenId">
+                <img src="@/assets/images/exclamation.png" class="h-[16px] w-[16px]" />
+                <div class="text-[12px] text-[#737373] font-semibold ml-[5px]"> <span class="text-[#FF3653]">Certification
+                    failed:</span> You
+                  can disconnect the wallet and log in
+                  to other wallets have UR-level Genesis NFT to continue verification.</div>
+              </div>
             </div>
+
           </div>
         </div>
         <!-- 第二部 -->
@@ -90,7 +96,7 @@
 </template>
 <script lang='ts' setup>
 import { ref, toRefs, onMounted, watch } from "vue";
-import { CheckCircleFilled } from "@ant-design/icons-vue";
+import { CheckCircleFilled, LoadingOutlined } from "@ant-design/icons-vue";
 import useAssets from "@/stores/useAssets";
 import { message } from "ant-design-vue";
 import { AptosClient } from "aptos";
