@@ -92,9 +92,9 @@ const getPriceData = (value: number) => {
 }
 
 const initData = () => {
-  stepItems.value[stageValue.value - 1].status = StepStatusEnums[stageData.value?.status]
+  stepItems.value[stageValue.value - 1].status = 'process'
   if (stageValue.value == 1) {
-    stepItems.value[stageValue.value - 1].disabled = StepStatusEnums[stageData.value?.status]
+    //stepItems.value[stageValue.value - 1].disabled = StepStatusEnums[2]
   } else if (stageValue.value == 2) {
     stepItems.value[stageValue.value - 2].status = 'finish'
   } else if (stageValue.value == 3) {

@@ -259,10 +259,10 @@ onMounted(async () => {
   if (walletAddress.walletAddress) {
     if (pageName.value == 'Whitelist') {
       getApiWhitelistSubscribeAmount()
-      getApiWhitelistDiscount()
+      //getApiWhitelistDiscount()
       getApiWhitelistVerify()
     } else {
-      getApiNFTEquityDiscount()
+      //getApiNFTEquityDiscount()
       getApiNFTEquityAmount()
       getApiNFTEquityCheck()
     }

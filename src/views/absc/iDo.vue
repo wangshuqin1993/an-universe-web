@@ -17,7 +17,7 @@
             class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] text-[14px] mr-[20px]">
             Refund
           </a-button>
-          <a-button :disabled="disabled" @click="idoBtnClick"
+          <a-button :disabled="disabled" @click="idoBtnClick" :loading="cliamLoading"
             class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] text-[14px]">
             {{ btnInfo }}
           </a-button>
@@ -155,6 +155,7 @@ const stageValue = ref(0)
 const totalAmountDataAll = ref(0)
 const bnbPriceData = ref(0)
 const IDOLaunchAmount = ref('')
+const cliamLoading = ref(false);
 
 const transitionPay = ref(0)
 // const idoApiData: any = ref()
@@ -187,7 +188,7 @@ const getApiIDOLaunchAmount = async () => {
 const getTokenEthRateData = async () => {
   const walletApiIDO = await getIDOApiData()
   tokenEthRateData.value = await walletApiIDO.getTokenEthRate(stageValue.value)
-  // console.log(tokenEthRateData.value.toNumber(), 'tokenEthRateData.value ')
+  console.log(tokenEthRateData.value.toNumber(), stageValue.value, 'tokenEthRateData.value ')
 }
 
 // 总额 + state.IDOLaunchInfoData.whitelistAmount
@@ -201,7 +202,7 @@ const getTotalAmountData = async () => {
 const getTotalAmountDataAll = async () => {
   const walletApiIDO = await getIDOApiData()
   for (let i = 1; i <= stageValue.value; i++) {
-    const data = await walletApiIDO.getTotalAmount(stageValue.value)
+    const data = await walletApiIDO.getTotalAmount(i)
     totalAmountDataAll.value += Number(data)
   }
 
@@ -219,8 +220,10 @@ const getStage = async () => {
 // 获取余额
 const getTokensBalanceData = async () => {
   const walletApiIDO = await getIDOApiData()
-  const data = await walletApiIDO.getTokensBalance(stageValue.value, walletAddress.walletAddress)
-  tokensBalanceData.value = data
+  for (let i = 1; i <= stageValue.value; i++) {
+    const data = await walletApiIDO.getTokensBalance(i, walletAddress.walletAddress)
+    tokensBalanceData.value += Number(data)
+  }
   // console.log(tokensBalanceData.value, 'tokensBalanceData.value')
 }
 
@@ -246,13 +249,20 @@ const getChainApiData = () => {
 }
 
 const toClaim = async () => {
-  const walletApiIDO = await getIDOApiData()
-  const data = await walletApiIDO.claim()
-  if (data) {
+  cliamLoading.value = true;
+  try {
+    const walletApiIDO = await getIDOApiData()
+    await walletApiIDO.claim()
+    await getTokensBalanceData()
     message.info('Successful')
-  } else {
-    message.error('failed')
+    cliamLoading.value = false;
+  } catch (err) {
+    const walletApiChain = await getChainApiData()
+    let errorMessage = await walletApiChain.getTransactionErrorInfo(err.transactionHash);
+    message.error(errorMessage + 'transaction error: ' + err.transactionHash);
+    cliamLoading.value = false
   }
+
 }
 
 
@@ -261,7 +271,6 @@ const toClaim = async () => {
 const buyIDOSubscribe = async () => {
   // if (buyValue.value <= 0) return message.error('Purchase value error')
   loading.value = true;
-  debugger
   const walletApiIDO = await getIDOApiData()
   try {
     await walletApiIDO.purchase(String(buyValue.value))
@@ -274,7 +283,7 @@ const buyIDOSubscribe = async () => {
   } catch (err) {
     const walletApiChain = await getChainApiData()
     let errorMessage = await walletApiChain.getTransactionErrorInfo(err.transactionHash);
-    message.error('transaction error: ' + err.transactionHash);
+    message.error(errorMessage + 'transaction error: ' + err.transactionHash);
     loading.value = false
   }
 }

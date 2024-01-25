@@ -14,7 +14,7 @@
         <span class="text-[#88898A]">{{ targetAmount }}</span>
       </div>
       <div class="text-[#88898A]">
-        Amount of BNB raised: <span class="text-[#E526FF]">{{ '$' + bnbPriceData }}</span>
+        Amount of BNB raised: <span class="text-[#E526FF]">{{ '$' + (bnbPriceData * totalAmountData) }}</span>
       </div>
     </div>
   </div>
