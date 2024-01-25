@@ -115,7 +115,7 @@
     </div>
 
     <div class="text-[12px] bg-[#F7F7F7] rounded-[8px] px-[30px] py-[20px] mt-[20px]">
-      <div class="text-[#343434]">{{ '1ABSC=' + 100 / (tokenEthRateData) + 'BNB' }}</div>
+      <div class="text-[#343434]">{{ '1ABSC=' + tokenRate + 'BNB' }}</div>
     </div>
     <div class="flex justify-center items-center mt-[40px]">
       <div class="cancel-btn" @click="openIDOBuyModal = false">Cancel</div>
@@ -126,7 +126,7 @@
 </template>
 
 <script lang='ts' setup>
-import { ref, onMounted, watch, reactive, onUnmounted } from "vue";
+import { ref, onMounted, watch, reactive, onUnmounted, computed } from "vue";
 import abscHeader from "@/components/absc-header.vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import { message } from "ant-design-vue";
@@ -164,6 +164,11 @@ const transitionPay = ref(0)
 const intervalData: any = ref()
 // const idoApiData: any = ref()
 // const chainApiData: any = ref()
+
+const tokenRate = computed(() => {
+  return new Big(100).div(tokenEthRateData.value);
+})
+
 
 const idoBtnClick = async () => {
   if (!walletAddress.walletAddress) {
@@ -321,7 +326,7 @@ const getApiIDOLaunchTime = async () => {
 
 
 const changePay = () => {
-  transitionPay.value = (buyValue.value * tokenEthRateData.value) / 100
+  transitionPay.value = new Big(buyValue.value).times(tokenEthRateData.value).div(100);
 }
 
 

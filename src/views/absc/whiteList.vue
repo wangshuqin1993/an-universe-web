@@ -155,7 +155,7 @@ const getApiWhitelistAcquisitionTime = async () => {
     const { data } = await apiWhitelistAcquisitionTime();
     whitelistAcquisitionTime.value = data
     if (data.status == '1') {
-      btnInfo.value = 'Get Whitelist'
+      btnInfo.value = 'Get Whitelist(coming soon)'
       disabled.value = true
     } else if (data.status == '2') {
       btnInfo.value = 'Get Whitelist'
@@ -253,10 +253,7 @@ const initDataHasWhitelistVerify = async () => {
 // 没有白名单判断认领是否开始
 const initDataNoWhitelistVerify = async () => {
   await getApiWhitelistAcquisitionTime()
-  if (whitelistAcquisitionTime.value.status == '1') {
-    disabled.value = true;
-    btnInfo.value = 'Get Whitelist'
-  } else if (whitelistAcquisitionTime.value.status == '3') {
+  if (whitelistAcquisitionTime.value.status == '3') {
     getApiWhitelistSubscribeTime()
   }
 }
