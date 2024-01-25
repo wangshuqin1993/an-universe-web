@@ -14,13 +14,15 @@
         <span class="text-[#88898A]">{{ targetAmount }}</span>
       </div>
       <div class="text-[#88898A]">
-        Amount of BNB raised: <span class="text-[#E526FF]">{{ '$' + (bnbPriceData * totalAmountData) }}</span>
+        Amount of BNB raised: <span class="text-[#E526FF]">{{ '$' + getBnbPrice }}</span>
       </div>
     </div>
   </div>
 </template>
 <script lang='ts' setup>
-import { ref, toRefs, watch } from "vue";
+import { ref, toRefs, watch, computed } from "vue";
+import Big from 'big.js';
+
 const showInfo = ref(true)
 const props = defineProps({
   targetAmount: {
@@ -52,6 +54,12 @@ const getPercentValue = () => {
   percentValue.value = totalAmountData.value / Number(targetAmount.value) * 100
   console.log(percentValue.value, totalAmountData.value, Number(targetAmount.value), 'percentValue.value')
 }
+
+const getBnbPrice = computed(() => {
+  let big = new Big(bnbPriceData.value);
+  return big.times(totalAmountData.value);
+})
+
 
 watch(
   () => props,
