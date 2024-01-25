@@ -26,7 +26,7 @@
         <span class="pb-[15px] text-[#8D8D8D] md:text-[18px] text-[14px]">Exchange time</span>
       </div>
       <div class="text-center md:mt-[40px] mt-[20px]">
-        <a-button class="w-[278px] h-[60px] rounded-[30px] text-[18px]" @click="handleExchangeModal"
+        <a-button class="w-[278px] h-[60px] rounded-[30px] text-[18px]" @click="handleExchangeModal" :loading="btnLoading"
           :disabled="disabled">{{ btnInfo
           }}</a-button>
       </div>
@@ -117,30 +117,34 @@ const whitelistSubscribeTime = ref({});
 const whitelistSubscribeAmountData = ref({});
 const btnInfo = ref('Get Whitelist');
 const disabled = ref(false);
+const btnLoading = ref(false)
 const startTime = ref('');
 const endTime = ref('');
 
 // 点击按钮
 const handleExchangeModal = async () => {
   if (!walletAddress.walletAddress) return openSelectedWhiteListModal.value = true;
+  btnLoading.value = true
   if (btnInfo.value.includes('Whitelist')) {
     // 点击获取白名单
     await getApiWhitelistVerify();
     if (whitelistVerifyData.value && whitelistVerifyData.value.joined) {
       // 有白名单判断 IDO 是否开始
-      getApiWhitelistSubscribeTime()
+      await getApiWhitelistSubscribeTime()
     } else {
       // 没有白名单
       openWhiteListModal.value = true;
     }
+    btnLoading.value = false
   } else {
     await getApiWhitelistVerify();
     if (whitelistVerifyData.value && whitelistVerifyData.value.joined) {
       // 有白名单判断 IDO 是否开始
-      getApiWhitelistSubscribeTime()
+      await getApiWhitelistSubscribeTime()
       if (whitelistSubscribeTime.value.status === '2') {
         openWhiteListBuyModal.value = true;
       }
+      btnLoading.value = false
     }
   }
 }

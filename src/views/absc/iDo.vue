@@ -92,7 +92,8 @@
           </template>
         </a-input>
         <div class="flex justify-between mt-[5px]">
-          <div class="text-[#6A6A6A ]">$300.12</div>
+          <!-- <div class="text-[#6A6A6A ]">$300.12</div> -->
+          <div></div>
           <div class="text-[#000000]">Balance: {{ BNBBalance }} BNB</div>
         </div>
       </div>
