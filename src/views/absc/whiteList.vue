@@ -179,7 +179,9 @@ const getApiWhitelistSubscribeTime = async () => {
     } else if (data.status == '2') {
       btnInfo.value = 'IDO';
       disabled.value = false;
-      getApiWhitelistSubscribeAmount()
+      if (walletAddress.walletAddress) {
+        getApiWhitelistSubscribeAmount()
+      }
     } else {
       btnInfo.value = 'IDO has ended';
       disabled.value = true;
@@ -256,8 +258,9 @@ const initDataNoWhitelistVerify = async () => {
 }
 
 onMounted(async () => {
-  // console.log('onMounted查看walletAddress：', walletAddress.walletAddress)
+  console.log('onMounted 查看 walletAddress：', walletAddress.walletAddress)
   if (walletAddress.walletAddress) {
+    console.log('walletAddress', "sadfa")
     await initDataHasWhitelistVerify()
   } else {
     // 认领是否开始

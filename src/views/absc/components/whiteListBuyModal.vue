@@ -195,7 +195,7 @@ const verifyBuyValue = () => {
   let bayMaxvalue = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
   if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue) {
     // false
-    return true
+    return false
   } else {
     return true
   }
@@ -281,7 +281,7 @@ watch(
     if (newVal) {
       getBalanceValue()
       pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
-      // pageName.value == 'Whitelist' ? getApiWhitelistDiscount() : getApiNFTEquityDiscount()
+      pageName.value == 'Whitelist' ? getApiWhitelistDiscount() : getApiNFTEquityDiscount()
     }
   }, { deep: true, immediate: true }
 );
