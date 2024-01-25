@@ -66,7 +66,8 @@
               <div class="flex items-center" v-else>
                 <img src="@/assets/images/successful.png" class="h-[16px] mr-[5px]" />
                 <div>
-                  You have obtained the <span class="text-[#28C57C]">{{ whitelistVerifyData.level }}</span> whitelist,
+                  You have obtained the <span class="text-[#28C57C]">{{ LeveLabellEnums[whitelistVerifyData.level]
+                  }}</span> whitelist,
                   corresponding to your NFT
                   with Token ID <span class="text-[#28C57C]">{{ whitelistVerifyData.tokenId }}</span>.
                 </div>
@@ -80,6 +81,10 @@
         Start Now
       </a-button> -->
       <div class="parting-line"></div>
+      <div class="text-center mt-[40px] font-normal ">
+        <a-button class="text-[14px] w-[178px] h-[38px] rounded-[5px]" :disabled="disabledWhiteListBtn"
+          @click="getWhiteListDone">done</a-button>
+      </div>
     </div>
   </a-modal>
 </template>
@@ -92,6 +97,7 @@ import { AptosClient } from "aptos";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { apiAbscQualificationCheck, apiWhitelistVerify, apiWhitelistApplication } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
+import { LeveLabellEnums } from "@/enums/levelLabel";
 import gql from 'graphql-tag';
 const { getImageURL } = useAssets();
 const walletAddress = useWalletAddress();
