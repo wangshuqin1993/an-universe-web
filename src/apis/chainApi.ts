@@ -31,6 +31,7 @@ export class chainApi {
   async getTransactionErrorInfo(txHash) {
     try {
       const transactionReceipt = await this.provider.getTransactionReceipt(txHash);
+      console.log('getTransactionErrorInfo', transactionReceipt);
       const revertReason = ethers.utils.toUtf8String(
         ethers.utils.arrayify(transactionReceipt.logs[0].data)
       );
