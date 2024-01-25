@@ -34,13 +34,18 @@
         class="text-center text-[#fff] mt-[20px]"> Your $ABSC balance: <span class="text-[#E527FF]"> {{
           whitelistSubscribeAmountData?.abscAmount }}</span> ABSC
       </div>
-      <div v-if="whitelistVerifyData.joined && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">You
+      <div v-if="whitelistVerifyData.joined && walletAddress.walletAddress && whitelistSubscribeTime != '3'"
+        class="text-center text-[#fff] mt-[20px]">You
         have
         obtained the <span class="text-[#E527FF]">{{ LeveLabellEnums[whitelistVerifyData?.level]
         }}</span>
         level of whitelist,
         corresponding to your NFT with
         Token ID <span class="text-[#E527FF]">{{ whitelistVerifyData.tokenId }}</span></div>
+      <div class="text-center text-[#fff] mt-[20px]" v-if="whitelistSubscribeTime == '3'">
+        The $ABSC tokens you purchased in the IDO will be airdropped directly to your wallet soon. Please pay attention to
+        check it.
+      </div>
     </div>
 
     <div v-if="!whitelistSubscribeResult"
@@ -107,7 +112,7 @@ import { LeveLabellEnums } from "@/enums/levelLabel";
 const walletAddress = useWalletAddress()
 
 // const open = ref(false)
-const openWhiteListModal = ref(true);
+const openWhiteListModal = ref(false);
 const openWhiteListBuyModal = ref(false);
 const openSelectedWhiteListModal = ref(false);
 const whitelistSubscribeResult = ref(false);
