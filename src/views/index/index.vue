@@ -132,7 +132,6 @@ const getIsMobils = async () => {
   isOKApp.value = /OKApp/i.test(ua);
 }
 
-
 onMounted(async () => {
   await getIsMobils()
   if (isMobile.value) {

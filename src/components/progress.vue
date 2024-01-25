@@ -50,7 +50,7 @@ const getPercentValue = () => {
     showInfo.value = false
   }
   percentValue.value = totalAmountData.value / Number(targetAmount.value) * 100
-  // console.log(percentValue.value, 'percentValue.value')
+  console.log(percentValue.value, totalAmountData.value, Number(targetAmount.value), 'percentValue.value')
 }
 
 watch(

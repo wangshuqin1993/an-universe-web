@@ -2,14 +2,14 @@
 <template>
   <!-- <abscHeader></abscHeader> -->
   <div class="w-full h-full bg-black md:pb-[64px] pb-[32px] bg-container">
-    <div class="max-w-[1440px] mx-auto px-[32px] md:px-[120px]">
+    <div class="max-w-[1440px] mx-auto px-[24px] md:px-[120px]">
       <div>
         <div class="flex justify-center items-center md:pt-[166px] pt-[100px]">
           <img src="@/assets/images/absc-tokens.png" class="md:h-[50px] h-[38px] self-center" />
           <span class="title-text text-[26px] text-[24px] md:text-[48px] ml-3">$ABSC Token IDO</span>
         </div>
       </div>
-      <div class="text-center ido-content  md:p-[66px] p-[32px] md:mt-[60px] mt-[32px]">
+      <div class="text-center ido-content  md:p-[66px] md:p-[32px] p-[24px] md:mt-[60px] mt-[32px]">
         <idoStep :stageValue="stageValue" :stageData="state.IDOLaunchInfoData" :stepAmount="totalAmountData"
           :bnbPriceData="bnbPriceData" :stages="stageTime"></idoStep>
         <div class="md:mb-[50px] mb-[40px] mt-[70px]">
@@ -86,7 +86,7 @@
     <div class="relative">
       <div class="mt-[50px] buy-input-item">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay</div>
-        <a-input v-model:value="buyValue" placeholder="Basic usage" @change="changePay">
+        <a-input v-model:value="buyValue" placeholder="Please enter" @change="changePay">
           <template #suffix>
             <div>BNB</div>
           </template>
@@ -100,7 +100,7 @@
 
       <div class="buy-input-item mt-[10px]">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">You Receive</div>
-        <a-input v-model:value="transitionPay" placeholder="Basic usage">
+        <a-input v-model:value="transitionPay" placeholder="Please enter" disabled>
           <template #suffix>
             <div>ABSC</div>
           </template>
@@ -136,6 +136,7 @@ import { chainApi } from "@/apis/chainApi"
 import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice } from "@/apis/absc"
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
+import { add } from "mathjs"
 const walletAddress = useWalletAddress()
 const state = reactive({
   IDOLaunchInfoData: {}
@@ -153,6 +154,7 @@ const BNBBalance = ref(0)
 const stageValue = ref(0)
 const totalAmountDataAll = ref(0)
 const bnbPriceData = ref(0)
+const IDOLaunchAmount = ref('')
 
 const transitionPay = ref(0)
 // const idoApiData: any = ref()
@@ -177,6 +179,7 @@ const idoBtnClick = async () => {
 
 const getApiIDOLaunchAmount = async () => {
   const { data } = await apiIDOLaunchAmount()
+  IDOLaunchAmount.value = data.String
   // console.log(data, 'total amount')
 }
 
@@ -201,6 +204,9 @@ const getTotalAmountDataAll = async () => {
     const data = await walletApiIDO.getTotalAmount(stageValue.value)
     totalAmountDataAll.value += Number(data)
   }
+
+  totalAmountDataAll.value = add(totalAmountDataAll.value, Number(IDOLaunchAmount.value))
+  // totalAmountDataAll.value += Number(IDOLaunchAmount.value)
 }
 
 // 获取 step
@@ -249,16 +255,21 @@ const toClaim = async () => {
   }
 }
 
+
+
 // purchase 买
 const buyIDOSubscribe = async () => {
+  // if (buyValue.value <= 0) return message.error('Purchase value error')
   loading.value = true;
+  debugger
   const walletApiIDO = await getIDOApiData()
   try {
     await walletApiIDO.purchase(String(buyValue.value))
+    await getTokensBalanceData()
     openIDOBuyModal.value = false;
-    buyValue.value = 0;
-    getTokensBalanceData()
     loading.value = false
+    buyValue.value = 0;
+    transitionPay.value = 0
     message.success('Successfully')
   } catch (err) {
     const walletApiChain = await getChainApiData()

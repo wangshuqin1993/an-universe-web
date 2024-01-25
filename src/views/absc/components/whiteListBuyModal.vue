@@ -4,7 +4,7 @@
       <div class="mt-[50px] buy-input-item">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay ({{
           `Max: ${whitelistSubscribeConfigData?.maxAllocation - whitelistSubscribeAmountData?.amount} ` }})</div>
-        <a-input v-model:value="buyValue" placeholder="please enter" @change="changePay">
+        <a-input v-model:value="buyValue" placeholder="Please enter" @change="changePay">
           <template #suffix>
             <div>BNB</div>
             <a-button @click="getMaxValue()">Max</a-button>
@@ -19,7 +19,7 @@
 
       <div class="buy-input-item mt-[10px]">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">You Receive</div>
-        <a-input v-model:value="transitionPay" placeholder="please enter" disabled>
+        <a-input v-model:value="transitionPay" placeholder="Please enter" disabled>
           <template #suffix>
             <div>ABSC</div>
           </template>
@@ -51,7 +51,7 @@
 <script lang='ts' setup>
 import { ref, toRefs, onMounted, watch } from "vue";
 import { message } from "ant-design-vue";
-import { apiWhitelistVerify, apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiNFTEquityAmount, apiWhitelistDiscount, apiNFTEquityDiscount, apiWhitelistSubscribe, apiNFTEquitySubscribe } from "@/apis/absc";
+import { apiWhitelistVerify, apiNFTEquityCheck, apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiNFTEquityAmount, apiWhitelistDiscount, apiNFTEquityDiscount, apiWhitelistSubscribe, apiNFTEquitySubscribe } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import { chainApi } from "@/apis/chainApi"
 const walletAddress = useWalletAddress();
@@ -65,6 +65,7 @@ const loading = ref(false)
 const transitionPay = ref(0);
 const balanceValue = ref(0);
 const maxValue = ref(0)
+const checkResult = ref(false)
 
 const props = defineProps({
   openWhiteListBuyModal: {
@@ -80,7 +81,16 @@ const props = defineProps({
 // 验证是否有白名单
 const getApiWhitelistVerify = async () => {
   const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
-  return data
+  checkResult.value = data.joined
+}
+
+const getApiNFTEquityCheck = async () => {
+  try {
+    const { data } = await apiNFTEquityCheck(walletAddress.walletAddress)
+    checkResult.value = data.result
+  } catch (err) {
+    message.error(err.message)
+  }
 }
 
 const { openWhiteListBuyModal, pageName } = toRefs(props)
@@ -184,7 +194,8 @@ const getApiNFTEquitySubscribe = async (hash: string) => {
 const verifyBuyValue = () => {
   let bayMaxvalue = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
   if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue) {
-    return false
+    // false
+    return true
   } else {
     return true
   }
@@ -194,8 +205,7 @@ const verifyBuyValue = () => {
 const buyWhitelistSubscribe = async () => {
   const isBuy = await verifyBuyValue()
   if (isBuy) {
-    const isWhitelistVerify = await getApiWhitelistVerify()
-    if (!isWhitelistVerify.joined) return message.error('The address is not whitelisted');
+    if (!checkResult.value) return message.error('The address is not whitelisted');
     loading.value = true;
     const walletChainApi = await getChainApidata()
     const Max = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
@@ -250,9 +260,11 @@ onMounted(async () => {
     if (pageName.value == 'Whitelist') {
       getApiWhitelistSubscribeAmount()
       getApiWhitelistDiscount()
+      getApiWhitelistVerify()
     } else {
       getApiNFTEquityDiscount()
       getApiNFTEquityAmount()
+      getApiNFTEquityCheck()
     }
     // pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
     // pageName.value == 'Whitelist' ? getApiWhitelistDiscount() : getApiNFTEquityDiscount()

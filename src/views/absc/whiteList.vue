@@ -1,8 +1,8 @@
 
 <template>
   <!-- <abscHeader></abscHeader> -->
-  <div class="w-full h-full bg-black pb-[75px] bg-container">
-    <div class="max-w-[1440px] mx-auto md:px-[0px] px-[32px]">
+  <div class="w-full h-full bg-black pb-[75px] bg-container  md:px-[32px] px-[24px]">
+    <div class="max-w-[1440px] mx-auto md:px-[0px] ">
       <div class="title-text md:pt-[166px] pt-[100px]"><span class="title-text-color md:text-[48px] text-[30px]">$ABSC
           Token IDO
           Whitelist</span></div>
@@ -44,7 +44,7 @@
     </div>
 
     <div v-if="!whitelistSubscribeResult"
-      class="whitelist-absc-container w-[90%] md:max-w-[931px] md:py-[50px] px-[10px] py-[30px] md:mt-[70px] mt-[60px] mx-auto">
+      class="whitelist-absc-container md:max-w-[931px] md:py-[50px] px-[10px] py-[30px] md:mt-[70px] mt-[60px] mx-auto">
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
         <span
