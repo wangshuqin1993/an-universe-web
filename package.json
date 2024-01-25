@@ -17,6 +17,7 @@
     "ant-design-vue": "^4.0.7",
     "aptos": "^1.21.0",
     "axios": "^1.6.4",
+    "big.js": "^5.2.1",
     "esbuild": "^0.19.9",
     "ethers": "^5.7.2",
     "graphql": "^16.8.1",

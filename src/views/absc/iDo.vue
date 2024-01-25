@@ -59,17 +59,17 @@
         <div class="md:text-[21px] text-[18px] text-[#fff] font-bold md:mb-[30px] mb-[10px]">$ABSC IDO Terms of service
         </div>
         <div class="text-[#7C7C7C] text-[14px]">
-          1.Declaration
+          1.Declaration<br />
           Welcome to participate in the $ABSC Token IDO activity. Your participation indicates that you have read and will
           comply with the terms of service.<br />
-          2.Token
+          2.Token<br />
           Our token ABSC will be issued on the BSC public chain, and will be distributed according to the shares obtained
           by
           you during the IDO after it ends.<br />
-          3.Refund
+          3.Refund<br />
           If the amount raised in the IDO does not reach the target, the full amount raised will be refunded, and the ABSC
           shares already issued will be revoked.<br />
-          4.Regulations
+          4.Regulations<br />
           You need to comply with the law and be fully responsible for ensuring that your IDO behavior complies with local
           laws and regulations.<br />
           5.We reserve the right to temporarily or permanently change or suspend part or all of the services without
@@ -126,7 +126,7 @@
 </template>
 
 <script lang='ts' setup>
-import { ref, onMounted, watch, reactive } from "vue";
+import { ref, onMounted, watch, reactive, onUnmounted } from "vue";
 import abscHeader from "@/components/absc-header.vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import { message } from "ant-design-vue";
@@ -137,7 +137,8 @@ import { chainApi } from "@/apis/chainApi"
 import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice } from "@/apis/absc"
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
-import { add } from "mathjs"
+// import { add } from "mathjs"
+import Big from 'big.js';
 const walletAddress = useWalletAddress()
 const state = reactive({
   IDOLaunchInfoData: {}
@@ -158,6 +159,8 @@ const bnbPriceData = ref(0)
 const IDOLaunchAmount = ref('')
 
 const transitionPay = ref(0)
+
+const intervalData: any = ref()
 // const idoApiData: any = ref()
 // const chainApiData: any = ref()
 
@@ -200,14 +203,15 @@ const getTotalAmountData = async () => {
 }
 
 const getTotalAmountDataAll = async () => {
+  let val = new Big(0)
   const walletApiIDO = await getIDOApiData()
   for (let i = 1; i <= stageValue.value; i++) {
     const data = await walletApiIDO.getTotalAmount(stageValue.value)
-    totalAmountDataAll.value += Number(data)
+    val = val.plus(Number(data))
   }
 
-  totalAmountDataAll.value = add(totalAmountDataAll.value, Number(IDOLaunchAmount.value))
-  // totalAmountDataAll.value += Number(IDOLaunchAmount.value)
+  // console.log(val, 'val');
+  totalAmountDataAll.value = val.plus(Number(IDOLaunchAmount.value))
 }
 
 // 获取 step
@@ -260,9 +264,8 @@ const toClaim = async () => {
 
 // purchase 买
 const buyIDOSubscribe = async () => {
-  // if (buyValue.value <= 0) return message.error('Purchase value error')
+  if (buyValue.value <= 0) return message.error('Purchase value error')
   loading.value = true;
-  debugger
   const walletApiIDO = await getIDOApiData()
   try {
     await walletApiIDO.purchase(String(buyValue.value))
@@ -330,6 +333,15 @@ const getStageTime = async () => {
   console.log(stageTime);
 }
 
+const setTimeGetAmount = () => {
+  intervalData.value = setInterval(() => {
+    getTotalAmountData()
+    getTotalAmountDataAll()
+    console.log('哈哈，我执行了');
+
+  }, 5000)
+}
+
 onMounted(async () => {
   await getStage()
   await getStageTime()
@@ -343,8 +355,13 @@ onMounted(async () => {
     getTokenEthRateData()
     getTokensBalanceData()
   }
+
+  setTimeGetAmount()
 })
 
+onUnmounted(() => {
+  clearInterval(intervalData.value)
+})
 
 watch(
   () => walletAddress.walletAddress,

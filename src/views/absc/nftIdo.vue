@@ -21,7 +21,7 @@
         <span class="pb-[15px] text-[#8D8D8D] md:text-[18px] text-[14px]">Exchange time</span>
       </div>
       <div class="text-center md:mt-[40px] mt-[20px]">
-        <a-button class="w-[278px] h-[60px] rounded-[30px] text-[18px]" @click="handleExchangeModal"
+        <a-button class="w-[278px] h-[60px] rounded-[30px] text-[18px]" @click="handleExchangeModal" :loading="btnLoading"
           :disabled="disabled">{{ btnInfo }}
         </a-button>
       </div>
@@ -158,6 +158,7 @@ const data = ref([
 ]);
 
 const disabled = ref(false);
+const btnLoading = ref(false)
 const openWhiteListBuyModal = ref(false)
 const openSelectedWhiteListModal = ref(false)
 const NFTEquityCheck = ref(false);
@@ -167,6 +168,7 @@ const startExchangeTime = ref('')
 const endExchangeTime = ref('')
 const btnInfo = ref('IDO(coming soon)');
 const handleExchangeModal = async () => {
+  btnLoading.value = true
   if (walletAddress.walletAddress) {
     await getApiNFTEquityCheck()
     if (NFTEquityCheck.value) {
@@ -174,9 +176,10 @@ const handleExchangeModal = async () => {
     } else {
       message.info('This address does not qualify for nft interest!')
     }
-
+    btnLoading.value = false
   } else {
     openSelectedWhiteListModal.value = true
+    btnLoading.value = false
   }
 }
 
@@ -268,4 +271,5 @@ watch(
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-}</style>
+}
+</style>
