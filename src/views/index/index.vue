@@ -2,7 +2,7 @@
   <div class="relative main-content bg-[#020619] ">
     <!-- class="absolute top-0" -->
     <div class="video-box">
-      <video autoplay loop width="100%">
+      <video autoplay loop muted width="100%">
         <source src="@/assets/images/video.mp4" type="video/mp4" />
       </video>
     </div>
@@ -18,31 +18,31 @@
           <!-- <div v-if="isMobile" @click="open = true">
             <img src="@/assets/images/mobileShow.png" class="w-[24px]" />
           </div> -->
-          <div class="flex items-stretch text-[#ffffff] text-[16px]">
+          <div class="flex items-center text-[#ffffff] text-[16px]">
             <!-- <div class="md:mr-[50px] mr-[16px] self-center">Whitepaper</div> -->
             <!-- <div class="md:mr-[50px] mr-[16px] self-center">Roadmap</div> -->
             <!-- <div class="md:mr-[50px] mr-[16px] self-center">IDO</div> -->
             <!-- <div class="min-btn">
               Mint (Coming Soon)
             </div> -->
-            <div class="mr-[50px]">$ABSC</div>
-            <div>
-              <img src="@/assets/images/Twitter.png" class="w-[22px] mr-[50px] cursor-pointer" />
+            <div class="md:mr-[50px] text-[16px] mr-[24px] cursor-pointer hover:text-[#F41FFF]">$ABSC</div>
+            <div @click="clickTwitter">
+              <img src="@/assets/images/Twitter.png" class="w-[22px] md:mr-[50px] mr-[24px] cursor-pointer" />
             </div>
-            <div>
+            <div @click="clickTG">
               <img src="@/assets/images/TG.png" class="w-[22px] cursor-pointer" />
             </div>
           </div>
 
         </div>
-        <div class="text-center content mt-[80px]">
+        <div class="text-center content md:mt-[80px] mt-[130px]">
           <div class="md:text-[72px] text-[50px] content-title">
             <span class="font-black title-text">Bmaker</span>
           </div>
           <div class="md:text-[18px] text-[14px]">
             <span class="title-text">The Web3 future Bitcoin Stablecoin Paradigm</span>
           </div>
-          <div>
+          <div @click="clickJoin">
             <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box">Join $ABSC</a-button>
           </div>
           <!-- <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
@@ -83,6 +83,18 @@ const onClose = () => {
 }
 
 const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
+
+const clickJoin = () => {
+  window.open('https://absc.app/')
+}
+
+const clickTwitter = () => {
+  window.open('https://twitter.com/bscstable')
+}
+
+const clickTG = () => {
+  window.open('https://t.me/aptbscs')
+}
 
 onMounted(() => {
   let width = document.documentElement.clientWidth;
