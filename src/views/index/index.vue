@@ -74,15 +74,15 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { CloseOutlined } from "@ant-design/icons-vue"
+// import { CloseOutlined } from "@ant-design/icons-vue"
 const open = ref(false);
 const isMobile = ref(false)
 
-const onClose = () => {
-  open.value = false
-}
+// const onClose = () => {
+//   open.value = false
+// }
 
-const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
+// const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
 
 const clickJoin = () => {
   window.open('https://absc.app/')
