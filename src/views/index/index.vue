@@ -93,35 +93,49 @@ const apolloClient = new ApolloClient({
 // }
 
 const disConnectWallet = async () => {
-  if (window.okxwallet?.selectedAddress) {
-    let connectionStatus = await window.okxwallet?.isConnected();
-    if (connectionStatus) {
-      try {
-        const response = await window.okxwallet.disconnect()
-        walletAddress.setWalletAddress('');
-        btnInfo.value = 'connect wallet'
-        window.location.reload()
-      } catch (error) {
-        message.error(error.message)
-      }
-    }
-  } else {
-    let connectionStatus = await window.ethereum?.isConnected()
-    if (connectionStatus) {
-      // try {
-      //   await window.ethereum.disconnect()
-      //   walletAddress.setWalletAddress('');
-      //   window.location.reload()
-      //   btnInfo.value = 'connect wallet'
-      // } catch (error) {
-      //   message.error(error.message)
-      // }
-      walletAddress.setWalletAddress('');
+  let walletName = localStorage.getItem('walletName') || ''
+  if (walletName != '') {
+    if (walletName == 'MetaMask') {
       localStorage.removeItem('metaMaskWalletAddress')
-      window.location.reload()
-      btnInfo.value = 'connect wallet'
+      localStorage.setItem('walletName', '')
+      walletAddress.setWalletAddress('');
+      // window.location.reload()
+    } else {
+      localStorage.removeItem('OKXWalletAddress')
+      localStorage.setItem('walletName', '')
+      walletAddress.setWalletAddress('');
+      // window.location.reload()
     }
   }
+  // if (window.okxwallet?.selectedAddress) {
+  //   let connectionStatus = await window.okxwallet?.isConnected();
+  //   if (connectionStatus) {
+  //     try {
+  //       const response = await window.okxwallet.disconnect()
+  //       walletAddress.setWalletAddress('');
+  //       btnInfo.value = 'connect wallet'
+  //       window.location.reload()
+  //     } catch (error) {
+  //       message.error(error.message)
+  //     }
+  //   }
+  // } else {
+  //   let connectionStatus = await window.ethereum?.isConnected()
+  //   if (connectionStatus) {
+  //     // try {
+  //     //   await window.ethereum.disconnect()
+  //     //   walletAddress.setWalletAddress('');
+  //     //   window.location.reload()
+  //     //   btnInfo.value = 'connect wallet'
+  //     // } catch (error) {
+  //     //   message.error(error.message)
+  //     // }
+  //     walletAddress.setWalletAddress('');
+  //     localStorage.removeItem('metaMaskWalletAddress')
+  //     window.location.reload()
+  //     btnInfo.value = 'connect wallet'
+  //   }
+  // }
 }
 
 const getIsMobils = async () => {
@@ -134,28 +148,43 @@ const getIsMobils = async () => {
 
 onMounted(async () => {
   await getIsMobils()
-  if (isMobile.value) {
-    if (window.okxwallet?.selectedAddress) {
-      let address = window.okxwallet?.selectedAddress;
-      walletAddress.setWalletAddress(address);
-      btnInfo.value = address.substring(0, 5) + "..." + address.substring(address.length - 4);
+  let walletName = localStorage.getItem('walletName') || ''
+  if (walletName != '') {
+    let address
+    if (walletName == 'MetaMask') {
+      address = localStorage.getItem('metaMaskWalletAddress') || ''
     } else {
-      let address = window.ethereum?.selectedAddress;
-      walletAddress.setWalletAddress(address);
-      btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+      address = localStorage.getItem('OKXWalletAddress') || ''
     }
+    walletAddress.setWalletAddress(address);
+    btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+  } else {
+    walletAddress.setWalletAddress('');
+    btnInfo.value = 'connect wallet'
   }
+  // if (isMobile.value) {
+  //   if (window.okxwallet?.selectedAddress) {
+  //     let address = window.okxwallet?.selectedAddress;
+  //     walletAddress.setWalletAddress(address);
+  //     btnInfo.value = address.substring(0, 5) + "..." + address.substring(address.length - 4);
+  //   } else {
+  //     let address = window.ethereum?.selectedAddress;
+  //     walletAddress.setWalletAddress(address);
+  //     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+  //   }
+  // }
 })
 
 watch(() => walletAddress.walletAddress,
   (newVal, _oldVal) => {
-    if (newVal) {
+    if (newVal != '') {
       // console.log(newVal, 'header watch walletAddress')
       walletAddress.setWalletAddress(newVal)
       btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
     }
 
     if (newVal == '') {
+      walletAddress.setWalletAddress('');
       btnInfo.value = 'connect wallet'
     }
   }, { deep: true, immediate: true })

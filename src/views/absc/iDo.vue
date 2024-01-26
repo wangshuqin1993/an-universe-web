@@ -135,7 +135,7 @@ import Progress from "@/components/progress.vue";
 import idoStep from "./components/idoStep.vue";
 import { IDOApi } from "@/apis/idoApi"
 import { chainApi } from "@/apis/chainApi"
-import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice } from "@/apis/absc"
+import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice, apiIDOInvite } from "@/apis/absc"
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import Big from 'big.js';
@@ -238,22 +238,43 @@ const getTokensBalanceData = async () => {
 
 
 const getIDOApiData = () => {
-  if (window.okxwallet?.selectedAddress) {
+  let walletName = localStorage.getItem('walletName') || ''
+  if (walletName == 'OKX') {
     const ido = new IDOApi(window.okxwallet, 'test');
     return ido
-  } else {
+  } else if (walletName == 'MetaMask') {
     const ido = new IDOApi(window.ethereum, 'test');
     return ido
+  } else {
+    return undefined
   }
+  // if (window.okxwallet?.selectedAddress) {
+  //   const ido = new IDOApi(window.okxwallet, 'test');
+  //   return ido
+  // } else {
+  //   const ido = new IDOApi(window.ethereum, 'test');
+  //   return ido
+  // }
 }
 
 const getChainApiData = () => {
-  if (window.okxwallet?.selectedAddress) {
+  // if (window.okxwallet?.selectedAddress) {
+  //   const chain = new chainApi(window.okxwallet)
+  //   return chain
+  // } else {
+  //   const chain = new chainApi(window.ethereum)
+  //   return chain
+  // }
+
+  let walletName = localStorage.getItem('walletName') || ''
+  if (walletName == 'OKX') {
     const chain = new chainApi(window.okxwallet)
     return chain
-  } else {
+  } else if (walletName == 'MetaMask') {
     const chain = new chainApi(window.ethereum)
     return chain
+  } else {
+    return undefined
   }
 }
 
@@ -271,9 +292,12 @@ const toClaim = async () => {
     message.error(errorMessage + 'transaction error: ' + err.transactionHash);
     cliamLoading.value = false
   }
-
 }
 
+
+const getApiIDOInvite = async (hash: string) => {
+  const res = await apiIDOInvite(walletAddress.walletAddress, hash, query?.invite_code)
+}
 
 
 // purchase 买
@@ -282,13 +306,16 @@ const buyIDOSubscribe = async () => {
   loading.value = true;
   const walletApiIDO = await getIDOApiData()
   try {
-    await walletApiIDO.purchase(String(buyValue.value))
+    const txh = await walletApiIDO.purchase(String(buyValue.value))
     await getTokensBalanceData()
     openIDOBuyModal.value = false;
     loading.value = false
     buyValue.value = 0;
     transitionPay.value = 0
     message.success('Successfully')
+    if (query?.invite_code) {
+      getApiIDOInvite(txh.hash)
+    }
   } catch (err) {
     const walletApiChain = await getChainApiData()
     let errorMessage = await walletApiChain.getTransactionErrorInfo(err.transactionHash);
@@ -356,7 +383,7 @@ const setTimeGetAmount = () => {
 }
 
 onMounted(async () => {
-  console.log(query.invite_code, 'params');
+  // console.log(query, 'params');
 
   await getStage()
   await getStageTime()

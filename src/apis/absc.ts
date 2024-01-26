@@ -236,3 +236,16 @@ export async function getBnbPrice() {
 })
   });
 }
+
+// /absc/ido/invite 
+export function apiIDOInvite(address:string, hash:string, inviteCode: string)  {
+  return httpRequest({
+    url: `/absc/ido/invite`,
+    method: "post",
+    data: {
+      address:address,
+      hash:hash,
+      inviteCode:inviteCode,
+    }
+  });
+}

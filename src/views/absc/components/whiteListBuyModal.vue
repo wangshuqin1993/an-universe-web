@@ -243,14 +243,26 @@ const getBalanceValue = async () => {
 }
 
 const getChainApidata = async () => {
-  if (window.okxwallet?.selectedAddress) {
-    // console.log(window.okxwallet)
+  // if (window.okxwallet?.selectedAddress) {
+  //   // console.log(window.okxwallet)
+  //   const chainApidata = new chainApi(window.okxwallet)
+  //   return chainApidata
+  // } else {
+  //   const chainApidata = new chainApi(window.ethereum)
+  //   return chainApidata
+  // }
+
+  let walletName = localStorage.getItem('walletName') || ''
+  if (walletName == 'OKX') {
     const chainApidata = new chainApi(window.okxwallet)
     return chainApidata
-  } else {
+  } else if (walletName == 'MetaMask') {
     const chainApidata = new chainApi(window.ethereum)
     return chainApidata
+  } else {
+    return undefined
   }
+
 }
 
 onMounted(async () => {

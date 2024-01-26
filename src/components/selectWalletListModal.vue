@@ -52,6 +52,8 @@ const connectWallet = async (id: number) => {
         });
         if (window.okxwallet?.selectedAddress) {
           let address = window.okxwallet.selectedAddress
+          localStorage.setItem('OKXWalletAddress', address)
+          localStorage.setItem('walletName', 'OKX')
           walletAddress.setWalletAddress(address);
           closeModal()
         } else {
@@ -66,6 +68,7 @@ const connectWallet = async (id: number) => {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x61' }], });
       walletAddress.setWalletAddress(accounts[0]);
       localStorage.setItem('metaMaskWalletAddress', accounts[0])
+      localStorage.setItem('walletName', 'MetaMask')
       // const providerData = new ethers.providers.Web3Provider(window.ethereum);
       // 这个之如果为 null 就说明没有连接到小狐狸，如果有值就是连接的用户钱包地址
       // const accounts = providerData.provider.selectedAddress

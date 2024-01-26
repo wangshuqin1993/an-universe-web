@@ -34,7 +34,8 @@
         class="text-center text-[#fff] mt-[20px]"> Your $ABSC balance: <span class="text-[#E527FF]"> {{
           whitelistSubscribeAmountData?.abscAmount }}</span> ABSC
       </div>
-      <div v-if="whitelistVerifyData.joined && walletAddress.walletAddress && whitelistSubscribeTime != '3'"
+      <div
+        v-if="whitelistVerifyData.joined && walletAddress.walletAddress && whitelistSubscribeTime != '3' && whitelistVerifyData.tokenId"
         class="text-center text-[#fff] mt-[20px]">You
         have
         obtained the <span class="text-[#E527FF]">{{ LeveLabellEnums[whitelistVerifyData?.level]
@@ -266,7 +267,7 @@ const initDataNoWhitelistVerify = async () => {
 onMounted(async () => {
   console.log('onMounted 查看 walletAddress：', walletAddress.walletAddress)
   if (walletAddress.walletAddress) {
-    console.log('walletAddress', "sadfa")
+    // console.log('walletAddress', "sadfa")
     await initDataHasWhitelistVerify()
   } else {
     // 认领是否开始
