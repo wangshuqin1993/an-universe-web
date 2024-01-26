@@ -22,7 +22,7 @@
             </div>
             <div class="text-[#929292] text-[12px]">Please connect your wallet to complete Genesis NFT holder
               certification</div>
-            <div v-if="!whitelistAbscNFTdata.tokenId" class="text-[12px] text-[#E527FF] font-semibold ml-[5px] mt-[6px]">
+            <div v-if="check" class="text-[12px] text-[#E527FF] font-semibold ml-[5px] mt-[6px]">
               <LoadingOutlined class="text-[14px] mr-[8px]" /> checking...
             </div>
             <div v-else>
@@ -114,6 +114,7 @@ const aptosAddress = ref('');
 const whitelistApplicationResult = ref(false);
 const startNowLoading = ref(false)
 const abscBalance = ref(0)
+const check = ref(false)
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
   // 你需要在这里使用绝对路径
@@ -145,11 +146,14 @@ const closeModal = () => {
 // 有 NFT 可以 Start Now
 const getApiWhitelistAbscNFT = async () => {
   try {
+    check.value = true;
     const { data } = await apiAbscQualificationCheck(walletAddress.walletAddress)
     whitelistAbscNFTdata.value = data;
+    check.value = false;
     // console.log(data, '有 nft')
   } catch (error) {
     message.error(error.message)
+    check.value = false;
   }
 }
 
