@@ -2,7 +2,7 @@
   <div class="relative main-content bg-[#020619] ">
     <!-- class="absolute top-0" -->
     <div class="video-box">
-      <video width="100%">
+      <video autoplay loop width="100%">
         <source src="@/assets/images/video.mp4" type="video/mp4" />
       </video>
     </div>
@@ -15,19 +15,23 @@
             <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
             <!-- <source src="@/assets/images/video.mp4" type="video/mp4" /> -->
           </div>
-          <div v-if="isMobile" @click="open = true">
+          <!-- <div v-if="isMobile" @click="open = true">
             <img src="@/assets/images/mobileShow.png" class="w-[24px]" />
-          </div>
-          <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
+          </div> -->
+          <div class="flex items-stretch text-[#ffffff] text-[16px]">
             <!-- <div class="md:mr-[50px] mr-[16px] self-center">Whitepaper</div> -->
             <!-- <div class="md:mr-[50px] mr-[16px] self-center">Roadmap</div> -->
             <!-- <div class="md:mr-[50px] mr-[16px] self-center">IDO</div> -->
             <!-- <div class="min-btn">
               Mint (Coming Soon)
             </div> -->
-            <div>$ABSC</div>
-            <div></div>
-            <div></div>
+            <div class="mr-[50px]">$ABSC</div>
+            <div>
+              <img src="@/assets/images/Twitter.png" class="w-[22px] mr-[50px] cursor-pointer" />
+            </div>
+            <div>
+              <img src="@/assets/images/TG.png" class="w-[22px] cursor-pointer" />
+            </div>
           </div>
 
         </div>
@@ -41,15 +45,15 @@
           <div>
             <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box">Join $ABSC</a-button>
           </div>
-          <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
+          <!-- <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
             <div class=" min-btn">
               Mint (Coming Soon)
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 
-      <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
+      <!-- <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
         :contentWrapperStyle="contentWrapperStyle" rootClassName="bg-css">
         <div class="flex justify-between">
           <div>
@@ -62,9 +66,8 @@
         <div class="text-[16px] text-[#ffFfff] font-bold">
           <div class="mt-[40px] mb-[30px]">Whitepaper</div>
           <div class="mb-[30px]">Roadmap</div>
-          <!-- <div class="mb-[30px]">IDO</div> -->
-        </div>
-      </a-drawer>
+    </div>
+    </a-drawer> -->
 
     </div>
   </div>
@@ -133,7 +136,7 @@ onMounted(() => {
   top: 0;
   left: 0;
   z-index: 2;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(243, 30, 255, 0.42) 100%);
+  background: linear-gradient(180deg, rgba(124, 0, 131, .2) 0%, rgba(243, 30, 255, 0.42) 100%);
 }
 
 .mobile-min-btn {
