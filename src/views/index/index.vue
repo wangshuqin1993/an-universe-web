@@ -1,10 +1,11 @@
 <template>
-  <div class="relative main-content bg-[#020619] ">
+  <div class="relative bg-[#020619] " :class="!isMobile ? ' main-content' : 'main-content-bg'">
     <!-- class="absolute top-0" -->
-    <div class="video-box">
-      <video autoplay loop muted width="100%">
+    <div class="video-box" :class="isMobile ? 'mobile-css' : ''">
+      <video autoplay loop muted width="100%" v-if="!isMobile">
         <source src="@/assets/images/video.mp4" type="video/mp4" />
       </video>
+
     </div>
 
 
@@ -116,6 +117,14 @@ onMounted(() => {
   z-index: 1;
 }
 
+.mobile-css {
+  height: 100vh;
+  background: url('../../assets/images/mobile-bg-bmaker.jpg') no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+  background-attachment: fixed;
+}
+
 .content-box {
   position: absolute;
   top: 0;
@@ -151,6 +160,18 @@ onMounted(() => {
   z-index: 2;
   background: linear-gradient(180deg, rgba(124, 0, 131, .2) 0%, rgba(243, 30, 255, 0.42) 100%);
 }
+
+.main-content-bg {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+/* .main-content-bg:after {
+  background: none;
+} */
 
 .mobile-min-btn {
   position: fixed;
