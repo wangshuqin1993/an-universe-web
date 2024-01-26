@@ -25,7 +25,8 @@
             <!-- <div class="min-btn">
               Mint (Coming Soon)
             </div> -->
-            <div class="md:mr-[50px] text-[16px] mr-[24px] cursor-pointer hover:text-[#F41FFF]">$ABSC</div>
+            <div class="md:mr-[50px] text-[16px] mr-[24px] cursor-pointer hover:text-[#F41FFF]" @click="clickJoin">$ABSC
+            </div>
             <div @click="clickTwitter">
               <img src="@/assets/images/Twitter.png" class="w-[22px] md:mr-[50px] mr-[24px] cursor-pointer" />
             </div>
