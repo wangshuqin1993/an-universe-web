@@ -1,55 +1,72 @@
 <template>
-  <div class="w-full h-full px-[32px] main-content ">
-    <div class="max-w-[1440px] mx-auto">
-      <div class="flex justify-between  header h-[82px] py-[20px] ">
-        <div>
-          <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
-        </div>
-        <div v-if="isMobile" @click="open = true">
-          <img src="@/assets/images/mobileShow.png" class="w-[24px]" />
-        </div>
-        <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
-          <div class="md:mr-[50px] mr-[16px] self-center">Whitepaper</div>
-          <div class="md:mr-[50px] mr-[16px] self-center">Roadmap</div>
-          <!-- <div class="md:mr-[50px] mr-[16px] self-center">IDO</div> -->
-          <div class="min-btn">
-            Mint (Coming Soon)
-          </div>
-        </div>
-
-      </div>
-      <div class="text-center content mt-[80px]">
-        <div class="md:text-[72px] text-[50px] content-title">
-          <span class="font-bold title-text">Bmaker</span>
-        </div>
-        <div class="md:text-[18px] text-[14px]">
-          <span class="title-text">The Web3 future Bitcoin Stablecoin Paradigm</span>
-        </div>
-        <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
-          <div class=" min-btn">
-            Mint (Coming Soon)
-          </div>
-        </div>
-      </div>
+  <div class="relative main-content bg-[#020619] ">
+    <!-- class="absolute top-0" -->
+    <div class="video-box">
+      <video width="100%">
+        <source src="@/assets/images/video.mp4" type="video/mp4" />
+      </video>
     </div>
 
-    <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
-      :contentWrapperStyle="contentWrapperStyle" rootClassName="bg-css">
-      <div class="flex justify-between">
-        <div>
-          <img src="@/assets/images/mbake-logo.png" class="w-[110px]" />
-        </div>
-        <div>
-          <CloseOutlined style="color: #ffffff;fontSize: 24px" @click="open = false" />
-        </div>
-      </div>
-      <div class="text-[16px] text-[#ffFfff] font-bold">
-        <div class="mt-[40px] mb-[30px]">Whitepaper</div>
-        <div class="mb-[30px]">Roadmap</div>
-        <!-- <div class="mb-[30px]">IDO</div> -->
-      </div>
-    </a-drawer>
 
+    <div class="w-full h-full px-[32px] content-box">
+      <div class="max-w-[1440px] mx-auto">
+        <div class="flex justify-between header h-[82px] py-[20px] ">
+          <div>
+            <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
+            <!-- <source src="@/assets/images/video.mp4" type="video/mp4" /> -->
+          </div>
+          <div v-if="isMobile" @click="open = true">
+            <img src="@/assets/images/mobileShow.png" class="w-[24px]" />
+          </div>
+          <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
+            <!-- <div class="md:mr-[50px] mr-[16px] self-center">Whitepaper</div> -->
+            <!-- <div class="md:mr-[50px] mr-[16px] self-center">Roadmap</div> -->
+            <!-- <div class="md:mr-[50px] mr-[16px] self-center">IDO</div> -->
+            <!-- <div class="min-btn">
+              Mint (Coming Soon)
+            </div> -->
+            <div>$ABSC</div>
+            <div></div>
+            <div></div>
+          </div>
+
+        </div>
+        <div class="text-center content mt-[80px]">
+          <div class="md:text-[72px] text-[50px] content-title">
+            <span class="font-black title-text">Bmaker</span>
+          </div>
+          <div class="md:text-[18px] text-[14px]">
+            <span class="title-text">The Web3 future Bitcoin Stablecoin Paradigm</span>
+          </div>
+          <div>
+            <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box">Join $ABSC</a-button>
+          </div>
+          <div class="mobile-min-btn text-[#ffffff]" v-if="isMobile">
+            <div class=" min-btn">
+              Mint (Coming Soon)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
+        :contentWrapperStyle="contentWrapperStyle" rootClassName="bg-css">
+        <div class="flex justify-between">
+          <div>
+            <img src="@/assets/images/mbake-logo.png" class="w-[110px]" />
+          </div>
+          <div>
+            <CloseOutlined style="color: #ffffff;fontSize: 24px" @click="open = false" />
+          </div>
+        </div>
+        <div class="text-[16px] text-[#ffFfff] font-bold">
+          <div class="mt-[40px] mb-[30px]">Whitepaper</div>
+          <div class="mb-[30px]">Roadmap</div>
+          <!-- <div class="mb-[30px]">IDO</div> -->
+        </div>
+      </a-drawer>
+
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -75,16 +92,48 @@ onMounted(() => {
 })
 </script>
 <style scoped>
+.video-box {
+  width: 100%;
+  /* height: 100%; */
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+}
+
+.content-box {
+  position: absolute;
+  top: 0;
+  z-index: 9;
+  font-family: Montserrat, Montserrat;
+}
+
 .main-content {
-  height: 100Vh;
-  margin: 0;
-  background: url('../../assets/images/bmake.jpg') no-repeat;
-  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  top: 0;
+  left: 0;
+
+
+  /* height: 100Vh; */
+  /* background: url('../../assets/images/bmake.jpg') no-repeat; */
+  /* background-size: cover;
   background-attachment: fixed;
-  background-position: center center;
+  background-position: center center; */
   /* 
   max-width: 1440px;
   margin: 0 auto; */
+}
+
+.main-content:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(243, 30, 255, 0.42) 100%);
 }
 
 .mobile-min-btn {
@@ -103,10 +152,11 @@ onMounted(() => {
 }
 
 .title-text {
-  background-image: linear-gradient(to right, #60638B 0%, #F9F9F9 25%, #FFFFFF 50%, #60638B 100%);
+  color: #ffffff;
+  /* background-image: linear-gradient(to right, #60638B 0%, #F9F9F9 25%, #FFFFFF 50%, #60638B 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
+  color: transparent; */
 }
 
 :deep(.ant-drawer-content) {
@@ -116,6 +166,25 @@ onMounted(() => {
 .bg-css {
   background-color: #1F1F1F;
 }
+
+.btn-box {
+  font-weight: bold;
+  border-radius: 19px;
+  background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
+  border: none
+}
+
+.btn-box:hover,
+.btn-box:focus {
+  /* font-size: 14.5px; */
+  font-weight: 800;
+  color: #FFF;
+  border: none;
+  opacity: 0.85;
+  outline: none;
+}
+
+
 
 
 
