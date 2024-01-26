@@ -127,6 +127,7 @@
 
 <script lang='ts' setup>
 import { ref, onMounted, watch, reactive, onUnmounted, computed } from "vue";
+import { useRoute } from "vue-router";
 import abscHeader from "@/components/absc-header.vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import { message } from "ant-design-vue";
@@ -137,8 +138,8 @@ import { chainApi } from "@/apis/chainApi"
 import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice } from "@/apis/absc"
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
-// import { add } from "mathjs"
 import Big from 'big.js';
+const { query } = useRoute();
 const walletAddress = useWalletAddress()
 const state = reactive({
   IDOLaunchInfoData: {}
@@ -162,8 +163,6 @@ const cliamLoading = ref(false);
 const transitionPay = ref(0)
 
 const intervalData: any = ref()
-// const idoApiData: any = ref()
-// const chainApiData: any = ref()
 
 const tokenRate = computed(() => {
   return new Big(100).div(tokenEthRateData.value);
@@ -345,19 +344,20 @@ const getStageTime = async () => {
   stageTime.value.push(stage2.data);
   const stage3 = await apiIDOLaunchTime(3)
   stageTime.value.push(stage3.data);
-  console.log(stageTime);
+  // console.log(stageTime);
 }
 
 const setTimeGetAmount = () => {
   intervalData.value = setInterval(() => {
     getTotalAmountData()
     getTotalAmountDataAll()
-    console.log('哈哈，我执行了');
-
+    // console.log('哈哈，我执行了');
   }, 5000)
 }
 
 onMounted(async () => {
+  console.log(query.invite_code, 'params');
+
   await getStage()
   await getStageTime()
   getApiIDOLaunchTime()
