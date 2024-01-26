@@ -35,6 +35,8 @@ const closeModal = () => {
   emit('closeSelectedWhiteListModal')
 }
 
+const baseUrl = ref(import.meta.env.VITE_BASE_URL)
+
 // 连接钱包
 const connectWallet = async (id: number) => {
   if (isMobile.value && !isOKApp.value) {
