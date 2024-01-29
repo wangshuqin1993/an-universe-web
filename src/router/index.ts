@@ -20,7 +20,7 @@ let router = createRouter({
     },
     {
       path: "/whitelist",
-      name: "Whitelist",
+      name: "Whitelist(IDO)",
       component: () => import('@/views/absc/whiteList.vue'),
     },
     {

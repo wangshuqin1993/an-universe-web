@@ -26,7 +26,7 @@ import Big from 'big.js';
 const showInfo = ref(true)
 const props = defineProps({
   targetAmount: {
-    type: String,
+    type: String || Number,
     default: ''
   },
   totalAmountData: {

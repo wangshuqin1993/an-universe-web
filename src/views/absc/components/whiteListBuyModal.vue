@@ -33,10 +33,13 @@
     </div>
 
     <div class="text-[12px] bg-[#F7F7F7] rounded-[8px] px-[30px] py-[20px] mt-[20px]">
-      <div class="text-[#343434]">1ABSC={{ 1 / whitelistSubscribeConfigData?.tokenBnbRate }}BNB</div>
+      <div class="text-[#000000]">1ABSC={{ 1 / whitelistSubscribeConfigData?.tokenBnbRate * whitelistDiscountData }}BNB
+      </div>
+      <div class="mb-[10px] text-[#818181]">{{ `(Original price: 1ABSC= ${1 / whitelistSubscribeConfigData?.tokenBnbRate})
+        BNB` }}</div>
       <div>
-        <div class="text-[#FF3653]">
-          <div v-if="whitelistDiscountData != '1'">Discount: {{ whitelistDiscountData }}</div>
+        <div class="text-[#6A6A6A]">
+          <div v-if="whitelistDiscountData != '1'">Discount: {{ whitelistDiscountData + '% off' }}</div>
           Minimum amount: {{ whitelistSubscribeConfigData?.minAllocation }} BNB<br />
           Maximum amount: {{ whitelistSubscribeConfigData?.maxAllocation }} BNB<br />
         </div>
@@ -118,6 +121,7 @@ const getApiWhitelistSubscribeAmount = async () => {
   }
 }
 
+
 const getApiNFTEquityAmount = async () => {
   try {
     const { data } = await apiNFTEquityAmount(walletAddress.walletAddress)
@@ -134,7 +138,12 @@ const getApiNFTEquityAmount = async () => {
 const getApiWhitelistDiscount = async () => {
   try {
     const { data } = await apiWhitelistDiscount(walletAddress.walletAddress)
-    whitelistDiscountData.value = data
+    if (data == '1') {
+      whitelistDiscountData.value = data
+    } else {
+      let num = Number(data)
+      whitelistDiscountData.value = (1 - num) * 100
+    }
   } catch (err) {
     message.error(err.message)
   }
@@ -335,5 +344,16 @@ watch(
 
 .ant-input-affix-wrapper {
   height: 49px;
+  font-size: 16px;
+}
+
+:deep(.ant-input-affix-wrapper-disabled) {
+  background-color: #fff;
+  color: rgba(0, 0, 0, .88)
+}
+
+:deep(.ant-input-affix-wrapper-disabled .ant-input[disabled]) {
+  color: rgba(0, 0, 0, .88);
+  font-size: 16px;
 }
 </style>

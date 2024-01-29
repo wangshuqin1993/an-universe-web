@@ -64,8 +64,7 @@
           comply with the terms of service.<br />
           2.Token<br />
           Our token ABSC will be issued on the BSC public chain, and will be distributed according to the shares obtained
-          by
-          you during the IDO after it ends.<br />
+          by you during the IDO after it ends.<br />
           3.Refund<br />
           If the amount raised in the IDO does not reach the target, the full amount raised will be refunded, and the ABSC
           shares already issued will be revoked.<br />
@@ -144,7 +143,7 @@ const walletAddress = useWalletAddress()
 const state = reactive({
   IDOLaunchInfoData: {}
 })
-const disabled = ref(false)
+const disabled = ref(true)
 const loading = ref(false)
 const openIDOBuyModal = ref(false);
 const btnInfo = ref('Coming Soon')
@@ -196,7 +195,7 @@ const getApiIDOLaunchAmount = async () => {
 const getTokenEthRateData = async () => {
   const walletApiIDO = await getIDOApiData()
   tokenEthRateData.value = await walletApiIDO.getTokenEthRate(stageValue.value)
-  console.log(tokenEthRateData.value.toNumber(), stageValue.value, 'tokenEthRateData.value ')
+  // console.log(tokenEthRateData.value.toNumber(), stageValue.value, 'tokenEthRateData.value ')
 }
 
 // 总额 + state.IDOLaunchInfoData.whitelistAmount
@@ -465,6 +464,17 @@ watch(
 
 .ant-input-affix-wrapper {
   height: 49px;
+  font-size: 16px;
+}
+
+:deep(.ant-input-affix-wrapper-disabled) {
+  background-color: #fff;
+  color: rgba(0, 0, 0, .88)
+}
+
+:deep(.ant-input-affix-wrapper-disabled .ant-input[disabled]) {
+  font-size: 16px;
+  color: rgba(0, 0, 0, .88)
 }
 
 

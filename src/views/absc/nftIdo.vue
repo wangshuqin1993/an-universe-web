@@ -25,7 +25,7 @@
           :disabled="disabled">{{ btnInfo }}
         </a-button>
       </div>
-      <div v-if="NFTEquityTime.status == '2' && walletAddress.walletAddress " class="text-center text-[#fff] mt-[20px]">
+      <div v-if="NFTEquityTime.status == '2' && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">
         Your $ABSC balance: <span class="text-[#E527FF]">{{
           NFTEquityAmountData.abscAmount }}</span> ABSC
       </div>
@@ -157,7 +157,7 @@ const data = ref([
   },
 ]);
 
-const disabled = ref(false);
+const disabled = ref(true);
 const btnLoading = ref(false)
 const openWhiteListBuyModal = ref(false)
 const openSelectedWhiteListModal = ref(false)
