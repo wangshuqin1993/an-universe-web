@@ -48,7 +48,7 @@ const connectWallet = async (id: number) => {
         const response = await window.okxwallet.request({ method: 'eth_requestAccounts' });
         const res = await window.okxwallet.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x61' }],
+          params: [{ chainId: '0x38' }],
         });
         if (window.okxwallet?.selectedAddress) {
           let address = window.okxwallet.selectedAddress
@@ -65,7 +65,7 @@ const connectWallet = async (id: number) => {
       }
     } else {
       // 小狐狸地址
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x61' }], });
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x38' }], });
       walletAddress.setWalletAddress(accounts[0]);
       localStorage.setItem('metaMaskWalletAddress', accounts[0])
       localStorage.setItem('walletName', 'MetaMask')

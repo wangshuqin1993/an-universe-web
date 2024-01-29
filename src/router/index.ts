@@ -14,20 +14,10 @@ let router = createRouter({
       component: () => import('@/views/absc/mint.vue'),
     },
     {
-      path: "/ido",
+      path: "/ido/:code",
       name: "IDO",
-      component: () => import('@/views/absc/iDo.vue'),
-    },
-    {
-      path: "/whitelist",
-      name: "Whitelist",
-      component: () => import('@/views/absc/whiteList.vue'),
-    },
-    {
-      path: "/nftIdo",
-      name: "NFT(IDO)",
-      component: () => import('@/views/absc/nftIdo.vue'),
-    },
+      component: () => import('@/views/index/index.vue'),
+    }
   ],
   // 每次切换路由页面滚动到顶部
   scrollBehavior() {
