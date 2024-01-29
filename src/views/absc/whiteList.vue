@@ -114,7 +114,7 @@ const walletAddress = useWalletAddress()
 
 // const open = ref(false)
 const openWhiteListModal = ref(false);
-const openWhiteListBuyModal = ref(true);
+const openWhiteListBuyModal = ref(false);
 const openSelectedWhiteListModal = ref(false);
 const whitelistSubscribeResult = ref(false);
 const whitelistVerifyData = ref({});
