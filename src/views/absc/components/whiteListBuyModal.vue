@@ -33,7 +33,9 @@
     </div>
 
     <div class="text-[12px] bg-[#F7F7F7] rounded-[8px] px-[30px] py-[20px] mt-[20px]">
-      <div class="text-[#000000]">1ABSC={{ 1 / whitelistSubscribeConfigData?.tokenBnbRate * whitelistDiscountData }}BNB
+      <!-- {{ whitelistSubscribeConfigData?.tokenBnbRate }} -->
+      <div class="text-[#000000]">1ABSC={{ 1 / whitelistSubscribeConfigData?.tokenBnbRate *
+        beforeWhitelistSubscribeConfigData }}BNB
       </div>
       <div class="mb-[10px] text-[#818181]">{{ `(Original price: 1ABSC= ${1 / whitelistSubscribeConfigData?.tokenBnbRate})
         BNB` }}</div>
@@ -56,7 +58,8 @@ import { ref, toRefs, onMounted, watch } from "vue";
 import { message } from "ant-design-vue";
 import { apiWhitelistVerify, apiNFTEquityCheck, apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiNFTEquityAmount, apiWhitelistDiscount, apiNFTEquityDiscount, apiWhitelistSubscribe, apiNFTEquitySubscribe } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
-import { chainApi } from "@/apis/chainApi"
+import { chainApi } from "@/apis/chainApi";
+import Big from 'big.js';
 const walletAddress = useWalletAddress();
 const buyValue = ref(0)
 const whitelistSubscribeConfigData = ref({});
@@ -64,6 +67,7 @@ const whitelistSubscribeAmountData = ref({});
 const whitelistSubscribeResult = ref(false);
 const NFTEquitySubscribeResult = ref(false);
 const whitelistDiscountData = ref(1)
+const beforeWhitelistSubscribeConfigData = ref(1);
 const loading = ref(false)
 const transitionPay = ref(0);
 const balanceValue = ref(0);
@@ -138,11 +142,15 @@ const getApiNFTEquityAmount = async () => {
 const getApiWhitelistDiscount = async () => {
   try {
     const { data } = await apiWhitelistDiscount(walletAddress.walletAddress)
+    beforeWhitelistSubscribeConfigData.value = data
     if (data == '1') {
       whitelistDiscountData.value = data
+      beforeWhitelistSubscribeConfigData.value = data
     } else {
+      let bigNum = new Big(1)
       let num = Number(data)
-      whitelistDiscountData.value = (1 - num) * 100
+      // bigNum.minus(num).times(100)
+      whitelistDiscountData.value = bigNum.minus(num).times(100)
     }
   } catch (err) {
     message.error(err.message)
