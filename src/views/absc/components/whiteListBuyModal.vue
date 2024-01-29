@@ -250,7 +250,7 @@ const buyWhitelistSubscribe = async () => {
 }
 
 const changePay = () => {
-  transitionPay.value = buyValue.value * whitelistSubscribeConfigData.value?.tokenBnbRate / Number(whitelistDiscountData.value)
+  transitionPay.value = buyValue.value * whitelistSubscribeConfigData.value?.tokenBnbRate / Number(beforeWhitelistSubscribeConfigData.value)
 }
 
 const getBalanceValue = async () => {
