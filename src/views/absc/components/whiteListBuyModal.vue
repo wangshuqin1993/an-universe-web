@@ -3,7 +3,7 @@
     <div class="relative">
       <div class="mt-[50px] buy-input-item">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay ({{
-          `Max: ${whitelistSubscribeConfigData?.maxAllocation - whitelistSubscribeAmountData?.amount} ` }})</div>
+          `Max: ${maxValue} ` }})</div>
         <a-input v-model:value="buyValue" placeholder="Please enter" @change="changePay">
           <template #suffix>
             <div>BNB</div>
@@ -54,7 +54,7 @@
   </a-modal>
 </template>
 <script lang='ts' setup>
-import { ref, toRefs, onMounted, watch } from "vue";
+import { ref, toRefs, onMounted, watch, computed } from "vue";
 import { message } from "ant-design-vue";
 import { apiWhitelistVerify, apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiNFTEquityAmount, apiWhitelistDiscount, apiNFTEquityDiscount, apiWhitelistSubscribe, apiNFTEquitySubscribe, apiWhitelistAddress } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
@@ -71,7 +71,6 @@ const beforeWhitelistSubscribeConfigData = ref(1);
 const loading = ref(false)
 const transitionPay = ref(0);
 const balanceValue = ref(0);
-const maxValue = ref(0)
 const checkResult = ref(true)
 const messageInfo = ref('')
 const bayMaxvalue = ref(0)
@@ -101,7 +100,7 @@ const closeModal = () => {
 }
 
 const getMaxValue = () => {
-  buyValue.value = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
+  buyValue.value = new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount))
   changePay()
 }
 
@@ -215,6 +214,10 @@ const getApiWhitelistAddress = async () => {
   const { data } = await apiWhitelistAddress()
   return data
 }
+
+const maxValue = computed(() => {
+  return new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount))
+})
 
 // verify
 const verifyBuyValue = () => {
