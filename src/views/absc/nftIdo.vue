@@ -86,16 +86,27 @@
   <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
     @closeSelectedWhiteListModal="closeSelectedWhiteListModal">
   </selectWalletListModal>
+
+  <a-modal v-model:open="showConfirmModal" title="" :footer="null">
+    <div class="text-center">
+      <div class="text-[18px] mt-[20px] ">Attention</div>
+      <div class="text-[14px]">You do not hold ABSC Genesis NFTs or the NFT rights have been used, so you do not have
+        access to the exclusive
+        IDO channel.ways to obtain the whitelist.</div>
+      <div class="text-center mt-[20px]">
+        <a-button @click="showConfirmModal = false">Got it</a-button>
+      </div>
+    </div>
+  </a-modal>
 </template>
 <script lang='ts' setup>
 import { ref, onMounted, watch } from 'vue'
 import { message } from "ant-design-vue";
-import abscHeader from "@/components/absc-header.vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
-import { apiNFTEquityCheck, apiNFTEquityTime, apiNFTEquityAmount, getBnbPrice } from "@/apis/absc"
+import { apiNFTEquityCheck, apiNFTEquityTime, apiNFTEquityAmount, getBnbPrice } from "@/apis/absc";
 const walletAddress = useWalletAddress()
 const columns = ref([
   {
@@ -162,6 +173,7 @@ const btnLoading = ref(false)
 const openWhiteListBuyModal = ref(false)
 const openSelectedWhiteListModal = ref(false)
 const NFTEquityCheck = ref(false);
+const showConfirmModal = ref(false)
 const NFTEquityAmountData = ref({});
 const NFTEquityTime = ref({});
 const startExchangeTime = ref('')
@@ -174,7 +186,8 @@ const handleExchangeModal = async () => {
     if (NFTEquityCheck.value) {
       openWhiteListBuyModal.value = true;
     } else {
-      message.info('This address does not qualify for nft interest!')
+      showConfirmModal.value = true;
+      // message.info('This address does not qualify for nft interest!')
     }
     btnLoading.value = false
   } else {
@@ -188,10 +201,12 @@ const getApiNFTEquityCheck = async () => {
   try {
     const { data } = await apiNFTEquityCheck(walletAddress.walletAddress)
     NFTEquityCheck.value = data.result
+    // NFTEquityCheck.value = false
   } catch (err) {
     message.error(err.message)
   }
 }
+
 
 // 连接钱包成功
 const closeSelectedWhiteListModal = async () => {

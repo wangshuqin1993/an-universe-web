@@ -28,7 +28,6 @@
           </div>
           <ul
             class="text-[#88898A] text-[10px] md:text-[14px] text-left mt-[10px] refund-text w-full md:max-w-[908px] mx-auto">
-            <li>If the IDO is not completed within 14 days, you can full refund.</li>
             <li>If the IDO complete, The $ABSC token will can claim. Please pay attention to the official announcement.
             </li>
           </ul>

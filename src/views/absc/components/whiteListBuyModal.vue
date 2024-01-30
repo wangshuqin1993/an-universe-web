@@ -56,7 +56,7 @@
 <script lang='ts' setup>
 import { ref, toRefs, onMounted, watch } from "vue";
 import { message } from "ant-design-vue";
-import { apiWhitelistVerify, apiNFTEquityCheck, apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiNFTEquityAmount, apiWhitelistDiscount, apiNFTEquityDiscount, apiWhitelistSubscribe, apiNFTEquitySubscribe } from "@/apis/absc";
+import { apiWhitelistVerify, apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiNFTEquityAmount, apiWhitelistDiscount, apiNFTEquityDiscount, apiWhitelistSubscribe, apiNFTEquitySubscribe, apiWhitelistAddress } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import { chainApi } from "@/apis/chainApi";
 import Big from 'big.js';
@@ -72,7 +72,9 @@ const loading = ref(false)
 const transitionPay = ref(0);
 const balanceValue = ref(0);
 const maxValue = ref(0)
-const checkResult = ref(false)
+const checkResult = ref(true)
+const messageInfo = ref('')
+const bayMaxvalue = ref(0)
 
 const props = defineProps({
   openWhiteListBuyModal: {
@@ -89,15 +91,7 @@ const props = defineProps({
 const getApiWhitelistVerify = async () => {
   const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
   checkResult.value = data.joined
-}
-
-const getApiNFTEquityCheck = async () => {
-  try {
-    const { data } = await apiNFTEquityCheck(walletAddress.walletAddress)
-    checkResult.value = data.result
-  } catch (err) {
-    message.error(err.message)
-  }
+  messageInfo.value = 'The address is not whitelist'
 }
 
 const { openWhiteListBuyModal, pageName } = toRefs(props)
@@ -161,7 +155,17 @@ const getApiWhitelistDiscount = async () => {
 const getApiNFTEquityDiscount = async () => {
   try {
     const { data } = await apiNFTEquityDiscount(walletAddress.walletAddress)
-    whitelistDiscountData.value = data
+    beforeWhitelistSubscribeConfigData.value = data
+
+    if (data == '1') {
+      whitelistDiscountData.value = data
+      beforeWhitelistSubscribeConfigData.value = data
+    } else {
+      let bigNum = new Big(1)
+      let num = Number(data)
+      // bigNum.minus(num).times(100)
+      whitelistDiscountData.value = bigNum.minus(num).times(100)
+    }
   } catch (err) {
     message.error(err.message)
   }
@@ -207,10 +211,15 @@ const getApiNFTEquitySubscribe = async (hash: string) => {
   }
 }
 
+const getApiWhitelistAddress = async () => {
+  const { data } = await apiWhitelistAddress()
+  return data
+}
+
 // verify
 const verifyBuyValue = () => {
-  let bayMaxvalue = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
-  if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue) {
+  bayMaxvalue.value = new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount))
+  if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue.value) {
     // false
     return false
   } else {
@@ -222,13 +231,14 @@ const verifyBuyValue = () => {
 const buyWhitelistSubscribe = async () => {
   const isBuy = await verifyBuyValue()
   if (isBuy) {
-    if (!checkResult.value) return message.error('The address is not whitelisted');
+    if (!checkResult.value) return message.error(messageInfo.value);
     loading.value = true;
     const walletChainApi = await getChainApidata()
-    const Max = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
-    if (buyValue.value > Max) return message.error('Exceed the maximum purchase value')
+    // const Max = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
+    const whitelistAddressValue = await getApiWhitelistAddress()
+    // if (buyValue.value > Max) return message.error('Exceed the maximum purchase value')
     try {
-      const data = await walletChainApi.transfer('0x5C8D243B165215871D0E199A362CfD33E5E69230', buyValue.value.toString())
+      const data = await walletChainApi.transfer(whitelistAddressValue, buyValue.value.toString())
       // console.log(data, '交易成功')
       if (data) {
         pageName.value == 'Whitelist' ? await getApiWhitelistSubscribe(data.hash) : await getApiNFTEquitySubscribe(data.hash)
@@ -245,7 +255,7 @@ const buyWhitelistSubscribe = async () => {
       loading.value = false;
     }
   } else {
-    return message.error('Purchase value error')
+    return message.error('Out of the purchase value range')
   }
 }
 
@@ -283,7 +293,7 @@ const getChainApidata = async () => {
 }
 
 onMounted(async () => {
-  console.log(walletAddress.walletAddress, 'walletAddress.walletAddress');
+  // console.log(walletAddress.walletAddress, 'walletAddress.walletAddress');
 
   if (walletAddress.walletAddress) {
     if (pageName.value == 'Whitelist') {
@@ -293,7 +303,7 @@ onMounted(async () => {
     } else {
       //getApiNFTEquityDiscount()
       getApiNFTEquityAmount()
-      getApiNFTEquityCheck()
+      // getApiNFTEquityCheck()
     }
     // pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
     // pageName.value == 'Whitelist' ? getApiWhitelistDiscount() : getApiNFTEquityDiscount()
