@@ -37,11 +37,13 @@
       <div class="text-[#000000]">1ABSC={{ 1 / whitelistSubscribeConfigData?.tokenBnbRate *
         beforeWhitelistSubscribeConfigData }}BNB
       </div>
-      <div class="mb-[10px] text-[#818181]">{{ `(Original price: 1ABSC= ${1 / whitelistSubscribeConfigData?.tokenBnbRate})
-        BNB` }}</div>
+      <div class="mb-[10px] text-[#818181]">{{ `(Original price: 1ABSC= ${1 / whitelistSubscribeConfigData?.tokenBnbRate}
+        BNB)` }}</div>
       <div>
         <div class="text-[#6A6A6A]">
           <div v-if="whitelistDiscountData != '1'">Discount: {{ whitelistDiscountData + '% off' }}</div>
+          <div v-if="whitelistDiscountData == '1' && pageName != 'Whitelist'">Discount: {{ `-${minusValue}U (airdrop) ` }}
+          </div>
           Minimum amount: {{ whitelistSubscribeConfigData?.minAllocation }} BNB<br />
           Maximum amount: {{ whitelistSubscribeConfigData?.maxAllocation }} BNB<br />
         </div>
@@ -74,6 +76,7 @@ const balanceValue = ref(0);
 const checkResult = ref(true)
 const messageInfo = ref('')
 const bayMaxvalue = ref(0)
+const minusValue = ref(0)
 
 const props = defineProps({
   openWhiteListBuyModal: {
@@ -127,7 +130,6 @@ const getApiNFTEquityAmount = async () => {
   } catch (err) {
     message.error(err.message)
   }
-
 }
 
 
@@ -154,15 +156,14 @@ const getApiWhitelistDiscount = async () => {
 const getApiNFTEquityDiscount = async () => {
   try {
     const { data } = await apiNFTEquityDiscount(walletAddress.walletAddress)
-    beforeWhitelistSubscribeConfigData.value = data
-
-    if (data == '1') {
-      whitelistDiscountData.value = data
-      beforeWhitelistSubscribeConfigData.value = data
+    beforeWhitelistSubscribeConfigData.value = data.discount
+    minusValue.value = Number(data.amount)
+    if (data.discount == '1') {
+      whitelistDiscountData.value = data.discount
+      beforeWhitelistSubscribeConfigData.value = data.discount
     } else {
       let bigNum = new Big(1)
-      let num = Number(data)
-      // bigNum.minus(num).times(100)
+      let num = Number(data.discount)
       whitelistDiscountData.value = bigNum.minus(num).times(100)
     }
   } catch (err) {
