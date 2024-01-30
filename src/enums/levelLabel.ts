@@ -12,3 +12,9 @@ export enum StepStatusEnums {
   'process' = '2',
   'finish' = '3'
 }
+
+// purchaseValueEnums
+export enum PurchaseValueEnums{
+  'min' = '100',
+  'max' = '1500',
+}

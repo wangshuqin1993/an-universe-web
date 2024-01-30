@@ -107,12 +107,13 @@ import whiteListBuyModal from './components/whiteListBuyModal.vue';
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import { apiNFTEquityCheck, apiNFTEquityTime, apiNFTEquityAmount, getBnbPrice } from "@/apis/absc";
+import { PurchaseValueEnums } from "@/enums/levelLabel"
 const walletAddress = useWalletAddress()
 const columns = ref([
   {
-    title: 'Type',
-    dataIndex: 'type',
-    key: 'type',
+    title: 'Level',
+    dataIndex: 'level',
+    key: 'level',
     align: 'center'
   },
   {
@@ -126,45 +127,40 @@ const columns = ref([
     dataIndex: 'price',
     key: 'price',
     align: 'center'
-  }
+  },
+
 ]);
 
 const data = ref([
-  // {
-  //   key: '1',
-  //   type: 'UR',
-  //   price: 13,
-  //   quota: 'Discount voucher 70% during $ABSC IDO',
-  // },
   {
     key: '2',
-    type: 'SSR',
-    price: 40,
-    quota: 'Discount voucher 80% during $ABSC IDO',
+    level: 'SSR',
+    price: 'Discount voucher 80% during $ABSC IDO',
+    quota: `${PurchaseValueEnums['min']}u<=Q<=${PurchaseValueEnums['max']}u`,
   },
   {
     key: '3',
-    type: 'SR',
-    price: 65,
-    quota: 'Discount voucher 90% during $ABSC IDO',
+    level: 'SR',
+    price: 'Discount voucher 90% during $ABSC IDO',
+    quota: `${PurchaseValueEnums['min']}u<=Q<=${PurchaseValueEnums['max']}u`,
   },
   {
     key: '4',
-    type: 'S',
-    price: 130,
-    quota: 'Voucher worth 80U during $ABSC IDO',
+    level: 'S',
+    price: 'Voucher worth 80U during $ABSC IDO',
+    quota: `${PurchaseValueEnums['min']}u<=Q<=${PurchaseValueEnums['max']}u`,
   },
   {
     key: '5',
-    type: 'R',
-    price: 260,
-    quota: 'Voucher worth 50U during $ABSC IDO',
+    level: 'R',
+    price: 'Voucher worth 50U during $ABSC IDO',
+    quota: `${PurchaseValueEnums['min']}u<=Q<=${PurchaseValueEnums['max']}u`,
   },
   {
     key: '6',
-    type: 'N',
-    price: 492,
-    quota: 'Voucher worth 30U during $ABSC IDO',
+    level: 'N',
+    price: 'Voucher worth 30U during $ABSC IDO',
+    quota: `${PurchaseValueEnums['min']}u<=Q<=${PurchaseValueEnums['max']}u`,
   },
 ]);
 
