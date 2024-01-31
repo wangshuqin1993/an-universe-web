@@ -326,7 +326,7 @@ const getBNBBalance = async () => {
 const getApiIDOLaunchTime = async () => {
   const data = stageTime.value[stageValue.value - 1];
   state.IDOLaunchInfoData = data
-  state.IDOLaunchInfoData.startTime = state.IDOLaunchInfoData.startTime.slice(0, -3)
+  state.IDOLaunchInfoData.startTime = state.IDOLaunchInfoData.startTime
   if (data.status == '1') {
     disabled.value = true
     btnInfo.value = 'Coming Soon'
