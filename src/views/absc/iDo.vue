@@ -305,7 +305,7 @@ const buyIDOSubscribe = async () => {
   const walletApiIDO = await getIDOApiData()
   try {
     const txh = await walletApiIDO.purchase(String(buyValue.value))
-    console.log(txh, 'txh')
+    // console.log(txh, 'txh')
     await getTokensBalanceData()
     openIDOBuyModal.value = false;
     loading.value = false

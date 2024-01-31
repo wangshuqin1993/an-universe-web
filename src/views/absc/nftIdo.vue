@@ -243,7 +243,7 @@ const getWhitelistSubscribeResult = () => {
 onMounted(() => {
   getapiNFTEquityTime()
   getBnbPrice().then((res) => {
-    console.log(res);
+    // console.log(res);
   });
 })
 

@@ -35,10 +35,8 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
-import abscHeader from "@/components/absc-header.vue";
-import abscFooter from "@/components/absc-footer.vue";
+import abscFooter from "@/components/absc-Footer.vue";
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
-import { message } from "ant-design-vue";
 import { DownOutlined } from '@ant-design/icons-vue';
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { useWalletAddress } from "@/stores/useWalletAddress";
@@ -67,31 +65,6 @@ const apolloClient = new ApolloClient({
   cache,
 })
 
-// const connectWallet = async () => {
-//   if (isMobile.value && !isOKApp.value) {
-//     const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent(baseUrl.value));
-//     window.location.href = encodedUrl;
-//   } else {
-//     try {
-//       const response = await okxwallet.request({ method: 'eth_requestAccounts' });
-//       const res = await okxwallet.request({
-//         method: 'wallet_switchEthereumChain',
-//         params: [{ chainId: '0x38' }],
-//       });
-//       if (window.okxwallet?.selectedAddress) {
-//         let address = window.okxwallet.selectedAddress
-//         walletAddress.setWalletAddress(address);
-//         btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
-//       } else {
-//         message.info('Please provide a wallet that supports BSC!')
-//       }
-//       openSelectedWhiteListModal.value = false
-//     } catch (error) {
-//       message.error(error.message)
-//     }
-//   }
-// }
-
 const disConnectWallet = async () => {
   let walletName = localStorage.getItem('walletName') || ''
   if (walletName != '') {
@@ -107,35 +80,6 @@ const disConnectWallet = async () => {
       // window.location.reload()
     }
   }
-  // if (window.okxwallet?.selectedAddress) {
-  //   let connectionStatus = await window.okxwallet?.isConnected();
-  //   if (connectionStatus) {
-  //     try {
-  //       const response = await window.okxwallet.disconnect()
-  //       walletAddress.setWalletAddress('');
-  //       btnInfo.value = 'connect wallet'
-  //       window.location.reload()
-  //     } catch (error) {
-  //       message.error(error.message)
-  //     }
-  //   }
-  // } else {
-  //   let connectionStatus = await window.ethereum?.isConnected()
-  //   if (connectionStatus) {
-  //     // try {
-  //     //   await window.ethereum.disconnect()
-  //     //   walletAddress.setWalletAddress('');
-  //     //   window.location.reload()
-  //     //   btnInfo.value = 'connect wallet'
-  //     // } catch (error) {
-  //     //   message.error(error.message)
-  //     // }
-  //     walletAddress.setWalletAddress('');
-  //     localStorage.removeItem('metaMaskWalletAddress')
-  //     window.location.reload()
-  //     btnInfo.value = 'connect wallet'
-  //   }
-  // }
 }
 
 const getIsMobils = async () => {
@@ -162,23 +106,11 @@ onMounted(async () => {
     walletAddress.setWalletAddress('');
     btnInfo.value = 'connect wallet'
   }
-  // if (isMobile.value) {
-  //   if (window.okxwallet?.selectedAddress) {
-  //     let address = window.okxwallet?.selectedAddress;
-  //     walletAddress.setWalletAddress(address);
-  //     btnInfo.value = address.substring(0, 5) + "..." + address.substring(address.length - 4);
-  //   } else {
-  //     let address = window.ethereum?.selectedAddress;
-  //     walletAddress.setWalletAddress(address);
-  //     btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
-  //   }
-  // }
 })
 
 watch(() => walletAddress.walletAddress,
   (newVal, _oldVal) => {
     if (newVal != '') {
-      // console.log(newVal, 'header watch walletAddress')
       walletAddress.setWalletAddress(newVal)
       btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
     }
