@@ -305,6 +305,7 @@ const buyIDOSubscribe = async () => {
   const walletApiIDO = await getIDOApiData()
   try {
     const txh = await walletApiIDO.purchase(String(buyValue.value))
+    console.log(txh, 'txh')
     await getTokensBalanceData()
     openIDOBuyModal.value = false;
     loading.value = false
@@ -312,7 +313,7 @@ const buyIDOSubscribe = async () => {
     transitionPay.value = 0
     message.success('Successfully')
     if (params?.invite_code && Object.prototype.toString.call(params?.invite_code) === "[object String]") {
-      getApiIDOInvite(txh.hash)
+      getApiIDOInvite(txh.transactionHash)
     }
   } catch (err) {
     const walletApiChain = await getChainApiData()
