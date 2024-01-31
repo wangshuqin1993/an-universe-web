@@ -19,6 +19,11 @@ let router = createRouter({
       component: () => import('@/views/absc/iDo.vue'),
     },
     {
+      path: "/ido/:invite_code",
+      name: "IDO_INVITE",
+      component: () => import('@/views/absc/iDo.vue'),
+    },
+    {
       path: "/whitelist",
       name: "Whitelist(IDO)",
       component: () => import('@/views/absc/whiteList.vue'),
