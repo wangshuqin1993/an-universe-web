@@ -15,9 +15,9 @@
       <div
         class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center md:mt-[49px] mt-[30px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-full border border-[#463947] border-solid mx-auto">
         <span class="pt-[15px] px-[21px] font-bold md:text-[20px] text-[16px] text-[#fff]">{{
-          startExchangeTime }} am — {{
+          startExchangeTime }}  — {{
     endExchangeTime }}
-          am(UTC+8)</span>
+          (UTC+8)</span>
         <span class="pb-[15px] text-[#8D8D8D] md:text-[18px] text-[14px]">Exchange time</span>
       </div>
       <div class="text-center md:mt-[40px] mt-[20px]">
@@ -67,7 +67,7 @@
 
             IDO quotas, as described below.
             <div class="mt-[12px]">
-              Exchange time:{{ startExchangeTime }} am—— {{ endExchangeTime }} am (UTC+8)
+              Exchange time:{{ startExchangeTime }} —— {{ endExchangeTime }} (UTC+8)
             </div>
           </span>
         </div>
