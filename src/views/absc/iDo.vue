@@ -137,7 +137,7 @@ import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice, apiIDOInvite } from 
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import Big from 'big.js';
-const { query } = useRoute();
+const { params } = useRoute();
 const walletAddress = useWalletAddress()
 const state = reactive({
   IDOLaunchInfoData: {}
@@ -244,7 +244,7 @@ const getIDOApiData = () => {
     const ido = new IDOApi(window.ethereum, 'test');
     return ido
   } else {
-    return undefined
+    return new IDOApi(undefined, 'test')
   }
   // if (window.okxwallet?.selectedAddress) {
   //   const ido = new IDOApi(window.okxwallet, 'test');
@@ -294,7 +294,7 @@ const toClaim = async () => {
 
 
 const getApiIDOInvite = async (hash: string) => {
-  const res = await apiIDOInvite(walletAddress.walletAddress, hash, query?.invite_code)
+  const res = await apiIDOInvite(walletAddress.walletAddress, hash, String(params?.invite_code))
 }
 
 
@@ -311,7 +311,7 @@ const buyIDOSubscribe = async () => {
     buyValue.value = 0;
     transitionPay.value = 0
     message.success('Successfully')
-    if (query?.invite_code) {
+    if (params?.invite_code && params?.invite_code instanceof String) {
       getApiIDOInvite(txh.hash)
     }
   } catch (err) {
