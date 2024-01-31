@@ -1923,7 +1923,7 @@
     "es5-ext" "^0.10.50"
     "type" "^1.0.1"
 
-"dayjs@^1.10.5":
+"dayjs@^1.10.5", "dayjs@^1.11.10":
   "integrity" "sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ=="
   "resolved" "https://registry.npmmirror.com/dayjs/-/dayjs-1.11.10.tgz"
   "version" "1.11.10"

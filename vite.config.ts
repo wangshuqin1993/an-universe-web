@@ -6,6 +6,10 @@ import { fileURLToPath, URL } from "node:url";
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv) => defineConfig({
   plugins: [vue()],
+  define: {
+    "process.env": process.env ?? {},
+  },
+  base: "/",
   build: {
     outDir: 'dist', // 打包文件的输出目录
     assetsDir: 'static', // 静态资源的存放目录

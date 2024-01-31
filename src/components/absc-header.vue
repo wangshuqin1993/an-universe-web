@@ -9,10 +9,12 @@
           <img src="@/assets/images/mobileShow.png" class="w-[24px] mt-[10px]" />
         </div>
         <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
-          <div v-for="item in menuList" :key="item.path"
-            class="md:mr-[50px] mr-[16px] self-center cursor-pointer hover:text-[#F41FFF]" @click="router.push(item.path)"
+          <div v-for="item in menuList" :key="item.path" @click="router.push(item.path)" class="self-center"
             :class="{ 'selected-header-menu': selectedNavTitle === item.name }">
-            {{ item.name }}
+
+            <div class="md:mr-[50px] mr-[16px] cursor-pointer hover:text-[#F41FFF]" v-if="item.meta.isShow">
+              {{ item.name }}
+            </div>
           </div>
 
           <a-button class="w-[178px] text-[18px] h-[42px] rounded-[12px]" @click="openSelectedWhiteListModal = true"
@@ -45,7 +47,9 @@
         <div v-for="item in menuList" :key="item.path"
           class="md:mr-[50px] mr-[16px] self-center cursor-pointer hover:text-[#F41FFF] mb-[30px]"
           @click="changeRouter(item)" :class="{ 'selected-header-menu': selectedNavTitle === item.name }">
-          {{ item.name }}
+          <div v-if="item.meta.isShow">
+            {{ item.name }}
+          </div>
         </div>
       </div>
     </a-drawer>
@@ -72,8 +76,9 @@ const openSelectedWhiteListModal = ref(false);
 const selectedNavTitle = ref('Home');
 const btnInfo = ref('');
 const contentWrapperStyle = ref({ 'backfround-color': '#1F1F1F' })
-const menuList = ref([{ name: 'Home', path: '/' }, { name: 'NFT', path: '/mint' }, { name: 'Whitelist(IDO)', path: '/whitelist' }, { name: 'NFT(IDO)', path: '/nftIdo' }, { name: 'IDO', path: '/ido' }])
+// const menuList = ref([{ name: 'Home', path: '/' }, { name: 'NFT', path: '/mint' }, { name: 'Whitelist(IDO)', path: '/whitelist' }, { name: 'NFT(IDO)', path: '/nftIdo' }, { name: 'IDO', path: '/ido' }])
 
+const menuList = router.options.routes
 // 与 API 的 HTTP 连接
 const httpLink = createHttpLink({
   // 你需要在这里使用绝对路径

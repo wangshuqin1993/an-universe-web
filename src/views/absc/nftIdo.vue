@@ -214,8 +214,8 @@ const closeSelectedWhiteListModal = async () => {
 const getapiNFTEquityTime = async () => {
   const { data } = await apiNFTEquityTime()
   NFTEquityTime.value = data
-  startExchangeTime.value = NFTEquityTime.value.start?.slice(0, -3)
-  endExchangeTime.value = NFTEquityTime.value.end?.slice(0, -3)
+  startExchangeTime.value = NFTEquityTime.value.start
+  endExchangeTime.value = NFTEquityTime.value.end
   console.log('NFTEquityTime.value', NFTEquityTime.value)
   if (data.status == '1') {
     btnInfo.value = 'IDO(coming soon)';
