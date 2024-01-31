@@ -244,7 +244,7 @@ const getIDOApiData = () => {
     const ido = new IDOApi(window.ethereum, 'test');
     return ido
   } else {
-    return undefined
+    return new IDOApi(undefined, 'test')
   }
   // if (window.okxwallet?.selectedAddress) {
   //   const ido = new IDOApi(window.okxwallet, 'test');

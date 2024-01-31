@@ -66,6 +66,10 @@ const connectWallet = async (id: number) => {
     } else {
       // 小狐狸地址
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x61' }], });
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x61' }],
+      });
       walletAddress.setWalletAddress(accounts[0]);
       localStorage.setItem('metaMaskWalletAddress', accounts[0])
       localStorage.setItem('walletName', 'MetaMask')
