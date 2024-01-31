@@ -6,7 +6,7 @@
         <span class="font-bold title-text">ABSC</span>
       </div>
       <div class="md:text-[18px] text-[14px]">
-        <span class="title-text">$ABSC: Asset Base in Bmaker & Btc Stable Coin Paradigm</span>
+        <span class="title-text">$ABSC: Asset Base in Bmaker & BTC Stable Coin Paradigm</span>
       </div>
     </div>
     <div class="mobile-min-btn position text-[#ffffff]" v-if="isMobile">

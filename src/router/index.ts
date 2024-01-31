@@ -40,7 +40,7 @@ let router = createRouter({
       name: "NFT(IDO)",
       component: () => import('@/views/absc/nftIdo.vue'),
       meta: {
-        isShow: false,
+        isShow: true,
       }
     },
     {
@@ -48,7 +48,7 @@ let router = createRouter({
       name: "IDO",
       component: () => import('@/views/absc/iDo.vue'),
       meta: {
-        isShow: false,
+        isShow: true,
       }
     },
   ],
