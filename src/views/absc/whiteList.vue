@@ -20,9 +20,9 @@
     <div>
       <div
         class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center md:mt-[49px] mt-[30px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-full border border-[#463947] border-solid mx-auto">
-        <span class="pt-[15px] px-[21px] font-bold md:text-[20px] text-[16px] text-[#fff]">{{ startTime }} am — {{
+        <span class="pt-[15px] px-[21px] font-bold md:text-[20px] text-[16px] text-[#fff]">{{ startTime }}  — {{
           endTime }}
-          am(UTC+8)</span>
+          (UTC+8)</span>
         <span class="pb-[15px] text-[#8D8D8D] md:text-[18px] text-[14px]">Exchange time</span>
       </div>
       <div class="text-center md:mt-[40px] mt-[20px]">
@@ -81,7 +81,7 @@
 
           500,000 ABSC inscriptions, and each address can only exchange once for each NFT.
           <div class="mt-[12px]">
-            Exchange time:{{ startTime }} am—— {{ endTime }} am (UTC+8)
+            Exchange time:{{ startTime }} —— {{ endTime }}  (UTC+8)
           </div>
         </span>
       </div>

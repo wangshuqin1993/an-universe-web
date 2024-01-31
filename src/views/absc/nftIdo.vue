@@ -15,9 +15,9 @@
       <div
         class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center md:mt-[49px] mt-[30px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-full border border-[#463947] border-solid mx-auto">
         <span class="pt-[15px] px-[21px] font-bold md:text-[20px] text-[16px] text-[#fff]">{{
-          startExchangeTime }} am — {{
+          startExchangeTime }}  — {{
     endExchangeTime }}
-          am(UTC+8)</span>
+          (UTC+8)</span>
         <span class="pb-[15px] text-[#8D8D8D] md:text-[18px] text-[14px]">Exchange time</span>
       </div>
       <div class="text-center md:mt-[40px] mt-[20px]">
@@ -25,7 +25,7 @@
           :disabled="disabled">{{ btnInfo }}
         </a-button>
       </div>
-      <div v-if="NFTEquityTime.status == '2' && walletAddress.walletAddress " class="text-center text-[#fff] mt-[20px]">
+      <div v-if="NFTEquityTime.status == '2' && walletAddress.walletAddress" class="text-center text-[#fff] mt-[20px]">
         Your $ABSC balance: <span class="text-[#E527FF]">{{
           NFTEquityAmountData.abscAmount }}</span> ABSC
       </div>
@@ -67,7 +67,7 @@
 
             IDO quotas, as described below.
             <div class="mt-[12px]">
-              Exchange time:{{ startExchangeTime }} am—— {{ endExchangeTime }} am (UTC+8)
+              Exchange time:{{ startExchangeTime }} —— {{ endExchangeTime }} (UTC+8)
             </div>
           </span>
         </div>
@@ -86,22 +86,34 @@
   <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
     @closeSelectedWhiteListModal="closeSelectedWhiteListModal">
   </selectWalletListModal>
+
+  <a-modal v-model:open="showConfirmModal" title="" :footer="null">
+    <div class="text-center">
+      <div class="text-[18px] mt-[20px] ">Attention</div>
+      <div class="text-[14px]">You do not hold ABSC Genesis NFTs or the NFT rights have been used, so you do not have
+        access to the exclusive
+        IDO channel.ways to obtain the whitelist.</div>
+      <div class="text-center mt-[20px]">
+        <a-button @click="showConfirmModal = false">Got it</a-button>
+      </div>
+    </div>
+  </a-modal>
 </template>
 <script lang='ts' setup>
 import { ref, onMounted, watch } from 'vue'
 import { message } from "ant-design-vue";
-import abscHeader from "@/components/absc-header.vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
-import { apiNFTEquityCheck, apiNFTEquityTime, apiNFTEquityAmount, getBnbPrice } from "@/apis/absc"
+import { apiNFTEquityCheck, apiNFTEquityTime, apiNFTEquityAmount, getBnbPrice } from "@/apis/absc";
+import { PurchaseValueEnums } from "@/enums/levelLabel"
 const walletAddress = useWalletAddress()
 const columns = ref([
   {
-    title: 'Type',
-    dataIndex: 'type',
-    key: 'type',
+    title: 'Level',
+    dataIndex: 'level',
+    key: 'level',
     align: 'center'
   },
   {
@@ -115,53 +127,49 @@ const columns = ref([
     dataIndex: 'price',
     key: 'price',
     align: 'center'
-  }
+  },
+
 ]);
 
 const data = ref([
-  // {
-  //   key: '1',
-  //   type: 'UR',
-  //   price: 13,
-  //   quota: 'Discount voucher 70% during $ABSC IDO',
-  // },
   {
     key: '2',
-    type: 'SSR',
-    price: 40,
-    quota: 'Discount voucher 80% during $ABSC IDO',
+    level: 'SSR',
+    price: 'Discount voucher 80% during $ABSC IDO',
+    quota: `${PurchaseValueEnums['min']}u<=Q<=${PurchaseValueEnums['max']}u`,
   },
   {
     key: '3',
-    type: 'SR',
-    price: 65,
-    quota: 'Discount voucher 90% during $ABSC IDO',
+    level: 'SR',
+    price: 'Discount voucher 90% during $ABSC IDO',
+    quota: `${PurchaseValueEnums['min']}u<=Q<=${PurchaseValueEnums['max']}u`,
   },
   {
     key: '4',
-    type: 'S',
-    price: 130,
-    quota: 'Voucher worth 80U during $ABSC IDO',
+    level: 'S',
+    price: 'Voucher worth 80U during $ABSC IDO',
+    quota: `${PurchaseValueEnums['min']}u<=Q<=${PurchaseValueEnums['max']}u`,
   },
   {
     key: '5',
-    type: 'R',
-    price: 260,
-    quota: 'Voucher worth 50U during $ABSC IDO',
+    level: 'R',
+    price: 'Voucher worth 50U during $ABSC IDO',
+    quota: `${PurchaseValueEnums['min']}u<=Q<=${PurchaseValueEnums['max']}u`,
   },
   {
     key: '6',
-    type: 'N',
-    price: 492,
-    quota: 'Voucher worth 30U during $ABSC IDO',
+    level: 'N',
+    price: 'Voucher worth 30U during $ABSC IDO',
+    quota: `${PurchaseValueEnums['min']}u<=Q<=${PurchaseValueEnums['max']}u`,
   },
 ]);
 
-const disabled = ref(false);
+const disabled = ref(true);
 const btnLoading = ref(false)
 const openWhiteListBuyModal = ref(false)
 const openSelectedWhiteListModal = ref(false)
 const NFTEquityCheck = ref(false);
+const showConfirmModal = ref(false)
 const NFTEquityAmountData = ref({});
 const NFTEquityTime = ref({});
 const startExchangeTime = ref('')
@@ -174,7 +182,8 @@ const handleExchangeModal = async () => {
     if (NFTEquityCheck.value) {
       openWhiteListBuyModal.value = true;
     } else {
-      message.info('This address does not qualify for nft interest!')
+      showConfirmModal.value = true;
+      // message.info('This address does not qualify for nft interest!')
     }
     btnLoading.value = false
   } else {
@@ -188,10 +197,12 @@ const getApiNFTEquityCheck = async () => {
   try {
     const { data } = await apiNFTEquityCheck(walletAddress.walletAddress)
     NFTEquityCheck.value = data.result
+    // NFTEquityCheck.value = false
   } catch (err) {
     message.error(err.message)
   }
 }
+
 
 // 连接钱包成功
 const closeSelectedWhiteListModal = async () => {
@@ -232,7 +243,7 @@ const getWhitelistSubscribeResult = () => {
 onMounted(() => {
   getapiNFTEquityTime()
   getBnbPrice().then((res) => {
-    console.log(res);
+    // console.log(res);
   });
 })
 

@@ -3,7 +3,7 @@
     <div class="relative">
       <div class="mt-[50px] buy-input-item">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay ({{
-          `Max: ${whitelistSubscribeConfigData?.maxAllocation - whitelistSubscribeAmountData?.amount} ` }})</div>
+          `Max: ${maxValue} ` }})</div>
         <a-input v-model:value="buyValue" placeholder="Please enter" @change="changePay">
           <template #suffix>
             <div>BNB</div>
@@ -33,10 +33,17 @@
     </div>
 
     <div class="text-[12px] bg-[#F7F7F7] rounded-[8px] px-[30px] py-[20px] mt-[20px]">
-      <div class="text-[#343434]">1ABSC={{ 1 / whitelistSubscribeConfigData?.tokenBnbRate }}BNB</div>
+      <!-- {{ whitelistSubscribeConfigData?.tokenBnbRate }} -->
+      <div class="text-[#000000]">1ABSC={{ 1 / whitelistSubscribeConfigData?.tokenBnbRate *
+        beforeWhitelistSubscribeConfigData }}BNB
+      </div>
+      <div class="mb-[10px] text-[#818181]">{{ `(Original price: 1ABSC= ${1 / whitelistSubscribeConfigData?.tokenBnbRate}
+        BNB)` }}</div>
       <div>
-        <div class="text-[#FF3653]">
-          <div v-if="whitelistDiscountData != '1'">Discount: {{ whitelistDiscountData }}</div>
+        <div class="text-[#6A6A6A]">
+          <div v-if="whitelistDiscountData != '1'">Discount: {{ whitelistDiscountData + '% off' }}</div>
+          <div v-if="whitelistDiscountData == '1' && pageName != 'Whitelist'">Discount: {{ `-${minusValue}U (airdrop) ` }}
+          </div>
           Minimum amount: {{ whitelistSubscribeConfigData?.minAllocation }} BNB<br />
           Maximum amount: {{ whitelistSubscribeConfigData?.maxAllocation }} BNB<br />
         </div>
@@ -49,11 +56,12 @@
   </a-modal>
 </template>
 <script lang='ts' setup>
-import { ref, toRefs, onMounted, watch } from "vue";
+import { ref, toRefs, onMounted, watch, computed } from "vue";
 import { message } from "ant-design-vue";
-import { apiWhitelistVerify, apiNFTEquityCheck, apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiNFTEquityAmount, apiWhitelistDiscount, apiNFTEquityDiscount, apiWhitelistSubscribe, apiNFTEquitySubscribe } from "@/apis/absc";
+import { apiWhitelistVerify, apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiNFTEquityAmount, apiWhitelistDiscount, apiNFTEquityDiscount, apiWhitelistSubscribe, apiNFTEquitySubscribe, apiWhitelistAddress } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
-import { chainApi } from "@/apis/chainApi"
+import { chainApi } from "@/apis/chainApi";
+import Big from 'big.js';
 const walletAddress = useWalletAddress();
 const buyValue = ref(0)
 const whitelistSubscribeConfigData = ref({});
@@ -61,11 +69,14 @@ const whitelistSubscribeAmountData = ref({});
 const whitelistSubscribeResult = ref(false);
 const NFTEquitySubscribeResult = ref(false);
 const whitelistDiscountData = ref(1)
+const beforeWhitelistSubscribeConfigData = ref(1);
 const loading = ref(false)
 const transitionPay = ref(0);
 const balanceValue = ref(0);
-const maxValue = ref(0)
-const checkResult = ref(false)
+const checkResult = ref(true)
+const messageInfo = ref('')
+const bayMaxvalue = ref(0)
+const minusValue = ref(0)
 
 const props = defineProps({
   openWhiteListBuyModal: {
@@ -82,15 +93,7 @@ const props = defineProps({
 const getApiWhitelistVerify = async () => {
   const { data } = await apiWhitelistVerify(walletAddress.walletAddress)
   checkResult.value = data.joined
-}
-
-const getApiNFTEquityCheck = async () => {
-  try {
-    const { data } = await apiNFTEquityCheck(walletAddress.walletAddress)
-    checkResult.value = data.result
-  } catch (err) {
-    message.error(err.message)
-  }
+  messageInfo.value = 'The address is not whitelist'
 }
 
 const { openWhiteListBuyModal, pageName } = toRefs(props)
@@ -100,7 +103,7 @@ const closeModal = () => {
 }
 
 const getMaxValue = () => {
-  buyValue.value = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
+  buyValue.value = new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount))
   changePay()
 }
 
@@ -118,6 +121,7 @@ const getApiWhitelistSubscribeAmount = async () => {
   }
 }
 
+
 const getApiNFTEquityAmount = async () => {
   try {
     const { data } = await apiNFTEquityAmount(walletAddress.walletAddress)
@@ -126,7 +130,6 @@ const getApiNFTEquityAmount = async () => {
   } catch (err) {
     message.error(err.message)
   }
-
 }
 
 
@@ -134,7 +137,16 @@ const getApiNFTEquityAmount = async () => {
 const getApiWhitelistDiscount = async () => {
   try {
     const { data } = await apiWhitelistDiscount(walletAddress.walletAddress)
-    whitelistDiscountData.value = data
+    beforeWhitelistSubscribeConfigData.value = data
+    if (data == '1') {
+      whitelistDiscountData.value = data
+      beforeWhitelistSubscribeConfigData.value = data
+    } else {
+      let bigNum = new Big(1)
+      let num = Number(data)
+      // bigNum.minus(num).times(100)
+      whitelistDiscountData.value = bigNum.minus(num).times(100)
+    }
   } catch (err) {
     message.error(err.message)
   }
@@ -144,7 +156,16 @@ const getApiWhitelistDiscount = async () => {
 const getApiNFTEquityDiscount = async () => {
   try {
     const { data } = await apiNFTEquityDiscount(walletAddress.walletAddress)
-    whitelistDiscountData.value = data
+    beforeWhitelistSubscribeConfigData.value = data.discount
+    minusValue.value = Number(data.amount)
+    if (data.discount == '1') {
+      whitelistDiscountData.value = data.discount
+      beforeWhitelistSubscribeConfigData.value = data.discount
+    } else {
+      let bigNum = new Big(1)
+      let num = Number(data.discount)
+      whitelistDiscountData.value = bigNum.minus(num).times(100)
+    }
   } catch (err) {
     message.error(err.message)
   }
@@ -190,10 +211,19 @@ const getApiNFTEquitySubscribe = async (hash: string) => {
   }
 }
 
+const getApiWhitelistAddress = async () => {
+  const { data } = await apiWhitelistAddress()
+  return data
+}
+
+const maxValue = computed(() => {
+  return new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount))
+})
+
 // verify
 const verifyBuyValue = () => {
-  let bayMaxvalue = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
-  if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue) {
+  bayMaxvalue.value = new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount))
+  if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue.value) {
     // false
     return false
   } else {
@@ -205,13 +235,14 @@ const verifyBuyValue = () => {
 const buyWhitelistSubscribe = async () => {
   const isBuy = await verifyBuyValue()
   if (isBuy) {
-    if (!checkResult.value) return message.error('The address is not whitelisted');
+    if (!checkResult.value) return message.error(messageInfo.value);
     loading.value = true;
     const walletChainApi = await getChainApidata()
-    const Max = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
-    if (buyValue.value > Max) return message.error('Exceed the maximum purchase value')
+    // const Max = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
+    const whitelistAddressValue = await getApiWhitelistAddress()
+    // if (buyValue.value > Max) return message.error('Exceed the maximum purchase value')
     try {
-      const data = await walletChainApi.transfer('0x5C8D243B165215871D0E199A362CfD33E5E69230', buyValue.value.toString())
+      const data = await walletChainApi.transfer(whitelistAddressValue, buyValue.value.toString())
       // console.log(data, '交易成功')
       if (data) {
         pageName.value == 'Whitelist' ? await getApiWhitelistSubscribe(data.hash) : await getApiNFTEquitySubscribe(data.hash)
@@ -228,12 +259,12 @@ const buyWhitelistSubscribe = async () => {
       loading.value = false;
     }
   } else {
-    return message.error('Purchase value error')
+    return message.error('Out of the purchase value range')
   }
 }
 
 const changePay = () => {
-  transitionPay.value = buyValue.value * whitelistSubscribeConfigData.value?.tokenBnbRate / Number(whitelistDiscountData.value)
+  transitionPay.value = buyValue.value * whitelistSubscribeConfigData.value?.tokenBnbRate / Number(beforeWhitelistSubscribeConfigData.value)
 }
 
 const getBalanceValue = async () => {
@@ -266,7 +297,7 @@ const getChainApidata = async () => {
 }
 
 onMounted(async () => {
-  console.log(walletAddress.walletAddress, 'walletAddress.walletAddress');
+  // console.log(walletAddress.walletAddress, 'walletAddress.walletAddress');
 
   if (walletAddress.walletAddress) {
     if (pageName.value == 'Whitelist') {
@@ -276,7 +307,7 @@ onMounted(async () => {
     } else {
       //getApiNFTEquityDiscount()
       getApiNFTEquityAmount()
-      getApiNFTEquityCheck()
+      // getApiNFTEquityCheck()
     }
     // pageName.value == 'Whitelist' ? getApiWhitelistSubscribeAmount() : getApiNFTEquityAmount()
     // pageName.value == 'Whitelist' ? getApiWhitelistDiscount() : getApiNFTEquityDiscount()
@@ -335,5 +366,16 @@ watch(
 
 .ant-input-affix-wrapper {
   height: 49px;
+  font-size: 16px;
+}
+
+:deep(.ant-input-affix-wrapper-disabled) {
+  background-color: #fff;
+  color: rgba(0, 0, 0, .88)
+}
+
+:deep(.ant-input-affix-wrapper-disabled .ant-input[disabled]) {
+  color: rgba(0, 0, 0, .88);
+  font-size: 16px;
 }
 </style>

@@ -14,7 +14,7 @@
         <span class="text-[#88898A]">{{ targetAmount }}</span>
       </div>
       <div class="text-[#88898A]">
-        Amount of BNB raised: <span class="text-[#E526FF]">{{ '$' + getBnbPrice }}</span>
+        <span class="text-[#E526FF]">≈{{ '$' + getBnbPrice }}</span>
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@ import Big from 'big.js';
 const showInfo = ref(true)
 const props = defineProps({
   targetAmount: {
-    type: String,
+    type: String || Number,
     default: ''
   },
   totalAmountData: {
@@ -52,7 +52,7 @@ const getPercentValue = () => {
     showInfo.value = false
   }
   percentValue.value = totalAmountData.value / Number(targetAmount.value) * 100
-  console.log(percentValue.value, totalAmountData.value, Number(targetAmount.value), 'percentValue.value')
+  // console.log(percentValue.value, totalAmountData.value, Number(targetAmount.value), 'percentValue.value')
 }
 
 const getBnbPrice = computed(() => {

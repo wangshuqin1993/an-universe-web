@@ -20,7 +20,7 @@ export class chainApi {
   }
 
   async getBalance(address: string) {
-    console.log('getBalance', this.provider);
+    // console.log('getBalance', this.provider);
     const signer = this.provider.getSigner();
     let balance = await this.provider.getBalance(address);
     return new Promise<any>((resolve) => {
@@ -31,7 +31,7 @@ export class chainApi {
   async getTransactionErrorInfo(txHash) {
     try {
       const transactionReceipt = await this.provider.getTransactionReceipt(txHash);
-      console.log('getTransactionErrorInfo', transactionReceipt);
+      // console.log('getTransactionErrorInfo', transactionReceipt);
       const revertReason = ethers.utils.toUtf8String(
         ethers.utils.arrayify(transactionReceipt.logs[0].data)
       );

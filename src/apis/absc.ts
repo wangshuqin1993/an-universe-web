@@ -249,3 +249,12 @@ export function apiIDOInvite(address:string, hash:string, inviteCode: string)  {
     }
   });
 }
+
+
+// https://absc-mint.hamster.newtouch.com/absc/whitelist/address
+export function apiWhitelistAddress()  {
+  return httpRequest({
+    url: `/absc/whitelist/address`,
+    method: "get",
+  });
+}
