@@ -238,21 +238,14 @@ const getTokensBalanceData = async () => {
 const getIDOApiData = () => {
   let walletName = localStorage.getItem('walletName') || ''
   if (walletName == 'OKX') {
-    const ido = new IDOApi(window.okxwallet, 'test');
+    const ido = new IDOApi(window.okxwallet, 'mainnet');
     return ido
   } else if (walletName == 'MetaMask') {
-    const ido = new IDOApi(window.ethereum, 'test');
+    const ido = new IDOApi(window.ethereum, 'mainnet');
     return ido
   } else {
-    return new IDOApi(undefined, 'test')
+    return new IDOApi(undefined, 'mainnet')
   }
-  // if (window.okxwallet?.selectedAddress) {
-  //   const ido = new IDOApi(window.okxwallet, 'test');
-  //   return ido
-  // } else {
-  //   const ido = new IDOApi(window.ethereum, 'test');
-  //   return ido
-  // }
 }
 
 const getChainApiData = () => {

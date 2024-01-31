@@ -1,8 +1,8 @@
 export const networkConfig: Record<string, Record<string, string>> =
 {
   mainnet: {
-    idoToken: "",
-    erc20Token: "",
+    idoToken: "0x09905C09975908d41bA1D761487F7785D3A7BC70",
+    erc20Token: "0xDB3Fe75CF3263218f061C3E22dB037D15652d506",
     url:"https://api.zan.top/node/v1/bsc/mainnet/6b55148012b74249962002e2154d5f26",
   },
   test: {
