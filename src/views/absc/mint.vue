@@ -434,9 +434,7 @@ onMounted(async () => {
   // if (typeof window.okxwallet !== 'undefined') { console.log(window.okxwallet, 'OKX is installed!'); }
   await getIsMobils()
 
-  if (window.okxwallet?.selectedAddress) {
-    let address = window.okxwallet.selectedAddress;
-    walletAddress.setWalletAddress(address);
+  if (walletAddress.walletAddress) {
     getAbscRecord()
   }
 
