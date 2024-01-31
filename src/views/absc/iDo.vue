@@ -311,7 +311,7 @@ const buyIDOSubscribe = async () => {
     buyValue.value = 0;
     transitionPay.value = 0
     message.success('Successfully')
-    if (params?.invite_code && params?.invite_code instanceof String) {
+    if (params?.invite_code && Object.prototype.toString.call(params?.invite_code) === "[object String]") {
       getApiIDOInvite(txh.hash)
     }
   } catch (err) {
@@ -381,7 +381,7 @@ const setTimeGetAmount = () => {
 }
 
 onMounted(async () => {
-  // console.log(query, 'params');
+  // console.log(params, Object.prototype.toString.call(params?.invite_code) === "[object String]", 'params');
 
   await getStage()
   await getStageTime()
