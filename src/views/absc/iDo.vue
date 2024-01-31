@@ -137,6 +137,7 @@ import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice, apiIDOInvite } from 
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import Big from 'big.js';
+import * as dayjs from 'dayjs';
 const { params } = useRoute();
 const walletAddress = useWalletAddress()
 const state = reactive({
@@ -333,7 +334,7 @@ const getBNBBalance = async () => {
 const getApiIDOLaunchTime = async () => {
   const data = stageTime.value[stageValue.value - 1];
   state.IDOLaunchInfoData = data
-  state.IDOLaunchInfoData.startTime = state.IDOLaunchInfoData.startTime
+  state.IDOLaunchInfoData.startTime = dayjs(state.IDOLaunchInfoData.startTime).format('MM-DD-YYYY hh:mm A')
   if (data.status == '1') {
     disabled.value = true
     btnInfo.value = 'Coming Soon'
