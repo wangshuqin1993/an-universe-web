@@ -137,7 +137,7 @@ import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice, apiIDOInvite } from 
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import Big from 'big.js';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 const { params } = useRoute();
 const walletAddress = useWalletAddress()
 const state = reactive({
