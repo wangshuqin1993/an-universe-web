@@ -265,7 +265,7 @@ const buyWhitelistSubscribe = async () => {
 }
 
 const changePay = () => {
-  transitionPay.value = new Big(buyValue.value).times(whitelistSubscribeConfigData.value?.tokenBnbRate).div(Number(beforeWhitelistSubscribeConfigData.value))
+  transitionPay.value = new Big(buyValue.value).times(whitelistSubscribeConfigData.value?.tokenBnbRate).div(Number(beforeWhitelistSubscribeConfigData.value)).round(18)
 }
 
 const getBalanceValue = async () => {

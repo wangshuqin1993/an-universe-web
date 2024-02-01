@@ -337,7 +337,7 @@ const getApiIDOLaunchTime = async () => {
 
 
 const changePay = () => {
-  transitionPay.value = new Big(buyValue.value).times(tokenEthRateData.value).div(100);
+  transitionPay.value = new Big(buyValue.value).times(tokenEthRateData.value).div(100).round(18);
 }
 
 
