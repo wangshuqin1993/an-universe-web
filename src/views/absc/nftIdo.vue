@@ -1,11 +1,10 @@
 <template>
-  <!-- <abscHeader></abscHeader> -->
   <div class="w-full h-full bg-black pb-[75px] text-center bg-container">
     <div class="max-w-[1440px] mx-auto md:px-[0px] px-[32px]">
       <div class="title-text md:pt-[166px] pt-[100px]"><span class="title-text-color md:text-[48px] text-[30px]">$ABSC
           Token IDO</span></div>
       <div
-        class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-center md:mt-[37px] mt-[10px] text-[14px] md:text-[16px]">
+        class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-justify md:mt-[37px] mt-[10px] text-[14px] md:text-[16px]">
         In order to provide a better IDO experience for users who hold ABSC Genesis NFTs, we have
         opened an exclusive IDO channel for them, and provided corresponding IDO price discounts and exclusive
         IDO quotas, as described below.
@@ -15,7 +14,7 @@
       <div
         class="flex items-center flex-col justify-center w-[90%] md:max-w-[646px] text-center md:mt-[49px] mt-[30px] bg-[#6C6C6C] bg-opacity-[0.09] rounded-full border border-[#463947] border-solid mx-auto">
         <span class="pt-[15px] px-[21px] font-bold md:text-[20px] text-[16px] text-[#fff]">{{
-          startExchangeTime }}  — {{
+          startExchangeTime }} — {{
     endExchangeTime }}
           (UTC+8)</span>
         <span class="pb-[15px] text-[#8D8D8D] md:text-[18px] text-[14px]">Exchange time</span>
@@ -41,7 +40,7 @@
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
         <span
-          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">As
+          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-justify md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">As
           the mapping token of
           the leading inscription ABSC based on APT-20 on the BSC chain, the $ABSC token
 
@@ -58,7 +57,7 @@
         <div class="flex flex-col items-center justify-center mt-[32px]">
           <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token IDO</span>
           <span
-            class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">
+            class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-justify md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">
             In order to provide
             a
             better IDO experience for users who hold ABSC Genesis NFTs, we have
@@ -66,7 +65,7 @@
             opened an exclusive IDO channel for them, and provided corresponding IDO price discounts and exclusive
 
             IDO quotas, as described below.
-            <div class="mt-[12px]">
+            <div class="mt-[12px] text-center">
               Exchange time:{{ startExchangeTime }} —— {{ endExchangeTime }} (UTC+8)
             </div>
           </span>
@@ -90,11 +89,14 @@
   <a-modal v-model:open="showConfirmModal" title="" :footer="null">
     <div class="text-center">
       <div class="text-[18px] mt-[20px] ">Attention</div>
-      <div class="text-[14px]">You do not hold ABSC Genesis NFTs or the NFT rights have been used, so you do not have
+      <div class="text-[14px] text-left">You do not hold ABSC Genesis NFTs or the NFT rights have been used, so you do not
+        have
         access to the exclusive
-        IDO channel.ways to obtain the whitelist.</div>
+        IDO channel.<br />
+        Ways to obtain the whitelist.</div>
       <div class="text-center mt-[20px]">
-        <a-button @click="showConfirmModal = false">Got it</a-button>
+        <!-- showConfirmModal = false -->
+        <a-button @click="toGotIt" class="w-[158px] h-[41px]">Got it</a-button>
       </div>
     </div>
   </a-modal>
@@ -192,6 +194,11 @@ const handleExchangeModal = async () => {
   }
 }
 
+
+const toGotIt = () => {
+  showConfirmModal.value = false;
+  window.open(`${import.meta.env.VITE_ElEMENT_URL}`)
+}
 
 const getApiNFTEquityCheck = async () => {
   try {

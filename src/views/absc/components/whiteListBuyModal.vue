@@ -235,6 +235,7 @@ const verifyBuyValue = () => {
 const buyWhitelistSubscribe = async () => {
   const isBuy = await verifyBuyValue()
   if (isBuy) {
+    if (buyValue.value > balanceValue.value) return message.error('Insufficient Balance')
     if (!checkResult.value) return message.error(messageInfo.value);
     loading.value = true;
     const walletChainApi = await getChainApidata()
@@ -264,13 +265,13 @@ const buyWhitelistSubscribe = async () => {
 }
 
 const changePay = () => {
-  transitionPay.value = buyValue.value * whitelistSubscribeConfigData.value?.tokenBnbRate / Number(beforeWhitelistSubscribeConfigData.value)
+  transitionPay.value = new Big(buyValue.value).times(whitelistSubscribeConfigData.value?.tokenBnbRate).div(Number(beforeWhitelistSubscribeConfigData.value))
 }
 
 const getBalanceValue = async () => {
   const walletChainApi = await getChainApidata()
   balanceValue.value = await walletChainApi.getBalance(walletAddress.walletAddress)
-  // console.log(balanceValue.value, 'balanceValue');
+  console.log(balanceValue.value, 'balanceValue');
 }
 
 const getChainApidata = async () => {

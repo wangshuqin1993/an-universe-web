@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+const envData = import.meta.env.VITE_NODE_ENV
+
 // absc/mint
 let router = createRouter({
   history: createWebHistory(),
@@ -40,7 +42,7 @@ let router = createRouter({
       name: "NFT(IDO)",
       component: () => import('@/views/absc/nftIdo.vue'),
       meta: {
-        isShow: false,
+        isShow: envData == 'development'? true:false,
       }
     },
     {
@@ -48,7 +50,7 @@ let router = createRouter({
       name: "IDO",
       component: () => import('@/views/absc/iDo.vue'),
       meta: {
-        isShow: false,
+        isShow: envData == 'development'? true:false,
       }
     },
   ],
