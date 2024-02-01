@@ -6,7 +6,7 @@
           Token IDO
           Whitelist</span></div>
       <div
-        class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-center md:mt-[37px] mt-[10px] text-[14px] md:text-[16px]">
+        class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-justify md:mt-[37px] mt-[10px] text-[14px] md:text-[16px]">
         The $ABSC token IDO will be conducted soon, and users who hold the whitelist can enjoy a 30% discount on the
 
         IDO price and corresponding quota. You can obtain the whitelist by participating in various activities in the ABSC
@@ -35,14 +35,14 @@
       </div>
       <div
         v-if="whitelistVerifyData.joined && walletAddress.walletAddress && whitelistSubscribeTime != '3' && whitelistVerifyData.tokenId"
-        class="text-center text-[#fff] mt-[20px]">You
+        class="text-left text-[#fff] mt-[20px]">You
         have
         obtained the <span class="text-[#E527FF]">{{ LeveLabellEnums[whitelistVerifyData?.level]
         }}</span>
         level of whitelist,
         corresponding to your NFT with
         Token ID <span class="text-[#E527FF]">{{ whitelistVerifyData.tokenId }}</span></div>
-      <div class="text-center text-[#fff] mt-[20px]" v-if="whitelistSubscribeTime == '3'">
+      <div class="text-left text-[#fff] mt-[20px]" v-if="whitelistSubscribeTime == '3'">
         The $ABSC tokens you purchased in the IDO will be airdropped directly to your wallet soon. Please pay attention to
         check it.
       </div>
@@ -53,7 +53,7 @@
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
         <span
-          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-left md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">As
+          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-justify md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">As
           the mapping token of
           the leading inscription ABSC based on APT-20 on the BSC chain, the $ABSC token
 
@@ -69,7 +69,7 @@
       <div class="flex flex-col items-center justify-center mt-[32px]">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token IDO Whitelist</span>
         <span
-          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-left md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">The
+          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-justify md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">The
           $ABSC token IDO
           will be conducted soon, and users who hold the whitelist can enjoy a 30% discount on the
 

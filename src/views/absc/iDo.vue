@@ -22,7 +22,8 @@
           </a-button>
           <div v-if="walletAddress.walletAddress" class="text-center text-[14px] text-[#fff]">
             <div> Your $ABSC balance: <span class="text-[#E527FF] mb-[10px]">{{ tokensBalanceData }} ABSC</span></div>
-            <div>The $ABSC token will enable claim function after the IDO ends. Please pay attention to the official
+            <div class="text-left">The $ABSC token will enable claim function after the IDO ends. Please pay attention to
+              the official
               announcement.</div>
           </div>
           <ul
@@ -41,7 +42,7 @@
       <div class="text-center md:mt-[86px] mt-[86px]">
         <div class="text-[#fff] md:text-[36px] text-[24px] font-bold md:mb-[32px] mb-[10px]">$ABSC Token</div>
         <div
-          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto md:text-[16px] text-[14px] text-left mb-[20px] md:mb-[30px]">
+          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto md:text-[16px] text-[14px] text-justify mb-[20px] md:mb-[30px]">
           As the governance token of the leading inscription ABSC based on APT-20 on the BSC chain,
           the $ABSC token will become the first governance token of the Bmaker ecosystem and can be exchanged with BSC
           stablecoins based on the Bmaker ecosystem.

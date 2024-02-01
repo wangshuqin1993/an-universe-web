@@ -4,7 +4,7 @@
       <div class="title-text md:pt-[166px] pt-[100px]"><span class="title-text-color md:text-[48px] text-[30px]">$ABSC
           Token IDO</span></div>
       <div
-        class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-center md:mt-[37px] mt-[10px] text-[14px] md:text-[16px]">
+        class="text-[#7C7C7C] w-[90%] md:w-[770px] w-full mx-auto text-justify md:mt-[37px] mt-[10px] text-[14px] md:text-[16px]">
         In order to provide a better IDO experience for users who hold ABSC Genesis NFTs, we have
         opened an exclusive IDO channel for them, and provided corresponding IDO price discounts and exclusive
         IDO quotas, as described below.
@@ -40,7 +40,7 @@
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
         <span
-          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-left md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">As
+          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-justify md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">As
           the mapping token of
           the leading inscription ABSC based on APT-20 on the BSC chain, the $ABSC token
 
@@ -57,7 +57,7 @@
         <div class="flex flex-col items-center justify-center mt-[32px]">
           <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token IDO</span>
           <span
-            class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-left md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">
+            class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-justify md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">
             In order to provide
             a
             better IDO experience for users who hold ABSC Genesis NFTs, we have
@@ -93,9 +93,10 @@
         have
         access to the exclusive
         IDO channel.<br />
-        ways to obtain the whitelist.</div>
+        Ways to obtain the whitelist.</div>
       <div class="text-center mt-[20px]">
-        <a-button @click="showConfirmModal = false">Got it</a-button>
+        <!-- showConfirmModal = false -->
+        <a-button @click="toGotIt" class="w-[158px] h-[41px]">Got it</a-button>
       </div>
     </div>
   </a-modal>
@@ -193,6 +194,11 @@ const handleExchangeModal = async () => {
   }
 }
 
+
+const toGotIt = () => {
+  showConfirmModal.value = false;
+  window.open(`${import.meta.env.VITE_ElEMENT_URL}`)
+}
 
 const getApiNFTEquityCheck = async () => {
   try {
