@@ -1,6 +1,5 @@
 
 <template>
-  <!-- <abscHeader></abscHeader> -->
   <div class="w-full h-full bg-black md:pb-[64px] pb-[32px] bg-container">
     <div class="max-w-[1440px] mx-auto px-[24px] md:px-[120px]">
       <div>
@@ -42,7 +41,7 @@
       <div class="text-center md:mt-[86px] mt-[86px]">
         <div class="text-[#fff] md:text-[36px] text-[24px] font-bold md:mb-[32px] mb-[10px]">$ABSC Token</div>
         <div
-          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto md:text-[16px] text-[14px] text-center mb-[20px] md:mb-[30px]">
+          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto md:text-[16px] text-[14px] text-left mb-[20px] md:mb-[30px]">
           As the governance token of the leading inscription ABSC based on APT-20 on the BSC chain,
           the $ABSC token will become the first governance token of the Bmaker ecosystem and can be exchanged with BSC
           stablecoins based on the Bmaker ecosystem.
@@ -90,7 +89,7 @@
           </template>
         </a-input>
         <div class="flex justify-between mt-[5px]">
-          <!-- <div class="text-[#6A6A6A ]">$300.12</div> -->
+          <!-- 占位用 -->
           <div></div>
           <div class="text-[#000000]">Balance: {{ BNBBalance }} BNB</div>
         </div>
@@ -126,7 +125,6 @@
 <script lang='ts' setup>
 import { ref, onMounted, watch, reactive, onUnmounted, computed } from "vue";
 import { useRoute } from "vue-router";
-import abscHeader from "@/components/absc-header.vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import { message } from "ant-design-vue";
 import Progress from "@/components/progress.vue";
@@ -247,24 +245,9 @@ const getIDOApiData = () => {
   } else {
     return new IDOApi(undefined, 'test')
   }
-  // if (window.okxwallet?.selectedAddress) {
-  //   const ido = new IDOApi(window.okxwallet, 'test');
-  //   return ido
-  // } else {
-  //   const ido = new IDOApi(window.ethereum, 'test');
-  //   return ido
-  // }
 }
 
 const getChainApiData = () => {
-  // if (window.okxwallet?.selectedAddress) {
-  //   const chain = new chainApi(window.okxwallet)
-  //   return chain
-  // } else {
-  //   const chain = new chainApi(window.ethereum)
-  //   return chain
-  // }
-
   let walletName = localStorage.getItem('walletName') || ''
   if (walletName == 'OKX') {
     const chain = new chainApi(window.okxwallet)

@@ -1,6 +1,5 @@
 
 <template>
-  <!-- <abscHeader></abscHeader> -->
   <div class="w-full h-full bg-black pb-[75px] bg-container  md:px-[32px] px-[24px]">
     <div class="max-w-[1440px] mx-auto md:px-[0px] ">
       <div class="title-text md:pt-[166px] pt-[100px]"><span class="title-text-color md:text-[48px] text-[30px]">$ABSC
@@ -54,7 +53,7 @@
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
         <span
-          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">As
+          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-left md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">As
           the mapping token of
           the leading inscription ABSC based on APT-20 on the BSC chain, the $ABSC token
 
@@ -70,7 +69,7 @@
       <div class="flex flex-col items-center justify-center mt-[32px]">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token IDO Whitelist</span>
         <span
-          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-center md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">The
+          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-left md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">The
           $ABSC token IDO
           will be conducted soon, and users who hold the whitelist can enjoy a 30% discount on the
 
@@ -80,7 +79,7 @@
           community. In addition, users who hold UR-level $BSC Genesis NFTs can exchange for the whitelist by burning
 
           500,000 ABSC inscriptions, and each address can only exchange once for each NFT.
-          <div class="mt-[12px]">
+          <div class="mt-[12px] text-center">
             Exchange time:{{ startTime }} —— {{ endTime }} (UTC+8)
           </div>
         </span>
@@ -102,7 +101,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
 import { message } from "ant-design-vue";
-import abscHeader from "@/components/absc-header.vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import WhiteListModal from './components/WhiteListModal.vue';
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
