@@ -22,7 +22,8 @@
           </a-button>
           <div v-if="walletAddress.walletAddress" class="text-center text-[14px] text-[#fff]">
             <div> Your $ABSC balance: <span class="text-[#E527FF] mb-[10px]">{{ tokensBalanceData }} ABSC</span></div>
-            <div class="text-left">The $ABSC token will enable claim function after the IDO ends. Please pay attention to
+            <div class="text-center">The $ABSC token will enable claim function after the IDO ends. Please pay attention
+              to
               the official
               announcement.</div>
           </div>
