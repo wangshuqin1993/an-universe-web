@@ -56,7 +56,7 @@
   </a-modal>
 </template>
 <script lang='ts' setup>
-import { ref, toRefs, onMounted, watch, computed } from "vue";
+import { ref, toRefs, onMounted, watch, computed, Ref } from "vue";
 import { message } from "ant-design-vue";
 import { apiWhitelistVerify, apiWhitelistSubscribeConfig, apiWhitelistSubscribeAmount, apiNFTEquityAmount, apiWhitelistDiscount, apiNFTEquityDiscount, apiWhitelistSubscribe, apiNFTEquitySubscribe, apiWhitelistAddress } from "@/apis/absc";
 import { useWalletAddress } from "@/stores/useWalletAddress";
@@ -75,7 +75,7 @@ const transitionPay = ref(0);
 const balanceValue = ref(0);
 const checkResult = ref(true)
 const messageInfo = ref('')
-const bayMaxvalue = ref(0)
+const bayMaxvalue: Ref<Big> = ref()
 const minusValue = ref(0)
 
 const props = defineProps({
@@ -223,7 +223,7 @@ const maxValue = computed(() => {
 // verify
 const verifyBuyValue = () => {
   bayMaxvalue.value = new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount))
-  if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue.value) {
+  if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || bayMaxvalue.value.lt(buyValue.value)) {
     // false
     return false
   } else {
