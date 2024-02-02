@@ -28,11 +28,15 @@
         Your $ABSC balance: <span class="text-[#E527FF]">{{
           NFTEquityAmountData.abscAmount }}</span> ABSC
       </div>
-      <div class="text-center text-[#FFF] mt-[20px] text-[14px]">The $ABSC tokens you purchased in the IDO will be
+      <div class="text-center text-[#FFF] mt-[12px] text-[14px]">The $ABSC tokens you purchased in the IDO will be
         airdropped
         directly
         to your wallet soon. Please pay attention
-        to check it.</div>
+        to check it.
+      </div>
+      <div class="text-center text-[#FFF] mt-[12px] text-[14px]">
+        IDO through NFT will not stop while the gap between rounds
+      </div>
     </div>
 
     <div

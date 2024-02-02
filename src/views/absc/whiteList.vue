@@ -35,14 +35,16 @@
       </div>
       <div
         v-if="whitelistVerifyData.joined && walletAddress.walletAddress && whitelistSubscribeTime != '3' && whitelistVerifyData.tokenId"
-        class="text-center text-[#fff] mt-[20px]">You
+        class="text-center text-[#fff] mt-[12px]">You
         have
         obtained the <span class="text-[#E527FF]">{{ LeveLabellEnums[whitelistVerifyData?.level]
         }}</span>
         level of whitelist,
         corresponding to your NFT with
         Token ID <span class="text-[#E527FF]">{{ whitelistVerifyData.tokenId }}</span></div>
-      <div class="text-center text-[#fff] mt-[20px]" v-if="whitelistSubscribeTime == '3'">
+      <div class="text-center text-[#fff] mt-[12px]">IDO through whitelist will not stop while the gap between rounds
+      </div>
+      <div class="text-center text-[#fff] mt-[12px]" v-if="whitelistSubscribeTime == '3'">
         The $ABSC tokens you purchased in the IDO will be airdropped directly to your wallet soon. Please pay attention to
         check it.
       </div>
