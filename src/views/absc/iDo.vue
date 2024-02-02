@@ -36,7 +36,7 @@
         <div class="progress pt-[30px] md:pb-[90px] pb-[70px] md:px-[45px] px-[32px] text-left">
           <div class="text-[#ffffff] md:mb-[28px] mb-[36px] md:text-[18px] text-[12px] font-bold">$ABSC Token IDO overall
             progress</div>
-          <Progress :targetAmount="'1667'" :totalAmountData="totalAmountDataAll" :bnbPriceData="bnbPriceData"
+          <Progress :targetAmount="'1658'" :totalAmountData="totalAmountDataAll" :bnbPriceData="bnbPriceData"
             :size="30"></Progress>
         </div>
       </div>
