@@ -43,10 +43,11 @@ const connectWallet = async (id: number) => {
 
   if (isMobile.value && !isOKApp.value) {
     if (id == 1) {
-      if (typeof window.okxwallet == 'undefined') return message.error('Please install the OKXWallet!')
+      // if (typeof window.okxwallet == 'undefined') return message.error('Please install the OKXWallet!')
       const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent(baseUrl.value));
       window.location.href = encodedUrl;
     } else {
+      debugger
       if (typeof window.ethereum == 'undefined') return message.error('Please install the MetaMask!')
       // 小狐狸地址
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x61' }], });

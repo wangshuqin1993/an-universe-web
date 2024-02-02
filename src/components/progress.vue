@@ -11,7 +11,8 @@
       :show-info="false" />
     <div class="md:text-[14px] text-[12px] float-right md:mt-[18px] mt-[10px]">
       <div class="text-right">
-        <span class="text-[#FF3B0F]">{{ totalAmountData }}/</span>
+        <span class="text-[#88898A]">BNB</span>
+        <span class="text-[#FF3B0F]"> {{ ' ' + totalAmountData }}/</span>
         <span class="text-[#88898A]">{{ targetAmount }}</span>
       </div>
       <div class="text-[#88898A]">
