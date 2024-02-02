@@ -108,7 +108,7 @@ import gql from 'graphql-tag';
 const { getImageURL } = useAssets();
 const walletAddress = useWalletAddress();
 const disabledWhiteListBtn = ref(true);
-const amount = ref(10);
+const amount = ref(500000);
 const abscNFTList = ref([]);
 const aptosAddress = ref('');
 const whitelistApplicationResult = ref(false);

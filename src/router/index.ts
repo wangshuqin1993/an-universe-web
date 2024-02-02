@@ -24,7 +24,7 @@ let router = createRouter({
     {
       path: "/ido/:invite_code",
       name: "IDO_INVITE",
-      component: () => import('@/views/index/index.vue'),
+      component: () => import('@/views/absc/iDo.vue'),
       meta: {
         isShow: false,
       }
@@ -42,7 +42,7 @@ let router = createRouter({
       name: "NFT(IDO)",
       component: () => import('@/views/absc/nftIdo.vue'),
       meta: {
-        isShow: envData == 'development'? true:false,
+        isShow: true,
       }
     },
     {
@@ -50,7 +50,7 @@ let router = createRouter({
       name: "IDO",
       component: () => import('@/views/absc/iDo.vue'),
       meta: {
-        isShow: envData == 'development'? true:false,
+        isShow:true,
       }
     },
   ],

@@ -86,7 +86,7 @@ const connectWallet = async (id: number) => {
     } else {
       if (typeof window.ethereum == 'undefined') return message.error('Please install the MetaMask!')
       // 小狐狸地址
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x61' }], });
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x38' }], });
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0x38' }],
