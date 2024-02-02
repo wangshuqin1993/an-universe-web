@@ -260,7 +260,7 @@ const initDataNoWhitelistVerify = async () => {
 }
 
 onMounted(async () => {
-  console.log('onMounted 查看 walletAddress：', walletAddress.walletAddress)
+  //console.log('onMounted 查看 walletAddress：', walletAddress.walletAddress)
   if (walletAddress.walletAddress) {
     // console.log('walletAddress', "sadfa")
     await initDataHasWhitelistVerify()
@@ -324,4 +324,5 @@ watch(
   border-color: transparent;
   border: 1px solid;
   border-image: linear-gradient(134deg, rgba(110, 86, 255, 0.24), rgba(240, 33, 255, 0.16)) 16px round;
-}</style>
+}
+</style>

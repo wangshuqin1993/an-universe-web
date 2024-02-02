@@ -50,7 +50,7 @@
           can be used on any chain supported by the BSC ecosystem. $ABSC token is an important value support for the
           Bmaker ecosystem-wide stablecoins.
         </div>
-        <div class="text-[#7C7C7C] mb-[20px]">Contract Address：<br />
+        <div class="text-[#7C7C7C] mb-[20px]">Contract Address:<br />
           {{ contractAddress }}
         </div>
         <div class=" w-full rounded-[10px] text-[#fff]">
@@ -228,7 +228,7 @@ const getTotalAmountDataAll = async () => {
   // console.log(mon, 'val');
   let amount = val.plus(Number(IDOLaunchAmount.value)).toString()
   totalAmountDataAll.value = Number(amount)
-  console.log(totalAmountDataAll.value, 'val测试循环');
+  //console.log(totalAmountDataAll.value, 'val测试循环');
 }
 
 // 获取 step
@@ -338,7 +338,7 @@ const getApiIDOLaunchTime = async () => {
   const data = stageTime.value[stageValue.value - 1];
   state.IDOLaunchInfoData = data
   state.IDOLaunchInfoData.startTime = dayjs(state.IDOLaunchInfoData.startTime).format('MM-DD-YYYY hh:mm A')
-  console.log(data, stageValue.value, 'data');
+  //console.log(data, stageValue.value, 'data');
   if (data.status == '1') {
     disabled.value = true
     btnInfo.value = 'Coming Soon'
@@ -378,7 +378,7 @@ const getStageTime = async () => {
   stageTime.value.push(stage2.data);
   const stage3 = await apiIDOLaunchTime(3)
   stageTime.value.push(stage3.data);
-  console.log(stageTime.value);
+  //console.log(stageTime.value);
 }
 
 const setTimeGetAmount = () => {

@@ -222,7 +222,7 @@ const getapiNFTEquityTime = async () => {
   NFTEquityTime.value = data
   startExchangeTime.value = NFTEquityTime.value.start
   endExchangeTime.value = NFTEquityTime.value.end
-  console.log('NFTEquityTime.value', NFTEquityTime.value)
+  //console.log('NFTEquityTime.value', NFTEquityTime.value)
   if (data.status == '1') {
     btnInfo.value = 'IDO(coming soon)';
     disabled.value = true;
@@ -288,4 +288,5 @@ watch(
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-}</style>
+}
+</style>
