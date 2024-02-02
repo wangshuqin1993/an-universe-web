@@ -50,7 +50,7 @@
           can be used on any chain supported by the BSC ecosystem. $ABSC token is an important value support for the
           Bmaker ecosystem-wide stablecoins.
         </div>
-        <div class="text-[#7C7C7C] mb-[20px]">Token Address：<br />
+        <div class="text-[#7C7C7C] mb-[20px]">Contract Address：<br />
           {{ contractAddress }}
         </div>
         <div class=" w-full rounded-[10px] text-[#fff]">
