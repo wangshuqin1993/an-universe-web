@@ -110,12 +110,12 @@ const disConnectWallet = async () => {
       localStorage.removeItem('metaMaskWalletAddress')
       localStorage.setItem('walletName', '')
       walletAddress.setWalletAddress('');
-      // window.location.reload()
+      window.location.reload()
     } else {
       localStorage.removeItem('OKXWalletAddress')
       localStorage.setItem('walletName', '')
       walletAddress.setWalletAddress('');
-      // window.location.reload()
+      window.location.reload()
     }
   }
   // if (window.okxwallet?.selectedAddress) {
