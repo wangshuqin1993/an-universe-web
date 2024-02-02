@@ -43,6 +43,7 @@ const connectWallet = async (id: number) => {
 
   if (isMobile.value && !isOKApp.value) {
     if (id == 1) {
+      if (typeof window.okxwallet == 'undefined') return message.error('Please install the OKXWallet!')
       const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent(baseUrl.value));
       window.location.href = encodedUrl;
     } else {
