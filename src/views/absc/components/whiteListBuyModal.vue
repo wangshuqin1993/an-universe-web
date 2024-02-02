@@ -229,8 +229,8 @@ const maxValue = computed(() => {
 const verifyBuyValue = () => {
   let bayMax = new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount)).toString()
   bayMaxvalue.value = Number(bayMax)
-  if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || bayMaxvalue.value.lt(buyValue.value)) {
-    // if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue.value) {
+  //if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || bayMaxvalue.value.lt(buyValue.value)) {
+  if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue.value) {
     // false
     return false
   } else {
