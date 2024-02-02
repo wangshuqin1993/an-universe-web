@@ -12,12 +12,12 @@
         <idoStep :stageValue="stageValue" :stageData="state.IDOLaunchInfoData" :stepAmount="totalAmountData"
           :bnbPriceData="bnbPriceData" :stages="stageTime"></idoStep>
         <div class="md:mb-[50px] mb-[40px] mt-[70px]">
-          <a-button ghost
-            class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] text-[14px] mr-[20px]">
+          <a-button ghost @click="apiWithdraw" :loading="refundLoading"
+            class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] md:text-[18px] text-[14px] mr-[20px]">
             Refund
           </a-button>
           <a-button :disabled="disabled" @click="idoBtnClick" :loading="cliamLoading"
-            class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] text-[14px]">
+            class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] md:text-[18px] text-[14px]">
             {{ btnInfo }}
           </a-button>
           <div v-if="walletAddress.walletAddress" class="text-center text-[14px] text-[#fff]">
@@ -36,7 +36,7 @@
         <div class="progress pt-[30px] md:pb-[90px] pb-[70px] md:px-[45px] px-[32px] text-left">
           <div class="text-[#ffffff] md:mb-[28px] mb-[36px] md:text-[18px] text-[12px] font-bold">$ABSC Token IDO overall
             progress</div>
-          <Progress :targetAmount="1667" :totalAmountData="totalAmountDataAll" :bnbPriceData="bnbPriceData"
+          <Progress :targetAmount="'1667'" :totalAmountData="totalAmountDataAll" :bnbPriceData="bnbPriceData"
             :size="30"></Progress>
         </div>
       </div>
@@ -44,12 +44,11 @@
         <div class="text-[#fff] md:text-[36px] text-[24px] font-bold md:mb-[32px] mb-[10px]">$ABSC Token</div>
         <div
           class="text-[#7C7C7C] md:w-[770px] w-full mx-auto md:text-[16px] text-[14px] text-justify mb-[20px] md:mb-[30px]">
-          As the governance token of the leading inscription ABSC based on APT-20 on the BSC chain,
-          the $ABSC token will become the first governance token of the Bmaker ecosystem and can be exchanged with BSC
-          stablecoins based on the Bmaker ecosystem.
-          $ABSC can also be staked to obtain the corresponding amount of Bmaker ecosystem stablecoins,
-          which can be used on any chain supported by the BSC ecosystem.
-          The $ABSC token is an important value support for the Bmaker ecosystem stablecoins.
+          $ABSC token is the governance token of BTC stablecoin on the BSC chain, and it will become the first governance
+          token of the Bmaker ecosystem. It can be exchanged with BSC stablecoins based on the Bmaker ecosystem in the
+          future. $ABSC can also be staked to obtain the corresponding amount of Bmaker ecosystem-wide stablecoins, which
+          can be used on any chain supported by the BSC ecosystem. $ABSC token is an important value support for the
+          Bmaker ecosystem-wide stablecoins.
         </div>
         <div class=" w-full rounded-[10px] text-[#fff]">
           <img src="@/assets/images/id-tokens.png" />
@@ -85,7 +84,8 @@
     <div class="relative">
       <div class="mt-[50px] buy-input-item">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay</div>
-        <a-input v-model:value="buyValue" placeholder="Please enter" @change="changePay">
+        <a-input v-model:value="buyValue" placeholder="Please enter" @change="changePay"
+          onkeyup="value=value.replace(/[^\d.]/g,'')">
           <template #suffix>
             <div>BNB</div>
           </template>
@@ -133,7 +133,7 @@ import Progress from "@/components/progress.vue";
 import idoStep from "./components/idoStep.vue";
 import { IDOApi } from "@/apis/idoApi"
 import { chainApi } from "@/apis/chainApi"
-import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice, apiIDOInvite } from "@/apis/absc"
+import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice, apiIDOInvite, apiWhitelistTotal } from "@/apis/absc"
 import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import Big from 'big.js';
@@ -158,13 +158,15 @@ const totalAmountDataAll = ref(0)
 const bnbPriceData = ref(0)
 const IDOLaunchAmount = ref('')
 const cliamLoading = ref(false);
+const refundLoading = ref(false);
 
 const transitionPay = ref(0)
 
 const intervalData: any = ref()
 
 const tokenRate = computed(() => {
-  return new Big(100).div(tokenEthRateData.value);
+  let val = new Big(100).div(tokenEthRateData.value).toString()
+  return Number(val)
 })
 
 
@@ -202,7 +204,11 @@ const getTokenEthRateData = async () => {
 const getTotalAmountData = async () => {
   const walletApiIDO = await getIDOApiData()
   const data = await walletApiIDO.getTotalAmount(stageValue.value)
-  totalAmountData.value = data
+  const res = await apiWhitelistTotal(stageValue.value)
+  let total = Number(res.data)
+  let val = new Big(data).plus(total).toString()
+  totalAmountData.value = Number(val)
+
   // totalAmountData.value = data.toNumber() + Number(state.IDOLaunchInfoData.whitelistAmount)
 }
 
@@ -213,9 +219,11 @@ const getTotalAmountDataAll = async () => {
     const data = await walletApiIDO.getTotalAmount(stageValue.value)
     val = val.plus(Number(data))
   }
-
-  // console.log(val, 'val');
-  totalAmountDataAll.value = val.plus(Number(IDOLaunchAmount.value))
+  await getApiIDOLaunchAmount()
+  // console.log(mon, 'val');
+  let amount = val.plus(Number(IDOLaunchAmount.value)).toString()
+  totalAmountDataAll.value = Number(amount)
+  console.log(totalAmountDataAll.value, 'val测试循环');
 }
 
 // 获取 step
@@ -227,11 +235,16 @@ const getStage = async () => {
 
 // 获取余额
 const getTokensBalanceData = async () => {
+  // tokensBalanceData.value = 0
+  let val = new Big(0)
   const walletApiIDO = await getIDOApiData()
   for (let i = 1; i <= stageValue.value; i++) {
     const data = await walletApiIDO.getTokensBalance(i, walletAddress.walletAddress)
-    tokensBalanceData.value += Number(data)
+    val = val.plus(Number(data))
+    // tokensBalanceData.value += Number(data)
   }
+  let balance = val.toString()
+  tokensBalanceData.value = Number(balance)
   // console.log(tokensBalanceData.value, 'tokensBalanceData.value')
 }
 
@@ -320,6 +333,7 @@ const getApiIDOLaunchTime = async () => {
   const data = stageTime.value[stageValue.value - 1];
   state.IDOLaunchInfoData = data
   state.IDOLaunchInfoData.startTime = dayjs(state.IDOLaunchInfoData.startTime).format('MM-DD-YYYY hh:mm A')
+  console.log(data, stageValue.value, 'data');
   if (data.status == '1') {
     disabled.value = true
     btnInfo.value = 'Coming Soon'
@@ -337,7 +351,9 @@ const getApiIDOLaunchTime = async () => {
 
 
 const changePay = () => {
-  transitionPay.value = new Big(buyValue.value).times(tokenEthRateData.value).div(100);
+  let data = buyValue.value || 0
+  let val = new Big(data).times(Number(tokenEthRateData.value)).div(100).round(18).toString();
+  transitionPay.value = Number(val)
 }
 
 
@@ -350,21 +366,52 @@ const getBnbPriceData = async () => {
 let stageTime = ref([]);
 
 const getStageTime = async () => {
+  stageTime.value = [];
   const stage1 = await apiIDOLaunchTime(1)
   stageTime.value.push(stage1.data);
   const stage2 = await apiIDOLaunchTime(2)
   stageTime.value.push(stage2.data);
   const stage3 = await apiIDOLaunchTime(3)
   stageTime.value.push(stage3.data);
-  // console.log(stageTime);
+  console.log(stageTime.value);
 }
 
 const setTimeGetAmount = () => {
+  let timeCounts = 180
   intervalData.value = setInterval(() => {
-    getTotalAmountData()
-    getTotalAmountDataAll()
+    // console.log(timeCounts, 'timeCounts');
+    timeCounts--
+    if (timeCounts <= 0) {
+      clearInterval(intervalData.value)
+    } else {
+      getTotalAmountData()
+      getTotalAmountDataAll()
+      getStage().then(() => {
+        getStageTime().then(() => {
+          getApiIDOLaunchTime()
+        })
+      })
+    }
     // console.log('哈哈，我执行了');
-  }, 5000)
+  }, 10000)
+
+}
+
+const apiWithdraw = async () => {
+  refundLoading.value = true;
+  try {
+    const walletApiIDO = await getIDOApiData()
+    await walletApiIDO.withdraw();
+    await getTokensBalanceData()
+    message.info('Successful')
+    refundLoading.value = false;
+  } catch (err) {
+    const walletApiChain = await getChainApiData()
+    let errorMessage = await walletApiChain.getTransactionErrorInfo(err.transactionHash);
+    message.error(errorMessage + 'transaction error: ' + err.transactionHash);
+    refundLoading.value = false
+  }
+
 }
 
 onMounted(async () => {

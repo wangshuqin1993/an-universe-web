@@ -1,16 +1,18 @@
 <template>
   <div class="">
-    <div class="flex justify-between text-[16px]" v-if="!showInfo">
+    <div class="flex justify-between text-[16px]">
       <div></div>
-      <div class="text-[#fff] mb-[5px] text-[16px] text-[#FF3B0F]">{{ percentValue + '%' }}</div>
+      <div class="mb-[5px] text-[16px] " :class="percentValue > 100 ? 'color-red' : 'color-white'">{{
+        percentValue + '%' }}</div>
     </div>
 
     <!-- :size="[300, 30]" -->
     <a-progress :percent="percentValue" :size="size" :stroke-color="{ '0%': '#6E56FF', '100%': '#F41FFF', }"
-      :show-info="showInfo" />
+      :show-info="false" />
     <div class="md:text-[14px] text-[12px] float-right md:mt-[18px] mt-[10px]">
       <div class="text-right">
-        <span class="text-[#FF3B0F]">{{ totalAmountData }}/</span>
+        <span class="text-[#88898A]">BNB</span>
+        <span class="text-[#FF3B0F]"> {{ ' ' + totalAmountData }}/</span>
         <span class="text-[#88898A]">{{ targetAmount }}</span>
       </div>
       <div class="text-[#88898A]">
@@ -105,5 +107,13 @@ watch(
 :deep(.ant-progress.ant-progress-show-info .ant-progress-outer) {
   margin-inline-end: unset !important;
   padding-inline-end: unset !important;
+}
+
+.color-red {
+  color: #FF3B0F;
+}
+
+.color-white {
+  color: #fff;
 }
 </style>

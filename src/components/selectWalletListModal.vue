@@ -20,7 +20,7 @@ import { message } from "ant-design-vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const { getImageURL } = useAssets();
 const walletAddress = useWalletAddress()
-const walletList = ref([])
+const walletList = ref([{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }, { name: "MetaMask", img: 'Metamask', id: 2 }])
 const props = defineProps({
   openSelectedWhiteListModal: {
     type: Boolean,
@@ -39,11 +39,31 @@ const baseUrl = ref(import.meta.env.VITE_BASE_URL)
 
 // 连接钱包
 const connectWallet = async (id: number) => {
+
+
   if (isMobile.value && !isOKApp.value) {
-    const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent(baseUrl.value));
-    window.location.href = encodedUrl;
+    if (id == 1) {
+      // if (typeof window.okxwallet == 'undefined') return message.error('Please install the OKXWallet!')
+      const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent(baseUrl.value));
+      window.location.href = encodedUrl;
+    } else {
+      debugger
+      if (typeof window.ethereum == 'undefined') return message.error('Please install the MetaMask!')
+      // 小狐狸地址
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x61' }], });
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x61' }],
+      });
+      walletAddress.setWalletAddress(accounts[0]);
+      localStorage.setItem('metaMaskWalletAddress', accounts[0])
+      localStorage.setItem('walletName', 'MetaMask')
+      closeModal()
+    }
+
   } else {
     if (id === 1) {
+      if (typeof window.okxwallet == 'undefined') return message.error('Please install the OKXWallet!')
       try {
         const response = await window.okxwallet.request({ method: 'eth_requestAccounts' });
         const res = await window.okxwallet.request({
@@ -64,6 +84,7 @@ const connectWallet = async (id: number) => {
         message.error(error.message)
       }
     } else {
+      if (typeof window.ethereum == 'undefined') return message.error('Please install the MetaMask!')
       // 小狐狸地址
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x61' }], });
       await window.ethereum.request({
@@ -93,11 +114,11 @@ const getIsMobils = async () => {
 
 onMounted(async () => {
   await getIsMobils()
-  if (isMobile.value) {
-    walletList.value = [{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }]
-  } else {
-    walletList.value = [{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }, { name: "MetaMask", img: 'Metamask', id: 2 }]
-  }
+  // if (isMobile.value) {
+  //   walletList.value = [{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }]
+  // } else {
+  //   walletList.value = [{ name: "OKX Web3 Wallet", img: 'OKXWallet-logo', id: 1 }, { name: "MetaMask", img: 'Metamask', id: 2 }]
+  // }
 })
 </script>
 <style lang='less' scoped>

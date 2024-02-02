@@ -28,11 +28,15 @@
         Your $ABSC balance: <span class="text-[#E527FF]">{{
           NFTEquityAmountData.abscAmount }}</span> ABSC
       </div>
-      <div class="text-center text-[#FFF] mt-[20px] text-[14px]">The $ABSC tokens you purchased in the IDO will be
+      <div class="text-center text-[#FFF] mt-[12px] text-[14px]">The $ABSC tokens you purchased in the IDO will be
         airdropped
         directly
         to your wallet soon. Please pay attention
-        to check it.</div>
+        to check it.
+      </div>
+      <div class="text-center text-[#FFF] mt-[12px] text-[14px]">
+        IDO through NFT will not stop while the gap between rounds
+      </div>
     </div>
 
     <div
@@ -40,17 +44,12 @@
       <div class="flex flex-col items-center justify-center">
         <span class="text-[#fff] md:text-[18px] text-[14px] font-bold">$ABSC Token</span>
         <span
-          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-justify md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">As
-          the mapping token of
-          the leading inscription ABSC based on APT-20 on the BSC chain, the $ABSC token
-
-          will become the first mapping token of the Bmaker ecosystem and can be exchanged with BSC stablecoins
-
-          based on the Bmaker ecosystem. $ABSC can also be staked toobtain the corresponding amount of Bmaker
-
-          ecosystem stablecoins, which can be used on any chain supported by the BSC ecosystem. The $ABSC
-
-          token is an important value support for the Bmaker ecosystem stablecoins.
+          class="text-[#7C7C7C] md:w-[770px] w-full mx-auto text-justify md:mt-[24px] mt-[10px] md:text-[16px] text-[14px]">$ABSC
+          token is the governance token of BTC stablecoin on the BSC chain, and it will become the first governance token
+          of the Bmaker ecosystem. It can be exchanged with BSC stablecoins based on the Bmaker ecosystem in the future.
+          $ABSC can also be staked to obtain the corresponding amount of Bmaker ecosystem-wide stablecoins, which can be
+          used on any chain supported by the BSC ecosystem. $ABSC token is an important value support for the Bmaker
+          ecosystem-wide stablecoins.
         </span>
       </div>
       <div class="max-w-[798px] mx-auto md:px-[0px] px-[32px] md:pb-[64px] pb-[32px] text-center">
@@ -289,5 +288,4 @@ watch(
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-}
-</style>
+}</style>
