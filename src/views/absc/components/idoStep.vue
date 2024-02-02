@@ -34,7 +34,7 @@
       </div>
     </div>
     <Progress :targetAmount="stageData?.targetAmount" :totalAmountData="stepAmount" :bnbPriceData="bnbPriceData"
-      :size="16"></Progress>
+      :size="'16'"></Progress>
 
   </div>
 </template>

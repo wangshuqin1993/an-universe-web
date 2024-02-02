@@ -4,7 +4,8 @@
       <div class="mt-[50px] buy-input-item">
         <div class="text-[#6A6A6A] text-[14px] mb-[15px]">Your pay ({{
           `Max: ${maxValue} ` }})</div>
-        <a-input v-model:value="buyValue" placeholder="Please enter" @change="changePay">
+        <a-input v-model:value="buyValue" placeholder="Please enter" @change="changePay"
+          onkeyup="value=value.replace(/[^\d.]/g,'')">
           <template #suffix>
             <div>BNB</div>
             <a-button @click="getMaxValue()">Max</a-button>
@@ -103,7 +104,8 @@ const closeModal = () => {
 }
 
 const getMaxValue = () => {
-  buyValue.value = new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount))
+  let val = new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount)).toString()
+  buyValue.value = Number(val)
   changePay()
 }
 
@@ -145,7 +147,8 @@ const getApiWhitelistDiscount = async () => {
       let bigNum = new Big(1)
       let num = Number(data)
       // bigNum.minus(num).times(100)
-      whitelistDiscountData.value = bigNum.minus(num).times(100)
+      let val = bigNum.minus(num).times(100).toString()
+      whitelistDiscountData.value = Number(val)
     }
   } catch (err) {
     message.error(err.message)
@@ -164,7 +167,8 @@ const getApiNFTEquityDiscount = async () => {
     } else {
       let bigNum = new Big(1)
       let num = Number(data.discount)
-      whitelistDiscountData.value = bigNum.minus(num).times(100)
+      let val = bigNum.minus(num).times(100).toString()
+      whitelistDiscountData.value = Number(val)
     }
   } catch (err) {
     message.error(err.message)
@@ -217,13 +221,16 @@ const getApiWhitelistAddress = async () => {
 }
 
 const maxValue = computed(() => {
-  return new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount))
+  let val = new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount)).toString()
+  return Number(val)
 })
 
 // verify
 const verifyBuyValue = () => {
-  bayMaxvalue.value = new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount))
+  let bayMax = new Big(whitelistSubscribeConfigData.value?.maxAllocation).minus(Number(whitelistSubscribeAmountData.value?.amount)).toString()
+  bayMaxvalue.value = Number(bayMax)
   if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || bayMaxvalue.value.lt(buyValue.value)) {
+    // if (buyValue.value < whitelistSubscribeConfigData.value?.minAllocation || buyValue.value > bayMaxvalue.value) {
     // false
     return false
   } else {
@@ -265,7 +272,9 @@ const buyWhitelistSubscribe = async () => {
 }
 
 const changePay = () => {
-  transitionPay.value = new Big(buyValue.value).times(whitelistSubscribeConfigData.value?.tokenBnbRate).div(Number(beforeWhitelistSubscribeConfigData.value)).round(18)
+  let data = buyValue.value || 0
+  let val = new Big(data).times(whitelistSubscribeConfigData.value?.tokenBnbRate).div(Number(beforeWhitelistSubscribeConfigData.value)).round(18).toString()
+  transitionPay.value = Number(val)
 }
 
 const getBalanceValue = async () => {
@@ -275,15 +284,6 @@ const getBalanceValue = async () => {
 }
 
 const getChainApidata = async () => {
-  // if (window.okxwallet?.selectedAddress) {
-  //   // console.log(window.okxwallet)
-  //   const chainApidata = new chainApi(window.okxwallet)
-  //   return chainApidata
-  // } else {
-  //   const chainApidata = new chainApi(window.ethereum)
-  //   return chainApidata
-  // }
-
   let walletName = localStorage.getItem('walletName') || ''
   if (walletName == 'OKX') {
     const chainApidata = new chainApi(window.okxwallet)

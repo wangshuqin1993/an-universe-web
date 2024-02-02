@@ -258,3 +258,14 @@ export function apiWhitelistAddress()  {
     method: "get",
   });
 }
+
+// /absc/whitelist/total    GET   query参数stage
+export function apiWhitelistTotal(stage:number)  {
+  return httpRequest({
+    url: `/absc/whitelist/total`,
+    method: "get",
+    params: {
+      stage:stage
+    }
+  });
+}

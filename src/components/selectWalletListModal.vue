@@ -39,11 +39,14 @@ const baseUrl = ref(import.meta.env.VITE_BASE_URL)
 
 // 连接钱包
 const connectWallet = async (id: number) => {
+
+
   if (isMobile.value && !isOKApp.value) {
     const encodedUrl = "https://www.okx.com/download?deeplink=" + encodeURIComponent("okx://wallet/dapp/url?dappUrl=" + encodeURIComponent(baseUrl.value));
     window.location.href = encodedUrl;
   } else {
     if (id === 1) {
+      if (typeof window.okxwallet == 'undefined') return message.error('Please install the OKXWallet!')
       try {
         const response = await window.okxwallet.request({ method: 'eth_requestAccounts' });
         const res = await window.okxwallet.request({
@@ -64,6 +67,7 @@ const connectWallet = async (id: number) => {
         message.error(error.message)
       }
     } else {
+      if (typeof window.ethereum == 'undefined') return message.error('Please install the MetaMask!')
       // 小狐狸地址
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts', params: [{ chainId: '0x61' }], });
       await window.ethereum.request({
