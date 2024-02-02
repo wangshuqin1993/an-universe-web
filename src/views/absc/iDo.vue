@@ -13,11 +13,11 @@
           :bnbPriceData="bnbPriceData" :stages="stageTime"></idoStep>
         <div class="md:mb-[50px] mb-[40px] mt-[70px]">
           <a-button ghost
-            class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] text-[14px] mr-[20px]">
+            class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] md:text-[18px] text-[14px] mr-[20px]">
             Refund
           </a-button>
           <a-button :disabled="disabled" @click="idoBtnClick" :loading="cliamLoading"
-            class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] text-[14px]">
+            class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] md:text-[18px] text-[14px]">
             {{ btnInfo }}
           </a-button>
           <div v-if="walletAddress.walletAddress" class="text-center text-[14px] text-[#fff]">
@@ -37,7 +37,7 @@
           <div class="text-[#ffffff] md:mb-[28px] mb-[36px] md:text-[18px] text-[12px] font-bold">$ABSC Token IDO overall
             progress</div>
           <Progress :targetAmount="'1667'" :totalAmountData="totalAmountDataAll" :bnbPriceData="bnbPriceData"
-            :size="'30'"></Progress>
+            :size="30"></Progress>
         </div>
       </div>
       <div class="text-center md:mt-[86px] mt-[86px]">
@@ -221,6 +221,7 @@ const getTotalAmountDataAll = async () => {
   // console.log(mon, 'val');
   let amount = val.plus(Number(IDOLaunchAmount.value)).toString()
   totalAmountDataAll.value = Number(amount)
+  console.log(totalAmountDataAll.value, 'val测试循环');
 }
 
 // 获取 step
@@ -232,11 +233,16 @@ const getStage = async () => {
 
 // 获取余额
 const getTokensBalanceData = async () => {
+  // tokensBalanceData.value = 0
+  let val = new Big(0)
   const walletApiIDO = await getIDOApiData()
   for (let i = 1; i <= stageValue.value; i++) {
     const data = await walletApiIDO.getTokensBalance(i, walletAddress.walletAddress)
-    tokensBalanceData.value += Number(data)
+    val = val.plus(Number(data))
+    // tokensBalanceData.value += Number(data)
   }
+  let balance = val.toString()
+  tokensBalanceData.value = Number(balance)
   // console.log(tokensBalanceData.value, 'tokensBalanceData.value')
 }
 
@@ -367,11 +373,20 @@ const getStageTime = async () => {
 }
 
 const setTimeGetAmount = () => {
+  let timeCounts = 360
   intervalData.value = setInterval(() => {
-    getTotalAmountData()
-    getTotalAmountDataAll()
+    // console.log(timeCounts, 'timeCounts');
+    timeCounts--
+    if (timeCounts <= 0) {
+      clearInterval(intervalData.value)
+    } else {
+      getTotalAmountData()
+      getTotalAmountDataAll()
+      getApiIDOLaunchTime()
+    }
     // console.log('哈哈，我执行了');
   }, 5000)
+
 }
 
 onMounted(async () => {
