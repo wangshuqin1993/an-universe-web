@@ -50,9 +50,13 @@
           can be used on any chain supported by the BSC ecosystem. $ABSC token is an important value support for the
           Bmaker ecosystem-wide stablecoins.
         </div>
+        <div class="text-[#7C7C7C] mb-[20px]">Token Address：<br />
+          {{ contractAddress }}
+        </div>
         <div class=" w-full rounded-[10px] text-[#fff]">
           <img src="@/assets/images/id-tokens.png" />
         </div>
+
       </div>
       <div class="service-box md:p-[50px] p-[24px] md:mt-[64px] mt-[32px]">
         <div class="md:text-[21px] text-[18px] text-[#fff] font-bold md:mb-[30px] mb-[10px]">$ABSC IDO Terms of service
@@ -143,6 +147,7 @@ const walletAddress = useWalletAddress()
 const state = reactive({
   IDOLaunchInfoData: {}
 })
+const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
 const disabled = ref(true)
 const loading = ref(false)
 const openIDOBuyModal = ref(false);

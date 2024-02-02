@@ -85,14 +85,14 @@
   "resolved" "https://registry.npmmirror.com/@emotion/unitless/-/unitless-0.8.1.tgz"
   "version" "0.8.1"
 
-"@esbuild/darwin-x64@0.18.20":
-  "integrity" "sha512-pc5gxlMDxzm513qPGbCbDukOdsGtKhfxD1zJKXjCCcU7ju50O7MeAZ8c4krSJcOIJGFR+qx21yMMVYwiQvyTyQ=="
-  "resolved" "https://registry.npmmirror.com/@esbuild/darwin-x64/-/darwin-x64-0.18.20.tgz"
+"@esbuild/win32-x64@0.18.20":
+  "integrity" "sha512-kTdfRcSiDfQca/y9QIkng02avJ+NCaQvrMejlsB3RRv5sE9rRoeBPISaZpKxHELzRxZyLvNts1P27W3wV+8geQ=="
+  "resolved" "https://registry.npmmirror.com/@esbuild/win32-x64/-/win32-x64-0.18.20.tgz"
   "version" "0.18.20"
 
-"@esbuild/darwin-x64@0.19.9":
-  "integrity" "sha512-vE0VotmNTQaTdX0Q9dOHmMTao6ObjyPm58CHZr1UK7qpNleQyxlFlNCaHsHx6Uqv86VgPmR4o2wdNq3dP1qyDQ=="
-  "resolved" "https://registry.npmmirror.com/@esbuild/darwin-x64/-/darwin-x64-0.19.9.tgz"
+"@esbuild/win32-x64@0.19.9":
+  "integrity" "sha512-oxoQgglOP7RH6iasDrhY+R/3cHrfwIDvRlT4CGChflq6twk8iENeVvMJjmvBb94Ik1Z+93iGO27err7w6l54GQ=="
+  "resolved" "https://registry.npmmirror.com/@esbuild/win32-x64/-/win32-x64-0.19.9.tgz"
   "version" "0.19.9"
 
 "@ethereumjs/rlp@^4.0.1":
@@ -2304,11 +2304,6 @@
   "integrity" "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw=="
   "resolved" "https://registry.npmmirror.com/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
-
-"fsevents@~2.3.2":
-  "integrity" "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw=="
-  "resolved" "https://registry.npmmirror.com/fsevents/-/fsevents-2.3.3.tgz"
-  "version" "2.3.3"
 
 "function-bind@^1.1.2":
   "integrity" "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="
