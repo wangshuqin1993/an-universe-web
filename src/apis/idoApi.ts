@@ -75,4 +75,10 @@ export class IDOApi {
   async stage(): Promise<any> {
     return this.contractApi.query('stage');
   }
+
+  async withdraw(): Promise<any> {
+    return this.contractApi.sendTransaction('withdraw', {
+      gasLimit: 10000000,
+    });
+  }
 }

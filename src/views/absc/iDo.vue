@@ -12,7 +12,7 @@
         <idoStep :stageValue="stageValue" :stageData="state.IDOLaunchInfoData" :stepAmount="totalAmountData"
           :bnbPriceData="bnbPriceData" :stages="stageTime"></idoStep>
         <div class="md:mb-[50px] mb-[40px] mt-[70px]">
-          <a-button ghost
+          <a-button ghost @click="apiWithdraw" :loading="refundLoading"
             class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] md:text-[18px] text-[14px] mr-[20px]">
             Refund
           </a-button>
@@ -158,6 +158,7 @@ const totalAmountDataAll = ref(0)
 const bnbPriceData = ref(0)
 const IDOLaunchAmount = ref('')
 const cliamLoading = ref(false);
+const refundLoading = ref(false);
 
 const transitionPay = ref(0)
 
@@ -218,6 +219,7 @@ const getTotalAmountDataAll = async () => {
     const data = await walletApiIDO.getTotalAmount(stageValue.value)
     val = val.plus(Number(data))
   }
+  await getApiIDOLaunchAmount()
   // console.log(mon, 'val');
   let amount = val.plus(Number(IDOLaunchAmount.value)).toString()
   totalAmountDataAll.value = Number(amount)
@@ -331,6 +333,7 @@ const getApiIDOLaunchTime = async () => {
   const data = stageTime.value[stageValue.value - 1];
   state.IDOLaunchInfoData = data
   state.IDOLaunchInfoData.startTime = dayjs(state.IDOLaunchInfoData.startTime).format('MM-DD-YYYY hh:mm A')
+  console.log(data, stageValue.value, 'data');
   if (data.status == '1') {
     disabled.value = true
     btnInfo.value = 'Coming Soon'
@@ -363,17 +366,18 @@ const getBnbPriceData = async () => {
 let stageTime = ref([]);
 
 const getStageTime = async () => {
+  stageTime.value = [];
   const stage1 = await apiIDOLaunchTime(1)
   stageTime.value.push(stage1.data);
   const stage2 = await apiIDOLaunchTime(2)
   stageTime.value.push(stage2.data);
   const stage3 = await apiIDOLaunchTime(3)
   stageTime.value.push(stage3.data);
-  // console.log(stageTime);
+  console.log(stageTime.value);
 }
 
 const setTimeGetAmount = () => {
-  let timeCounts = 360
+  let timeCounts = 180
   intervalData.value = setInterval(() => {
     // console.log(timeCounts, 'timeCounts');
     timeCounts--
@@ -382,10 +386,31 @@ const setTimeGetAmount = () => {
     } else {
       getTotalAmountData()
       getTotalAmountDataAll()
-      getApiIDOLaunchTime()
+      getStage().then(() => {
+        getStageTime().then(() => {
+          getApiIDOLaunchTime()
+        })
+      })
     }
     // console.log('哈哈，我执行了');
-  }, 5000)
+  }, 10000)
+
+}
+
+const apiWithdraw = async () => {
+  refundLoading.value = true;
+  try {
+    const walletApiIDO = await getIDOApiData()
+    await walletApiIDO.withdraw();
+    await getTokensBalanceData()
+    message.info('Successful')
+    refundLoading.value = false;
+  } catch (err) {
+    const walletApiChain = await getChainApiData()
+    let errorMessage = await walletApiChain.getTransactionErrorInfo(err.transactionHash);
+    message.error(errorMessage + 'transaction error: ' + err.transactionHash);
+    refundLoading.value = false
+  }
 
 }
 

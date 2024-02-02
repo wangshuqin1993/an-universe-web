@@ -231,9 +231,8 @@ export async function getBnbPrice() {
       message: "success",
       data: {
         symbol: 'BNBUSDT',
-        price: '296.6',
-      }
-})
+        price: '301.5',
+      }})
   });
 }
 
@@ -259,7 +258,7 @@ export function apiWhitelistAddress()  {
   });
 }
 
-// /absc/whitelist/total    GET   query参数stage
+// /absc/whitelist/total    GET   query 参数 stage
 export function apiWhitelistTotal(stage:number)  {
   return httpRequest({
     url: `/absc/whitelist/total`,
