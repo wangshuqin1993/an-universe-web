@@ -12,7 +12,7 @@
         <idoStep :stageValue="stageValue" :stageData="state.IDOLaunchInfoData" :stepAmount="totalAmountData"
           :bnbPriceData="bnbPriceData" :stages="stageTime"></idoStep>
         <div class="md:mb-[50px] mb-[40px] mt-[70px]">
-          <a-button ghost @click="apiWithdraw" :loading="refundLoading"
+          <a-button ghost @click="apiWithdraw" disabled :loading="refundLoading"
             class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] md:text-[18px] text-[14px] mr-[20px]">
             Refund
           </a-button>
@@ -221,11 +221,10 @@ const getTotalAmountDataAll = async () => {
   let val = new Big(0)
   const walletApiIDO = await getIDOApiData()
   for (let i = 1; i <= stageValue.value; i++) {
-    const data = await walletApiIDO.getTotalAmount(stageValue.value)
+    const data = await walletApiIDO.getTotalAmount(i)
     val = val.plus(Number(data))
   }
   await getApiIDOLaunchAmount()
-  // console.log(mon, 'val');
   let amount = val.plus(Number(IDOLaunchAmount.value)).toString()
   totalAmountDataAll.value = Number(amount)
   //console.log(totalAmountDataAll.value, 'val测试循环');
