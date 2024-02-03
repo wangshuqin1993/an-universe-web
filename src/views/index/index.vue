@@ -10,13 +10,13 @@
       </div>
     </div>
     <div class="mobile-min-btn position text-[#ffffff]" v-if="isMobile">
-      <a-button class="min-btn  w-[198px] text-[18px] h-[50px] rounded-[25px]" @click="openSelectedWhiteListModal = true"
+      <a-button class="min-btn  w-[198px] text-[18px] h-[50px] rounded-[25px]" @click="modal.open()"
         v-if="!walletAddress.walletAddress">connect wallet</a-button>
       <a-dropdown v-else>
         <template #overlay>
           <a-menu>
             <a-menu-item>
-              <div @click="disConnectWallet" class="text-center">Disconnect</div>
+              <div @click="disconnect()" class="text-center">Disconnect</div>
             </a-menu-item>
           </a-menu>
         </template>
@@ -28,9 +28,11 @@
   </div>
   <abscFooter></abscFooter>
 
-  <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
+  <!--
+    <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
     @closeSelectedWhiteListModal="openSelectedWhiteListModal = false">
   </selectWalletListModal>
+  -->
 </template>
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
@@ -41,7 +43,9 @@ import { DownOutlined } from '@ant-design/icons-vue';
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const walletAddress = useWalletAddress()
-
+import { useWeb3ModalAccount, useWeb3Modal, useDisconnect } from '@web3modal/ethers5/vue'
+const modal = useWeb3Modal()
+const { disconnect } = useDisconnect()
 const router = useRouter();
 const isMobile = ref(false);
 const isOKApp = ref(false);
@@ -65,22 +69,23 @@ const apolloClient = new ApolloClient({
   cache,
 })
 
-const disConnectWallet = async () => {
-  let walletName = localStorage.getItem('walletName') || ''
-  if (walletName != '') {
-    if (walletName == 'MetaMask') {
-      localStorage.removeItem('metaMaskWalletAddress')
-      localStorage.setItem('walletName', '')
-      walletAddress.setWalletAddress('');
-      window.location.reload()
-    } else {
-      localStorage.removeItem('OKXWalletAddress')
-      localStorage.setItem('walletName', '')
-      walletAddress.setWalletAddress('');
-      window.location.reload()
-    }
-  }
-}
+// const disConnectWallet = async () => {
+
+//   let walletName = localStorage.getItem('walletName') || ''
+//   if (walletName != '') {
+//     if (walletName == 'MetaMask') {
+//       localStorage.removeItem('metaMaskWalletAddress')
+//       localStorage.setItem('walletName', '')
+//       walletAddress.setWalletAddress('');
+//       window.location.reload()
+//     } else {
+//       localStorage.removeItem('OKXWalletAddress')
+//       localStorage.setItem('walletName', '')
+//       walletAddress.setWalletAddress('');
+//       window.location.reload()
+//     }
+//   }
+// }
 
 const getIsMobils = async () => {
   const ua = navigator.userAgent;
@@ -92,31 +97,28 @@ const getIsMobils = async () => {
 
 onMounted(async () => {
   await getIsMobils()
-  let walletName = localStorage.getItem('walletName') || ''
-  if (walletName != '') {
-    let address
-    if (walletName == 'MetaMask') {
-      address = localStorage.getItem('metaMaskWalletAddress') || ''
-    } else {
-      address = localStorage.getItem('OKXWalletAddress') || ''
-    }
-    walletAddress.setWalletAddress(address);
-    btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
-  } else {
-    walletAddress.setWalletAddress('');
-    btnInfo.value = 'connect wallet'
-  }
+  // let walletName = localStorage.getItem('walletName') || ''
+  // if (walletName != '') {
+  //   let address
+  //   if (walletName == 'MetaMask') {
+  //     address = localStorage.getItem('metaMaskWalletAddress') || ''
+  //   } else {
+  //     address = localStorage.getItem('OKXWalletAddress') || ''
+  //   }
+  //   walletAddress.setWalletAddress(address);
+  //   btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+  // } else {
+  //   walletAddress.setWalletAddress('');
+  //   btnInfo.value = 'connect wallet'
+  // }
 })
 
 watch(() => walletAddress.walletAddress,
   (newVal, _oldVal) => {
     if (newVal != '') {
-      walletAddress.setWalletAddress(newVal)
       btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
     }
-
     if (newVal == '') {
-      walletAddress.setWalletAddress('');
       btnInfo.value = 'connect wallet'
     }
   }, { deep: true, immediate: true })

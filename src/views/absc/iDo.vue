@@ -80,9 +80,12 @@
       </div>
     </div>
   </div>
-  <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
+  <!--
+    <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
     @closeSelectedWhiteListModal="openSelectedWhiteListModal = false">
   </selectWalletListModal>
+  -->
+
 
   <a-modal v-model:open="openIDOBuyModal" title="" :footer="null" @cancel="openIDOBuyModal = false">
     <div class="relative">
@@ -138,10 +141,12 @@ import idoStep from "./components/idoStep.vue";
 import { IDOApi } from "@/apis/idoApi"
 import { chainApi } from "@/apis/chainApi"
 import { apiIDOLaunchTime, apiIDOLaunchAmount, getBnbPrice, apiIDOInvite, apiWhitelistTotal } from "@/apis/absc"
-import selectWalletListModal from "@/components/selectWalletListModal.vue";
+//import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import Big from 'big.js';
 import dayjs from 'dayjs';
+import { useWeb3ModalProvider, useWeb3Modal } from '@web3modal/ethers5/vue'
+const modal = useWeb3Modal()
 const { params } = useRoute();
 const walletAddress = useWalletAddress()
 const state = reactive({
@@ -177,10 +182,11 @@ const tokenRate = computed(() => {
 
 const idoBtnClick = async () => {
   if (!walletAddress.walletAddress) {
-    openSelectedWhiteListModal.value = true;
+    modal.open();
+    //openSelectedWhiteListModal.value = true;
   } else {
     if (state.IDOLaunchInfoData?.status == '2') {
-      // 购买
+      // buy
       openIDOBuyModal.value = true;
       getTokenEthRateData()
       getTotalAmountData()
@@ -234,6 +240,7 @@ const getTotalAmountDataAll = async () => {
 const getStage = async () => {
   const walletApiIDO = await getIDOApiData()
   const data = await walletApiIDO.stage()
+  //console.log(data, 'datesdf')
   stageValue.value = data
 }
 
@@ -252,31 +259,46 @@ const getTokensBalanceData = async () => {
   // console.log(tokensBalanceData.value, 'tokensBalanceData.value')
 }
 
+const isProd = import.meta.env.VITE_NODE_ENV === 'production';
+const { walletProvider } = useWeb3ModalProvider()
 
 const getIDOApiData = () => {
-  let walletName = localStorage.getItem('walletName') || ''
-  if (walletName == 'OKX') {
-    const ido = new IDOApi(window.okxwallet, 'mainnet');
-    return ido
-  } else if (walletName == 'MetaMask') {
-    const ido = new IDOApi(window.ethereum, 'mainnet');
+  // let walletName = localStorage.getItem('walletName') || ''
+  // if (walletName == 'OKX') {
+  //   const ido = new IDOApi(window.okxwallet, 'mainnet');
+  //   return ido
+  // } else if (walletName == 'MetaMask') {
+  //   const ido = new IDOApi(window.ethereum, 'mainnet');
+  //   return ido
+  // } else {
+  //   return new IDOApi(undefined, 'mainnet')
+  // }
+  console.log(walletProvider.value, 'walletProvider.value');
+  if (walletProvider.value) {
+    const ido = new IDOApi(walletProvider.value, isProd ? 'mainnet' : 'test');
     return ido
   } else {
-    return new IDOApi(undefined, 'mainnet')
+    return new IDOApi(undefined, isProd ? 'mainnet' : 'test')
   }
 }
 
 const getChainApiData = () => {
-  let walletName = localStorage.getItem('walletName') || ''
-  if (walletName == 'OKX') {
-    const chain = new chainApi(window.okxwallet)
-    return chain
-  } else if (walletName == 'MetaMask') {
-    const chain = new chainApi(window.ethereum)
+  if (walletProvider.value) {
+    const chain = new chainApi(walletProvider.value);
     return chain
   } else {
     return undefined
   }
+  // let walletName = localStorage.getItem('walletName') || ''
+  // if (walletName == 'OKX') {
+  //   const chain = new chainApi(window.okxwallet)
+  //   return chain
+  // } else if (walletName == 'MetaMask') {
+  //   const chain = new chainApi(window.ethereum)
+  //   return chain
+  // } else {
+  //   return undefined
+  // }
 }
 
 const toClaim = async () => {
@@ -377,7 +399,6 @@ const getStageTime = async () => {
   stageTime.value.push(stage2.data);
   const stage3 = await apiIDOLaunchTime(3)
   stageTime.value.push(stage3.data);
-  //console.log(stageTime.value);
 }
 
 const setTimeGetAmount = () => {
@@ -390,11 +411,11 @@ const setTimeGetAmount = () => {
     } else {
       getTotalAmountData()
       getTotalAmountDataAll()
-      getStage().then(() => {
-        getStageTime().then(() => {
-          getApiIDOLaunchTime()
-        })
-      })
+      // getStage().then(() => {
+      //   getStageTime().then(() => {
+      //     getApiIDOLaunchTime()
+      //   })
+      // })
     }
     // console.log('哈哈，我执行了');
   }, 10000)
