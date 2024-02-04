@@ -92,7 +92,7 @@
 
       <div v-else
         class="text-center flex justify-center items-center bg-[#FFFFFF] w-[80%] mx-auto h-[170px] md:h-[260px] bg-opacity-20 rounded-[16px] border border-opacity-20 border-[#fff]">
-        <span class="text-[#7C7C7C] font-[Arial] text-[16px]">You haven't obtained the NFT yet, please go to mint</span>
+        <span class="text-[#7C7C7C] font-[Arial] text-[16px]">All NFTs have been airdropped</span>
       </div>
     </div>
 

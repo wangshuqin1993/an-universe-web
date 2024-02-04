@@ -9,6 +9,7 @@
         <span class="title-text">$ABSC: Asset Base in Bmaker & BTC Stable Coin Paradigm</span>
       </div>
     </div>
+    <!--
     <div class="mobile-min-btn position text-[#ffffff]" v-if="isMobile">
       <a-button class="min-btn  w-[198px] text-[18px] h-[50px] rounded-[25px]" @click="modal.open()"
         v-if="!walletAddress.walletAddress">connect wallet</a-button>
@@ -25,6 +26,7 @@
         </a-button>
       </a-dropdown>
     </div>
+    -->
   </div>
   <abscFooter></abscFooter>
 
@@ -113,15 +115,15 @@ onMounted(async () => {
   // }
 })
 
-watch(() => walletAddress.walletAddress,
-  (newVal, _oldVal) => {
-    if (newVal != '') {
-      btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
-    }
-    if (newVal == '') {
-      btnInfo.value = 'connect wallet'
-    }
-  }, { deep: true, immediate: true })
+// watch(() => walletAddress.walletAddress,
+//   (newVal, _oldVal) => {
+//     if (newVal != '') {
+//       btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
+//     }
+//     if (newVal == '') {
+//       btnInfo.value = 'connect wallet'
+//     }
+//   }, { deep: true, immediate: true })
 </script>
 <style scoped lang="less">
 .main-content {

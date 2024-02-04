@@ -5,8 +5,22 @@
         <div>
           <img src="@/assets/images/absc.png" class="md:w-[140px] w-[110px]" />
         </div>
-        <div v-if="isMobile" @click="open = true">
-          <img src="@/assets/images/mobileShow.png" class="w-[24px] mt-[10px]" />
+        <div v-if="isMobile" class="flex items-stretch text-[#ffffff] text-[16px]">
+          <a-button class="w-[138px] text-[14px] h-[42px] rounded-[12px]" @click="modal.open()"
+            v-if="!walletAddress.walletAddress">connect wallet</a-button>
+          <a-dropdown placement="bottom" v-else>
+            <a-button class="w-[138px] h-[42px] rounded-[12px]">{{ btnInfo }}</a-button>
+            <template #overlay>
+              <a-menu>
+                <a-menu-item>
+                  <div @click="disconnect()" class="text-center">Disconnect</div>
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
+          <div @click="open = true" class="ml-[20px]">
+            <img src="@/assets/images/mobileShow.png" class="w-[24px] mt-[10px]" />
+          </div>
         </div>
         <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
           <div v-for="item in menuList" :key="item.path" @click="router.push(item.path)" class="self-center"
