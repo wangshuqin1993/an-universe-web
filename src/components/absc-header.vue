@@ -5,8 +5,22 @@
         <div>
           <img src="@/assets/images/absc.png" class="md:w-[140px] w-[110px]" />
         </div>
-        <div v-if="isMobile" @click="open = true">
-          <img src="@/assets/images/mobileShow.png" class="w-[24px] mt-[10px]" />
+        <div v-if="isMobile" class="flex items-stretch text-[#ffffff] text-[16px]">
+          <a-button class="w-[138px] text-[14px] h-[42px] rounded-[12px]" @click="modal.open()"
+            v-if="!walletAddress.walletAddress">connect wallet</a-button>
+          <a-dropdown placement="bottom" v-else>
+            <a-button class="w-[138px] h-[42px] rounded-[12px]">{{ btnInfo }}</a-button>
+            <template #overlay>
+              <a-menu>
+                <a-menu-item>
+                  <div @click="disconnect()" class="text-center">Disconnect</div>
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
+          <div @click="open = true" class="ml-[20px]">
+            <img src="@/assets/images/mobileShow.png" class="w-[24px] mt-[10px]" />
+          </div>
         </div>
         <div v-else class="flex items-stretch text-[#ffffff] text-[16px]">
           <div v-for="item in menuList" :key="item.path" @click="router.push(item.path)" class="self-center"
@@ -17,7 +31,7 @@
             </div>
           </div>
 
-          <a-button class="w-[178px] text-[18px] h-[42px] rounded-[12px]" @click="openSelectedWhiteListModal = true"
+          <a-button class="w-[178px] text-[18px] h-[42px] rounded-[12px]" @click="modal.open()"
             v-if="!walletAddress.walletAddress">connect wallet</a-button>
 
           <a-dropdown placement="bottom" v-else>
@@ -25,11 +39,12 @@
             <template #overlay>
               <a-menu>
                 <a-menu-item>
-                  <div @click="disConnectWallet" class="text-center">Disconnect</div>
+                  <div @click="disconnect()" class="text-center">Disconnect</div>
                 </a-menu-item>
               </a-menu>
             </template>
           </a-dropdown>
+
         </div>
       </div>
     </div>
@@ -54,19 +69,27 @@
       </div>
     </a-drawer>
   </div>
-  <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
+  <!--
+    <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
     @closeSelectedWhiteListModal="openSelectedWhiteListModal = false">
   </selectWalletListModal>
+  -->
 </template>
 <script lang='ts' setup>
 import { ref, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { CloseOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
-import selectWalletListModal from "@/components/selectWalletListModal.vue";
+//import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { useWalletAddress } from "@/stores/useWalletAddress";
 const walletAddress = useWalletAddress()
+import { useWeb3ModalAccount, useWeb3Modal, useDisconnect, useWeb3ModalProvider } from '@web3modal/ethers5/vue'
+const modal = useWeb3Modal()
+const { disconnect } = useDisconnect()
+const { address } = useWeb3ModalAccount()
+const { walletProvider } = useWeb3ModalProvider()
+
 const router = useRouter();
 const route = useRoute();
 const open = ref(false);
@@ -186,20 +209,20 @@ onMounted(async () => {
   // console.log(window.okxwallet, window.ethereum.isMetaMask, window.ethereum?.isConnected(), 'window.okxwallet')
   // console.log(window.ethereum?.provider, walletAddress.walletAddress, 'window.ethereum');
   await getIsMobils()
-  let walletName = localStorage.getItem('walletName') || ''
-  if (walletName != '') {
-    let address
-    if (walletName == 'MetaMask') {
-      address = localStorage.getItem('metaMaskWalletAddress') || ''
-    } else {
-      address = localStorage.getItem('OKXWalletAddress') || ''
-    }
-    walletAddress.setWalletAddress(address);
-    btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
-  } else {
-    walletAddress.setWalletAddress('');
-    btnInfo.value = 'connect wallet'
-  }
+  // let walletName = localStorage.getItem('walletName') || ''
+  // if (walletName != '') {
+  //   let address
+  //   if (walletName == 'MetaMask') {
+  //     address = localStorage.getItem('metaMaskWalletAddress') || ''
+  //   } else {
+  //     address = localStorage.getItem('OKXWalletAddress') || ''
+  //   }
+  //   walletAddress.setWalletAddress(address);
+  //   btnInfo.value = address?.substring(0, 5) + "..." + address?.substring(address.length - 4);
+  // } else {
+  //   walletAddress.setWalletAddress('');
+  //   btnInfo.value = 'connect wallet'
+  // }
 
 
 
@@ -243,18 +266,40 @@ watch(
   }, { deep: true, immediate: true }
 );
 
-watch(() => walletAddress.walletAddress,
+const isProd = import.meta.env.VITE_NODE_ENV === 'production';
+
+watch(() => address.value,
   (newVal, _oldVal) => {
-    if (newVal != '') {
-      // console.log(newVal, 'header watch walletAddress')
+    if (newVal) {
+      console.log(newVal, 'header watch walletAddress')
       walletAddress.setWalletAddress(newVal)
+      if (walletProvider.value) {
+        walletProvider.value.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: isProd ? '0x38' : '0x61' }],
+        });
+      }
       btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
     }
-    if (newVal == '') {
+    if (newVal == undefined) {
+      console.log('wallet address is undefined')
       walletAddress.setWalletAddress('');
       btnInfo.value = 'connect wallet'
     }
   }, { deep: true, immediate: true })
+
+// watch(() => walletAddress.walletAddress,
+//   (newVal, _oldVal) => {
+//     if (newVal != '') {
+//       // console.log(newVal, 'header watch walletAddress')
+//       walletAddress.setWalletAddress(newVal)
+//       btnInfo.value = newVal?.substring(0, 5) + "..." + newVal?.substring(newVal.length - 4);
+//     }
+//     if (newVal == '') {
+//       walletAddress.setWalletAddress('');
+//       btnInfo.value = 'connect wallet'
+//     }
+//   }, { deep: true, immediate: true })
 
 
 

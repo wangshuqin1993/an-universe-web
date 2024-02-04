@@ -1,10 +1,9 @@
 import { BigNumber, ethers } from 'ethers';
-import { EIP1193Provider } from '@web3-onboard/core';
 
 export class chainApi {
   private provider;
 
-  constructor(walletProvider: EIP1193Provider) {
+  constructor(walletProvider: any) {
     this.provider = new ethers.providers.Web3Provider(walletProvider)
   }
 

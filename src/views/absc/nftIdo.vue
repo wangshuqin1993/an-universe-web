@@ -78,9 +78,12 @@
   <whiteListBuyModal :openWhiteListBuyModal="openWhiteListBuyModal" pageName="NFT(Ido)"
     @getWhitelistSubscribeResult="getWhitelistSubscribeResult" @closeWhiteListBuyModal="openWhiteListBuyModal = false">
   </whiteListBuyModal>
-  <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
+  <!--
+    <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
     @closeSelectedWhiteListModal="closeSelectedWhiteListModal">
   </selectWalletListModal>
+  -->
+
 
   <a-modal v-model:open="showConfirmModal" title="" :footer="null">
     <div class="text-center">
@@ -102,10 +105,12 @@ import { ref, onMounted, watch } from 'vue'
 import { message } from "ant-design-vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
-import selectWalletListModal from "@/components/selectWalletListModal.vue";
+//import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import { apiNFTEquityCheck, apiNFTEquityTime, apiNFTEquityAmount, getBnbPrice } from "@/apis/absc";
 import { PurchaseValueEnums } from "@/enums/levelLabel"
+import { useWeb3Modal } from '@web3modal/ethers5/vue'
+const modal = useWeb3Modal()
 const walletAddress = useWalletAddress()
 const columns = ref([
   {
@@ -185,7 +190,8 @@ const handleExchangeModal = async () => {
     }
     btnLoading.value = false
   } else {
-    openSelectedWhiteListModal.value = true
+    modal.open();
+    //openSelectedWhiteListModal.value = true
     btnLoading.value = false
   }
 }
@@ -230,12 +236,15 @@ const getapiNFTEquityTime = async () => {
   } else {
     btnInfo.value = 'IDO has ended';
     disabled.value = true;
+    getApiNFTEquityAmount()
   }
 }
 
 const getApiNFTEquityAmount = async () => {
-  const { data } = await apiNFTEquityAmount(walletAddress.walletAddress)
-  NFTEquityAmountData.value = data
+  if (walletAddress.walletAddress) {
+    const { data } = await apiNFTEquityAmount(walletAddress.walletAddress)
+    NFTEquityAmountData.value = data
+  }
 }
 
 // 购买成功

@@ -63,6 +63,8 @@ import { apiWhitelistVerify, apiWhitelistSubscribeConfig, apiWhitelistSubscribeA
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import { chainApi } from "@/apis/chainApi";
 import Big from 'big.js';
+import { useWeb3ModalProvider } from '@web3modal/ethers5/vue'
+const { walletProvider } = useWeb3ModalProvider();
 const walletAddress = useWalletAddress();
 const buyValue = ref(0)
 const whitelistSubscribeConfigData = ref({});
@@ -245,7 +247,7 @@ const buyWhitelistSubscribe = async () => {
     if (buyValue.value > balanceValue.value) return message.error('Insufficient Balance')
     if (!checkResult.value) return message.error(messageInfo.value);
     loading.value = true;
-    const walletChainApi = await getChainApidata()
+    const walletChainApi = await getChainApiData()
     // const Max = whitelistSubscribeConfigData.value?.maxAllocation - whitelistSubscribeAmountData.value?.amount
     const whitelistAddressValue = await getApiWhitelistAddress()
     // if (buyValue.value > Max) return message.error('Exceed the maximum purchase value')
@@ -278,23 +280,18 @@ const changePay = () => {
 }
 
 const getBalanceValue = async () => {
-  const walletChainApi = await getChainApidata()
+  const walletChainApi = await getChainApiData()
   balanceValue.value = await walletChainApi.getBalance(walletAddress.walletAddress)
   console.log(balanceValue.value, 'balanceValue');
 }
 
-const getChainApidata = async () => {
-  let walletName = localStorage.getItem('walletName') || ''
-  if (walletName == 'OKX') {
-    const chainApidata = new chainApi(window.okxwallet)
-    return chainApidata
-  } else if (walletName == 'MetaMask') {
-    const chainApidata = new chainApi(window.ethereum)
-    return chainApidata
+const getChainApiData = () => {
+  if (walletProvider.value) {
+    const chain = new chainApi(walletProvider.value);
+    return chain
   } else {
     return undefined
   }
-
 }
 
 onMounted(async () => {

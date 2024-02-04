@@ -90,9 +90,11 @@
   <whiteListBuyModal :openWhiteListBuyModal="openWhiteListBuyModal" pageName="Whitelist"
     @getWhitelistSubscribeResult="getWhitelistSubscribeResult" @closeWhiteListBuyModal="openWhiteListBuyModal = false">
   </whiteListBuyModal>
-  <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
+  <!--
+    <selectWalletListModal :openSelectedWhiteListModal="openSelectedWhiteListModal"
     @closeSelectedWhiteListModal="closeSelectedWhiteListModal">
   </selectWalletListModal>
+  -->
 </template>
 
 <script setup lang="ts">
@@ -101,10 +103,12 @@ import { message } from "ant-design-vue";
 import abscFooter from "@/components/absc-Footer.vue";
 import WhiteListModal from './components/WhiteListModal.vue';
 import whiteListBuyModal from './components/whiteListBuyModal.vue';
-import selectWalletListModal from "@/components/selectWalletListModal.vue";
+//import selectWalletListModal from "@/components/selectWalletListModal.vue";
 import { useWalletAddress } from "@/stores/useWalletAddress";
 import { apiWhitelistAcquisitionTime, apiWhitelistVerify, apiWhitelistSubscribeTime, apiWhitelistSubscribeAmount } from "@/apis/absc";
 import { LeveLabellEnums } from "@/enums/levelLabel";
+import { useWeb3Modal } from '@web3modal/ethers5/vue'
+const modal = useWeb3Modal()
 const walletAddress = useWalletAddress()
 
 // const open = ref(false)
@@ -124,7 +128,11 @@ const endTime = ref('');
 
 // 点击按钮
 const handleExchangeModal = async () => {
-  if (!walletAddress.walletAddress) return openSelectedWhiteListModal.value = true;
+  if (!walletAddress.walletAddress) {
+    modal.open();
+    //openSelectedWhiteListModal.value = true;
+    return;
+  }
   btnLoading.value = true
   if (btnInfo.value.includes('Whitelist')) {
     // 点击获取白名单

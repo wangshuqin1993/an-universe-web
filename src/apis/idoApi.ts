@@ -11,7 +11,7 @@ export class IDOApi {
   private provider;
   private queryContractApi;
 
-  constructor(walletProvider: EIP1193Provider, network: string) {
+  constructor(walletProvider: any, network: string) {
     if (walletProvider) {
       this.provider = new ethers.providers.Web3Provider(walletProvider)
     }

@@ -108,10 +108,12 @@ import gql from 'graphql-tag';
 const { getImageURL } = useAssets();
 const walletAddress = useWalletAddress();
 const disabledWhiteListBtn = ref(true);
-const amount = ref(500000);
+const isProd = import.meta.env.VITE_NODE_ENV === 'production';
+const amount = isProd ? ref(500000) : ref(10);
 const abscNFTList = ref([]);
 const aptosAddress = ref('');
 const whitelistApplicationResult = ref(false);
+
 const startNowLoading = ref(false)
 const abscBalance = ref(0)
 const check = ref(false)
