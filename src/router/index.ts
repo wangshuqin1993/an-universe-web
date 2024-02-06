@@ -53,6 +53,14 @@ let router = createRouter({
         isShow:true,
       }
     },
+    {
+      path: "/ido-claim",
+      name: "Claim",
+      component: () => import('@/views/absc/claim.vue'),
+      meta: {
+        isShow:true,
+      }
+    },
   ],
   // 每次切换路由页面滚动到顶部
   scrollBehavior() {

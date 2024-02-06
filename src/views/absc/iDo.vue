@@ -12,7 +12,7 @@
         <idoStep :stageValue="stageValue" :stageData="state.IDOLaunchInfoData" :stepAmount="totalAmountData"
           :bnbPriceData="bnbPriceData" :stages="stageTime"></idoStep>
         <div class="md:mb-[50px] mb-[40px] mt-[70px]">
-          <a-button ghost @click="apiWithdraw" disabled :loading="refundLoading"
+          <a-button ghost @click="apiWithdraw" :loading="refundLoading"
             class="md:h-[60px] h-[40px] md:w-[278px] w-[130px] md:rounded-[30px] rounded-[25px] mb-[20px] md:text-[18px] text-[14px] mr-[20px]">
             Refund
           </a-button>
@@ -187,6 +187,7 @@ const idoBtnClick = async () => {
   } else {
     if (state.IDOLaunchInfoData?.status == '2') {
       // buy
+      getBNBBalance();
       openIDOBuyModal.value = true;
       getTokenEthRateData()
       getTotalAmountData()
@@ -273,7 +274,7 @@ const getIDOApiData = () => {
   // } else {
   //   return new IDOApi(undefined, 'mainnet')
   // }
-  console.log(walletProvider.value, 'walletProvider.value');
+  //console.log(walletProvider.value, 'walletProvider.value');
   if (walletProvider.value) {
     const ido = new IDOApi(walletProvider.value, isProd ? 'mainnet' : 'test');
     return ido
@@ -423,6 +424,7 @@ const setTimeGetAmount = () => {
 }
 
 const apiWithdraw = async () => {
+  return
   refundLoading.value = true;
   try {
     const walletApiIDO = await getIDOApiData()

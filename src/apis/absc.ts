@@ -268,3 +268,52 @@ export function apiWhitelistTotal(stage:number)  {
     }
   });
 }
+
+export function apiIDOInfo(address:string)  {
+  return httpRequest({
+    url: `/absc/ido/info`,
+    method: "get",
+    params: {
+      address:address
+    }
+  });
+}
+
+export function apiIDORefund(address:string)  {
+  return httpRequest({
+    url: `/absc/ido/refund`,
+    method: "post",
+    data: {
+      address:address
+    }
+  });
+  
+}
+
+export function apiIDOClaim(address:string)  {
+  return httpRequest({
+    url: `/absc/ido/claim`,
+    method: "post",
+    data: {
+      address:address
+    }
+  });
+  // return new Promise<any>((resolve) => {
+  //   resolve({
+  //     code: 200,
+  //     message: "success",
+  //   })
+  // });
+}
+
+// {
+//  "refundStatus":"1",//1 未开始；2 进行中
+//  "claimStatus":"1"
+// }
+export function apiIDOStatus() {
+  return httpRequest({
+    url: `/absc/ido/refund/status`,
+    method: "get"
+  });
+}
+
