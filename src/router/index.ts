@@ -21,38 +21,38 @@ let router = createRouter({
         isShow: true,
       }
     },
-    {
-      path: "/ido/:invite_code",
-      name: "IDO_INVITE",
-      component: () => import('@/views/absc/iDo.vue'),
-      meta: {
-        isShow: false,
-      }
-    },
-    {
-      path: "/whitelist",
-      name: "Whitelist(IDO)",
-      component: () => import('@/views/absc/whiteList.vue'),
-      meta: {
-        isShow: true,
-      }
-    },
-    {
-      path: "/nftIdo",
-      name: "NFT(IDO)",
-      component: () => import('@/views/absc/nftIdo.vue'),
-      meta: {
-        isShow: true,
-      }
-    },
-    {
-      path: "/ido",
-      name: "IDO",
-      component: () => import('@/views/absc/iDo.vue'),
-      meta: {
-        isShow:true,
-      }
-    },
+    // {
+    //   path: "/ido/:invite_code",
+    //   name: "IDO_INVITE",
+    //   component: () => import('@/views/absc/iDo.vue'),
+    //   meta: {
+    //     isShow: false,
+    //   }
+    // },
+    // {
+    //   path: "/whitelist",
+    //   name: "Whitelist(IDO)",
+    //   component: () => import('@/views/absc/whiteList.vue'),
+    //   meta: {
+    //     isShow: true,
+    //   }
+    // },
+    // {
+    //   path: "/nftIdo",
+    //   name: "NFT(IDO)",
+    //   component: () => import('@/views/absc/nftIdo.vue'),
+    //   meta: {
+    //     isShow: true,
+    //   }
+    // },
+    // {
+    //   path: "/ido",
+    //   name: "IDO",
+    //   component: () => import('@/views/absc/iDo.vue'),
+    //   meta: {
+    //     isShow:true,
+    //   }
+    // },
     {
       path: "/ido-claim",
       name: "Claim",
@@ -62,7 +62,6 @@ let router = createRouter({
       }
     },
   ],
-  // 每次切换路由页面滚动到顶部
   scrollBehavior() {
     return { top: 0 }
   }
