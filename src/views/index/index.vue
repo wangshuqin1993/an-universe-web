@@ -42,7 +42,8 @@
             <span class="font-black title-text">Bmaker</span>
           </div>
           <div class="md:text-[18px] text-[14px]">
-            <span class="title-text">The Web3 future Bitcoin Stablecoin Paradigm</span>
+            <!-- <span class="title-text">The Web3 future Bitcoin Stablecoin Paradigm</span> -->
+            <span class="title-text">L1-2 INFRASTRUCTURE FOR ALL THE FULL CHAIN ASSETS</span>
           </div>
           <div @click="clickJoin">
             <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box">Join $ABSC</a-button>
