@@ -47,9 +47,18 @@
             <!-- <span class="title-text">The Web3 future Bitcoin Stablecoin Paradigm</span> -->
             <span class="title-text">L1-2 INFRASTRUCTURE FOR<br /> ALL THE FULL CHAIN ASSETS</span>
           </div>
-          <div @click="clickJoin">
-            <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box mr-[24px]">Join $ABSC</a-button>
-            <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box">View Demo</a-button>
+          <div class="flex justify-center">
+            <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box mr-[24px]" @click="clickJoin">Join
+              $ABSC</a-button>
+            <a-anchor :affix="false" :items="[{
+    key: '1',
+    href: '#bmaker-demo-video',
+    title: 'Basic demo',
+  }]" @change="onChange">
+              <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box">View Demo</a-button>
+            </a-anchor>
+            <!-- <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box" href="#bmaker-demo-video"
+              @click="onChange">View Demo</a-button> -->
           </div>
         </div>
       </div>
@@ -101,7 +110,7 @@
         <img src="@/assets/images/Home-2.png" class="md:w-[80%] w-[100%] mx-auto" />
 
       </div>
-      <div class="md:mt-[120px] mt-[60px]">
+      <div class="md:mt-[120px] mt-[60px]" id="bmaker-demo-video">
         <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
           Bmaker Demo Video
         </div>
@@ -157,6 +166,10 @@ const clickTG = () => {
 const clickDiscord = () => {
   window.open('https://discord.com')
 }
+
+const onChange = (link: string) => {
+  console.log('Anchor:OnChange', link);
+};
 
 
 onMounted(() => {
@@ -245,6 +258,29 @@ onMounted(() => {
   background-color: #1F1F1F;
 }
 
+:deep(.ant-anchor-wrapper:not(.ant-anchor-wrapper-horizontal) .ant-anchor .ant-anchor-ink) {
+  background-color: transparent;
+}
+
+:deep(.ant-anchor-wrapper .ant-anchor .ant-anchor-link-title) {
+  color: #ffffff;
+}
+
+:deep(.ant-anchor-wrapper .ant-anchor .ant-anchor-link-title:hover) {
+  font-size: 15px;
+}
+
+:deep(.ant-anchor-link-title) {
+  font-weight: bold;
+  border-radius: 19px;
+  background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
+  border: none;
+  line-height: 37px;
+  color: #ffffff;
+  width: 178px;
+  margin-top: 38px;
+}
+
 .bg-css {
   background-color: #1F1F1F;
 }
@@ -253,7 +289,8 @@ onMounted(() => {
   font-weight: bold;
   border-radius: 19px;
   background: linear-gradient(90deg, #6E56FF 0%, #F41FFF 100%);
-  border: none
+  border: none;
+  line-height: 30px;
 }
 
 .btn-box:hover,
