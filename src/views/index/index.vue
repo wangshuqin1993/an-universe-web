@@ -14,7 +14,7 @@
           <div>
             <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
           </div>
-          <div class="flex items-center text-[#ffffff] text-[16px] text-right">
+          <div v-if="!isMobile" class="flex items-center text-[#ffffff] text-[16px] text-right">
             <div
               class="md:mr-[50px] md:text-[20px] text-[16px] mr-[12px] cursor-pointer hover:text-[#F41FFF] md:font-bold font-semibold"
               @click="clickJoin">$ABSC
@@ -37,23 +37,24 @@
               <!-- <img src="@/assets/images/TG.png" class="w-[22px] cursor-pointer" /> -->
             </div>
           </div>
+          <div @click="open = true" v-if="isMobile">
+            <img src="@/assets/images/mobileShow.png" class="h-[24px]" />
+          </div>
 
         </div>
-        <div class="text-center content md:mt-[80px] mt-[130px]">
-          <div class="md:text-[72px] text-[50px] content-title">
-            <span class="font-black title-text">Bmaker</span>
+        <div class="text-center content md:mt-[200px] mt-[130px]">
+          <div class="md:text-[72px] text-[32px] font-bold mx-auto">
+            <span v-if="!isMobile" class="title-text">L1-2 INFRASTRUCTURE FOR <br /> ALL THE FULL CHAIN ASSETS</span>
+            <span v-if="isMobile" class="title-text">L1-2 INFRASTRUCTURE FOR ALL THE FULL CHAIN ASSETS</span>
           </div>
-          <div class="md:text-[48px] text-[18px] font-bold mx-auto">
-            <!-- <span class="title-text">The Web3 future Bitcoin Stablecoin Paradigm</span> -->
-            <span class="title-text">L1-2 INFRASTRUCTURE FOR<br /> ALL THE FULL CHAIN ASSETS</span>
-          </div>
-          <div class="flex justify-center">
-            <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box mr-[24px]" @click="clickJoin">Join
+          <div class="md:justify-center md:flex mt-[40px]">
+            <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
+              @click="clickJoin">Join
               $ABSC</a-button>
             <a-anchor :affix="false" :items="[{
     key: '1',
     href: '#bmaker-demo-video',
-    title: 'Basic demo',
+    title: 'View demo',
   }]" @change="onChange">
               <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box">View Demo</a-button>
             </a-anchor>
@@ -65,21 +66,33 @@
 
 
 
-      <!-- <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
-        :contentWrapperStyle="contentWrapperStyle" rootClassName="bg-css">
+      <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
+         rootClassName="bg-css">
         <div class="flex justify-between">
           <div>
             <img src="@/assets/images/mbake-logo.png" class="w-[110px]" />
           </div>
           <div>
-            <CloseOutlined style="color: #ffffff;fontSize: 24px" @click="open = false" />
+            <CloseOutlined :style="{ fontSize: '24px', color: '#fff' }" @click="open = false" />
           </div>
         </div>
-        <div class="text-[16px] text-[#ffFfff] font-bold">
-          <div class="mt-[40px] mb-[30px]">Whitepaper</div>
-          <div class="mb-[30px]">Roadmap</div>
-    </div>
-    </a-drawer> -->
+        <div class="text-[18px] text-[#ffFfff] font-bold">
+          <div class=" mb-[32px] mt-[32px]" @click="clickJoin">$ABSC
+          </div>
+          <div @click="clickTwitter">
+            <div class=" mb-[32px]">
+              Twitter</div>
+          </div>
+          <div @click="clickTG">
+            <div class=" mb-[32px]">
+              Telegram</div>
+          </div>
+          <div @click="clickDiscord">
+            <div class="">
+              Discord</div>
+          </div>
+        </div>
+      </a-drawer>
 
     </div>
 
@@ -147,29 +160,38 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-// import { CloseOutlined } from "@ant-design/icons-vue"
+import { CloseOutlined } from "@ant-design/icons-vue"
 const isMobile = ref(false)
+const open = ref(false)
 const heightValue = ref(556)
 
 const clickJoin = () => {
   window.open('https://absc.app/')
+  open.value = false
 }
 
 const clickTwitter = () => {
   window.open('https://twitter.com/bscstable')
+  open.value = false
 }
 
 const clickTG = () => {
   window.open('https://t.me/aptbscs')
+  open.value = false
 }
 
 const clickDiscord = () => {
-  window.open('https://discord.com')
+  window.open('https://discord.com/invite/cpECV8CKbS')
+  open.value = false
 }
 
 const onChange = (link: string) => {
   console.log('Anchor:OnChange', link);
 };
+
+const onClose = () => {
+  open.value = false;
+}
 
 
 onMounted(() => {
@@ -279,6 +301,15 @@ onMounted(() => {
   color: #ffffff;
   width: 178px;
   margin-top: 38px;
+  margin: 0 auto;
+}
+
+:deep(.ant-anchor-link) {
+  margin: 0 auto;
+}
+
+:deep(.ant-anchor-wrapper .ant-anchor .ant-anchor-link) {
+  padding-inline: 0px;
 }
 
 .bg-css {
