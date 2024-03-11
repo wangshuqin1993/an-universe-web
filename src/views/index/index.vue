@@ -67,7 +67,7 @@
 
 
       <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
-         rootClassName="bg-css">
+        rootClassName="bg-css">
         <div class="flex justify-between">
           <div>
             <img src="@/assets/images/mbake-logo.png" class="w-[110px]" />
@@ -176,7 +176,7 @@ const clickTwitter = () => {
 }
 
 const clickTG = () => {
-  window.open('https://t.me/aptbscs')
+  window.open('https://t.me/bmaker2024')
   open.value = false
 }
 
