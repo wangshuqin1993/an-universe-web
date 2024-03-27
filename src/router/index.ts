@@ -56,7 +56,7 @@ let router = createRouter({
     {
       path: "/ido-claim",
       name: "Claim",
-      component: () => import('@/views/absc/claim.vue'),
+      component: () => import('@/views/absc/refund.vue'),
       meta: {
         isShow:true,
       }
