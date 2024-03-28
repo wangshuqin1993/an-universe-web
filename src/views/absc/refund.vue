@@ -16,7 +16,7 @@
         <br />
         1.Please log in to the wallet that you used during the IDO activity.
         <br />
-        2.Send the $ABSC tokens to the following address: <br />
+        2.Send the $tABSC tokens to the following address: <br />
         <div class="w-[90%] md:max-w-[450px] mt-[8px] px-[8px] py-[4px] text-[16px] text-[#fff] flex items-center bg-[#6C6C6C] bg-opacity-[0.09] rounded-full border border-[#463947] border-solid">
             <div>
               <span>{{ sendAddress }}</span>
@@ -26,8 +26,22 @@
                    src="@/assets/images/copy.svg"
                    class="h-[19px] cursor-pointer"
               />
+        </div>
+        </div>
+        <div class="mt-[12px]">
+          <span>The token address for $tABSC is:</span>
+          <div class="w-[90%] md:max-w-[450px] mt-[8px] px-[8px] py-[4px] text-[16px] text-[#fff] flex items-center bg-[#6C6C6C] bg-opacity-[0.09] rounded-full border border-[#463947] border-solid">
+            <div>
+              <span>{{ tokenAddress }}</span>
+            </div>
+            <div class="ml-[5px]">
+              <img @click="copyInfo(tokenAddress)"
+                   src="@/assets/images/copy.svg"
+                   class="h-[19px] cursor-pointer"
+              />
             </div>
           </div>
+        </div>
         <br />
         3.We will verify and refund the BNB amount you used during the IDO activity back to the same wallet address you used for participation within 72 hours.
         <br />
@@ -45,6 +59,7 @@ const refundModal = ref(false);
 const claimModal = ref(false);
 const isMobile = ref(false);
 const sendAddress = ref('0x0108308Cc98f24545105972B2C865980e162Eb2D')
+const tokenAddress = ref('0xc43C0e54b79286b3E66955A0dF9Aa49B76fc1798')
 
 const copyInfo = async (address: any) => {
   // 存储传递过来的数据
