@@ -5,7 +5,7 @@
       <!-- <video autoplay loop muted width="100%" v-if="!isMobile">
         <source src="@/assets/images/video.mp4" type="video/mp4" />
       </video> -->
-      <img src="@/assets/images/Home-5.png" />
+      <img src="@/assets/images/Home-5.jpg" />
     </div>
 
 
@@ -161,7 +161,7 @@ onMounted(() => {
 
 .mobile-css {
   height: 100vh;
-  background: url('../../assets/images/Home-5-m.png') no-repeat;
+  background: url('../../assets/images/Home-5-m.jpg') no-repeat;
   background-size: cover;
   background-position: center bottom;
   /* background-attachment: fixed; */
@@ -200,7 +200,7 @@ onMounted(() => {
   position: relative;
   top: 0;
   left: 0;
-  background: url("@/assets/images/Home-5-m.png") 100% 100% no-repeat;
+  background: url("@/assets/images/Home-5-m.jpg") 100% 100% no-repeat;
   background-size: cover;
 }
 
