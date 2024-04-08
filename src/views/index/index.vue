@@ -51,7 +51,7 @@
       </div>
       <div class="items-center justify-around md:flex">
         <img src="@/assets/images/Home-1.png" class="mx-auto md:w-[50%] w-[100%] md:mr-[50px] mb-[30px]" />
-        <div class="md:text-[20px] text-[16px] text-left ">
+        <div class="md:text-[26px] text-[16px] text-left ">
           · Finally! ICP could travel freely through the very Bitcoin original L1 network.<br />
           · Utilizing decentralized rollup protocol, there are no moral risks associated with centralized cross-chain
           bridges.<br />
@@ -84,7 +84,7 @@
   </div>
   <div class="max-w-[1428px] text-[#ffffff] px-[32px] pt-[60px] pb-[80px] mx-auto">
     <div>
-      <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
+      <img src="@/assets/images/logo-d.png" class="md:w-[140px] w-[110px]" />
     </div>
     <div class="text-[16px] font-bold mt-[12px] mb-[20px]">Copyright © 2024 Bmaker. All rights reserved.</div>
     <div class="flex">
