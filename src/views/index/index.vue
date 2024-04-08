@@ -1,10 +1,11 @@
 <template>
   <div class="relative bg-[#020619] " :class="!isMobile ? 'main-content' : 'main-content-bg'">
     <!-- class="absolute top-0" -->
-    <div class="video-box" :class="isMobile ? 'mobile-css' : ''">
-      <video autoplay loop muted width="100%" v-if="!isMobile">
+    <div class="video-box" :class="isMobile ? 'mobile-css' : ''" v-if="!isMobile">
+      <!-- <video autoplay loop muted width="100%" v-if="!isMobile">
         <source src="@/assets/images/video.mp4" type="video/mp4" />
-      </video>
+      </video> -->
+      <img src="@/assets/images/Home-5.png" />
     </div>
 
 
@@ -12,118 +13,64 @@
       <div class="max-w-[1440px] mx-auto">
         <div class="flex justify-between items-center header h-[82px] py-[20px] ">
           <div>
-            <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
+            <img src="@/assets/images/logo-d.png" class="md:w-[140px] w-[110px]" />
           </div>
-          <div v-if="!isMobile" class="flex items-center text-[#ffffff] text-[16px] text-right">
-            <div
-              class="md:mr-[50px] md:text-[20px] text-[16px] mr-[12px] cursor-pointer hover:text-[#F41FFF] md:font-bold font-semibold"
-              @click="clickJoin">$ABSC
-            </div>
-            <div @click="clickTwitter">
-              <!-- <img src="@/assets/images/Twitter.png" class="w-[22px] md:mr-[50px] mr-[24px] cursor-pointer" /> -->
-              <div
-                class=" md:mr-[50px] mr-[12px] cursor-pointer md:text-[20px] text-[16px] md:font-bold font-semibold hover:text-[#F41FFF]">
-                Twitter</div>
-            </div>
-            <div @click="clickTG">
-              <div
-                class=" md:mr-[50px] mr-[12px] cursor-pointer md:text-[20px] text-[16px] md:font-bold font-semibold hover:text-[#F41FFF]">
-                Telegram</div>
-              <!-- <img src="@/assets/images/TG.png" class="w-[22px] cursor-pointer" /> -->
-            </div>
-            <div @click="clickDiscord">
-              <div class=" cursor-pointer md:text-[20px] text-[16px] md:font-bold font-semibold hover:text-[#F41FFF]">
-                Discord</div>
-              <!-- <img src="@/assets/images/TG.png" class="w-[22px] cursor-pointer" /> -->
-            </div>
-          </div>
-          <div @click="open = true" v-if="isMobile">
+
+          <!-- <div @click="open = true" v-if="isMobile">
             <img src="@/assets/images/mobileShow.png" class="h-[24px]" />
-          </div>
+          </div> -->
 
         </div>
         <div class="text-center content md:mt-[200px] mt-[130px]">
-          <div class="md:text-[72px] text-[32px] font-bold mx-auto">
-            <span v-if="!isMobile" class="title-text">L1-2 INFRASTRUCTURE FOR <br /> ALL THE FULL CHAIN ASSETS</span>
-            <span v-if="isMobile" class="title-text">L1-2 INFRASTRUCTURE FOR ALL THE FULL CHAIN ASSETS</span>
+          <div class="md:text-[72px] text-[32px] font-bold mx-auto text-[#fff]">
+            LAYER M INFRA FOR OMNI ASSETS<br /> BASED ON THE INTERNET COMPUTER
           </div>
           <div class="md:justify-center md:flex mt-[40px]">
-            <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
+            <!-- <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
               @click="clickJoin">Join
               $ABSC</a-button>
             <a-anchor :affix="false" :items="[{
     key: '1',
     href: '#bmaker-demo-video',
     title: 'View demo',
-  }]" @change="onChange">
+  }]" @change="onChange"> 
               <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box">View Demo</a-button>
-            </a-anchor>
-            <!-- <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box" href="#bmaker-demo-video"
-              @click="onChange">View Demo</a-button> -->
+            </a-anchor>-->
+            <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box">View Demo(soon)</a-button>
           </div>
         </div>
       </div>
-
-
-
-      <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
-        rootClassName="bg-css">
-        <div class="flex justify-between">
-          <div>
-            <img src="@/assets/images/mbake-logo.png" class="w-[110px]" />
-          </div>
-          <div>
-            <CloseOutlined :style="{ fontSize: '24px', color: '#fff' }" @click="open = false" />
-          </div>
-        </div>
-        <div class="text-[18px] text-[#ffFfff] font-bold">
-          <div class=" mb-[32px] mt-[32px]" @click="clickJoin">$ABSC
-          </div>
-          <div @click="clickTwitter">
-            <div class=" mb-[32px]">
-              Twitter</div>
-          </div>
-          <div @click="clickTG">
-            <div class=" mb-[32px]">
-              Telegram</div>
-          </div>
-          <div @click="clickDiscord">
-            <div class="">
-              Discord</div>
-          </div>
-        </div>
-      </a-drawer>
-
     </div>
 
   </div>
-  <div class="bg-black px-[32px]">
+  <div class="bg-black px-[32px] md:pb-[100px] pb-[60px]">
     <div class="w-full text-[#ffffff] text-center md:pt-[120px] pt-[60px] max-w-[1428px] mx-auto">
       <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
-        <div>Bmaker: BTC & Omni Chains Asset Infra<br />
+        <div>Dokodemo on the Internet Computer: BTC & Omni Chains Asset Infra
           Unlock infinite possibilities</div>
       </div>
       <div class="items-center justify-around md:flex">
         <img src="@/assets/images/Home-1.png" class="mx-auto md:w-[50%] w-[100%] md:mr-[50px] mb-[30px]" />
         <div class="md:text-[20px] text-[16px] text-left ">
-          · Omni chain infra L1-2 for decentralized stablecoin & all omni
-          chain
-          assets<br />
-          · BTC L1 Supporting the issuance of centralized stablecoins with excess collateral<br />
-          · Stablecoin can be used directly on EVM L1&L2 & Non EVM w/o coss chain bridge<br />
-          · Universal infra that can empower any asset with omni chain free consumption scenarios<br />
-          · Web 3 Massadotion/Web 2.5/ Old money friendly <br />
-          · Decentralized and fully on chain</div>
+          · Permissionless Verification on Bitcoin Original Network<br />
+          · “M” for Middle & Multiple｜SupportL1 & 2, EVM & non-EVM<br />
+          · Omni Asset Swift for Crypto assets<br />
+          · BC can earn Interest on Bitcoin L1! Without the need for warping / cross-chain bridge / any other
+          centralized solution<br />
+          · Omni-chains Swap/OTC/re-staking: One universal account / Secondly confirm / low gas fee / fully
+          decentralized environment<br />
+          · Finally! Omni-chains TVL expandability.An infrastructure helps all L1 & L2 to achieve interoperability! And
+          it's base on the strongest consensus in crypto business: the bitcoin original network</div>
       </div>
       <div class="md:mt-[120px] mt-[60px]">
         <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
-          BTC Ecological Native /EVM&Non-EVM supportable,
-          Web2.5-Web3.0 financial application scenarios friendly
+          Application Scenarios of Dokodemo Infra & Omni chain assets
+          on the Internet Computer
         </div>
         <img src="@/assets/images/Home-2.png" class="md:w-[80%] w-[100%] mx-auto" />
 
       </div>
-      <div class="md:mt-[120px] mt-[60px]" id="bmaker-demo-video">
+      <!-- <div class="md:mt-[120px] mt-[60px]" id="bmaker-demo-video">
         <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
           Bmaker Demo Video
         </div>
@@ -134,7 +81,7 @@
             allowfullscreen></iframe>
         </div>
 
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="max-w-[1428px] text-[#ffffff] px-[32px] pt-[60px] pb-[80px] mx-auto">
@@ -216,7 +163,7 @@ onMounted(() => {
 
 .mobile-css {
   height: 100vh;
-  background: url('../../assets/images/mobile-bg-bmaker.jpg') no-repeat;
+  background: url('../../assets/images/Home-5-m.png') no-repeat;
   background-size: cover;
   background-position: center bottom;
   /* background-attachment: fixed; */
@@ -246,7 +193,7 @@ onMounted(() => {
   top: 0;
   left: 0;
   z-index: 2;
-  background: linear-gradient(180deg, rgba(124, 0, 131, .2) 0%, rgba(243, 30, 255, 0.42) 100%);
+  /* background: linear-gradient(180deg, rgba(124, 0, 131, .2) 0%, rgba(243, 30, 255, 0.42) 100%); */
 }
 
 .main-content-bg {
@@ -255,6 +202,8 @@ onMounted(() => {
   position: relative;
   top: 0;
   left: 0;
+  background: url("@/assets/images/Home-5-m.png") 100% 100% no-repeat;
+  background-size: cover;
 }
 
 .mobile-min-btn {
