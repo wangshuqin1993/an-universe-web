@@ -52,15 +52,13 @@
       <div class="items-center justify-around md:flex">
         <img src="@/assets/images/Home-1.png" class="mx-auto md:w-[50%] w-[100%] md:mr-[50px] mb-[30px]" />
         <div class="md:text-[20px] text-[16px] text-left ">
-          · Permissionless Verification on Bitcoin Original Network<br />
-          · “M” for Middle & Multiple｜SupportL1 & 2, EVM & non-EVM<br />
-          · Omni Asset Swift for Crypto assets<br />
-          · BC can earn Interest on Bitcoin L1! Without the need for warping / cross-chain bridge / any other
-          centralized solution<br />
-          · Omni-chains Swap/OTC/re-staking: One universal account / Secondly confirm / low gas fee / fully
-          decentralized environment<br />
-          · Finally! Omni-chains TVL expandability.An infrastructure helps all L1 & L2 to achieve interoperability! And
-          it's base on the strongest consensus in crypto business: the bitcoin original network</div>
+          · Finally! ICP could travel freely through the very Bitcoin original L1 network.<br />
+          · Utilizing decentralized rollup protocol, there are no moral risks associated with centralized cross-chain
+          bridges.<br />
+          · Ready for the whale！Release the TVL of the Bitcoin network onto the ICP.<br />
+          · The Grand De-Fi Era of ICP is about to dawn!<br />
+          · BTC and BTC L2 assets can be staked/re-staked on the ICP network!<br />
+        </div>
       </div>
       <div class="md:mt-[120px] mt-[60px]">
         <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
