@@ -86,8 +86,8 @@
     <div>
       <img src="@/assets/images/logo-d.png" class="md:w-[140px] w-[110px]" />
     </div>
-    <div class="text-[16px] font-bold mt-[12px] mb-[20px]">Copyright © 2024 Bmaker. All rights reserved.</div>
-    <div class="flex">
+    <div class="text-[16px] font-bold mt-[12px] mb-[20px]">Copyright © 2024 Dokodemo. All rights reserved.</div>
+    <!-- <div class="flex">
       <div @click="clickTwitter">
         <img src="@/assets/images/bmaker-twitter.png" class="w-[22px] mr-[24px] cursor-pointer" />
       </div>
@@ -97,7 +97,7 @@
       <div @click="clickTG">
         <img src="@/assets/images/bmaker-tg.png" class="w-[22px] cursor-pointer" />
       </div>
-    </div>
+    </div> -->
   </div>
 
 
