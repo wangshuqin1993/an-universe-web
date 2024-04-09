@@ -50,7 +50,7 @@
           Unlock infinite possibilities</div>
       </div>
       <div class="items-center justify-around md:flex">
-        <img src="@/assets/images/Home-1.jpg" class="mx-auto md:w-[50%] w-[100%] md:mr-[50px] mb-[30px]" />
+        <img src="@/assets/images/Home-1.png" class="mx-auto md:w-[50%] w-[100%] md:mr-[50px] mb-[30px]" />
         <div class="md:text-[26px] text-[16px] text-left ">
           · Finally! ICP could travel freely through the very Bitcoin original L1 network.<br />
           · Utilizing decentralized rollup protocol, there are no moral risks associated with centralized cross-chain
