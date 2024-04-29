@@ -43,12 +43,7 @@
             </div>
             <!-- tips -->
             <p class="mt-4 text-base text-black">✅ Each address can only claim 1 time! In total 100,000 tBMR/day. Rest: 
-              <template v-if="!loading">
-                <span class="mx-2">{{ restToken }}</span>
-              </template>
-              <template v-else>
-                <Skeleton class="inline-block w-12 h-6 mx-2" />
-              </template>
+              <span class="mx-2">{{ !loading ? restToken : '???' }}</span>
               <span>
                 tBMR today.
               </span>

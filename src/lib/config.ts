@@ -1,21 +1,19 @@
-import exp from "constants";
-
 // opBNBmainnet
 const opBNBmainnet = {
   chainId: 56,
   chainName: 'Binance Smart Chain Mainnet',
-  explorer: 'https://opbnbscan.com/',
+  explorerUrl: 'https://opbnbscan.com/',
 };
 // openBNBtestnet
 const opBNBtestnet = {
   chainId: 97,
   chainName: 'Binance Smart Chain Testnet',
-  explorer: 'https://testnet.opbnbscan.com/',
+  explorerUrl: 'https://testnet.opbnbscan.com/',
 };
 
-export const config = import.meta.env.VITE_NETWORK !== 'mainnet' ? opBNBtestnet : opBNBmainnet;
+export const config = import.meta.env.VITE_NETWORK === 'testnet' ? opBNBtestnet : opBNBmainnet;
 
-export function getTransationUrl(hash: string): string {
-  return `${config.explorer}tx/${hash}`;
+export function getTransationUrl(hash: string) {
+  return `${config.explorerUrl}tx/${hash}`;
 } 
 
