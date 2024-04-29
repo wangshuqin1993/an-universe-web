@@ -48,10 +48,13 @@
             <span v-if="isMobile" class="title-text">L1-2 INFRASTRUCTURE FOR ALL THE FULL CHAIN ASSETS</span> -->
             LAYER M INFRA FOR OMNI ASSETS
           </div>
-          <div class="md:justify-center md:flex mt-[40px]">
-            <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
+          <div class="md:justify-center md:flex mt-[40px] flex flex-col md:flex-row items-center">
+            <!-- <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
               @click="clickJoin">Join
-              $ABSC</a-button>
+              $ABSC</a-button> -->
+              <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
+              @click="clickFaucent">
+              Faucet</a-button>
             <a-anchor :affix="false" :items="[{
     key: '1',
     href: '#bmaker-demo-video',
@@ -174,9 +177,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { CloseOutlined } from "@ant-design/icons-vue"
+import { useRouter } from "vue-router"
+
 const isMobile = ref(false)
 const open = ref(false)
 const heightValue = ref(556)
+const router = useRouter();
 
 const clickJoin = () => {
   window.open('https://absc.app/')
@@ -195,6 +201,11 @@ const clickTG = () => {
 
 const clickDiscord = () => {
   window.open('https://discord.com/invite/cpECV8CKbS')
+  open.value = false
+}
+
+const clickFaucent = () => {
+  router.push('/faucet');
   open.value = false
 }
 
