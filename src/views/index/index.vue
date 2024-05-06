@@ -8,8 +8,8 @@
     </div>
 
 
-    <div class="w-full h-full px-[32px] content-box">
-      <div class="max-w-[1440px] mx-auto">
+    <div class="w-full h-full px-[32px] content-box bg-[]">
+      <div class="max-w-[1440px] mx-auto ">
         <div class="flex justify-between items-center header h-[82px] py-[20px] ">
           <div>
             <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
@@ -52,7 +52,7 @@
             <!-- <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
               @click="clickJoin">Join
               $ABSC</a-button> -->
-              <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
+            <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
               @click="clickFaucent">
               Faucet</a-button>
             <a-anchor :affix="false" :items="[{
@@ -155,23 +155,26 @@
     </div>
   </div>
 
-  <div class="max-w-[1428px] text-[#ffffff] px-[32px] pt-[60px] pb-[80px] mx-auto">
-    <div>
-      <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
-    </div>
-    <div class="text-[16px] font-bold mt-[12px] mb-[20px]">Copyright © 2024 Bmaker. All rights reserved.</div>
-    <div class="flex">
-      <div @click="clickTwitter">
-        <img src="@/assets/images/bmaker-twitter.png" class="w-[22px] mr-[24px] cursor-pointer" />
+  <div class="w-full bg-[#1F0D32]">
+    <div class="max-w-[1428px] text-[#ffffff] px-[32px] pt-[60px] pb-[80px] mx-auto">
+      <div>
+        <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
       </div>
-      <div @click="clickDiscord">
-        <img src="@/assets/images/bmaker-discord.png" class="w-[22px] mr-[24px] cursor-pointer" />
-      </div>
-      <div @click="clickTG">
-        <img src="@/assets/images/bmaker-tg.png" class="w-[22px] cursor-pointer" />
+      <div class="text-[16px] font-bold mt-[12px] mb-[20px]">Copyright © 2024 Bmaker. All rights reserved.</div>
+      <div class="flex">
+        <div @click="clickTwitter">
+          <img src="@/assets/images/bmaker-twitter.png" class="w-[22px] mr-[24px] cursor-pointer" />
+        </div>
+        <div @click="clickDiscord">
+          <img src="@/assets/images/bmaker-discord.png" class="w-[22px] mr-[24px] cursor-pointer" />
+        </div>
+        <div @click="clickTG">
+          <img src="@/assets/images/bmaker-tg.png" class="w-[22px] cursor-pointer" />
+        </div>
       </div>
     </div>
   </div>
+
 
 
 </template>
