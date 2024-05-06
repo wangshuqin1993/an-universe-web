@@ -53,10 +53,10 @@
               @click="clickJoin">Join
               $ABSC</a-button>
             <a-anchor :affix="false" :items="[{
-    key: '1',
-    href: '#bmaker-demo-video',
-    title: 'View demo',
-  }]" @change="onChange">
+              key: '1',
+              href: '#bmaker-demo-video',
+              title: 'View demo',
+            }]" @change="onChange">
               <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box">View Demo</a-button>
             </a-anchor>
             <!-- <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box" href="#bmaker-demo-video"
@@ -147,6 +147,8 @@
       <img src="@/assets/images/Syn.png" class="md:h-[48px] h-[30px]" />
       <img src="@/assets/images/Par.png" class="md:h-[48px]  h-[26px]" />
       <img src="@/assets/images/OKX.png" class="md:h-[48px] h-[26px]" />
+      <img src="@/assets/images/Photoroom.png" class="md:h-[48px] h-[26px]" />
+      <img src="@/assets/images/Photoroom2.png" class="md:h-[48px] h-[26px]" />
     </div>
   </div>
 
