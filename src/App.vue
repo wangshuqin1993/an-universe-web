@@ -1,13 +1,15 @@
 <script setup lang="ts">
-
+import Toaster from '@/components/ui/toast/Toaster.vue'
+import { ConfigProvider } from 'ant-design-vue';
+// import { useRecaptchaProvider } from 'vue-recaptcha';
+// useRecaptchaProvider();
 </script>
 
 <template>
-  <div class="bg-[#15083E] ">
-
+  <ConfigProvider>
     <router-view></router-view>
-
-  </div>
+    <Toaster />
+  </ConfigProvider>
 </template>
 
 <style>
