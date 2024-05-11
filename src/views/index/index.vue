@@ -113,7 +113,7 @@
           • Permissionless Verification on Bitcoin Original Network<br />
           • "M" for Middle & Multiple | SupportL1 & 2. EVM & non-EVM<br />
           • Omni Asset Swift for Crypto assets<br />
-          • BC can earn Interest on Bitcoin L1! Without the need for warping / cross-chain bridge / any other
+          • BTC can earn Interest on Bitcoin L1! Without the need for warping / cross-chain bridge / any other
           centralized solution.<br />
           • Omni-chains Swap / OTC / re-staking: One universal account / Secondly confirm / low gas fee / fully
           decentralized environment.<br />
