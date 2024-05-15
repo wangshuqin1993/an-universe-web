@@ -104,7 +104,7 @@
   <div class="bg-black px-[32px]">
     <div class="w-full text-[#ffffff] text-center md:pt-[120px] pt-[60px] max-w-[1428px] mx-auto">
       <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
-        <div>Bmaker: BTC & Omni Chains Asset InfraUnlock infinite possibilities</div>
+        <div>Bmaker: BTC & Omni Chains Asset Infra Unlock infinite possibilities</div>
       </div>
       <div class="items-center justify-around md:flex">
         <img src="@/assets/images/Home-1.png" class="mx-auto md:w-[50%] w-[100%] md:mr-[50px] mb-[30px]" />
