@@ -97,11 +97,62 @@
           </div>
         </div>
       </a-drawer>
-
     </div>
-
   </div>
+
   <div class="bg-black px-[32px]">
+    <div class="w-full text-[#ffffff] text-center md:pt-[120px] pt-[60px] max-w-[1428px] mx-auto">
+      <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
+        <div>Permissionless & Native Infra 4 BTC Liquidity</div>
+      </div>
+      <div class="md:grid items-center justify-around grid-cols-3 gap-12 md:flex md:px-[64px]">
+        <div class="mb-[48px] md:mb-[0px]">
+          <div class="flex items-center img-box md:w-[140px] md:h-[140px] w-[100px] h-[100px]">
+            <img src="@/assets/images/Permissionless1.svg" class="md:w-[60px] md:h-[60px] w-[40px] h-[40px]" />
+          </div>
+          <div class="md:text-[24px] text-[20px] font-bold md:mt-[32px] mt-[16px]">Permissionless Verification Channel
+            on BTC</div>
+        </div>
+        <div class="mb-[48px] md:mb-[0px]">
+          <div class="flex items-center img-box md:w-[140px] md:h-[140px] w-[100px] h-[100px]">
+            <img src="@/assets/images/Permissionless2.svg" class="md:w-[60px] md:h-[60px] w-[40px] h-[40px]" />
+          </div>
+          <div class="md:text-[24px] text-[20px] font-bold md:mt-[32px] mt-[16px]">Omni TVL Expandability
+            (L1/L2/Non-EVM)</div>
+        </div>
+        <div>
+          <div class="flex items-center img-box md:w-[140px] md:h-[140px] w-[100px] h-[100px]">
+            <img src="@/assets/images/Permissionless3.svg" class="md:w-[60px] md:h-[60px] w-[40px] h-[40px]" />
+          </div>
+          <div class="md:text-[24px] text-[20px] font-bold  md:mt-[32px] mt-[16px]">Liquidity Support 4 Omni Staking &
+            Re-staking</div>
+        </div>
+      </div>
+
+
+      <div class="md:mt-[120px] mt-[60px]">
+        <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
+          Application Scenarios of Bmaker Infra & Omni chain assets
+        </div>
+        <img src="@/assets/images/Home-2.png" class="md:w-[80%] w-[100%] mx-auto" />
+
+      </div>
+      <div class="md:mt-[120px] mt-[60px]" id="bmaker-demo-video">
+        <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
+          Bmaker Demo Video
+        </div>
+        <div class="md:w-[70%] h-full w-[100%] mx-auto md:pb-[60px] pb-[32px]">
+          <iframe width="100%" :height="heightValue" src="https://www.youtube.com/embed/SrT93VxCrlE?si=eifWepFkzUgVvtAJ"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="bg-black px-[32px]">
     <div class="w-full text-[#ffffff] text-center md:pt-[120px] pt-[60px] max-w-[1428px] mx-auto">
       <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
         <div>Bmaker: BTC & Omni Chains Asset Infra Unlock infinite possibilities</div>
@@ -119,14 +170,6 @@
           decentralized environment.<br />
           • Finally! Omni-chains TVL expandability.An infrastructure helps all L1 & L2 to achieve interoperability! And
           it’s base on the strongest consensus in crypto business: the bitcoin original network!<br />
-
-
-          <!-- · Finally! ICP could travel freely through the very Bitcoin original L1 network.<br />
-          · Utilizing decentralized rollup protocol, there are no moral risks associated with centralized cross-chain
-          bridges.<br />
-          · Ready for the whale！Release the TVL of the Bitcoin network onto the ICP.<br />
-          · The Grand De-Fi Era of ICP is about to dawn!<br />
-          · BTC and BTC L2 assets can be staked/re-staked on the ICP network!<br /> -->
         </div>
       </div>
       <div class="md:mt-[120px] mt-[60px]">
@@ -149,7 +192,8 @@
 
       </div>
     </div>
-  </div>
+  </div> -->
+
   <div class="pt-[60px] text-[#ffffff] box-4 px-[32px] md:h-full h-[400px] md:pb-[200px]">
     <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px] text-center">Partnership</div>
     <div
@@ -313,6 +357,21 @@ onMounted(() => {
 
 .title-text {
   color: #ffffff;
+}
+
+.img-box {
+  /* width: 140px;
+  height: 140px; */
+  border-radius: 50%;
+  background: linear-gradient(to right, #6D5CF6, #D148F6);
+  text-align: center;
+  margin: auto;
+}
+
+.img-box img {
+  /* width: 60px;
+  height: 60px; */
+  margin: auto;
 }
 
 :deep(.ant-drawer-content) {
