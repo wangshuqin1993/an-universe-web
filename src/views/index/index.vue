@@ -229,9 +229,9 @@
   </div>
 
   <a-modal v-model:open="openAbsc" title="About $ABSC" :footer="null" wrapClassName="absc-modal">
-    <div class="text-center mt-[16px]">
-      <div class="text-[16px] text-[#000] ">For more details on $ABSC, please check Bmaker's Twitter</div>
-      <a class="text-[16px] text-[#000]" @click="clickBmakerAI">https://x.com/BmakerAI/status/1771439902993129670</a>
+    <div class="text-center mt-[24px]">
+      <div class="text-[16px] text-[#000] mb-[8px]">For more details on $ABSC, please check Bmaker's Twitter</div>
+      <a class="text-[16px] text-[#1677ff]" @click="clickBmakerAI">https://x.com/BmakerAI/status/1771439902993129670</a>
       <div class="corder-t mt-[24px] pt-[24px]">
         <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
           @click="openAbsc = false">Done</a-button>
