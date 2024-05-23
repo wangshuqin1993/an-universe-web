@@ -231,7 +231,7 @@
   <a-modal v-model:open="openAbsc" title="About $ABSC" :footer="null" wrapClassName="absc-modal">
     <div class="text-center mt-[16px]">
       <div class="text-[16px] text-[#000] ">For more details on $ABSC, please check Bmaker's Twitter</div>
-      <div class="text-[16px] text-[#000]">https://x.com/BmakerAI/status/1771439902993129670</div>
+      <a class="text-[16px] text-[#000]" @click="clickBmakerAI">https://x.com/BmakerAI/status/1771439902993129670</a>
       <div class="corder-t mt-[24px] pt-[24px]">
         <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
           @click="openAbsc = false">Done</a-button>
@@ -262,6 +262,10 @@ const clickJoin = () => {
 const clickTwitter = () => {
   window.open('https://twitter.com/BmakerAI')
   open.value = false
+}
+
+const clickBmakerAI = () => {
+  window.open('https://x.com/BmakerAI/status/1771439902993129670')
 }
 
 const clickTG = () => {
