@@ -76,3 +76,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+.absc-modal .ant-modal .ant-modal-title {
+  font-size: 20px;
+  font-weight: 700;
+}

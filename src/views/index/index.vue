@@ -129,7 +129,6 @@
         </div>
       </div>
 
-
       <div class="md:mt-[120px] mt-[60px]">
         <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
           Application Scenarios of Bmaker Infra & Omni chain assets
@@ -229,7 +228,17 @@
     </div>
   </div>
 
+  <a-modal v-model:open="openAbsc" title="About $ABSC" :footer="null" wrapClassName="absc-modal">
+    <div class="text-center mt-[16px]">
+      <div class="text-[16px] text-[#000] ">For more details on $ABSC, please check Bmaker's Twitter</div>
+      <div class="text-[16px] text-[#000]">https://x.com/BmakerAI/status/1771439902993129670</div>
+      <div class="corder-t mt-[24px] pt-[24px]">
+        <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
+          @click="openAbsc = false">Done</a-button>
+      </div>
+    </div>
 
+  </a-modal>
 
 </template>
 
@@ -240,11 +249,13 @@ import { useRouter } from "vue-router"
 
 const isMobile = ref(false)
 const open = ref(false)
+const openAbsc = ref(false)
 const heightValue = ref(556)
 const router = useRouter();
 
 const clickJoin = () => {
-  window.open('https://absc.app/')
+  // window.open('https://absc.app/')
+  openAbsc.value = true;
   open.value = false
 }
 
@@ -445,6 +456,9 @@ onMounted(() => {
   /* padding: 80px 100px; */
   border-radius: 12px;
 }
+
+
+
 
 
 
