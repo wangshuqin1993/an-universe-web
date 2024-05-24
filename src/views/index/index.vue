@@ -137,9 +137,15 @@
 
       </div>
       <div class="md:mt-[120px] mt-[60px]" id="bmaker-demo-video">
-        <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
+        <div class="md:text-[48px] text-[24px] font-bold md:mb-[32px] mb-[24px]">
           Bmaker Demo Video
         </div>
+        <div class="md:text-[40px] text-[20px] md:mb-[80px] mb-[48px] text-center" v-if="!isMobile">
+          <div>This is the earliest prototype video</div>
+          <div>If you are interested in our latest research results, stay tuned</div>
+        </div>
+        <div class="md:text-[40px] text-[20px] md:mb-[80px] mb-[48px]" v-else>This is the earliest prototype video
+          If you are interested in our latest research results, stay tuned</div>
         <div class="md:w-[70%] h-full w-[100%] mx-auto md:pb-[60px] pb-[32px]">
           <iframe width="100%" :height="heightValue" src="https://www.youtube.com/embed/SrT93VxCrlE?si=eifWepFkzUgVvtAJ"
             title="YouTube video player" frameborder="0"
