@@ -84,7 +84,7 @@
           <!-- <div class=" mb-[32px] mt-[32px]" @click="clickJoin">$ABSC
           </div> -->
           <div @click="clickTwitter">
-            <div class=" mb-[32px]">
+            <div class=" my-[32px]">
               Twitter</div>
           </div>
           <div @click="clickTG">
