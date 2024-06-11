@@ -15,10 +15,10 @@
             <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
           </div>
           <div v-if="!isMobile" class="flex items-center text-[#ffffff] text-[16px] text-right">
-            <div
+            <!-- <div
               class="md:mr-[50px] md:text-[20px] text-[16px] mr-[12px] cursor-pointer hover:text-[#F41FFF] md:font-bold font-semibold"
               @click="clickJoin">$ABSC
-            </div>
+            </div> -->
             <div @click="clickTwitter">
               <!-- <img src="@/assets/images/Twitter.png" class="w-[22px] md:mr-[50px] mr-[24px] cursor-pointer" /> -->
               <div
@@ -81,8 +81,8 @@
           </div>
         </div>
         <div class="text-[18px] text-[#ffFfff] font-bold">
-          <div class=" mb-[32px] mt-[32px]" @click="clickJoin">$ABSC
-          </div>
+          <!-- <div class=" mb-[32px] mt-[32px]" @click="clickJoin">$ABSC
+          </div> -->
           <div @click="clickTwitter">
             <div class=" mb-[32px]">
               Twitter</div>
