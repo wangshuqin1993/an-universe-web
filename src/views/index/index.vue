@@ -12,7 +12,7 @@
       <div class="max-w-[1440px] mx-auto ">
         <div class="flex justify-between items-center header h-[82px] py-[20px] ">
           <div>
-            <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
+            <img src="@/assets/images/Vishwa.png" class="md:w-[140px] w-[110px]" />
           </div>
           <div v-if="!isMobile" class="flex items-center text-[#ffffff] text-[16px] text-right">
             <!-- <div
@@ -131,14 +131,14 @@
 
       <div class="md:mt-[120px] mt-[60px]">
         <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
-          Application Scenarios of Bmaker Infra & Omni chain assets
+          Application Scenarios of Vishwa Infra & Omni chain assets
         </div>
         <img src="@/assets/images/Home-2.png" class="md:w-[80%] w-[100%] mx-auto" />
 
       </div>
       <div class="md:mt-[120px] mt-[60px]" id="bmaker-demo-video">
         <div class="md:text-[48px] text-[24px] font-bold md:mb-[32px] mb-[24px]">
-          Bmaker Demo Video
+          Vishwa Demo Video
         </div>
         <div class="md:text-[40px] text-[20px] md:mb-[80px] mb-[48px] text-center" v-if="!isMobile">
           <div>This is the earliest prototype video</div>
@@ -156,48 +156,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <div class="bg-black px-[32px]">
-    <div class="w-full text-[#ffffff] text-center md:pt-[120px] pt-[60px] max-w-[1428px] mx-auto">
-      <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
-        <div>Bmaker: BTC & Omni Chains Asset Infra Unlock infinite possibilities</div>
-      </div>
-      <div class="items-center justify-around md:flex">
-        <img src="@/assets/images/Home-1.png" class="mx-auto md:w-[50%] w-[100%] md:mr-[50px] mb-[30px]" />
-        <div class="md:text-[23px] text-[16px] text-left ">
-
-          • Permissionless Verification on Bitcoin Original Network<br />
-          • "M" for Middle & Multiple | SupportL1 & 2. EVM & non-EVM<br />
-          • Omni Asset Swift for Crypto assets<br />
-          • BTC can earn Interest on Bitcoin L1! Without the need for warping / cross-chain bridge / any other
-          centralized solution.<br />
-          • Omni-chains Swap / OTC / re-staking: One universal account / Secondly confirm / low gas fee / fully
-          decentralized environment.<br />
-          • Finally! Omni-chains TVL expandability.An infrastructure helps all L1 & L2 to achieve interoperability! And
-          it’s base on the strongest consensus in crypto business: the bitcoin original network!<br />
-        </div>
-      </div>
-      <div class="md:mt-[120px] mt-[60px]">
-        <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
-          Application Scenarios of Bmaker Infra & Omni chain assets
-        </div>
-        <img src="@/assets/images/Home-2.png" class="md:w-[80%] w-[100%] mx-auto" />
-
-      </div>
-      <div class="md:mt-[120px] mt-[60px]" id="bmaker-demo-video">
-        <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
-          Bmaker Demo Video
-        </div>
-        <div class="md:w-[70%] h-full w-[100%] mx-auto md:pb-[60px] pb-[32px]">
-          <iframe width="100%" :height="heightValue" src="https://www.youtube.com/embed/SrT93VxCrlE?si=eifWepFkzUgVvtAJ"
-            title="YouTube video player" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen></iframe>
-        </div>
-
-      </div>
-    </div>
-  </div> -->
 
   <div class="pt-[60px] text-[#ffffff] box-4 px-[32px] md:h-full h-[400px] md:pb-[200px]">
     <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px] text-center">Partnership</div>
@@ -217,9 +175,9 @@
   <div class="w-full bg-[#1F0D32]">
     <div class="max-w-[1428px] text-[#ffffff] px-[32px] pt-[60px] pb-[80px] mx-auto">
       <div>
-        <img src="@/assets/images/mbake-logo.png" class="md:w-[140px] w-[110px]" />
+        <img src="@/assets/images/Vishwa.png" class="md:w-[140px] w-[110px]" />
       </div>
-      <div class="text-[16px] font-bold mt-[12px] mb-[20px]">Copyright © 2024 Bmaker. All rights reserved.</div>
+      <div class="text-[16px] font-bold mt-[12px] mb-[20px]">Copyright © 2024 Vishwa. All rights reserved.</div>
       <div class="flex">
         <div @click="clickTwitter">
           <img src="@/assets/images/bmaker-twitter.png" class="w-[22px] mr-[24px] cursor-pointer" />
@@ -236,7 +194,7 @@
 
   <a-modal v-model:open="openAbsc" title="About $ABSC" :footer="null" wrapClassName="absc-modal">
     <div class="text-center mt-[24px]">
-      <div class="text-[16px] text-[#000] mb-[8px]">For more details on $ABSC, please check Bmaker's Twitter</div>
+      <div class="text-[16px] text-[#000] mb-[8px]">For more details on $ABSC, please check Vishwa's Twitter</div>
       <a class="text-[16px] text-[#1677ff]" @click="clickBmakerAI">https://x.com/BmakerAI/status/1771439902993129670</a>
       <div class="corder-t mt-[24px] pt-[24px]">
         <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
