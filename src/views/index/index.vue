@@ -1,6 +1,5 @@
 <template>
   <div class="relative bg-[#020619] " :class="!isMobile ? 'main-content' : 'main-content-bg'">
-    <!-- class="absolute top-0" -->
     <div class="video-box" :class="isMobile ? 'mobile-css' : ''">
       <video autoplay loop muted width="100%" v-if="!isMobile">
         <source src="@/assets/images/video.mp4" type="video/mp4" />
@@ -20,7 +19,6 @@
               @click="clickJoin">$ABSC
             </div> -->
             <div @click="clickTwitter">
-              <!-- <img src="@/assets/images/Twitter.png" class="w-[22px] md:mr-[50px] mr-[24px] cursor-pointer" /> -->
               <div
                 class=" md:mr-[50px] mr-[12px] cursor-pointer md:text-[20px] text-[16px] md:font-bold font-semibold hover:text-[#F41FFF]">
                 Twitter</div>
@@ -29,12 +27,10 @@
               <div
                 class=" md:mr-[50px] mr-[12px] cursor-pointer md:text-[20px] text-[16px] md:font-bold font-semibold hover:text-[#F41FFF]">
                 Telegram</div>
-              <!-- <img src="@/assets/images/TG.png" class="w-[22px] cursor-pointer" /> -->
             </div>
             <div @click="clickDiscord">
               <div class=" cursor-pointer md:text-[20px] text-[16px] md:font-bold font-semibold hover:text-[#F41FFF]">
                 Discord</div>
-              <!-- <img src="@/assets/images/TG.png" class="w-[22px] cursor-pointer" /> -->
             </div>
           </div>
           <div @click="open = true" v-if="isMobile">
@@ -44,14 +40,9 @@
         </div>
         <div class="text-center content md:mt-[200px] mt-[130px]">
           <div class="md:text-[72px] text-[32px] font-bold mx-auto title-text">
-            <!-- <span v-if="!isMobile" class="title-text">L1-2 INFRASTRUCTURE FOR <br /> ALL THE FULL CHAIN ASSETS</span>
-            <span v-if="isMobile" class="title-text">L1-2 INFRASTRUCTURE FOR ALL THE FULL CHAIN ASSETS</span> -->
             LAYER M INFRA FOR OMNI ASSETS
           </div>
           <div class="md:justify-center md:flex mt-[40px] flex flex-col md:flex-row items-center">
-            <!-- <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
-              @click="clickJoin">Join
-              $ABSC</a-button> -->
             <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
               @click="clickFaucent">
               Faucet</a-button>
@@ -62,19 +53,26 @@
             }]" @change="onChange">
               <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box">View Demo</a-button>
             </a-anchor>
-            <!-- <a-button class="w-[178px] h-[37px] text-[#fff] mt-[40px] btn-box" href="#bmaker-demo-video"
-              @click="onChange">View Demo</a-button> -->
+          </div>
+
+          <div
+            class=" bottom-[68px] flex flex-wrap max-w-[1280px] md:px-[32px] p-[24px] gap-6 mt-[260px] justify-between">
+            <img src="@/assets/images/vish1.svg" class="md:h-[32px] h-[24px]" />
+            <img src="@/assets/images/vish2.svg" class="md:h-[32px] h-[24px]" />
+            <img src="@/assets/images/vish3.svg" class="md:h-[32px] h-[24px]" />
+            <img src="@/assets/images/vish4.svg" class="md:h-[32px] h-[24px]" />
+            <img src="@/assets/images/vish5.svg" class="md:h-[32px] h-[24px]" />
+            <img src="@/assets/images/vish6.svg" class="md:h-[32px] h-[24px]" />
           </div>
         </div>
       </div>
-
 
 
       <a-drawer :width="500" title="" placement="top" :open="open" @close="onClose" :closable="false"
         rootClassName="bg-css">
         <div class="flex justify-between">
           <div>
-            <img src="@/assets/images/mbake-logo.png" class="w-[110px]" />
+            <img src="@/assets/images/Vishwa.png" class="w-[110px]" />
           </div>
           <div>
             <CloseOutlined :style="{ fontSize: '24px', color: '#fff' }" @click="open = false" />
@@ -224,7 +222,7 @@ const clickJoin = () => {
 }
 
 const clickTwitter = () => {
-  window.open('https://twitter.com/BmakerAI')
+  window.open('https://x.com/Vishwa_xyz')
   open.value = false
 }
 
