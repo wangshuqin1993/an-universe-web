@@ -7,7 +7,7 @@
     </div>
 
 
-    <div class="w-full h-full px-[32px] content-box bg-[]">
+    <div class="w-full h-full px-[32px] content-box ">
       <div class="max-w-[1440px] mx-auto ">
         <div class="flex justify-between items-center header h-[82px] py-[20px] ">
           <div>
@@ -55,15 +55,33 @@
             </a-anchor>
           </div>
 
-          <div
-            class=" bottom-[68px] flex flex-wrap max-w-[1280px] md:px-[32px] p-[24px] gap-6 mt-[260px] justify-between">
-            <img src="@/assets/images/vish1.svg" class="md:h-[32px] h-[24px]" />
-            <img src="@/assets/images/vish2.svg" class="md:h-[32px] h-[24px]" />
-            <img src="@/assets/images/vish3.svg" class="md:h-[32px] h-[24px]" />
-            <img src="@/assets/images/vish4.svg" class="md:h-[32px] h-[24px]" />
-            <img src="@/assets/images/vish5.svg" class="md:h-[32px] h-[24px]" />
-            <img src="@/assets/images/vish6.svg" class="md:h-[32px] h-[24px]" />
+          <div class="absolute bottom-[80px]  md:px-[32px] p-[24px] text-box">
+            <div class="flex grid items-center justify-between grid-cols-6 gap-6">
+              <div
+                class="md:text-[24px] text-[16px] font-bold text-[#fff] opacity-75 md:col-span-1 col-span-6 md:text-center text-left">
+                Ecosystem</div>
+              <img src="@/assets/images/vish2.svg" class="md:h-[32px] h-[24px] col-span-3 md:col-span-1 md:m-auto" />
+              <img src="@/assets/images/vish3.svg" class="md:h-[32px] h-[24px] col-span-3 md:col-span-1 md:m-auto" />
+              <img src="@/assets/images/vish4.svg" class="md:h-[32px] h-[24px] col-span-3 md:col-span-1 md:m-auto" />
+              <img src="@/assets/images/vish5.svg" class="md:h-[32px] h-[24px] col-span-3 md:col-span-1 md:m-auto" />
+              <img src="@/assets/images/vish6.svg" class="md:h-[32px] h-[24px] col-span-3 md:col-span-1 md:m-auto" />
+            </div>
           </div>
+
+          <!-- <div
+            class=" bottom-[68px] md:flex max-w-[1280px] md:px-[32px] p-[24px] gap-24 justify-around m-auto absolute bottom-[80px] text-box">
+            <div class="text-left mb-[16px] ">
+              <div class="md:text-[24px] text-[16px] font-bold text-[#fff] opacity-[80]">Ecosystem</div>
+            </div>
+            <div class="flex flex-wrap justify-between flex-1 gap-6">
+              <img src="@/assets/images/vish2.svg" class="md:h-[32px] h-[24px]" />
+              <img src="@/assets/images/vish3.svg" class="md:h-[32px] h-[24px]" />
+              <img src="@/assets/images/vish4.svg" class="md:h-[32px] h-[24px]" />
+              <img src="@/assets/images/vish5.svg" class="md:h-[32px] h-[24px]" />
+              <img src="@/assets/images/vish6.svg" class="md:h-[32px] h-[24px]" />
+            </div>
+
+          </div> -->
         </div>
       </div>
 
@@ -160,6 +178,7 @@
     <div
       class="mx-auto grid md:grid-cols-3 grid-cols-2 gap-4 box-4-in w-[100%] md:w-[1160px] md:h-[540px] items-center md:justify-items-center p-[24px] md:p-[100px] ">
       <img src="@/assets/images/ANT.png" class="md:h-[64px] h-[36px]" />
+
       <img src="@/assets/images/Pic.png" class="md:h-[64px] h-[36px]" />
       <img src="@/assets/images/KODO.png" class="md:h-[64px] h-[36px]" />
       <img src="@/assets/images/Syn.png" class="md:h-[48px] h-[30px]" />
@@ -280,6 +299,13 @@ onMounted(() => {
   background-size: cover;
   background-position: center bottom;
   /* background-attachment: fixed; */
+}
+
+.text-box {
+  width: 100%;
+  max-width: 1280px;
+  left: 50%;
+  transform: translateX(-50%)
 }
 
 .content-box {
