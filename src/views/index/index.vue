@@ -40,7 +40,7 @@
         </div>
         <div class="text-center content md:mt-[200px] mt-[130px]">
           <div class="md:text-[72px] text-[32px] font-bold mx-auto title-text">
-            LAYER M INFRA FOR OMNI ASSETS
+            LAYER M FOR BITCOIN
           </div>
           <div class="md:justify-center md:flex mt-[40px] flex flex-col md:flex-row items-center">
             <a-button class="w-[178px] h-[37px] text-[#fff]  btn-box md:mr-[24px] ms:mx-auto mb-[24px] md:mb-[0px]"
@@ -119,7 +119,7 @@
   <div class="bg-black px-[32px]">
     <div class="w-full text-[#ffffff] text-center md:pt-[120px] pt-[60px] max-w-[1428px] mx-auto">
       <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
-        <div>Permissionless & Native Infra 4 BTC Liquidity</div>
+        <div>Permissionless & Native Infra 4 BTC Liquidity & Payment</div>
       </div>
       <div class="md:grid items-center justify-around grid-cols-3 gap-12 md:flex md:px-[64px]">
         <div class="mb-[48px] md:mb-[0px]">
@@ -147,7 +147,7 @@
 
       <div class="md:mt-[120px] mt-[60px]">
         <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
-          Application Scenarios of Vishwa Infra & Omni chain assets
+          Vishwa In A Nutshell
         </div>
         <img src="@/assets/images/Home-2.png" class="md:w-[80%] w-[100%] mx-auto" />
 
@@ -250,7 +250,7 @@ const clickBmakerAI = () => {
 }
 
 const clickTG = () => {
-  window.open('https://t.me/bmaker2024')
+  window.open('https://t.me/vishwa_xyz')
   open.value = false
 }
 
