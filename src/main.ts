@@ -8,6 +8,7 @@ import './assets/index.css'
 // import { VueRecaptchaPlugin } from 'vue-recaptcha';
 
 // createApp(App).mount('#app')
+import Vue3Marquee from 'vue3-marquee'
 const app = createApp(App);
 
 // const head = createHead()
@@ -17,4 +18,5 @@ const app = createApp(App);
 // })
 app.use(router);
 app.use(Antd);
+app.use(Vue3Marquee);
 app.mount("#app");

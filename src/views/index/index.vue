@@ -1,5 +1,19 @@
 <template>
   <div class="relative bg-[#020619] " :class="!isMobile ? 'main-content' : 'main-content-bg'">
+    <div class="title-activity">
+      <Vue3Marquee :pause-on-hover="true" :clone="true">
+        <div class="text-[#fff] md:mx-[200px] mx-[80px] py-[8px] flex items-center">
+          <img src="@/assets/images/header-banner-2.png" class="h-[20px]" />
+          <div class="ml-[8px]"> We are partners of OP_CAT Builder Alliance, join
+
+            <span class="text-[#646cff] underline-offset-4 cursor-pointer"
+              @click="toLink('https://t.me/opcatbtc')">https://t.me/opcatbtc</span> to
+            know more
+            and tech of OP_CAT.
+          </div>
+        </div>
+      </Vue3Marquee>
+    </div>
     <div class="video-box" :class="isMobile ? 'mobile-css' : ''">
       <video autoplay loop muted width="100%" v-if="!isMobile">
         <source src="@/assets/images/video.mp4" type="video/mp4" />
@@ -9,7 +23,7 @@
 
     <div class="w-full h-full px-[32px] content-box ">
       <div class="max-w-[1440px] mx-auto ">
-        <div class="flex justify-between items-center header h-[82px] py-[20px] ">
+        <div class="flex justify-between items-center header h-[82px] pb-[20px] pt-[68px]">
           <div>
             <img src="@/assets/images/Vishwa.png" class="md:w-[140px] w-[110px]" />
           </div>
@@ -240,6 +254,10 @@ const clickJoin = () => {
   open.value = false
 }
 
+const toLink = (link: string) => {
+  window.open(link)
+}
+
 const clickTwitter = () => {
   window.open('https://x.com/Vishwa_xyz')
   open.value = false
@@ -299,6 +317,19 @@ onMounted(() => {
   background-size: cover;
   background-position: center bottom;
   /* background-attachment: fixed; */
+}
+
+.title-activity {
+  width: 100%;
+  background: linear-gradient(281deg, #BC006B 0%, #454CDA 100%);
+  font-family: Montserrat-Regular, Montserrat;
+  color: #FFFFFF;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  z-index: 99999;
+  /* padding: 10px 0; */
+  font-weight: bold;
 }
 
 .text-box {
