@@ -133,7 +133,8 @@
   <div class="bg-black px-[32px]">
     <div class="w-full text-[#ffffff] text-center md:pt-[120px] pt-[60px] max-w-[1428px] mx-auto">
       <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px]">
-        <div>Inter-liquidity & Decentralized Statement Channel Protocol for Payfi</div>
+        <div v-if="isMobile">Inter-liquidity & Decentralized Statement Channel Protocol for Payfi</div>
+        <div v-else>Inter-liquidity & Decentralized Statement Channel<br /> Protocol for Payfi</div>
       </div>
       <div class="md:grid items-center justify-around grid-cols-3 gap-12 md:flex md:px-[64px]">
         <div class="mb-[48px] md:mb-[0px]">
@@ -190,7 +191,7 @@
   <div class="pt-[60px] text-[#ffffff] box-4 px-[32px] md:h-full h-[460px] md:pb-[200px]">
     <div class="md:text-[48px] text-[24px] font-bold md:mb-[80px] mb-[48px] text-center">Partnership</div>
     <div
-      class="mx-auto grid md:grid-cols-3 grid-cols-2 gap-4 box-4-in w-[100%] md:w-[1160px] md:h-[540px] items-center md:justify-items-left p-[24px] md:p-[100px] ">
+      class="mx-auto grid md:grid-cols-3 grid-cols-2 md:gap-12 gap-4 box-4-in w-[100%] md:w-[1160px] md:h-[540px] items-center md:justify-items-left p-[24px] md:p-[100px] ">
       <img src="@/assets/images/baby.png" class="md:h-[44px] h-[26px]" />
       <img src="@/assets/images/Photoroom.png" class="md:h-[48px] h-[26px]" />
       <img src="@/assets/images/Photoroom2.png" class="md:h-[48px] h-[26px]" />
